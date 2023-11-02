@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <!-- Se nombra directamente al Fragment. La propiedad android:name da error
+    porque el Fragmento no está en app y es en tiempo de ejecución cuando el módulo se une al
+    fichero apk-->
+    <fragment
+        app:moduleName="accountsignin"
+        android:label="@string/title_accountsigin"
+        android:id="@+id/accountSignInFragment"
+        android:name="com.moronlu18.accountsignin.ui.AccountSignIn" />
+    <fragment
+        app:moduleName="accountsignup"
+        android:label="@string/title_accountsignup"
+        android:id="@+id/accountSignUpFragment"
+        android:name="com.moronlu18.accountsignup.ui.AccountSignUp" />
+    <fragment
+        app:moduleName="tasklist"
+        android:label="@string/title_tasklist"
+        android:id="@+id/taskListFragment"
+        android:name="com.moronlu18.tasklist.ui.TaskListFragment" >
+        <action
+            android:id="@+id/action_taskListFragment_to_taskCreationFragment3"
+            app:destination="@id/taskCreationFragment" />
+    </fragment>
+    <fragment
+        app:moduleName="itemlist"
+        android:label="Lista de Artículos"
+        android:id="@+id/itemListFragment"
+        android:name="com.moronlu18.itemlist.ui.ItemListFragment" >
+        <action
+            android:id="@+id/action_itemListFragment_to_itemCreationFragment"
+            app:destination="@id/itemCreationFragment" />
+    </fragment>
+    <fragment
+        app:moduleName="taskcreation"
+        android:label="@string/title_taskcreation"
+        android:id="@+id/taskCreationFragment"
+        android:name="com.moronlu18.taskcreation.ui.TaskCreationFragment" />
+
+    <fragment
+        app:moduleName="invoicelist"
+        android:label="Lista de Facturas"
+        android:id="@+id/invoiceListFragment"
+        android:name="com.moronlu18.invoicelist.ui.InvoiceListFragment" >
+        <action
+            android:id="@+id/action_invoiceListFragment_to_invoiceCreationFragment"
+            app:destination="@id/invoiceCreationFragment" />
+    </fragment>
+
+    <fragment
+        app:moduleName="invoicecreation"
+        android:label="Creación de la factura"
+        android:id="@+id/invoiceCreationFragment"
+        android:name="com.moronlu18.invoicecreation.ui.InvoiceCreationFragment" />
+
+    <fragment
+        app:moduleName="itemcreation"
+        android:label="Creación del artículo"
+        android:id="@+id/itemCreationFragment"
+        android:name="com.moronlu18.itemcreation.ui.ItemCreationFragment" />
+
+    <fragment
+        app:moduleName="invoicedetail"
+        android:label="Detalles de la factura"
+        android:id="@+id/invoiceDetailFragment"
+        android:name="com.moronlu18.invoicedetail.ui.InvoiceDetailFragment" />
+
+    <fragment
+        app:moduleName="itemdetail"
+        android:label="Detalles de los artículos"
+        android:id="@+id/itemDetailFragment"
+        android:name="com.moronlu18.itemdetail.ui.ItemDetailFragment" />
+
+    <fragment
+        app:moduleName="taskdetail"
+        android:label="Detalles de las tareas"
+        android:id="@+id/taskDetailFragment"
+        android:name="com.moronlu18.taskdetail.ui.TaskDetailFragment" />
+
+    <fragment
+        app:moduleName="customerlist"
+        android:label="Lista de clientes"
+        android:id="@+id/customerListFragment"
+        android:name="com.moronlu18.customerlist.ui.CustomerListFragment" />
+    <fragment
+        app:moduleName="customerdetail"
+        android:label="Detalle de cliente"
+        android:id="@+id/customerDetailFragment"
+        android:name="com.moronlu18.customerdetail.ui.CustomerDetailFragment" />
+
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.moronlu18.invoice.MainFragment"
+        android:label="@string/mainFragment"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_featureAccountSignIn"
+            app:destination="@+id/accountSignInFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_featureAccountSignUp"
+            app:destination="@+id/accountSignUpFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_taskListFragment"
+            app:destination="@id/taskListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemListFragment"
+            app:destination="@id/itemListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_invoiceListFragment"
+            app:destination="@id/invoiceListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemCreationFragment3"
+            app:destination="@id/itemCreationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemCreationFragment4"
+            app:destination="@id/itemCreationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_invoiceDetailFragment"
+            app:destination="@id/invoiceDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_customerListFragment"
+            app:destination="@id/customerListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_customerDetailFragment"
+            app:destination="@id/customerDetailFragment" />
+    </fragment>
+
+
+</navigation>

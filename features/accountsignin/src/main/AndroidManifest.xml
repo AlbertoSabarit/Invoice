@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution">
+
+    <!-- Informacion del módulo: install-time: Este tipo de entrega se utiliza para el módulo que
+    será visible para el usuario solo una vez. El módulo de inicio de sesión puede ser un ejemplo
+    de este tipo de entrega; una vez que el usuario inicia sesión, podemos desinstalar el
+    módulo dinámicamente. Pero esto no significa que nunca podamos volver a instalar el módulo.
+    Si un usuario cierra sesión,
+    podemos reinstalar el módulo nuevamente tal como lo haríamos con el módulo bajo demanda. -->
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_accountsigin">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>

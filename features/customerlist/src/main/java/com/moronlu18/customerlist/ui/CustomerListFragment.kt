@@ -29,10 +29,10 @@ class CustomerListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //binding.btnCreateTask.setOnClickListener{
+        binding.fabCustomerCreation.setOnClickListener{
             //findNavController().navigate()
-            //findNavController().navigate(com.moronlu18.invoice.R.id.action_taskListFragment_to_taskCreationFragment3)
-        //}
+            findNavController().navigate(com.moronlu18.invoice.R.id.action_customerListFragment_to_customerCreationFragment)
+        }
     }
 
     override fun onDestroyView() {

@@ -2,4 +2,9 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tvName" >Nombre:&#160;</string>
+    <string name="tvEmail" translatable="false">Email:&#160;</string>
+    <string name="tvPhone">Teléfono:&#160;</string>
+    <string name="tvCity">Ciudad:&#160;</string>
+    <string name="tvAddress">Dirección:&#160;</string>
 </resources>

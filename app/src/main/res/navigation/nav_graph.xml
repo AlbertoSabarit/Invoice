@@ -86,12 +86,22 @@
         app:moduleName="customerlist"
         android:label="Lista de clientes"
         android:id="@+id/customerListFragment"
-        android:name="com.moronlu18.customerlist.ui.CustomerListFragment" />
+        android:name="com.moronlu18.customerlist.ui.CustomerListFragment" >
+        <action
+            android:id="@+id/action_customerListFragment_to_customerCreationFragment"
+            app:destination="@id/customerCreationFragment" />
+    </fragment>
     <fragment
         app:moduleName="customerdetail"
         android:label="Detalle de cliente"
         android:id="@+id/customerDetailFragment"
         android:name="com.moronlu18.customerdetail.ui.CustomerDetailFragment" />
+
+    <fragment
+        app:moduleName="customercreation"
+        android:label="Creación del cliente"
+        android:id="@+id/customerCreationFragment"
+        android:name="com.moronlu18.customercreation.ui.CustomerCreationFragment" />
 
 
     <fragment

@@ -9,4 +9,5 @@
     <string name="phoneHint">Phone</string>
     <string name="cityHint">City</string>
     <string name="AddressHint">Address</string>
+    <string name="toastMessage">Coming soon</string>
 </resources>

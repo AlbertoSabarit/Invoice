@@ -39,7 +39,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:drawableEnd="@drawable/img_calendario"
             android:hint="@string/tx_fvencimiento" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +64,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:drawableEnd="@drawable/img_calendario"
             android:hint="@string/tx_femision" />
     </com.google.android.material.textfield.TextInputLayout>

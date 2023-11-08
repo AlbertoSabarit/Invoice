@@ -4,5 +4,7 @@
         android:width="2dp"
         android:color="@color/md_theme_dark_onErrorContainer" />
     <corners android:radius="20dp" />
-    <solid android:color="@android:color/transparent"></solid>
+    <solid android:color="@color/md_theme_light_primary"></solid>
+
+
 </shape>

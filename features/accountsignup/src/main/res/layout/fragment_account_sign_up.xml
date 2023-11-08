@@ -112,23 +112,39 @@
         app:layout_constraintStart_toStartOf="@+id/gdStart"
         app:layout_constraintTop_toBottomOf="@+id/tieConfirmsPasswordsSignUp" />
 
+    <Button
+        android:id="@+id/btnCrearCuenta"
+        style="@style/ButtonTrasnparent.TexColor"
+        android:textColor="@color/md_theme_light_onSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_weight="0.3"
+        android:text="Crear cuenta"
+        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/gdStart"
+        app:layout_constraintTop_toBottomOf="@+id/spProfile" />
+
     <TextView
         android:id="@+id/txCalificacion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="96dp"
         android:gravity="center"
         android:text="@string/calificacionUusario"
         app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta" />
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="@+id/gdStart"
         app:layout_constraintTop_toBottomOf="@+id/txCalificacion">
 
@@ -157,7 +173,6 @@
             tools:layout_editor_absoluteY="530dp" />
 
     </RadioGroup>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,11 +52,15 @@
 
         <Button
             android:id="@+id/btnSignUp"
+            android:shadowColor="@color/md_theme_light_primary"
             style="@style/ButtonTrasnparent.TexColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
-            android:text="Iniciar sesión" />
+            android:textColor="@color/md_theme_light_onSecondary"
+            android:text="Iniciar sesión"
+            android:background="@drawable/selector_button"
+            android:clickable="true" />
     </LinearLayout>
 
 

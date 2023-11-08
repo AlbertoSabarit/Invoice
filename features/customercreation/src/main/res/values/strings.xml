@@ -9,6 +9,6 @@
     <string name="phoneHint">Teléfono</string>
     <string name="cityHint">Ciudad</string>
     <string name="AddressHint">Dirección</string>
-    <string name="toastMessage" translatable="false">Coming Soon...</string>
+    <string name="toastMessage">Próximamente...</string>
 
 </resources>

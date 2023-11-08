@@ -12,12 +12,16 @@
         app:moduleName="accountsignin"
         android:label="@string/title_accountsigin"
         android:id="@+id/accountSignInFragment"
-        android:name="com.moronlu18.accountsignin.ui.AccountSignIn" />
+        android:name="com.moronlu18.accountsignin.ui.AccountSignInFragment" >
+        <action
+            android:id="@+id/action_accountSignInFragment_to_accountSignUpFragment"
+            app:destination="@id/accountSignUpFragment" />
+    </fragment>
     <fragment
         app:moduleName="accountsignup"
         android:label="@string/title_accountsignup"
         android:id="@+id/accountSignUpFragment"
-        android:name="com.moronlu18.accountsignup.ui.AccountSignUp" />
+        android:name="com.moronlu18.accountsignup.ui.AccountSignUpFragment" />
     <fragment
         app:moduleName="tasklist"
         android:label="@string/title_tasklist"

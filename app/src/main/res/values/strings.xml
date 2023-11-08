@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Invoice</string>
 
-    <string name="title_accountsigin">Sig In</string>
-    <string name="title_accountsignup">Sign Up</string>
+    <string name="title_accountsigin">Iniciar sesión</string>
+    <string name="title_accountsignup">Registrarse</string>
     <string name="title_customercreation">Customer Creation</string>
     <string name="title_firebase">Firebase</string>
     <string name="title_printer">Printer</string>

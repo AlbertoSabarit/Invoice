@@ -21,8 +21,8 @@ class TaskCreationFragment : Fragment() {
         val spinnerEstado = view.findViewById<Spinner>(R.id.spinnerEstado)
 
         val nombres = arrayOf("Alberto", "Christian", "Marina")
-        val tipo = arrayOf("Private", "Call", "Visitor")
-        val estado = arrayOf("Pending", "Modified", "Overdue")
+        val tipo = arrayOf("Privado", "Llamada", "Visita")
+        val estado = arrayOf("Pendiente", "Modificado", "Vencido")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

@@ -78,6 +78,7 @@
             android:padding="5dp"/>
 
         <Spinner
+            android:entries="@array/sp_item_creation_type"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:id="@+id/sItemCreationType"
             android:layout_width="match_parent"

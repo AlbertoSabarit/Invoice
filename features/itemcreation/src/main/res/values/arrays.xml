@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_item_creation_type">
+        <item>Producto</item>
+        <item>Servicio</item>
+    </string-array>
+
+</resources>

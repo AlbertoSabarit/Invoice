@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_accountSignInFragment_to_accountSignUpFragment"
             app:destination="@id/accountSignUpFragment" />
+        <action
+            android:id="@+id/action_accountSignInFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
     </fragment>
     <fragment
         app:moduleName="accountsignup"
@@ -150,6 +153,11 @@
             android:id="@+id/action_mainFragment_to_customerDetailFragment"
             app:destination="@id/customerDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="com.moronlu18.invoice.UserListFragment"
+        android:label="Lista de usuarios"
+        tools:layout="@layout/fragment_user_list" />
 
 
 </navigation>

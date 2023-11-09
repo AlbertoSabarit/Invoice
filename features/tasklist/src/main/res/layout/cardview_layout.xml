@@ -15,7 +15,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvcardviewTaskList"
-            android:layout_width="347dp"
+            android:layout_width="match_parent"
             android:layout_height="195dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
@@ -31,7 +31,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_cardview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/seed">
 
                 <TextView
                     android:id="@+id/txtFechaVenc"
@@ -90,7 +91,7 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tarea"
+                    android:text="Tipo"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"

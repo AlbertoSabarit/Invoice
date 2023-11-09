@@ -38,6 +38,11 @@ class AccountSignInFragment : Fragment() {
             //findNavController().navigate()
             findNavController().navigate(com.moronlu18.invoice.R.id.action_accountSignInFragment_to_accountSignUpFragment)
         }
+
+        binding.btnSignUp.setOnClickListener{
+            //findNavController().navigate()
+            findNavController().navigate(com.moronlu18.invoice.R.id.action_accountSignInFragment_to_userListFragment)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

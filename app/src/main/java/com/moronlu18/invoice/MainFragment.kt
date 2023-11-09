@@ -11,9 +11,6 @@ import android.widget.Toast.makeText
 import androidx.navigation.fragment.findNavController
 import com.moronlu18.invoice.databinding.FragmentMainBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null

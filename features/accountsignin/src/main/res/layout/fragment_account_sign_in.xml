@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.moronlu18.accountsignin.ui.AccountSignInFragment">
+    tools:context="com.murray.accountsignin.ui.AccountSignInFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_google" />
+            android:src="@mipmap/ic_googlecolor" />
 
         <ImageButton
             android:id="@+id/imgFacebook"
@@ -122,6 +122,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_facebook" />
+            android:src="@mipmap/ic_facebookcolor" />
     </LinearLayout>
 </LinearLayout>

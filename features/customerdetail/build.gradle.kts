@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
-    namespace = "com.moronlu18.customerdetail"
+    namespace = "com.murray.customerdetail"
     compileSdk = 33
 
     defaultConfig {

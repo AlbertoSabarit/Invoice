@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
-    namespace = "com.moronlu18.printer"
+    namespace = "com.murray.printer"
     compileSdk = 33
 
     defaultConfig {

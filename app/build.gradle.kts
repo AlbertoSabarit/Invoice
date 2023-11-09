@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.moronlu18.invoice"
+    namespace = "com.murray.invoice"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.moronlu18.invoice"
+        applicationId = "com.murray.invoice"
         minSdk = 24
         targetSdk = 33
         versionCode = 2

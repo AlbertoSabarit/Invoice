@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
-    namespace = "com.moronlu18.firebase"
+    namespace = "com.murray.firebase"
     compileSdk = 33
 
     defaultConfig {

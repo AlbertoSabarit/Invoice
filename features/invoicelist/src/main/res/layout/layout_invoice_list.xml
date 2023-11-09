@@ -31,7 +31,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_cardview"
                 android:layout_width="392dp"
-                android:background="@color/seed"
+                android:background="@color/md_theme_light_secondaryContainer"
                 android:layout_height="170dp">
 
                 <TextView
@@ -39,19 +39,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cliente"
-                    android:textSize="15dp"
+                    android:textSize="19dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.049"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.09" />
+                    app:layout_constraintVertical_bias="0.09"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/txtncliente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.063"
@@ -64,28 +66,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Creación"
-                    android:textSize="15dp"
+                    android:textSize="19dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.762"
                     app:layout_constraintStart_toEndOf="@+id/txtCliente"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.106" />
+                    app:layout_constraintVertical_bias="0.106"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/txtVencimiento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vencimiento"
-                    android:textSize="15dp"
+                    android:textSize="19dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.87"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.6" />
+                    app:layout_constraintVertical_bias="0.6"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/txtfcreacion"
@@ -94,6 +98,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/txtVencimiento"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.848"
+                    android:textSize="17dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtCreacion"
                     app:layout_constraintVertical_bias="0.342" />
@@ -102,6 +107,7 @@
                     android:id="@+id/txtfvencimiento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.848"
@@ -114,19 +120,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Articulos"
-                    android:textSize="15dp"
+                    android:textSize="19dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.048"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.6" />
+                    app:layout_constraintVertical_bias="0.6"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/txtnarticulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/txtfvencimiento"
                     app:layout_constraintHorizontal_bias="0.099"

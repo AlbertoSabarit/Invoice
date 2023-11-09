@@ -32,7 +32,7 @@
                 android:id="@+id/constraint_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/seed">
+                android:background="@color/md_theme_light_secondaryContainer">
 
                 <TextView
                     android:id="@+id/txtFechaVenc"

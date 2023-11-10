@@ -5,4 +5,5 @@
     <string name="tvPhone">Phone:&#160;</string>
     <string name="tvCity">City:&#160;</string>
     <string name="tvAddress">Address:&#160;</string>
+    <string name="btnEditar">Edit</string>
 </resources>

@@ -75,7 +75,7 @@
             android:id="@+id/noAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="0.5"
             android:gravity=""
             android:text="¿No tienes cuenta?" />
 
@@ -83,7 +83,7 @@
             android:id="@+id/txtRegsiter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7"
+            android:layout_weight="0.5"
             android:textColor="@color/md_theme_light_primary"
             android:textStyle="bold"
             android:text="Regístrate" />
@@ -116,6 +116,13 @@
             android:background="@android:color/transparent"
             android:src="@mipmap/ic_googlecolor" />
 
+        <ImageButton
+            android:id="@+id/imgInstagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_instacolor" />
         <ImageButton
             android:id="@+id/imgFacebook"
             android:layout_width="wrap_content"

@@ -52,7 +52,7 @@ class UserListFragment : Fragment() {
         dataset.add(User("Alberto", "Sabarit", "albertosabarit@iesportada.org"))
         dataset.add(User("Ender", "Watts", "enderwatts@iesportada.org"))
         dataset.add(User("Kateryna", "Nikitenko", "katerynanikitenko@iesportada.org"))
-        dataset.add(User("Ale", "Valle", "alevalle@iesportada.org"))
+        dataset.add(User("Alejandro", "Valle", "alevalle@iesportada.org"))
         return dataset
     }
 }

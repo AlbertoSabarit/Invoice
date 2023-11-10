@@ -7,4 +7,5 @@
     <string name="tvCity">Ciudad:&#160;</string>
     <string name="tvAddress">Dirección:&#160;</string>
     <string name="btnEditar">Editar</string>
+    <string name="toastMessage">Próximamente...</string>
 </resources>

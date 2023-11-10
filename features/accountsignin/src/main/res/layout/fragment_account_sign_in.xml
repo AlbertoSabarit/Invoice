@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_instacolor" />
+            android:src="@mipmap/ic_linkedincolor" />
         <ImageButton
             android:id="@+id/imgFacebook"
             android:layout_width="wrap_content"

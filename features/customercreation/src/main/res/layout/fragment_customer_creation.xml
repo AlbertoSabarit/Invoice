@@ -62,6 +62,7 @@
             android:text="@string/tvEmail" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawableEnd="@drawable/ic_email"
@@ -80,6 +81,7 @@
         app:layout_constraintVertical_bias="0.31">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawableEnd="@drawable/ic_phone"

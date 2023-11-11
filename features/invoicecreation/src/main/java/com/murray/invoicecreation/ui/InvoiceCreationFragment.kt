@@ -9,25 +9,82 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.murray.invoicecreation.R
 
-
+import android.app.DatePickerDialog
+import com.murray.invoicecreation.databinding.FragmentInvoiceCreationBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InvoiceCreationFragment : Fragment() {
+    private var _binding: FragmentInvoiceCreationBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_invoice_creation, container, false)
+        _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
 
-        val spinner = view.findViewById<Spinner>(R.id.spinner)
-
-        val nombres = arrayOf("Alberto", "Ender", "Kateryna", "Ale")
+        val nombres = arrayOf("Alberto", "Ender", "Kateryna", "Alejandro")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
 
-        return view
+        binding.spinner.adapter = adapter
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.tiefechaFin.setOnClickListener {
+            showDatePickerFin()
+        }
+        binding.tiefechaIni.setOnClickListener {
+            showDatePickerIni()
+        }
+    }
+
+    private fun showDatePickerIni() {
+        val calendar = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                binding.tiefechaIni.setText(formattedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
+    }
+    private fun showDatePickerFin() {
+        val calendar = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, monthOfYear, dayOfMonth)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                binding.tiefechaFin.setText(formattedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
     }
 
 }

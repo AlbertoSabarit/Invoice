@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintVertical_bias="0.074" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFechaFin"
@@ -38,9 +38,12 @@
             android:text="@string/txt_formato" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiefechaFin"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:drawableEnd="@drawable/img_calendario"
+            android:inputType="date"
             android:hint="@string/tx_fvencimiento" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,6 +66,8 @@
             android:text="@string/txt_formato" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiefechaIni"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:drawableEnd="@drawable/img_calendario"
@@ -93,5 +98,18 @@
             android:layout_height="50dp"
             android:drawableEnd="@drawable/img_person" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnGuardarFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

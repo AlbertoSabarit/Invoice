@@ -12,6 +12,7 @@ import com.murray.invoicelist.data.model.Invoice
 
 class ListaAdapter (private val dataset: MutableList<Invoice>, private val context: Context) :
     RecyclerView.Adapter<ListaAdapter.UserViewHolder>() {
+    private var contador = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layourInflater = LayoutInflater.from(parent.context)
@@ -20,7 +21,8 @@ class ListaAdapter (private val dataset: MutableList<Invoice>, private val conte
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = dataset.get(position)
-        holder.bind(item, context)
+        contador++
+        holder.bind(item, context, contador)
     }
 
     override fun getItemCount(): Int {
@@ -31,7 +33,10 @@ class ListaAdapter (private val dataset: MutableList<Invoice>, private val conte
         val tvArticulos= view.findViewById(com.murray.invoicelist.R.id.txtnarticulo) as TextView
         val tvFCrear = view.findViewById(com.murray.invoicelist.R.id.txtfcreacion) as TextView
         val tvFVenc = view.findViewById(com.murray.invoicelist.R.id.txtfvencimiento) as TextView
-        fun bind(item: Invoice, context: Context){
+        val tvFactura = view.findViewById(com.murray.invoicelist.R.id.txtnfacturas) as TextView
+
+        fun bind(item: Invoice, context: Context, contador: Int){
+            tvFactura.text = "Factura " + contador
             tvCliente.text = item.cliente
             tvArticulos.text = item.articulo
             tvFCrear.text = item.fcreacion

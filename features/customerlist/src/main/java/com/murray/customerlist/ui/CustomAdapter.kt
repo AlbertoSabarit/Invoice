@@ -24,7 +24,7 @@ class CustomAdapter ( private val dataset: MutableList<Customer>, private val co
     class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Customer, context: Context) {
-            binding.tvName.text = item.name
+            binding.txtCustomer.text = item.name
             binding.txtEmail.text = item.email
         }
     }

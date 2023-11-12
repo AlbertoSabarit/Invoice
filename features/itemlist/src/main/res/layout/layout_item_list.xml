@@ -7,11 +7,11 @@
     android:layout_margin="8dp">
 
     <androidx.cardview.widget.CardView
-        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
         android:id="@+id/cvcardviewTaskList"
+        android:layout_width="380dp"
+        android:layout_height="150dp"
         android:layout_margin="10dp"
-        android:layout_width="347dp"
-        android:layout_height="195dp"
+        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,97 +35,151 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.05" />
 
-            <TextView
-                android:id="@+id/tvNombreTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Nombre"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gdStart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvImpuestoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Sí"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
-                app:layout_constraintTop_toBottomOf="@+id/tvImpuestoTitle" />
-
-
-            <TextView
-                android:id="@+id/tvPrecioText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="60€"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="@+id/gdStart"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrecioTitle" />
-
-            <TextView
-                android:id="@+id/tvNombreText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Maleta de cuero"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="@+id/gdStart"
-                app:layout_constraintTop_toBottomOf="@+id/tvNombreTitle" />
-
-            <TextView
-                android:id="@+id/tvTipoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Producto"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
-                app:layout_constraintTop_toBottomOf="@+id/tvTipoTitle" />
-
-            <TextView
-                android:id="@+id/tvPrecioTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:text="Precio"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gdStart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvImpuestoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:text="¿Impuesto?"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvTipoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Tipo"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gdMiddle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.4" />
+
+            <TextView
+                android:id="@+id/tvNombreTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Nombre"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvNombreText"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tvNombreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maleta de cuero"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvPrecioTitle"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvNombreTitle" />
+
+            <TextView
+                android:id="@+id/tvPrecioTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Precio"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvPrecioText"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvNombreText" />
+
+            <TextView
+                android:id="@+id/tvPrecioText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60€"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrecioTitle" />
+
+            <TextView
+                android:id="@+id/tvTipoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Tipo"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvTipoText"
+                app:layout_constraintStart_toEndOf="@+id/gdMiddle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tvTipoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Producto"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvImpuestoTitle"
+                app:layout_constraintStart_toEndOf="@+id/gdMiddle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTipoTitle" />
+
+            <TextView
+                android:id="@+id/tvImpuestoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="¿Impuesto?"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvImpuestoText"
+                app:layout_constraintStart_toEndOf="@+id/gdMiddle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTipoText" />
+
+            <TextView
+                android:id="@+id/tvImpuestoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sí"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/gdMiddle"
+                app:layout_constraintTop_toBottomOf="@+id/tvImpuestoTitle" />
+
+
+            <ImageView
+                android:id="@+id/imgItem"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_item_img"
+                android:clipToOutline="true"
+                android:padding="10dp"
+                android:src="@drawable/img_maleta_cuero"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvNombreTitle" />
+            <View
+                android:id="@+id/view1"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTipoTitle" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toStartOf="@+id/gdStart"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrecioTitle" />
+            <View
+                android:id="@+id/view3"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toStartOf="@+id/gdMiddle"
+                app:layout_constraintTop_toBottomOf="@+id/tvImpuestoTitle" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

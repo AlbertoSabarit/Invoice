@@ -7,20 +7,20 @@
     tools:context=".ui.ItemDetailFragment">
 
     <!-- Info -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvItemDetailInfo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="325dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/cvItemDetailDescr"
-        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
-        app:layout_constraintVertical_weight="2"
-        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,11 +32,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Ferrari SF90"
+                android:text="Maleta de cuero"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemListEmptyText"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="45.000€"
+                android:text="60€"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
@@ -96,7 +96,7 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemListEmptyText" />
+                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle" />
 
             <View
                 android:id="@+id/view2"
@@ -124,12 +124,13 @@
 
             <!-- titles -->
             <TextView
-                android:id="@+id/tvItemListEmptyText"
+                android:id="@+id/tvItemDetailNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/tiet_item_detail_name"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
                 app:layout_constraintTop_toTopOf="parent"
@@ -142,6 +143,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/tiet_item_detail_type"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
                 app:layout_constraintTop_toTopOf="parent"
@@ -153,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tiet_item_detail_rate"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
                 app:layout_constraintTop_toTopOf="parent"
@@ -164,24 +167,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tiet_item_detail_tax"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.59000003" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvItemDetailDescr"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="325dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        app:layout_constraintVertical_weight="3"
-        app:layout_constraintBottom_toTopOf="@+id/gItemDetailBottom"
-        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
-        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
-        app:layout_constraintTop_toBottomOf="@+id/cvItemDetailInfo">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvItemDetailInfo"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -193,7 +200,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="Coche de gama alta marca Ferrari"
+                android:justificationMode="inter_word"
+                android:text="Cuero de cabra de grano superior superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente.  Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción. "
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -216,6 +224,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/tiet_item_detail_descr"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -225,32 +234,29 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.05" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
+
     <!--Helpers-->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gItemCreationStart"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gItemCreationEnd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gItemDetailBottom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
 
     <!--Button-->
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/shape_item_img"
+        android:clipToOutline="true"
+        android:elevation="8dp"
+        android:padding="10dp"
+        android:src="@drawable/img_maleta_cuero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cvItemDetailDescr"
+        app:layout_constraintVertical_bias="0.6" />
+
     <Button
         android:id="@+id/bItemCreationAddItem"
         android:layout_width="wrap_content"

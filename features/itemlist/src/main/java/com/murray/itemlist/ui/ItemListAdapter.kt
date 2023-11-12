@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.itemlist.R
+import com.murray.itemlist.databinding.LayoutItemListBinding
 
 class ItemListAdapter(private val dataset: MutableList<Item>, private val context: Context) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ItemListViewHolder(layoutInflater.inflate(R.layout.layout_item_list, parent, false))
+        return ItemListViewHolder(LayoutItemListBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -25,17 +26,17 @@ class ItemListAdapter(private val dataset: MutableList<Item>, private val contex
         holder.bind(item, context)
     }
 
-    class ItemListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvNombre = view.findViewById(R.id.tvNombreText) as TextView
-        val tvTipo = view.findViewById(R.id.tvTipoText) as TextView
-        val tvImpuesto = view.findViewById(R.id.tvImpuestoText) as TextView
-        val tvPrecio = view.findViewById(R.id.tvPrecioText) as TextView
+    class ItemListViewHolder(private val binding: LayoutItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Item, context: Context) {
-            tvNombre.text = item.nombre
-            tvTipo.text = item.tipo
-            tvImpuesto.text = item.impuesto
-            tvPrecio.text = item.precio
+            with(binding){
+                tvNombreText.text = item.nombre
+                tvTipoText.text = item.tipo
+                tvImpuestoText.text = item.impuesto
+                tvPrecioText.text = item.precio
+                imgItem.setImageResource(item.imagen)
+            }
+
         }
     }
 

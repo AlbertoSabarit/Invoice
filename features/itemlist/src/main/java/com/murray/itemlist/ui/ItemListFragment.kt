@@ -14,7 +14,8 @@ import com.murray.itemlist.databinding.FragmentItemListBinding
 class ItemListFragment : Fragment() {
 
     private var _binding: FragmentItemListBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +30,12 @@ class ItemListFragment : Fragment() {
 
         setUpUserRecycler()
         binding.btnCrearArticulo.setOnClickListener{
-            //findNavController().navigate()
             findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemCreationFragment)
         }
     }
 
     private fun setUpUserRecycler(){
-        var adapter: ItemListAdapter = ItemListAdapter (getUpDataSetUser(), requireContext())
+        var adapter: ItemListAdapter = ItemListAdapter (getUpDataSetItem(), requireContext())
 
         with(binding.recyclerView){
             layoutManager = LinearLayoutManager(requireContext())
@@ -44,12 +44,14 @@ class ItemListFragment : Fragment() {
         }
     }
 
-    private fun getUpDataSetUser(): MutableList<Item> {
+    private fun getUpDataSetItem(): MutableList<Item> {
         var dataset: MutableList<Item> = ArrayList()
-        dataset.add(Item("Maleta de Cuero", "Producto", "60€", "Sí"))
-        dataset.add(Item("Lápiz", "Producto", "0.5€", "No"))
-        dataset.add(Item("Cuaderno", "Producto", "3€", "No"))
-        dataset.add(Item("Portátil", "Producto", "700€", "Sí"))
+        dataset.add(Item("Maleta de Cuero", "Producto", "60€", "Sí",R.drawable.img_maleta_cuero))
+        dataset.add(Item("Lápices Acuarela", "Producto", "75€", "No",R.drawable.img_lapices_acuarela))
+        dataset.add(Item("Cuaderno", "Producto", "20€", "No",R.drawable.img_cuaderno))
+        dataset.add(Item("Portátil", "Producto", "700€", "Sí",R.drawable.img_portatil))
+        dataset.add(Item("Pinturas al óleo", "Producto", "9€", "No",R.drawable.img_oleo))
+        dataset.add(Item("Botas de nieve", "Producto", "15€", "Sí",R.drawable.img_botas_nieve))
         return dataset
     }
 

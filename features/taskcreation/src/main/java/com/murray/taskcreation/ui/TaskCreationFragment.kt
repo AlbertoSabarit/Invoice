@@ -1,5 +1,6 @@
 package com.murray.taskcreation.ui
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,17 +9,22 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.murray.taskcreation.R
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import com.murray.taskcreation.databinding.FragmentTaskCreationBinding
 
 class TaskCreationFragment : Fragment() {
+
+    private var _binding: FragmentTaskCreationBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_task_creation, container, false)
-        val spinner = view.findViewById<Spinner>(R.id.spinner)
-        val spinnerTipo = view.findViewById<Spinner>(R.id.spinnerTipo)
-        val spinnerEstado = view.findViewById<Spinner>(R.id.spinnerEstado)
+
+        _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
         val nombres = arrayOf("Alberto", "Christian", "Marina")
         val tipo = arrayOf("Privado", "Llamada", "Visita")
@@ -26,16 +32,71 @@ class TaskCreationFragment : Fragment() {
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
+        binding.spinner.adapter = adapter
 
         val adapterTipo = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipo)
         adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTipo.adapter = adapterTipo
+        binding.spinnerTipo.adapter = adapterTipo
 
-        val adapterEstado = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, estado)
+        val adapterEstado =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, estado)
         adapterEstado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerEstado.adapter = adapterEstado
+        binding.spinnerEstado.adapter = adapterEstado
 
-        return view
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.tieFechCreacion.setOnClickListener {
+            showDatePickerFin()
+        }
+        binding.tieFechFin.setOnClickListener {
+            showDatePickerIni()
+        }
+    }
+
+    private fun showDatePickerIni() {
+        val calendar = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                binding.tieFechCreacion.setText(formattedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
+    }
+
+    private fun showDatePickerFin() {
+        val calendar = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, monthOfYear, dayOfMonth)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                binding.tieFechFin.setText(formattedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
+    }
+
 }

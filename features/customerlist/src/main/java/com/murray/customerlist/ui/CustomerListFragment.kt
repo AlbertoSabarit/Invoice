@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.customerlist.R
 import com.murray.customerlist.databinding.FragmentCustomerListBinding
 
@@ -28,8 +29,8 @@ class CustomerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.fabCustomerCreation.setOnClickListener{
+        setUpUserRecycler()
+        binding.floatingActionButton.setOnClickListener{
             //findNavController().navigate()
             findNavController().navigate(com.murray.invoice.R.id.action_customerListFragment_to_customerCreationFragment)
         }
@@ -38,6 +39,30 @@ class CustomerListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun setUpUserRecycler(){
+        var adapter: CustomAdapter = CustomAdapter (getUpDataSetUser(), requireContext())
+        with(binding.recyclerView){
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            this.adapter=adapter
+        }
+    }
+    private fun getUpDataSetUser(): MutableList<Customer> {
+        var dataset: MutableList<Customer> = ArrayList()
+        dataset.add(Customer("Alejandro Valle", "alejandro@gmail.es"))
+        dataset.add(Customer("Alberto Sabarit", "alberto@gmail.es"))
+        dataset.add(Customer("Ender Watts", "ender@gmail.uk"))
+        dataset.add(Customer("Katya Nikitenko", "katya@gmail.ua"))
+        dataset.add(Customer("Lourdes Rodriguez", "Lourdes@gmail.com"))
+        dataset.add(Customer("Carlos Cortijo", "Carlos@gmail.com"))
+        dataset.add(Customer("Federico Huercano", "Federico@gmail.com"))
+        dataset.add(Customer("Francisco Garcia", "Francisco@gmail.com"))
+        dataset.add(Customer("Eliseo Moreno", "Eliseo@gmail.com"))
+        dataset.add(Customer("Francisco Cabrera", "Francisco@gmail.com"))
+        dataset.add(Customer("Jose Millan", "Jose@gmail.com"))
+        dataset.add(Customer("Pello Mir", "Pello@gmail.com"))
+        return dataset
     }
 
 }

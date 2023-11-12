@@ -34,6 +34,19 @@
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_light_secondaryContainer">
 
+                <ImageButton
+                    android:id="@+id/imgbtnDelete"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/md_theme_light_secondaryContainer"
+                    android:src="@drawable/ic_delete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.954"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.050000012"
+                    tools:ignore="TouchTargetSizeCheck" />
                 <TextView
                     android:id="@+id/txtFechaVenc"
                     android:layout_width="wrap_content"
@@ -43,7 +56,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                    app:layout_constraintStart_toStartOf="@+id/txtEstado"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.811" />
 
@@ -64,7 +77,21 @@
                     android:id="@+id/txtNombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre"
+                    android:text="Cliente"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.55"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.09" />
+
+                <TextView
+                    android:id="@+id/txtTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Título"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -73,6 +100,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.09" />
+
+                <TextView
+                    android:id="@+id/txtTit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Citación"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txtTitulo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.294" />
 
                 <TextView
                     android:id="@+id/txtCliente"
@@ -102,7 +142,7 @@
                     app:layout_constraintVertical_bias="0.562" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txtEstado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estado"
@@ -110,8 +150,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.58"
-                    app:layout_constraintStart_toEndOf="@+id/textView4"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txtNombre"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.562" />
             </androidx.constraintlayout.widget.ConstraintLayout>

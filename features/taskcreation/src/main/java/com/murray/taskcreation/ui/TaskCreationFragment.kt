@@ -26,7 +26,7 @@ class TaskCreationFragment : Fragment() {
 
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
-        val nombres = arrayOf("Alberto", "Christian", "Marina")
+        val nombres = arrayOf("Alberto Sabarit", "Christian Gaitán", "Marina Del Rey")
         val tipo = arrayOf("Privado", "Llamada", "Visita")
         val estado = arrayOf("Pendiente", "Modificado", "Vencido")
 
@@ -50,10 +50,10 @@ class TaskCreationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tieFechCreacion.setOnClickListener {
-            showDatePickerFin()
+            showDatePickerIni()
         }
         binding.tieFechFin.setOnClickListener {
-            showDatePickerIni()
+            showDatePickerFin()
         }
     }
 

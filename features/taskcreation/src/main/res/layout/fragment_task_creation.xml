@@ -7,30 +7,58 @@
     tools:context=".ui.TaskCreationFragment">
 
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:tooltipText="Contacto"
-        app:layout_constraintBottom_toTopOf="@+id/tilCliente"
-        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
-        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.89" />
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilSpinnerClientes"
+        android:id="@+id/tilTitulo"
         android:layout_width="359dp"
         android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352">
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart">
 
+        <TextView
+            android:id="@+id/txTtitulo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Titulo" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Título" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tilCliente"
+        app:layout_constraintEnd_toEndOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart">
+
+        <TextView
+            android:id="@+id/txtNomCliente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="Cliente"
+            android:textSize="18dp"
+            app:layout_constraintVertical_bias="0.62" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:padding="10dp"
+
+            android:tooltipText="Contacto" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Button
         android:id="@+id/button"
@@ -50,9 +78,10 @@
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.198">
+        app:layout_constraintVertical_bias="0.267">
 
         <TextView
             android:id="@+id/txtCliente"
@@ -69,13 +98,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFechaIni"
-        android:layout_width="359dp"
-        android:layout_height="80dp"
+        android:layout_width="360dp"
+        android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352">
+        app:layout_constraintVertical_bias="0.408">
 
         <TextView
             android:id="@+id/txtDataIni"
@@ -96,11 +126,13 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFechaFin"
         android:layout_width="365dp"
-        android:layout_height="80dp"
+        android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55">
 
         <TextView
             android:id="@+id/tvDataFin"
@@ -119,6 +151,28 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
+        android:id="@+id/spinnerEstado"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:tooltipText="Clientes"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtEstado" />
+
+    <TextView
+        android:id="@+id/txtEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Estado"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerEstado"
+        app:layout_constraintStart_toStartOf="@+id/txtTipo" />
+
+    <Spinner
         android:id="@+id/spinnerTipo"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -128,41 +182,8 @@
         app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtTipo"
-        app:layout_constraintTop_toBottomOf="@+id/tilFechaFin" />
-
-    <Spinner
-        android:id="@+id/spinnerEstado"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:padding="10dp"
-        android:tooltipText="Clientes"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txtEstado" />
-
-    <TextView
-        android:id="@+id/txtNomCliente"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:text="Clientes"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
-        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
-
-    <TextView
-        android:id="@+id/txtEstado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Estado"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerEstado"
-        app:layout_constraintStart_toStartOf="@+id/txtTipo" />
+        app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
+        app:layout_constraintVertical_bias="0.598" />
 
     <TextView
         android:id="@+id/txtTipo"
@@ -172,7 +193,10 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerTipo"
         app:layout_constraintStart_toStartOf="@+id/tilFechaFin"
-        app:layout_constraintTop_toBottomOf="@+id/tilFechaFin" />
+        app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
+        app:layout_constraintVertical_bias="0.737" />
+
+
 
 
     <androidx.constraintlayout.widget.Guideline

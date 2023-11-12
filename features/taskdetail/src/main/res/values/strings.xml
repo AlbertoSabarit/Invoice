@@ -5,4 +5,5 @@
     <string name="txtdatos">Datos</string>
     <string name="txtEstado">Estado</string>
     <string name="txtTarea">Tarea</string>
+    <string name="txteditar">Editar</string>
 </resources>

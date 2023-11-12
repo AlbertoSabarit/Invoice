@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.tasklist.R
 
-class AdapterPersonalizado(
+class TaskAdapter(
     private val dataset: MutableList<listaTarea>,
     private val context: Context
 ) :
-    RecyclerView.Adapter<AdapterPersonalizado.ListViewHolder>() {
+    RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,11 +26,13 @@ class AdapterPersonalizado(
 
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        val tvTitle = view.findViewById(R.id.txtTit) as TextView
         val tvName = view.findViewById(R.id.txtCliente) as TextView
         val tvTask = view.findViewById(R.id.txtFechaCreacion) as TextView
         val tvState = view.findViewById(R.id.txtFechaVenc) as TextView
 
         fun bind(item: listaTarea, context: Context) {
+            tvTitle.text = item.titulo
             tvName.text = item.nombre
             tvTask.text = item.tarea
             tvState.text = item.estado

@@ -31,7 +31,6 @@ class CustomerListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpUserRecycler()
         binding.floatingActionButton.setOnClickListener{
-            //findNavController().navigate()
             findNavController().navigate(com.murray.invoice.R.id.action_customerListFragment_to_customerCreationFragment)
         }
     }

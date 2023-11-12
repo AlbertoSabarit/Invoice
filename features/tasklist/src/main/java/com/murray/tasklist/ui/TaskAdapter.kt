@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.tasklist.R
+import com.murray.tasklist.databinding.CardviewLayoutBinding
 
 class TaskAdapter(
     private val dataset: MutableList<listaTarea>,
@@ -16,7 +17,7 @@ class TaskAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ListViewHolder(layoutInflater.inflate( R.layout.cardview_layout, parent,false) )
+        return ListViewHolder(CardviewLayoutBinding.inflate(layoutInflater, parent,false) )
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -24,18 +25,15 @@ class TaskAdapter(
         holder.bind(item, context)
     }
 
-    class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        val tvTitle = view.findViewById(R.id.txtTit) as TextView
-        val tvName = view.findViewById(R.id.txtCliente) as TextView
-        val tvTask = view.findViewById(R.id.txtFechaCreacion) as TextView
-        val tvState = view.findViewById(R.id.txtFechaVenc) as TextView
+    class ListViewHolder(private val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: listaTarea, context: Context) {
-            tvTitle.text = item.titulo
-            tvName.text = item.nombre
-            tvTask.text = item.tarea
-            tvState.text = item.estado
+            with(binding) {
+                txtTit.text = item.titulo
+                txtCliente.text = item.nombre
+                txtFechaCreacion.text = item.tarea
+                txtFechaVenc.text = item.estado
+            }
         }
     }
 

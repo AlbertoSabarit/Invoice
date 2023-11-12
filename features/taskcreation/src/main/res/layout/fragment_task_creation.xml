@@ -14,9 +14,8 @@
         android:padding="10dp"
         android:tooltipText="Contacto"
         app:layout_constraintBottom_toTopOf="@+id/tilCliente"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tilCliente"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.89" />
 
@@ -50,9 +49,8 @@
         android:layout_width="359dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.198">
 
@@ -61,12 +59,12 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  Descripción" />
+            android:text="Descripción" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="" />
+            android:hint="Descripción" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -74,9 +72,8 @@
         android:layout_width="359dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.352">
 
@@ -88,9 +85,11 @@
             android:text="  DD/MM/AAAA" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieFechCreacion"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawableEnd="@drawable/baseline_calendar_today_24"
+            android:focusable="false"
             android:hint="Fecha creación" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,22 +98,23 @@
         android:layout_width="365dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.347"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtDataFin"
+            android:id="@+id/tvDataFin"
             android:layout_width="113dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="  DD/MM/AAAA" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieFechFin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawableEnd="@drawable/baseline_calendar_today_24"
+            android:focusable="false"
             android:hint="Fecha fin" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,8 +125,9 @@
         android:padding="10dp"
         android:tooltipText="Contacto"
         app:layout_constraintBottom_toTopOf="@+id/spinnerEstado"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtTipo"
         app:layout_constraintTop_toBottomOf="@+id/tilFechaFin" />
 
     <Spinner
@@ -137,8 +138,9 @@
         android:padding="10dp"
         android:tooltipText="Clientes"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtEstado" />
 
     <TextView
         android:id="@+id/txtNomCliente"
@@ -147,9 +149,8 @@
         android:text="Clientes"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
+        app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.62" />
 
@@ -161,7 +162,7 @@
         android:text="Estado"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerEstado"
-        app:layout_constraintStart_toStartOf="@+id/spinnerTipo" />
+        app:layout_constraintStart_toStartOf="@+id/txtTipo" />
 
     <TextView
         android:id="@+id/txtTipo"
@@ -170,8 +171,23 @@
         android:text="Tipo"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerTipo"
-        app:layout_constraintStart_toStartOf="@+id/spinnerTipo"
+        app:layout_constraintStart_toStartOf="@+id/tilFechaFin"
         app:layout_constraintTop_toBottomOf="@+id/tilFechaFin" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gItemCreationStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gItemCreationEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

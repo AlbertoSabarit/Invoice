@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoice.adapter.UserAdapter
 import com.murray.invoice.data.model.User
+import com.murray.invoice.data.repository.UserRepository
 import com.murray.invoice.databinding.FragmentUserListBinding
 
 class UserListFragment : Fragment() {
@@ -37,7 +38,7 @@ class UserListFragment : Fragment() {
      */
     private fun setUpUserRecycler(){
         //Crear el Adapter con los valores en el constructor primario
-        var adapter: UserAdapter = UserAdapter (getUpDataSetUser(), requireContext())
+        var adapter: UserAdapter = UserAdapter (UserRepository.dataSet, requireContext())
 
         //1. ¿Como quiero que se muestren los elementos de la lista?
         with(binding.rvuser){
@@ -47,12 +48,4 @@ class UserListFragment : Fragment() {
         }
     }
 
-    private fun getUpDataSetUser(): MutableList<User> {
-        var dataset: MutableList<User> = ArrayList()
-        dataset.add(User("Alberto", "Sabarit", "albertosabarit@iesportada.org"))
-        dataset.add(User("Ender", "Watts", "enderwatts@iesportada.org"))
-        dataset.add(User("Kateryna", "Nikitenko", "katerynanikitenko@iesportada.org"))
-        dataset.add(User("Alejandro", "Valle", "alevalle@iesportada.org"))
-        return dataset
-    }
 }

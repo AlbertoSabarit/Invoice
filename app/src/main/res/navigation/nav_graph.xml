@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <!-- Se nombra directamente al Fragment. La propiedad android:name da error
     porque el Fragmento no está en app y es en tiempo de ejecución cuando el módulo se une al
@@ -158,6 +158,14 @@
         android:name="com.murray.invoice.UserListFragment"
         android:label="Lista de usuarios"
         tools:layout="@layout/fragment_user_list" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.murray.invoice.SplashFragment"
+        android:label="Logo" >
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
 
 </navigation>

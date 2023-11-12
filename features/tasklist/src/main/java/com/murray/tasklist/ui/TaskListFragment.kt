@@ -51,7 +51,7 @@ class TaskListFragment : Fragment() {
         dataset.add(listaTarea("Visita fábrica", "Estela Perez", "Llamada", "Vencido"))
         dataset.add(listaTarea("Ver presupuesto", "Alejandro Castaño", "Visita", "Pendiente"))
         dataset.add(listaTarea("Cancelar visita", "Fernando Carmona", "Visita", "Modificado"))
-        dataset.add(listaTarea("Agendar", "Marina Del Rey", "Llamada", "Vencido"))
+        dataset.add(listaTarea("Agendar", "Marina Rey", "Llamada", "Vencido"))
         dataset.add(listaTarea("Citación", "Daniel Hernandez", "Visita", "Vencido"))
         dataset.add(listaTarea("Agendar", "David García", "Llamada", "Vencido"))
         dataset.add(listaTarea("Ver resultados", "Mateo Chupetón", "Privado", "Pendiente"))

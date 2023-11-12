@@ -26,7 +26,7 @@ class TaskCreationFragment : Fragment() {
 
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
-        val nombres = arrayOf("Alberto Sabarit", "Christian Gaitán", "Marina Del Rey")
+        val nombres = arrayOf("Alberto Sabarit", "Christian Gaitán", "Marina Rey")
         val tipo = arrayOf("Privado", "Llamada", "Visita")
         val estado = arrayOf("Pendiente", "Modificado", "Vencido")
 

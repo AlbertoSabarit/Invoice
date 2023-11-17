@@ -7,7 +7,7 @@
     tools:context=".UserListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvuser"
+        android:id="@+id/rv_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

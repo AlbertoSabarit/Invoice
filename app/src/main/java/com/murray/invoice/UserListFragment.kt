@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoice.adapter.UserAdapter
 import com.murray.invoice.data.model.User
 import com.murray.invoice.data.repository.UserRepository
 import com.murray.invoice.databinding.FragmentUserListBinding
 
-class UserListFragment : Fragment() {
+class UserListFragment : Fragment(), UserAdapter.OnUserClick {
 
     private var _binding: FragmentUserListBinding? = null
     private val binding get() = _binding!!
@@ -34,18 +35,32 @@ class UserListFragment : Fragment() {
     }
 
     /**
-     * Funcion que inicializa el RecyclerView que meustra el listado de usuarios de la app
+     * Funcion que inicializa el RecyclerView que muestra el listado de usuarios de la app
      */
     private fun setUpUserRecycler(){
         //Crear el Adapter con los valores en el constructor primario
-        var adapter: UserAdapter = UserAdapter (UserRepository.dataSet, requireContext())
+        var adapter = UserAdapter (UserRepository.dataSet, requireContext(), this){
+            Toast.makeText(requireContext(), "Usuario seleccionado mediante lambda $it", Toast.LENGTH_SHORT).show()
+        }
 
         //1. ¿Como quiero que se muestren los elementos de la lista?
-        with(binding.rvuser){
+        with(binding.rvUser){
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             this.adapter=adapter
         }
+    }
+
+    /**
+     * Esta funcion se llama de forma asincrona cuando el usuario pulse sobre un elemento del RecyclerView
+     */
+
+    override fun userClick(user: User) {
+        Toast.makeText(requireActivity(), "Pulsacion cota en el usuario $user", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun userOnLongClick(user: User) {
+        Toast.makeText(requireActivity(), "Pulsacion larga en el usuario $user", Toast.LENGTH_SHORT).show()
     }
 
 }

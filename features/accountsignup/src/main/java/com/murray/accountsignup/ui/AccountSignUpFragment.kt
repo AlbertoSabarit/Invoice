@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.murray.accountsignup.databinding.FragmentAccountSignUpBinding
 
@@ -46,11 +48,28 @@ class AccountSignUpFragment : Fragment() {
         //3. Inicializar el listener que se lanza cuando el usuario modifica el valor
         binding.spProfile.onItemClickListener = null*/
 
+        val listener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val profile = parent?.adapter?.getItem(position)
+                Toast.makeText(requireActivity(), "Elemento pulsado $profile", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
+
         //Se usa el modismo with que dado un objeto se pueden modificar propiedades dentro del bloque
         with(binding.spProfile) {
             this.adapter = adapter
             setSelection(2)
-            onItemSelectedListener = null
+            onItemSelectedListener = listener
         }
 
     }

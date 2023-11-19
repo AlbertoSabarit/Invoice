@@ -11,7 +11,7 @@ import com.murray.itemlist.R
 import com.murray.itemlist.databinding.FragmentItemListBinding
 
 
-class ItemListFragment : Fragment() {
+class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
 
     private var _binding: FragmentItemListBinding? = null
     private val binding
@@ -31,11 +31,13 @@ class ItemListFragment : Fragment() {
         setUpUserRecycler()
         binding.btnCrearArticulo.setOnClickListener{
             findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemCreationFragment)
+            //TODO: Que se actualice ItemDetailFragment con los datos de cada Item
+            //val action = ItemListFragmentDirections
         }
     }
 
     private fun setUpUserRecycler(){
-        var adapter: ItemListAdapter = ItemListAdapter (getUpDataSetItem(), requireContext())
+        var adapter: ItemListAdapter = ItemListAdapter (getUpDataSetItem(), requireContext(), this)
 
         with(binding.recyclerView){
             layoutManager = LinearLayoutManager(requireContext())
@@ -53,6 +55,10 @@ class ItemListFragment : Fragment() {
         dataset.add(Item("Pinturas al óleo", "Producto", "9€", "No",R.drawable.img_oleo))
         dataset.add(Item("Botas de nieve", "Producto", "15€", "Sí",R.drawable.img_botas_nieve))
         return dataset
+    }
+
+    override fun onItemClick(position: Int) {
+        findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemDetailFragment)
     }
 
 }

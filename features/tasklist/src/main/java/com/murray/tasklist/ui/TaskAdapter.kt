@@ -2,30 +2,37 @@ package com.murray.tasklist.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.tasklist.R
 import com.murray.tasklist.databinding.CardviewLayoutBinding
 
 class TaskAdapter(
     private val dataset: MutableList<listaTarea>,
-    private val context: Context
-) :
-    RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
+    private val context: Context,
+    private val clickListener: OnItemClickListener
+) : RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ListViewHolder(CardviewLayoutBinding.inflate(layoutInflater, parent,false) )
+        return ListViewHolder(CardviewLayoutBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val item = dataset.get(position)
+        val item = dataset[position]
         holder.bind(item, context)
+
+        // Agregar clic al CardView
+        holder.itemView.setOnClickListener {
+            clickListener.onItemClick(position)
+        }
     }
 
-    class ListViewHolder(private val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: CardviewLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: listaTarea, context: Context) {
             with(binding) {
@@ -41,4 +48,3 @@ class TaskAdapter(
         return dataset.size
     }
 }
-

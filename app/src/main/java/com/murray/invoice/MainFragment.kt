@@ -52,30 +52,10 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_invoiceListFragment)
         }
 
-        binding.btInvoiceDetail.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_invoiceDetailFragment)
-        }
-
-        binding.btItemDetail.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_itemDetailFragment)
-        }
-
-        binding.btTaskDetail.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_taskDetailFragment)
-        }
         binding.btCustomerList.setOnClickListener {
             //findNavController().navigate()
             findNavController().navigate(R.id.action_mainFragment_to_customerListFragment)
         }
-
-        binding.btCustomerDetail.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_customerDetailFragment)
-        }
-
     }
 
     override fun onDestroyView() {

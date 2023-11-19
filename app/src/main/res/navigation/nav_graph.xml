@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_taskListFragment_to_taskCreationFragment3"
             app:destination="@id/taskCreationFragment" />
+        <action
+            android:id="@+id/action_taskListFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
     </fragment>
     <fragment
         app:moduleName="itemlist"
@@ -42,6 +45,9 @@
         <action
             android:id="@+id/action_itemListFragment_to_itemCreationFragment"
             app:destination="@id/itemCreationFragment" />
+        <action
+            android:id="@+id/action_itemListFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
     </fragment>
     <fragment
         app:moduleName="taskcreation"
@@ -57,6 +63,9 @@
         <action
             android:id="@+id/action_invoiceListFragment_to_invoiceCreationFragment"
             app:destination="@id/invoiceCreationFragment" />
+        <action
+            android:id="@+id/action_invoiceListFragment_to_invoiceDetailFragment"
+            app:destination="@id/invoiceDetailFragment" />
     </fragment>
 
     <fragment
@@ -75,19 +84,31 @@
         app:moduleName="invoicedetail"
         android:label="Detalles de la factura"
         android:id="@+id/invoiceDetailFragment"
-        android:name="com.murray.invoicedetail.ui.InvoiceDetailFragment" />
+        android:name="com.murray.invoicedetail.ui.InvoiceDetailFragment" >
+        <action
+            android:id="@+id/action_invoiceDetailFragment_to_invoiceCreationFragment"
+            app:destination="@id/invoiceCreationFragment" />
+    </fragment>
 
     <fragment
         app:moduleName="itemdetail"
         android:label="Detalles de los artículos"
         android:id="@+id/itemDetailFragment"
-        android:name="com.murray.itemdetail.ui.ItemDetailFragment" />
+        android:name="com.murray.itemdetail.ui.ItemDetailFragment" >
+        <action
+            android:id="@+id/action_itemDetailFragment_to_itemCreationFragment"
+            app:destination="@id/itemCreationFragment" />
+    </fragment>
 
     <fragment
         app:moduleName="taskdetail"
         android:label="Detalles de las tareas"
         android:id="@+id/taskDetailFragment"
-        android:name="com.murray.taskdetail.ui.TaskDetailFragment" />
+        android:name="com.murray.taskdetail.ui.TaskDetailFragment" >
+        <action
+            android:id="@+id/action_taskDetailFragment_to_taskCreationFragment"
+            app:destination="@id/taskCreationFragment" />
+    </fragment>
 
     <fragment
         app:moduleName="customerlist"
@@ -97,12 +118,19 @@
         <action
             android:id="@+id/action_customerListFragment_to_customerCreationFragment"
             app:destination="@id/customerCreationFragment" />
+        <action
+            android:id="@+id/action_customerListFragment_to_customerDetailFragment"
+            app:destination="@id/customerDetailFragment" />
     </fragment>
     <fragment
         app:moduleName="customerdetail"
         android:label="Detalle de cliente"
         android:id="@+id/customerDetailFragment"
-        android:name="com.murray.customerdetail.ui.CustomerDetailFragment" />
+        android:name="com.murray.customerdetail.ui.CustomerDetailFragment" >
+        <action
+            android:id="@+id/action_customerDetailFragment_to_customerCreationFragment"
+            app:destination="@id/customerCreationFragment" />
+    </fragment>
 
     <fragment
         app:moduleName="customercreation"
@@ -132,26 +160,8 @@
             android:id="@+id/action_mainFragment_to_invoiceListFragment"
             app:destination="@id/invoiceListFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_itemCreationFragment3"
-            app:destination="@id/itemCreationFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_itemCreationFragment4"
-            app:destination="@id/itemCreationFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_invoiceDetailFragment"
-            app:destination="@id/invoiceDetailFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_taskDetailFragment"
-            app:destination="@id/taskDetailFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_customerListFragment"
             app:destination="@id/customerListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_customerDetailFragment"
-            app:destination="@id/customerDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/userListFragment"

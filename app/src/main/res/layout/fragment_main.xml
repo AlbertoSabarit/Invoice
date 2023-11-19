@@ -23,17 +23,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btSignIn" />
 
-            <Button
-                android:id="@+id/btCustomerDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detalles clientes" />
-
-            <Button
-                android:id="@+id/btInvoiceDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detalles facturas" />
 
             <Button
                 android:id="@+id/btCustomerList"
@@ -60,17 +49,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btSignUp" />
 
-            <Button
-                android:id="@+id/btItemDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detalles artículos" />
-
-            <Button
-                android:id="@+id/btTaskDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detalles tareas" />
 
             <Button
                 android:id="@+id/btItemList"

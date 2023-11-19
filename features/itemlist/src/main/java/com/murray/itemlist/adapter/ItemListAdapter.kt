@@ -1,18 +1,17 @@
-package com.murray.itemlist.ui
+package com.murray.itemlist.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.itemlist.R
+import com.murray.itemlist.data.model.Item
 import com.murray.itemlist.databinding.LayoutItemListBinding
 
 class ItemListAdapter(
-    private val dataset: MutableList<Item>,
+    private val dataSet: MutableList<Item>,
     private val context: Context,
-    private val clickListener: OnItemClickListener) :
+    private val clickListener: OnItemClickListener
+) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
     interface OnItemClickListener {
@@ -28,11 +27,11 @@ class ItemListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return dataset.size
+        return dataSet.size
     }
 
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
-        val item = dataset[position]
+        val item = dataSet[position]
         holder.bind(item, context)
 
         holder.itemView.setOnClickListener {

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="tvTitle">Se implementará Login</string>
-    <string name="tvOther">"Inciar sesión en: "</string>
-    <string name="tieEmailSignInHint">Email</string>
-    <string name="tiePasswordSignInHint">Contraseña</string>
-</resources>

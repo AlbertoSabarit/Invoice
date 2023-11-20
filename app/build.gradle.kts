@@ -47,8 +47,7 @@ android {
     }
 
     dynamicFeatures += setOf(
-        ":features:accountsignin",
-        ":features:accountsignup",
+        ":features:account",
         ":features:customercreation",
         ":infrastructure:firebase",
         ":infrastructure:printer",
@@ -63,9 +62,7 @@ android {
         ":features:itemcreation",
         ":features:itemdetail",
         ":features:itemlist",
-        ":features:taskcreation",
-        ":features:taskdetail",
-        ":features:tasklist"
+        ":features:task"
     )
 }
 

@@ -8,166 +8,7 @@
     <!-- Se nombra directamente al Fragment. La propiedad android:name da error
     porque el Fragmento no está en app y es en tiempo de ejecución cuando el módulo se une al
     fichero apk-->
-    <fragment
-        app:moduleName="accountsignin"
-        android:label="@string/title_accountsigin"
-        android:id="@+id/accountSignInFragment"
-        android:name="com.murray.accountsignin.ui.AccountSignInFragment" >
-        <action
-            android:id="@+id/action_accountSignInFragment_to_accountSignUpFragment"
-            app:destination="@id/accountSignUpFragment" />
-        <action
-            android:id="@+id/action_accountSignInFragment_to_userListFragment"
-            app:destination="@id/userListFragment" />
-    </fragment>
-    <fragment
-        app:moduleName="accountsignup"
-        android:label="@string/title_accountsignup"
-        android:id="@+id/accountSignUpFragment"
-        android:name="com.murray.accountsignup.ui.AccountSignUpFragment" />
-    <fragment
-        app:moduleName="tasklist"
-        android:label="@string/title_tasklist"
-        android:id="@+id/taskListFragment"
-        android:name="com.murray.tasklist.ui.TaskListFragment" >
-        <action
-            android:id="@+id/action_taskListFragment_to_taskCreationFragment3"
-            app:destination="@id/taskCreationFragment" />
-        <action
-            android:id="@+id/action_taskListFragment_to_taskDetailFragment"
-            app:destination="@id/taskDetailFragment" />
-    </fragment>
-    <fragment
-        app:moduleName="itemlist"
-        android:label="Lista de Artículos"
-        android:id="@+id/itemListFragment"
-        android:name="com.murray.itemlist.ui.ItemListFragment" >
-        <action
-            android:id="@+id/action_itemListFragment_to_itemCreationFragment"
-            app:destination="@id/itemCreationFragment" />
-        <action
-            android:id="@+id/action_itemListFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
-    </fragment>
-    <fragment
-        app:moduleName="taskcreation"
-        android:label="@string/title_taskcreation"
-        android:id="@+id/taskCreationFragment"
-        android:name="com.murray.taskcreation.ui.TaskCreationFragment" />
 
-    <fragment
-        app:moduleName="invoicelist"
-        android:label="Lista de Facturas"
-        android:id="@+id/invoiceListFragment"
-        android:name="com.murray.invoicelist.ui.InvoiceListFragment" >
-        <action
-            android:id="@+id/action_invoiceListFragment_to_invoiceCreationFragment"
-            app:destination="@id/invoiceCreationFragment" />
-        <action
-            android:id="@+id/action_invoiceListFragment_to_invoiceDetailFragment"
-            app:destination="@id/invoiceDetailFragment" />
-    </fragment>
-
-    <fragment
-        app:moduleName="invoicecreation"
-        android:label="Creación de la factura"
-        android:id="@+id/invoiceCreationFragment"
-        android:name="com.murray.invoicecreation.ui.InvoiceCreationFragment" />
-
-    <fragment
-        app:moduleName="itemcreation"
-        android:label="Creación del artículo"
-        android:id="@+id/itemCreationFragment"
-        android:name="com.murray.itemcreation.ui.ItemCreationFragment" />
-
-    <fragment
-        app:moduleName="invoicedetail"
-        android:label="Detalles de la factura"
-        android:id="@+id/invoiceDetailFragment"
-        android:name="com.murray.invoicedetail.ui.InvoiceDetailFragment" >
-        <action
-            android:id="@+id/action_invoiceDetailFragment_to_invoiceCreationFragment"
-            app:destination="@id/invoiceCreationFragment" />
-    </fragment>
-
-    <fragment
-        app:moduleName="itemdetail"
-        android:label="Detalles de los artículos"
-        android:id="@+id/itemDetailFragment"
-        android:name="com.murray.itemdetail.ui.ItemDetailFragment" >
-        <action
-            android:id="@+id/action_itemDetailFragment_to_itemCreationFragment"
-            app:destination="@id/itemCreationFragment" />
-    </fragment>
-
-    <fragment
-        app:moduleName="taskdetail"
-        android:label="Detalles de las tareas"
-        android:id="@+id/taskDetailFragment"
-        android:name="com.murray.taskdetail.ui.TaskDetailFragment" >
-        <action
-            android:id="@+id/action_taskDetailFragment_to_taskCreationFragment"
-            app:destination="@id/taskCreationFragment" />
-    </fragment>
-
-    <fragment
-        app:moduleName="customerlist"
-        android:label="Lista de clientes"
-        android:id="@+id/customerListFragment"
-        android:name="com.murray.customerlist.ui.CustomerListFragment" >
-        <action
-            android:id="@+id/action_customerListFragment_to_customerCreationFragment"
-            app:destination="@id/customerCreationFragment" />
-        <action
-            android:id="@+id/action_customerListFragment_to_customerDetailFragment"
-            app:destination="@id/customerDetailFragment" />
-    </fragment>
-    <fragment
-        app:moduleName="customerdetail"
-        android:label="Detalle de cliente"
-        android:id="@+id/customerDetailFragment"
-        android:name="com.murray.customerdetail.ui.CustomerDetailFragment" >
-        <action
-            android:id="@+id/action_customerDetailFragment_to_customerCreationFragment"
-            app:destination="@id/customerCreationFragment" />
-    </fragment>
-
-    <fragment
-        app:moduleName="customercreation"
-        android:label="Creación del cliente"
-        android:id="@+id/customerCreationFragment"
-        android:name="com.murray.customercreation.ui.CustomerCreationFragment" />
-
-
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.murray.invoice.MainFragment"
-        android:label="@string/mainFragment"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_featureAccountSignIn"
-            app:destination="@+id/accountSignInFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_featureAccountSignUp"
-            app:destination="@+id/accountSignUpFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_taskListFragment"
-            app:destination="@id/taskListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_itemListFragment"
-            app:destination="@id/itemListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_invoiceListFragment"
-            app:destination="@id/invoiceListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_customerListFragment"
-            app:destination="@id/customerListFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/userListFragment"
-        android:name="com.murray.invoice.UserListFragment"
-        android:label="Lista de usuarios"
-        tools:layout="@layout/fragment_user_list" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.murray.invoice.SplashFragment"
@@ -177,5 +18,57 @@
             app:destination="@id/mainFragment" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.murray.invoice.MainFragment"
+        android:label="@string/mainFragment"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_account"
+            app:destination="@id/nav_graph_account" />
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_customer"
+            app:destination="@id/nav_graph_customer" />
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_invoice"
+            app:destination="@id/nav_graph_invoice" />
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_task"
+            app:destination="@id/nav_graph_task" />
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_item"
+            app:destination="@id/nav_graph_item" />
+    </fragment>
+    <!-- Se incluye el grafo de navegación con un id="@+id" que se ha establecido
+     en el fichero /res/navigation/ .
+     SOLO SE AÑADE EL + EN ESTE CODIGO-->
+    <include-dynamic
+        android:id="@+id/nav_graph_account"
+        app:graphPackage="${applicationId}.account"
+        app:graphResName="nav_graph_account"
+        app:moduleName="account"/>
+
+    <include-dynamic
+        android:id="@+id/nav_graph_customer"
+        app:graphPackage="${applicationId}.customer"
+        app:graphResName="nav_graph_customer"
+        app:moduleName="customer"/>
+
+    <include-dynamic
+        android:id="@+id/nav_graph_item"
+        app:graphPackage="${applicationId}.item"
+        app:graphResName="nav_graph_item"
+        app:moduleName="item"/>
+    <include-dynamic
+        android:id="@+id/nav_graph_invoice"
+        app:graphPackage="${applicationId}.invoice"
+        app:graphResName="nav_graph_invoice"
+        app:moduleName="invoice"/>
+    <include-dynamic
+        android:id="@+id/nav_graph_task"
+        app:graphPackage="${applicationId}.task"
+        app:graphResName="nav_graph_task"
+        app:moduleName="task"/>
 
 </navigation>

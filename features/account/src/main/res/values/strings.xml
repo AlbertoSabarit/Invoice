@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tvTitle">Se implementará Login</string>
+    <string name="tvOther">"Inciar sesión en: "</string>
+    <string name="tieEmailSignInHint">Email</string>
+    <string name="tiePasswordSignInHint">Contraseña</string>
+    <string name="tvTitle2">Implementacion Registro</string>
+    <string name="calificacionUusario">Calificación usuario</string>
+	
+	
+    <string name="title_accountsigin">Iniciar sesión</string>
+    <string name="title_accountsignup">Registrarse</string>
+    <string name="title_account">Iniciar sesión1</string>
+    <string name="title_customercreation">Customer Creation</string>
+    <string name="title_firebase">Firebase</string>
+    <string name="title_printer">Printer</string>
+    <string name="title_customerdetail">Detalle Cliente</string>
+    <string name="title_customerlist">Lista Clientes</string>
+    <string name="title_invoicecreation">Creación Factura</string>
+    <string name="title_ui">Interfaz Gráfica</string>
+    <string name="title_utils">Uitlidades</string>
+    <string name="title_accounts">Cuentas</string>
+    <string name="title_invoicedetail">Detalle de Factura</string>
+    <string name="title_invoicelist">Lista de Facturas</string>
+    <string name="title_itemcreation">Creación de producto</string>
+    <string name="title_itemdetail">Detalle de Producto</string>
+    <string name="title_itemlist">Lista de productos</string>
+    <string name="title_taskcreation">Creación de tarea</string>
+    <string name="title_taskdetail">Detalle de tarea</string>
+    <string name="title_tasklist">Lista de tareas</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="btSignIn">Login</string>
+    <string name="btSignUp">Registro</string>
+    <string name="mainFragment">Pantalla Inicial</string>
+    <string name="btTaskList_Text">Tareas</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

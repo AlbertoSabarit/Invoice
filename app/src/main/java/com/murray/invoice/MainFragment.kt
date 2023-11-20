@@ -31,30 +31,26 @@ class MainFragment : Fragment() {
 
         binding.btSignin.setOnClickListener {
             //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_featureAccountSignIn)
-        }
-        binding.btSignUp.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_featureAccountSignUp)
-        }
-
-        binding.btTaskList.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_taskListFragment)
-        }
-
-        binding.btItemList.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_itemListFragment)
-        }
-        binding.btInvoiceList.setOnClickListener {
-            //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_invoiceListFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_nav_graph_account)
         }
 
         binding.btCustomerList.setOnClickListener {
             //findNavController().navigate()
-            findNavController().navigate(R.id.action_mainFragment_to_customerListFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_nav_graph_customer)
+        }
+
+        binding.btInvoiceList.setOnClickListener {
+            //findNavController().navigate()
+            findNavController().navigate(R.id.action_mainFragment_to_nav_graph_invoice)
+        }
+        binding.btItemList.setOnClickListener {
+            //findNavController().navigate()
+            findNavController().navigate(R.id.action_mainFragment_to_nav_graph_item)
+        }
+
+        binding.btTaskList.setOnClickListener {
+            //findNavController().navigate()
+            findNavController().navigate(R.id.action_mainFragment_to_nav_graph_task)
         }
     }
 

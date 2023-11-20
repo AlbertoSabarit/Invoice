@@ -30,7 +30,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
 
         setUpUserRecycler()
         binding.btnCrearArticulo.setOnClickListener{
-            findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemCreationFragment)
+            //findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemCreationFragment)
             //TODO: Que se actualice ItemDetailFragment con los datos de cada Item
             //val action = ItemListFragmentDirections
         }
@@ -47,7 +47,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemDetailFragment)
+       //findNavController().navigate(com.murray.invoice.R.id.action_itemListFragment_to_itemDetailFragment)
     }
 
 }

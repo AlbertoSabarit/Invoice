@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeuser_signup">
+        <item>Usuario</item>
+        <item>Administrador</item>
+        <item>Invitado</item>
+        <item>Cliente</item>
+    </string-array>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonTrasnparent">
+        <item name="android:background">@drawable/selector_button</item>
+    </style>
+
+    <!-- Se puede utilizar la herencia entre los estulos deifidoos por el desarrolador
+    Para estilos del sdk de android se debe utilizar parent-->
+
+    <style name="ButtonTrasnparent.TexColor" parent="ButtonTrasnparent" >
+        <item name="android:textColor">@color/md_theme_light_secondary</item>
+    </style>
+
+    <style name="InvoiceTitleSmall" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SignInTextInputLayout">
+
+        <item name="hintTextColor">@color/md_theme_dark_errorContainer</item>
+        <item name="errorTextColor">@color/md_theme_light_error</item>
+        <item name="boxBackgroundColor">@android:color/darker_gray</item>
+    </style>
+
+</resources>

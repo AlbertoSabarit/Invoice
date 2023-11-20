@@ -16,8 +16,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Invoice"
 include(":app")
-include(":features:accountsignin")
-include(":features:accountsignup")
+include(":features:account")
+//include(":features:accountsignup")
 include(":features:customercreation")
 include(":infrastructure:firebase")
 include(":infrastructure:printer")
@@ -34,4 +34,4 @@ include(":features:itemdetail")
 include(":features:itemlist")
 include(":features:taskcreation")
 include(":features:taskdetail")
-include(":features:tasklist")
+include(":features:task")

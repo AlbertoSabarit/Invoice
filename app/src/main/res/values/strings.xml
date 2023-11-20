@@ -3,6 +3,7 @@
 
     <string name="title_accountsigin">Iniciar sesión</string>
     <string name="title_accountsignup">Registrarse</string>
+    <string name="title_account">Iniciar sesión1</string>
     <string name="title_customercreation">Customer Creation</string>
     <string name="title_firebase">Firebase</string>
     <string name="title_printer">Printer</string>

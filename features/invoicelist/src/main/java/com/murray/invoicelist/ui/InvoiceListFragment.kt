@@ -32,7 +32,7 @@ class InvoiceListFragment : Fragment() {
         setUpUserRecycler()
 
         binding.btnCrearFactura.setOnClickListener{
-            findNavController().navigate(com.murray.invoice.R.id.action_invoiceListFragment_to_invoiceCreationFragment)
+            //findNavController().navigate(com.murray.invoice.R.id.action_invoiceListFragment_to_invoiceCreationFragment)
         }
     }
 

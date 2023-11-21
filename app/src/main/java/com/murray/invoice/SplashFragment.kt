@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.murray.invoice.R
 import com.murray.invoice.databinding.FragmentSplashBinding
 
-private const val WAIT_TIME: Long = 1000 // Espera 4 segundos
+private const val WAIT_TIME: Long = 1000 // Espera 4 segundos (variando)
 
 class SplashFragment : Fragment() {
 

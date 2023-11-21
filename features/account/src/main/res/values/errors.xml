@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="errEmailEmpty">Debe escribir un email</string>
+    <string name="errPasswordEmpty">Debe escribir una contraseña</string>
+</resources>

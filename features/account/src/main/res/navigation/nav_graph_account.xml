@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/accountSignInFragment"
-        android:name="com.murray.account.ui.AccountSignInFragment"
+        android:name="com.murray.account.ui.sigin.AccountSignInFragment"
         android:label="fragment_account_sign_in"
         tools:layout="@layout/fragment_account_sign_in" >
         <action

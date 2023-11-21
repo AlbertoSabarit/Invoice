@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.dynamic-feature")
     id("org.jetbrains.kotlin.android")
@@ -23,6 +25,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
 

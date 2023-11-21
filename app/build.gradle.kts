@@ -54,15 +54,11 @@ android {
         ":infrastructure:printer",
         ":features:customerdetail",
         ":features:customerlist",
-        ":features:invoicecreation",
         ":base:ui",
         ":base:utils",
         ":domain:invoice",
-        ":features:invoicedetail",
-        ":features:invoicelist",
-        ":features:itemcreation",
-        ":features:itemdetail",
-        ":features:itemlist",
+        ":features:invoicee",
+        ":features:item",
         ":features:task"
     )
 }

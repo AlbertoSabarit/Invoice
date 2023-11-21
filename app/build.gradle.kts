@@ -57,8 +57,12 @@ android {
         ":base:ui",
         ":base:utils",
         ":domain:invoice",
-        ":features:invoicee",
-        ":features:item",
+        ":features:invoicedetail",
+        ":features:invoicelist",
+        ":features:invoicecreation",
+        ":features:itemcreation",
+        ":features:itemdetail",
+        ":features:itemlist",
         ":features:task"
     )
 }

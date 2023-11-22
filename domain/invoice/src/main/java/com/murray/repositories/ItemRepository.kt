@@ -1,15 +1,16 @@
 package com.murray.repositories
 
+import com.murray.entities.items.Item
 import com.murray.invoice.R
 
-class ItemRepository private constructor(){
-    companion object{
+
+class ItemRepository private constructor() {
+    companion object {
         val dataSet: MutableList<com.murray.entities.items.Item> = InitDataSetItem()
 
-        private fun InitDataSetItem(): MutableList<com.murray.entities.items.Item> {
-            var dataSet: MutableList<com.murray.entities.items.Item> = ArrayList()
-            dataSet.add(
-                com.murray.entities.items.Item(
+        private fun InitDataSetItem(): MutableList<Item> {
+            var dataSet: MutableList<Item> = ArrayList()
+            dataSet.add(Item(
                     "Maleta de Cuero",
                     "Producto",
                     "60€",
@@ -17,8 +18,7 @@ class ItemRepository private constructor(){
                     R.drawable.img_maleta_cuero
                 )
             )
-            dataSet.add(
-                com.murray.entities.items.Item(
+            dataSet.add(Item(
                     "Lápices Acuarela",
                     "Producto",
                     "75€",
@@ -26,8 +26,7 @@ class ItemRepository private constructor(){
                     R.drawable.img_lapices_acuarela
                 )
             )
-            dataSet.add(
-                com.murray.entities.items.Item(
+            dataSet.add(Item(
                     "Cuaderno",
                     "Producto",
                     "20€",
@@ -35,8 +34,7 @@ class ItemRepository private constructor(){
                     R.drawable.img_cuaderno
                 )
             )
-            dataSet.add(
-                com.murray.entities.items.Item(
+            dataSet.add(Item(
                     "Portátil",
                     "Producto",
                     "700€",
@@ -44,8 +42,7 @@ class ItemRepository private constructor(){
                     R.drawable.img_portatil
                 )
             )
-            dataSet.add(
-                com.murray.entities.items.Item(
+            dataSet.add(Item(
                     "Pinturas al óleo",
                     "Producto",
                     "9€",
@@ -53,8 +50,7 @@ class ItemRepository private constructor(){
                     R.drawable.img_oleo
                 )
             )
-            dataSet.add(
-                com.murray.entities.items.Item(
+            dataSet.add(Item(
                     "Botas de nieve",
                     "Producto",
                     "15€",

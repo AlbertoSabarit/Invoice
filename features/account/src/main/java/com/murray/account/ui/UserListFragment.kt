@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.account.adapter.UserAdapter
-import com.murray.account.data.repository.UserRepository
+import com.murray.repositories.UserRepository
 import com.murray.account.databinding.FragmentUserListBinding
+import com.murray.entities.accounts.User
 
 class UserListFragment : Fragment(), UserAdapter.OnUserClick {
 
@@ -53,11 +54,11 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick {
      * Esta funcion se llama de forma asincrona cuando el usuario pulse sobre un elemento del RecyclerView
      */
 
-    override fun userClick(user: com.murray.account.data.model.User) {
+    override fun userClick(user: User) {
         Toast.makeText(requireActivity(), "Pulsacion cota en el usuario $user", Toast.LENGTH_SHORT).show()
     }
 
-    override fun userOnLongClick(user: com.murray.account.data.model.User) {
+    override fun userOnLongClick(user: User) {
         Toast.makeText(requireActivity(), "Pulsacion larga en el usuario $user", Toast.LENGTH_SHORT).show()
     }
 

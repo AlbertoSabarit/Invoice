@@ -1,46 +1,44 @@
 package com.murray.repositories
 
+import com.murray.entities.customers.Customer
+
 class CustomerRepository private constructor(){
     companion object {
-        val dataSet: MutableList<com.murray.entities.customers.Customer> = initDataSetUser()
-        private fun initDataSetUser(): MutableList<com.murray.entities.customers.Customer> {
-            var dataset: MutableList<com.murray.entities.customers.Customer> = ArrayList()
+        val dataSet: MutableList<Customer> = initDataSetUser()
+        private fun initDataSetUser(): MutableList<Customer> {
+            var dataset: MutableList<Customer> = ArrayList()
             dataset.add(
                 com.murray.entities.customers.Customer(
                     "Alejandro Valle",
                     "alejandro@gmail.es"
                 )
             )
-            dataset.add(com.murray.entities.customers.Customer("Alberto Sabarit", "alberto@gmail.es"))
-            dataset.add(com.murray.entities.customers.Customer("Ender Watts", "ender@gmail.uk"))
-            dataset.add(com.murray.entities.customers.Customer("Katya Nikitenko", "katya@gmail.ua"))
-            dataset.add(
-                com.murray.entities.customers.Customer(
+            dataset.add(Customer("Alberto Sabarit", "alberto@gmail.es"))
+            dataset.add(Customer("Ender Watts", "ender@gmail.uk"))
+            dataset.add(Customer("Katya Nikitenko", "katya@gmail.ua"))
+            dataset.add(Customer(
                     "Lourdes Rodriguez",
                     "Lourdes@gmail.com"
                 )
             )
-            dataset.add(com.murray.entities.customers.Customer("Carlos Cortijo", "Carlos@gmail.com"))
-            dataset.add(
-                com.murray.entities.customers.Customer(
+            dataset.add(Customer("Carlos Cortijo", "Carlos@gmail.com"))
+            dataset.add(Customer(
                     "Federico Huercano",
                     "Federico@gmail.com"
                 )
             )
-            dataset.add(
-                com.murray.entities.customers.Customer(
+            dataset.add(Customer(
                     "Francisco Garcia",
                     "Francisco@gmail.com"
                 )
             )
-            dataset.add(com.murray.entities.customers.Customer("Eliseo Moreno", "Eliseo@gmail.com"))
-            dataset.add(
-                com.murray.entities.customers.Customer(
+            dataset.add(Customer("Eliseo Moreno", "Eliseo@gmail.com"))
+            dataset.add(Customer(
                     "Francisco Cabrera",
                     "Francisco@gmail.com"
                 )
             )
-            dataset.add(com.murray.entities.customers.Customer("Jose Millan", "Jose@gmail.com"))
+            dataset.add(Customer("Jose Millan", "Jose@gmail.com"))
             return dataset
         }
     }

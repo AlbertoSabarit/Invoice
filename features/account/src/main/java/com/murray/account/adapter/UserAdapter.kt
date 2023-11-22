@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.account.databinding.LayoutUserItemBinding
+import com.murray.entities.accounts.User
 
 class UserAdapter(
-    private val dataset: MutableList<com.murray.account.data.model.User>,
+    private val dataset: MutableList<User>,
     private val context: Context,
     private val listener: OnUserClick,
-    private val onItemClick: (user: com.murray.account.data.model.User) -> Unit
+    private val onItemClick: (user: User) -> Unit
 ) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -19,8 +20,8 @@ class UserAdapter(
      */
 
     interface OnUserClick {
-        fun userClick(user: com.murray.account.data.model.User) //Pulsacion corta
-        fun userOnLongClick(user: com.murray.account.data.model.User) //Pulsacion larga
+        fun userClick(user: User) //Pulsacion corta
+        fun userOnLongClick(user: User) //Pulsacion larga
         //fun deleteClick(user:User) //Eliminar usuario
     }
 
@@ -52,7 +53,7 @@ class UserAdapter(
 
         //val imgUser = view.findViewById(R.id.circularImageView) as ImageView
 
-        fun bind(item: com.murray.account.data.model.User, context: Context) {
+        fun bind(item: User, context: Context) {
             with(binding) {
                 tvNombre.text = item.name
                 tvApellido.text = item.surname

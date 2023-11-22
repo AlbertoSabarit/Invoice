@@ -16,7 +16,6 @@ import java.util.Locale
 class InvoiceCreationFragment : Fragment() {
     private var _binding: FragmentInvoiceCreationBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,12 +34,11 @@ class InvoiceCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.tiefechaFin.setOnClickListener {
-            showDatePickerFin()
-        }
         binding.tiefechaIni.setOnClickListener {
             showDatePickerIni()
+        }
+        binding.tiefechaFin.setOnClickListener {
+            showDatePickerFin()
         }
     }
 
@@ -52,9 +50,9 @@ class InvoiceCreationFragment : Fragment() {
             { _, year: Int, month: Int, day: Int ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, day)
+
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)
-
                 binding.tiefechaIni.setText(formattedDate)
             },
             calendar.get(Calendar.YEAR),
@@ -72,9 +70,21 @@ class InvoiceCreationFragment : Fragment() {
             { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, monthOfYear, dayOfMonth)
+
+                //val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                //val fechaIniText = binding.tiefechaIni.text.toString()
+                //val formattedDate = dateFormat.format(selectedDate.time)
+                //val fechaIniDate = dateFormat.parse(fechaIniText)
+
+               /* if (selectedDate.before(fechaIniDate)) {
+                    binding.btnGuardarFactura.isEnabled = true
+                } else {
+                    binding.btnGuardarFactura.isEnabled = false
+                    binding.tiefechaFin.setText(formattedDate)
+                }*/
+
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)
-
                 binding.tiefechaFin.setText(formattedDate)
             },
             calendar.get(Calendar.YEAR),
@@ -84,5 +94,4 @@ class InvoiceCreationFragment : Fragment() {
 
         datePickerDialog.show()
     }
-
 }

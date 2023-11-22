@@ -1,65 +1,66 @@
-package com.murray.task.data.repository
+package com.murray.repositories
+
+
 
 
 class TaskRepository private constructor() {
-
     companion object {
-        val dataSet: MutableList<com.murray.task.data.model.ListaTarea> = initDataSetUser()
+        val dataSet: MutableList<com.murray.entities.tasks.Task> = initDataSetTask()
 
-        private fun initDataSetUser(): MutableList<com.murray.task.data.model.ListaTarea> {
-            var dataset: MutableList<com.murray.task.data.model.ListaTarea> = ArrayList()
+        private fun initDataSetTask(): MutableList<com.murray.entities.tasks.Task> {
+            var dataset: MutableList<com.murray.entities.tasks.Task> = ArrayList()
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Citación", "Antonio García", "Privado", "Modificado"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Visita fábrica", "Estela Perez", "Llamada", "Vencido"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Ver presupuesto", "Alejandro Castaño", "Visita", "Pendiente"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Cancelar visita", "Fernando Carmona", "Visita", "Modificado"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Agendar", "Marina Rey", "Llamada", "Vencido"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Citación", "Daniel Hernandez", "Visita", "Vencido"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Agendar", "Cristiano Ronaldo", "Privado", "Vencido"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Ver informe", "Lucia Cabrera", "Privado", "Modificado"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Ver resultados", "Mateo Chupetón", "Privado", "Pendiente"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Citación", "Federico Valverde", "Visita", "Pendiente"
                 )
             )
             dataset.add(
-                com.murray.task.data.model.ListaTarea(
+                com.murray.entities.tasks.Task(
                     "Agendar", "David García", "Llamada", "Vencido"
                 )
             )

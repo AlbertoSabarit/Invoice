@@ -1,7 +1,6 @@
 package com.murray.customer.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,8 @@ import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerListBinding
 import androidx.navigation.fragment.findNavController
 import com.murray.customer.ui.adapter.CustomAdapter
-import com.murray.customer.ui.data.model.Customer
-import com.murray.customer.ui.data.repository.CustomerRepository
+import com.murray.entities.customers.Customer
+import com.murray.repositories.CustomerRepository
 
 class CustomerListFragment : Fragment() {
     private var _binding: FragmentCustomerListBinding? = null

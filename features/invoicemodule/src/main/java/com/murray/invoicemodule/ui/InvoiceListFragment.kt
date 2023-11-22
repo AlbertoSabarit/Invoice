@@ -10,8 +10,8 @@ import com.murray.invoicemodule.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
-import com.murray.invoicemodule.data.model.Invoice
-import com.murray.invoicemodule.data.repository.InvoiceRepository
+import com.murray.entities.invoices.Invoice
+import com.murray.repositories.InvoiceRepository
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 
 class InvoiceListFragment : Fragment() {
@@ -40,10 +40,10 @@ class InvoiceListFragment : Fragment() {
     }
 
     private fun setUpUserRecycler() {
-        var adapter: InvoiceAdapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
+        var adapter: InvoiceAdapter = InvoiceAdapter(com.murray.repositories.InvoiceRepository.dataSet, requireContext())
 
         adapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
-            override fun onItemClick(item: Invoice) {
+            override fun onItemClick(item: com.murray.entities.invoices.Invoice) {
                 val bundle = bundleOf(
                     "cliente" to item.cliente,
                     "fechacrear" to item.fcreacion,

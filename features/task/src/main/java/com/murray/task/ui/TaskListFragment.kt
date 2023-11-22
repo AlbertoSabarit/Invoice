@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.task.R
 import com.murray.task.adapter.TaskAdapter
-import com.murray.task.data.repository.TaskRepository
+import com.murray.repositories.TaskRepository
 import com.murray.task.databinding.FragmentTaskListBinding
 
 class TaskListFragment : Fragment(), TaskAdapter.OnItemClickListener {
@@ -39,7 +39,7 @@ class TaskListFragment : Fragment(), TaskAdapter.OnItemClickListener {
     }
 
     private fun setUpTaskRecycler() {
-        val adapter = TaskAdapter(TaskRepository.dataSet, requireContext(), this)
+        val adapter = TaskAdapter(com.murray.repositories.TaskRepository.dataSet, requireContext(), this)
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())

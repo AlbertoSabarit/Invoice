@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.R
-import com.murray.invoicemodule.data.model.Invoice
 
 class InvoiceAdapter (private val dataset: MutableList<Invoice>, private val context: Context) :
     RecyclerView.Adapter<InvoiceViewHolder>() {
@@ -50,6 +50,6 @@ class InvoiceAdapter (private val dataset: MutableList<Invoice>, private val con
         return dataset.size
     }
     interface OnItemClickListener {
-        fun onItemClick(item: Invoice)
+        fun onItemClick(item: com.murray.entities.invoices.Invoice)
     }
 }

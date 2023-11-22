@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
-    namespace = "com.murray.inovice"
+    namespace = "com.murray.invoice"
     compileSdk = 33
 
     defaultConfig {

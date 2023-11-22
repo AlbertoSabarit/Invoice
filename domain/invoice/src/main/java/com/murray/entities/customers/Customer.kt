@@ -1,4 +1,4 @@
-package com.murray.customer.ui.data.model
+package com.murray.entities.customers
 
 data class Customer(var name:String, var email:String) {
 }

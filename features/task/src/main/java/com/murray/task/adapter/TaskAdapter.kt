@@ -4,11 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.murray.entities.tasks.Task
 import com.murray.task.databinding.CardviewLayoutBinding
-import com.murray.task.data.model.ListaTarea
 
 class TaskAdapter(
-    private val dataset: MutableList<ListaTarea>,
+    private val dataset: MutableList<Task>,
     private val context: Context,
     private val clickListener: OnItemClickListener
 ) : RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
@@ -35,7 +35,7 @@ class TaskAdapter(
     class ListViewHolder(private val binding: CardviewLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ListaTarea, context: Context) {
+        fun bind(item: com.murray.entities.tasks.Task, context: Context) {
             with(binding) {
                 txtTit.text = item.titulo
                 txtCliente.text = item.nombre

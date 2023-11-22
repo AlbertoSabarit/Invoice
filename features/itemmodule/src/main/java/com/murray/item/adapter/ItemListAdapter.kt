@@ -4,11 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.item.data.model.Item
+import com.murray.entities.items.Item
 import com.murray.item.databinding.LayoutItemListBinding
 
 class ItemListAdapter(
-    private val dataSet: MutableList<Item>,
+    private val dataSet: MutableList<com.murray.entities.items.Item>,
     private val context: Context,
     private val clickListener: OnItemClickListener
 ) :
@@ -44,7 +44,7 @@ class ItemListAdapter(
     class ItemListViewHolder(private val binding: LayoutItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Item, context: Context) {
+        fun bind(item: com.murray.entities.items.Item, context: Context) {
             with(binding) {
                 tvNombreText.text = item.nombre
                 tvTipoText.text = item.tipo

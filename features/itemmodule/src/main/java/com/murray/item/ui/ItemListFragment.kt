@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.R
-import com.murray.item.data.repository.ItemRepository
+import com.murray.repositories.ItemRepository
 import com.murray.item.databinding.FragmentItemListBinding
 
 class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {

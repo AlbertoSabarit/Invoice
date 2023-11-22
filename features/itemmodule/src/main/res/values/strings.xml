@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_item_list_empty_title">Sin artículos</string>
+    <string name="tv_item_list_empty_text">Toca el boton &quot;+&quot; para crear un nuevo artículo</string>
+
+    <string name="tiet_item_creation_name">Nombre</string>
+    <string name="tiet_item_creation_rate">Precio</string>
+    <string name="tiet_item_creation_tax">¿Impuesto?</string>
+    <string name="tiet_item_creation_type">Tipo</string>
+    <string name="tiet_item_creation_descr">Descripción</string>
+    <string name="b_item_creation_add">Añadir</string>
+
+    <string name="tiet_item_detail_name">Nombre</string>
+    <string name="tiet_item_detail_rate">Precio</string>
+    <string name="tiet_item_detail_tax">¿Impuesto?</string>
+    <string name="tiet_item_detail_type">Tipo</string>
+    <string name="tiet_item_detail_descr">Descripción</string>
+    <string name="b_item_detail_edit">Editar</string>
+</resources>

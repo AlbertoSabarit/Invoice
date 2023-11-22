@@ -6,4 +6,7 @@
     <string name="txtEstado">Estado</string>
     <string name="txtTarea">Tarea</string>
     <string name="txteditar">Editar</string>
+    <string name="lista_de_tareas">Lista de tareas</string>
+    <string name="creacion_de_tarea">Creación de tarea</string>
+    <string name="detalle_de_tarea">Detalle de tarea</string>
 </resources>

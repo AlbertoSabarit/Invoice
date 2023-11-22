@@ -57,14 +57,14 @@
 
     <include-dynamic
         android:id="@+id/nav_graph_item"
-        app:graphPackage="${applicationId}.item"
+        app:graphPackage="${applicationId}.itemmodule"
         app:graphResName="nav_graph_item"
-        app:moduleName="item"/>
+        app:moduleName="itemmodule"/>
     <include-dynamic
         android:id="@+id/nav_graph_invoice"
-        app:graphPackage="${applicationId}.invoice"
+        app:graphPackage="${applicationId}.invoicemodule"
         app:graphResName="nav_graph_invoice"
-        app:moduleName="invoice"/>
+        app:moduleName="invoicemodule"/>
     <include-dynamic
         android:id="@+id/nav_graph_task"
         app:graphPackage="${applicationId}.task"

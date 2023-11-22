@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/taskListFragment"
         android:name="com.murray.task.ui.TaskListFragment"
-        android:label="fragment_task_list"
+        android:label="@string/lista_de_tareas"
         tools:layout="@layout/fragment_task_list" >
         <action
             android:id="@+id/action_taskListFragment_to_taskCreationFragment"
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/taskCreationFragment"
         android:name="com.murray.task.ui.TaskCreationFragment"
-        android:label="fragment_task_creation"
+        android:label="@string/creacion_de_tarea"
         tools:layout="@layout/fragment_task_creation" />
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.murray.task.ui.TaskDetailFragment"
-        android:label="fragment_task_detail"
+        android:label="@string/detalle_de_tarea"
         tools:layout="@layout/fragment_task_detail" >
         <action
             android:id="@+id/action_taskDetailFragment_to_taskCreationFragment"

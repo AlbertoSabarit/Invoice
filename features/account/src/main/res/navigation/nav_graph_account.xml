@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/accountSignInFragment"
         android:name="com.murray.account.ui.sigin.AccountSignInFragment"
-        android:label="fragment_account_sign_in"
+        android:label="@string/title_accountsigin"
         tools:layout="@layout/fragment_account_sign_in" >
         <action
             android:id="@+id/action_accountSignInFragment_to_accountSignUpFragment"
@@ -20,10 +20,10 @@
     <fragment
         android:id="@+id/accountSignUpFragment"
         android:name="com.murray.account.ui.AccountSignUpFragment"
-        android:label="AccountSignUpFragment" />
+        android:label="@string/title_accountsignup" />
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.murray.account.ui.UserListFragment"
-        android:label="fragment_user_list"
+        android:label="@string/title_userlist"
         tools:layout="@layout/fragment_user_list" />
 </navigation>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/nav_graph_customer"
+    app:startDestination="@id/customerListFragment">
+
+    <fragment
+        android:id="@+id/customerListFragment"
+        android:name="com.murray.customer.ui.CustomerListFragment"
+        android:label="fragment_customer_list"
+        tools:layout="@layout/fragment_customer_list" >
+        <action
+            android:id="@+id/action_customerListFragment_to_customerDetailFragment"
+            app:destination="@id/customerDetailFragment" />
+        <action
+            android:id="@+id/action_customerListFragment_to_customerCreationFragment"
+            app:destination="@id/customerCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerDetailFragment"
+        android:name="com.murray.customer.ui.CustomerDetailFragment"
+        android:label="fragment_customer_detail"
+        tools:layout="@layout/fragment_customer_detail" >
+        <action
+            android:id="@+id/action_customerDetailFragment_to_customerCreationFragment"
+            app:destination="@id/customerCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerCreationFragment"
+        android:name="com.murray.customer.ui.CustomerCreationFragment"
+        android:label="fragment_customer_creation"
+        tools:layout="@layout/fragment_customer_creation" />
+</navigation>

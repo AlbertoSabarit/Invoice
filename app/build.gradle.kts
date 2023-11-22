@@ -49,20 +49,14 @@ android {
 
     dynamicFeatures += setOf(
         ":features:account",
-        ":features:customercreation",
         ":infrastructure:firebase",
         ":infrastructure:printer",
-        ":features:customerdetail",
-        ":features:customerlist",
         ":base:ui",
         ":base:utils",
         ":domain:invoice",
-        ":features:invoicedetail",
-        ":features:invoicelist",
-        ":features:invoicecreation",
-        ":features:itemcreation",
-        ":features:itemdetail",
-        ":features:itemlist",
+        ":features:customer",
+        ":features:invoicemodule",
+        ":features:itemmodule",
         ":features:task"
     )
 }

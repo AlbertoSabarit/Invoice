@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tv_item_list_empty_title">Sin artículos</string>
-    <string name="tv_item_list_empty_text">Toca el boton &quot;+&quot; para crear un nuevo artículo</string>
-</resources>

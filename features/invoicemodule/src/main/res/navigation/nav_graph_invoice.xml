@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/nav_graph_invoice"
+    app:startDestination="@id/invoiceListFragment">
+
+    <fragment
+        android:id="@+id/invoiceListFragment"
+        android:name="com.murray.invoicemodule.ui.InvoiceListFragment"
+        android:label="fragment_invoice_list"
+        tools:layout="@layout/fragment_invoice_list" >
+        <action
+            android:id="@+id/action_invoiceListFragment_to_invoiceCreationFragment"
+            app:destination="@id/invoiceCreationFragment" />
+        <action
+            android:id="@+id/action_invoiceListFragment_to_invoiceDetailFragment"
+            app:destination="@id/invoiceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoiceCreationFragment"
+        android:name="com.murray.invoicemodule.ui.InvoiceCreationFragment"
+        android:label="fragment_invoice_creation"
+        tools:layout="@layout/fragment_invoice_creation" />
+    <fragment
+        android:id="@+id/invoiceDetailFragment"
+        android:name="com.murray.invoicemodule.ui.InvoiceDetailFragment"
+        android:label="fragment_invoice_detail"
+        tools:layout="@layout/fragment_invoice_detail" >
+        <action
+            android:id="@+id/action_invoiceDetailFragment_to_invoiceCreationFragment"
+            app:destination="@id/invoiceCreationFragment" />
+    </fragment>
+</navigation>

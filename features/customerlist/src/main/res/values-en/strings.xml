@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tvMissing">There are still no customers...</string>
-    <string name="tvAdd">Tap the &quot;+&quot; button to add a new customer.</string>
-</resources>

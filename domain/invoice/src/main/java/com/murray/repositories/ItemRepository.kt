@@ -3,10 +3,9 @@ package com.murray.repositories
 import com.murray.entities.items.Item
 import com.murray.invoice.R
 
-
 class ItemRepository private constructor() {
     companion object {
-        val dataSet: MutableList<com.murray.entities.items.Item> = InitDataSetItem()
+        val dataSet: MutableList<Item> = InitDataSetItem()
 
         private fun InitDataSetItem(): MutableList<Item> {
             var dataSet: MutableList<Item> = ArrayList()

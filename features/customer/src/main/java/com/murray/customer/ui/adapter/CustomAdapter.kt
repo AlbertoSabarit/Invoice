@@ -1,17 +1,11 @@
-package com.murray.customer.ui
+package com.murray.customer.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.customer.R
 import com.murray.customer.databinding.CardviewLayoutBinding
-import androidx.navigation.fragment.findNavController
-
-interface OnItemClickListener {
-    fun onItemClick(position: Int)
-}
-
+import com.murray.customer.ui.data.model.Customer
 
 class CustomAdapter (
     private val dataset: MutableList<Customer>,

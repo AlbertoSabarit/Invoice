@@ -2,18 +2,17 @@ package com.murray.customer.ui
 
 import android.location.Geocoder
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.murray.customer.databinding.FragmentCustomerDetailBinding
-
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.murray.customer.databinding.FragmentCustomerDetailBinding
 import java.io.IOException
 import java.util.Locale
 
@@ -48,7 +47,6 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCustomerDetailBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -69,6 +67,13 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         mapView = binding.map
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        binding.checkBox.setOnCheckedChangeListener(){ _, isChecked ->
+            if(isChecked)
+                gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
+            else
+                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+        }
     }
 
     override fun onDestroyView() {

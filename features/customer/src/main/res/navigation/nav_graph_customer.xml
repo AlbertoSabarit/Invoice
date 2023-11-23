@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/customerListFragment"
         android:name="com.murray.customer.ui.CustomerListFragment"
-        android:label="fragment_customer_list"
+        android:label="Lista de Clientes"
         tools:layout="@layout/fragment_customer_list" >
         <action
             android:id="@+id/action_customerListFragment_to_customerDetailFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/customerDetailFragment"
         android:name="com.murray.customer.ui.CustomerDetailFragment"
-        android:label="fragment_customer_detail"
+        android:label="Detalles de Cliente"
         tools:layout="@layout/fragment_customer_detail" >
         <action
             android:id="@+id/action_customerDetailFragment_to_customerCreationFragment"
@@ -29,6 +29,6 @@
     <fragment
         android:id="@+id/customerCreationFragment"
         android:name="com.murray.customer.ui.CustomerCreationFragment"
-        android:label="fragment_customer_creation"
+        android:label="Creación de Cliente"
         tools:layout="@layout/fragment_customer_creation" />
 </navigation>

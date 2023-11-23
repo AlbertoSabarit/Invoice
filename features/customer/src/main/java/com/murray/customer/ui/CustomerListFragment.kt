@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.customer.R
@@ -43,8 +44,15 @@ class CustomerListFragment : Fragment() {
         _binding = null
     }
     private fun setUpUserRecycler(){
-        var adapter = CustomAdapter (CustomerRepository.dataSet, requireContext()) { _: Customer ->
-            findNavController().navigate(R.id.action_customerListFragment_to_customerDetailFragment)
+        var adapter = CustomAdapter (CustomerRepository.dataSet, requireContext()) { customer: Customer ->
+            val bundle = bundleOf(
+                "name" to customer.name,
+                "email" to customer.email,
+                "phone" to customer.phone,
+                "city" to customer.city,
+                "address" to customer.address
+            )
+            findNavController().navigate(R.id.action_customerListFragment_to_customerDetailFragment, bundle)
         }
         with(binding.recyclerView){
             layoutManager = LinearLayoutManager(requireContext())

@@ -10,35 +10,53 @@ class CustomerRepository private constructor(){
             dataset.add(
                 com.murray.entities.customers.Customer(
                     "Alejandro Valle",
-                    "alejandro@gmail.es"
+                    "alejandro@gmail.es",
+                    693296746,
+                    "Torre del Mar",
+                    "Calle Juan Aguayo Moreno 3"
                 )
             )
-            dataset.add(Customer("Alberto Sabarit", "alberto@gmail.es"))
-            dataset.add(Customer("Ender Watts", "ender@gmail.uk"))
-            dataset.add(Customer("Katya Nikitenko", "katya@gmail.ua"))
+            dataset.add(Customer("Alberto Sabarit", "alberto@gmail.es", 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"))
+            dataset.add(Customer("Ender Watts", "ender@gmail.uk",657318092,"Londres","9 Buckingham Gate"))
+            dataset.add(Customer("Katya Nikitenko", "katya@gmail.ua",643417845,"Kiev","Instytutska St 23-26"))
             dataset.add(Customer(
                     "Lourdes Rodriguez",
-                    "Lourdes@gmail.com"
+                    "Lourdes@gmail.com",
+                615940554,
+                "Málaga",
+                "Calle Competa 29"
                 )
             )
-            dataset.add(Customer("Carlos Cortijo", "Carlos@gmail.com"))
+            dataset.add(Customer("Carlos Cortijo", "Carlos@gmail.com",639401967,
+                "Málaga",
+                "Calle Competa 29"))
             dataset.add(Customer(
                     "Federico Huercano",
-                    "Federico@gmail.com"
+                    "Federico@gmail.com",682150437,
+                "Málaga",
+                "Calle Competa 29"
                 )
             )
             dataset.add(Customer(
                     "Francisco Garcia",
-                    "Francisco@gmail.com"
+                    "Francisco@gmail.com",668421541,
+                "Málaga",
+                "Calle Competa 29"
                 )
             )
-            dataset.add(Customer("Eliseo Moreno", "Eliseo@gmail.com"))
+            dataset.add(Customer("Eliseo Moreno", "Eliseo@gmail.com",682103410,
+                "Málaga",
+                "Calle Competa 29"))
             dataset.add(Customer(
                     "Francisco Cabrera",
-                    "Francisco@gmail.com"
+                    "Francisco@gmail.com",696412057,
+                "Málaga",
+                "Calle Competa 29"
                 )
             )
-            dataset.add(Customer("Jose Millan", "Jose@gmail.com"))
+            dataset.add(Customer("Jose Millan", "Jose@gmail.com",604153895,
+                "Málaga",
+                "Calle Competa 29"))
             return dataset
         }
     }

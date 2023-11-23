@@ -20,12 +20,12 @@ import java.util.Locale
 class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentCustomerDetailBinding? = null
-    private var address:String = "España"
     private val binding
         get() = _binding!!
 
     lateinit var gMap: GoogleMap
     lateinit var mapView: MapView
+    var address:String = "España"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +48,27 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCustomerDetailBinding.inflate(inflater, container, false)
-        address = binding.txtAddress.text.toString()
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val cliente = arguments?.getString("name") ?: ""
+        val email = arguments?.getString("email") ?: ""
+        val phone = arguments?.getInt("phone") ?: ""
+        val city = arguments?.getString("city") ?: ""
+        val address = arguments?.getString("address") ?: "España"
+        this.address = address
+        binding.txtName.text = cliente
+        binding.txtEmail.text = email
+        binding.txtPhone.text = phone.toString()
+        binding.txtCity.text = city
+        binding.txtAddress.text = address
+
         mapView = binding.map
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-        return binding.root
     }
 
     override fun onDestroyView() {

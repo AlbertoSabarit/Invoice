@@ -5,20 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.items.Item
+import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
 
 class ItemListAdapter(
-    private val dataSet: MutableList<com.murray.entities.items.Item>,
+    private val dataSet: MutableList<Item>,
     private val context: Context,
     private val clickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
-
-        //TODO: Que se actualice ItemDetailFragment con los datos de cada Item
-        //fun onItemClick(position: Int, item: Item)
+        fun onItemClick(item: Item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
@@ -35,22 +33,24 @@ class ItemListAdapter(
         holder.bind(item, context)
 
         holder.itemView.setOnClickListener {
-            clickListener.onItemClick(position)
-            //TODO: Que se actualice ItemDetailFragment con los datos de cada Item
-            //clickListener.onItemClick(position, item)
+            clickListener.onItemClick(item)
         }
     }
 
     class ItemListViewHolder(private val binding: LayoutItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: com.murray.entities.items.Item, context: Context) {
+        fun bind(item: Item, context: Context) {
             with(binding) {
-                tvNombreText.text = item.nombre
-                tvTipoText.text = item.tipo
-                tvImpuestoText.text = item.impuesto
-                tvPrecioText.text = item.precio
-                imgItem.setImageResource(item.imagen)
+                tvNombreText.text = item.name
+                tvTipoText.text = item.type
+                if (item.isTaxable){
+                    tvImpuestoText.text = context.getString(R.string.true_string) //no me deja poner getResources()
+                } else{
+                    tvImpuestoText.text = context.getString(R.string.false_string)
+                }
+                tvPrecioText.text = item.rate
+                imgItem.setImageResource(item.image)
             }
 
         }

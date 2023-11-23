@@ -2,15 +2,18 @@ package com.murray.account.ui.sigin
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
-import com.murray.account.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import com.murray.account.databinding.FragmentAccountSignInBinding
 
 
@@ -42,15 +45,24 @@ class AccountSignInFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        //binding.tieEmailSignIn.addTextChangedListener(CorrecionErrores(requireView()))  HACER
+        //binding.tiePasswordSignIn.addTextChangedListener(CorrecionErrores(requireView()))
+
         return binding.root
     }
-
+    private lateinit var twatcher:SignInWatcher
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.txtRegsiter.setOnClickListener {
-            findNavController().navigate(R.id.action_accountSignInFragment_to_accountSignUpFragment)
+            findNavController().navigate(com.murray.account.R.id.action_accountSignInFragment_to_accountSignUpFragment)
         }
+
+        twatcher= SignInWatcher(binding.tilEmail)
+        binding.tieEmailSignIn.addTextChangedListener(twatcher)
+
+        twatcher= SignInWatcher(binding.tilPasswordSignIn)
+        binding.tiePasswordSignIn.addTextChangedListener(twatcher)
 
         /*Este codigo ya no es necesario ya que se implementa medainte Data Binding
         binding.btnSignIn.setOnClickListener {
@@ -73,12 +85,12 @@ class AccountSignInFragment : Fragment() {
      * Función que muestra el error de Email Empty
      */
     private fun setEmailEmptyError() {
-        binding.tilEmail.error = getString(R.string.errEmailEmpty)
+        binding.tilEmail.error = getString(com.murray.account.R.string.errEmailEmpty)
         binding.tilEmail.requestFocus() //El cursor del foco se coloca en el til que tiene el error
     }
 
     private fun setPasswordEmptyError() {
-        binding.tilPasswordSignIn.error = getString(R.string.errPasswordEmpty)
+        binding.tilPasswordSignIn.error = getString(com.murray.account.R.string.errPasswordEmpty)
         binding.tilEmail.requestFocus()
     }
 
@@ -91,4 +103,23 @@ class AccountSignInFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    /**
+     * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
+     */
+    inner class SignInWatcher(var tieError: TextInputLayout) : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            tieError.isErrorEnabled = false
+        }
+
+    }
 }
+

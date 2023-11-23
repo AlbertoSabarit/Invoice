@@ -33,7 +33,7 @@ class SignInViewModel: ViewModel() {
         when{
             TextUtils.isEmpty(email.value) -> state.value = SignInState.EmailEmptyError
             TextUtils.isEmpty(password.value) -> state.value = SignInState.PasswordEmptyError
-            else -> state.value = SignInState.Success
+            //else -> state.value = SignInState.Success
         }
     }
 

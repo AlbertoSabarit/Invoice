@@ -48,6 +48,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
@@ -62,18 +63,17 @@
 
             <Button
                 android:id="@+id/btnSignIn"
-                android:shadowColor="@color/md_theme_light_primary"
                 style="@style/ButtonTrasnparent.TexColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
-                android:textColor="@color/md_theme_light_onSecondary"
-                android:text="Iniciar sesión"
-                android:onClick="@{() -> viewmodel.validateCredentials()}"
                 android:background="@drawable/selector_button"
-                android:clickable="true" />
+                android:clickable="true"
+                android:onClick="@{() -> viewmodel.validateCredentials()}"
+                android:shadowColor="@color/md_theme_light_primary"
+                android:text="Iniciar sesión"
+                android:textColor="@color/md_theme_light_onSecondary" />
         </LinearLayout>
-
 
         <LinearLayout
 

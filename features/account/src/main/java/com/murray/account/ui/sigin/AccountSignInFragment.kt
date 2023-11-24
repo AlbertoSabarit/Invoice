@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -47,7 +46,7 @@ class AccountSignInFragment : Fragment() {
 
         return binding.root
     }
-    private lateinit var twatcher:SignInWatcher
+    private lateinit var twatcher:LogInTextWatcher
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,20 +54,28 @@ class AccountSignInFragment : Fragment() {
             findNavController().navigate(com.murray.account.R.id.action_accountSignInFragment_to_accountSignUpFragment)
         }
 
-        twatcher= SignInWatcher(binding.tilEmail)
+        twatcher= LogInTextWatcher(binding.tilEmail)
         binding.tieEmailSignIn.addTextChangedListener(twatcher)
 
-        twatcher= SignInWatcher(binding.tilPasswordSignIn)
+        twatcher= LogInTextWatcher(binding.tilPasswordSignIn)
         binding.tiePasswordSignIn.addTextChangedListener(twatcher)
 
-        viewModel.getState().observe(viewLifecycleOwner, Observer {
+        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
             when(it){
                 SignInState.EmailEmptyError -> setEmailEmptyError()
                 SignInState.PasswordEmptyError -> setPasswordEmptyError()
+                is SignInState.AuthenticationError -> showMessage(it.message)
                 else -> onSuccess()
             }
         })
 
+    }
+
+    /**
+     * Función que muestra al usuario un mensaje
+     */
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), "Mi primer MVVM $message", Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -81,7 +88,7 @@ class AccountSignInFragment : Fragment() {
 
     private fun setPasswordEmptyError() {
         binding.tilPasswordSignIn.error = getString(com.murray.account.R.string.errPasswordEmpty)
-        binding.tilEmail.requestFocus()
+        binding.tilPasswordSignIn.requestFocus()
     }
 
     private fun onSuccess() {
@@ -97,7 +104,7 @@ class AccountSignInFragment : Fragment() {
     /**
      * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
      */
-    inner class SignInWatcher(var tieError: TextInputLayout) : TextWatcher {
+    open inner class LogInTextWatcher(var tilError: TextInputLayout) : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
@@ -107,7 +114,7 @@ class AccountSignInFragment : Fragment() {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            tieError.isErrorEnabled = false
+            tilError.error = null
         }
 
     }

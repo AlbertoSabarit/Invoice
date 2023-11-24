@@ -23,4 +23,22 @@ class TaskDetailFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val titulo = arguments?.getString("titulo") ?: ""
+        val cliente = arguments?.getString("cliente") ?: ""
+        val tarea = arguments?.getString("tarea") ?: ""
+        val estado = arguments?.getString("estado") ?: ""
+        binding.tvTaskTitle.text = titulo
+        binding.tvclientetask.text = cliente
+        binding.tvTaskTipo.text = tarea
+        binding.tvTaskEstado.text = estado
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

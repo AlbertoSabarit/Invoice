@@ -48,23 +48,23 @@
                     app:layout_constraintVertical_bias="0.050000012"
                     tools:ignore="TouchTargetSizeCheck" />
                 <TextView
-                    android:id="@+id/txtFechaVenc"
+                    android:id="@+id/txtEstado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pendiente"
+                    android:text=""
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/txtEstado"
+                    app:layout_constraintStart_toStartOf="@+id/tvEstado"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.811" />
 
                 <TextView
-                    android:id="@+id/txtFechaCreacion"
+                    android:id="@+id/txtTipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cita"
+                    android:text=""
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                     android:id="@+id/txtTit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Citación"
+                    android:text=""
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +118,7 @@
                     android:id="@+id/txtCliente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rodrigo Gaitán Del Rio"
+                    android:text=""
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +142,7 @@
                     app:layout_constraintVertical_bias="0.562" />
 
                 <TextView
-                    android:id="@+id/txtEstado"
+                    android:id="@+id/tvEstado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estado"

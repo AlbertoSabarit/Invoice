@@ -45,9 +45,6 @@ class AccountSignInFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        //binding.tieEmailSignIn.addTextChangedListener(CorrecionErrores(requireView()))  HACER
-        //binding.tiePasswordSignIn.addTextChangedListener(CorrecionErrores(requireView()))
-
         return binding.root
     }
     private lateinit var twatcher:SignInWatcher
@@ -64,12 +61,6 @@ class AccountSignInFragment : Fragment() {
         twatcher= SignInWatcher(binding.tilPasswordSignIn)
         binding.tiePasswordSignIn.addTextChangedListener(twatcher)
 
-        /*Este codigo ya no es necesario ya que se implementa medainte Data Binding
-        binding.btnSignIn.setOnClickListener {
-            //findNavController().navigate(R.id.action_accountSignInFragment_to_userListFragment)
-            viewModel.validateCredentials()
-        } */
-
         viewModel.getState().observe(viewLifecycleOwner, Observer {
             when(it){
                 SignInState.EmailEmptyError -> setEmailEmptyError()
@@ -79,7 +70,6 @@ class AccountSignInFragment : Fragment() {
         })
 
     }
-
 
     /**
      * Función que muestra el error de Email Empty

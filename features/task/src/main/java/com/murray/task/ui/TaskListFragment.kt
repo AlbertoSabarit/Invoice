@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.murray.entities.customers.Customer
+import com.murray.entities.tasks.Task
+import com.murray.repositories.CustomerRepository
 import com.murray.task.R
 import com.murray.task.adapter.TaskAdapter
 import com.murray.repositories.TaskRepository
 import com.murray.task.databinding.FragmentTaskListBinding
 
-class TaskListFragment : Fragment(), TaskAdapter.OnItemClickListener {
+class TaskListFragment : Fragment(){
 
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
@@ -34,12 +38,17 @@ class TaskListFragment : Fragment(), TaskAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemClick(position: Int) {
-        findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment)
-    }
 
     private fun setUpTaskRecycler() {
-        val adapter = TaskAdapter(com.murray.repositories.TaskRepository.dataSet, requireContext(), this)
+        var adapter = TaskAdapter (TaskRepository.dataSet, requireContext()) { task: Task ->
+            val bundle = bundleOf(
+                "titulo" to task.titulo,
+                "cliente" to task.nombre,
+                "tarea" to task.tarea,
+                "estado" to task.estado
+            )
+            findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
+        }
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())

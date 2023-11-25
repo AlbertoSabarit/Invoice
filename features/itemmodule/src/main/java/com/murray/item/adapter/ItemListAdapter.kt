@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.items.Item
 import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
+import com.murray.repositories.ImagesItem
 
 class ItemListAdapter(
     private val dataSet: MutableList<Item>,
@@ -50,7 +51,7 @@ class ItemListAdapter(
                     tvImpuestoText.text = context.getString(R.string.false_string)
                 }
                 tvPrecioText.text = item.rate
-                imgItem.setImageResource(item.image)
+                imgItem.setImageResource(ImagesItem.getImageDrawable(item.image.name));
             }
 
         }

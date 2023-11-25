@@ -54,7 +54,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
             "itemRate" to item.rate,
             "itemTaxable" to item.isTaxable,
             "itemDescr" to item.description,
-            "itemImage" to item.image
+            "itemImage" to item.image.name
         )
         findNavController().navigate(R.id.action_itemListFragment_to_itemDetailFragment, bundle)
     }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/itemListFragment"
         android:name="com.murray.item.ui.ItemListFragment"
-        android:label="fragment_item_list"
+        android:label="@string/fragment_item_list_label"
         tools:layout="@layout/fragment_item_list" >
         <action
             android:id="@+id/action_itemListFragment_to_itemCreationFragment"
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/itemCreationFragment"
         android:name="com.murray.item.ui.ItemCreationFragment"
-        android:label="fragment_item_creation"
+        android:label="@string/fragment_item_creation_label"
         tools:layout="@layout/fragment_item_creation" />
     <fragment
         android:id="@+id/itemDetailFragment"
         android:name="com.murray.item.ui.ItemDetailFragment"
-        android:label="fragment_item_detail"
+        android:label="@string/fragment_item_detail_label"
         tools:layout="@layout/fragment_item_detail" >
         <action
             android:id="@+id/action_itemDetailFragment_to_itemCreationFragment"

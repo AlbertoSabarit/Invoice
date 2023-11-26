@@ -36,9 +36,21 @@ class ItemListAdapter(
         holder.itemView.setOnClickListener {
             clickListener.onItemClick(item)
         }
+
+        holder.binding.imgBtDeleteItem.setOnClickListener{
+            val adapterPosition = holder.adapterPosition
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                removeItem(adapterPosition)
+            }
+        }
     }
 
-    class ItemListViewHolder(private val binding: LayoutItemListBinding) :
+    fun removeItem(position: Int){
+        dataSet.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    class ItemListViewHolder(val binding: LayoutItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Item, context: Context) {
@@ -52,8 +64,7 @@ class ItemListAdapter(
                 }
                 tvPrecioText.text = item.rate
                 imgItem.setImageResource(ImagesItem.getImageDrawable(item.image.name));
-            }
-
+                }
         }
     }
 

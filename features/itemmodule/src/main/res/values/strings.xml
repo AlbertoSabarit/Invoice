@@ -17,6 +17,10 @@
     <string name="tiet_item_detail_descr">Descripción</string>
     <string name="b_item_detail_edit">Editar</string>
 
+    <string name="fragment_item_list_label">Lista de artículos</string>
+    <string name="fragment_item_creation_label">Crear artículo</string>
+    <string name="fragment_item_detail_label">Detalles del artículo</string>
+
     <string name="true_string">Sí</string>
     <string name="false_string">No</string>
 </resources>

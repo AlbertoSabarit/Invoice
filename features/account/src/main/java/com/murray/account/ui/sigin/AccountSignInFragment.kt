@@ -89,7 +89,7 @@ class AccountSignInFragment : Fragment() {
      */
     private fun showMessage(message: String) {
         //Toast.makeText(requireContext(), "Mi primer MVVM $message", Toast.LENGTH_SHORT).show()
-        val action = AccountSignInFragmentDirections.actionAccountSignInFragmentToBaseFragmentDialog("Error","Incorrecto")
+        val action = AccountSignInFragmentDirections.actionAccountSignInFragmentToBaseFragmentDialog("Error",message)
         findNavController().navigate(action)
     }
 

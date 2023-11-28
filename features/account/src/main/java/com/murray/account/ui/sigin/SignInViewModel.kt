@@ -6,10 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.AuthFirebase
 import com.murray.entities.accounts.Account
+import com.murray.firebase.AuthFirebase
 import com.murray.network.Resource
-import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
 
 const val TAG = "ViewModel"
@@ -51,7 +50,8 @@ class SignInViewModel : ViewModel() {
                     //La respuesta del Repositorio es asíncrona
 
                     //val result = UserRepository.login(email.value!!, password.value!!)
-                    val result = AuthFirebase().login(email.value!!, password.value!!)
+                    val authFirebase:AuthFirebase = AuthFirebase()
+                    val result = authFirebase.login(email.value!!, password.value!!)
 
                     //ES OBLIGATORIO: pausar/quitar el FragmentDialog antes de mostrar el error. Ya que el Fragment SignIn está pausado.
                     state.value = SignInState.Loading(false)
@@ -60,7 +60,7 @@ class SignInViewModel : ViewModel() {
                         is Resource.Success<*> -> {
                                 // Manejo de error si el tipo de dato no es el esperado
                                 Log.e(TAG, "Login correcto del usuario")
-
+                            state.value = SignInState.Success(result.data as Account)
 
                         }
                         is Resource.Error -> {

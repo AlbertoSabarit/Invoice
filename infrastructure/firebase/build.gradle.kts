@@ -4,7 +4,7 @@ plugins {
 }
 android {
     namespace = "com.murray.firebase"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -43,4 +43,5 @@ dependencies {
     //Implementar la navegación por módulos
     implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
+
 }

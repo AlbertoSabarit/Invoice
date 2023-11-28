@@ -53,14 +53,15 @@ class Account private constructor(
      * Al utilizar un objeto acompañante con una función y el constructor privado de la clase
      * garantizo el modo/restricciones que tenga al crear un objeto de la clase
      */
+
     companion object {
-        fun create(id: Int, email: Email, password: String?, displayName: String?): Account {
+        fun create(id: Int, email: Email, password: String?, displayName: String?, state: AccountState): Account {
             return Account(
                 id = id,
                 email = email,
-                password = password,
+                password=password,
                 displayName = displayName,
-                state = AccountState.UNVERIFIED,
+                state=state,
                 businessProfile = BusinessProfile(),
             )
         }

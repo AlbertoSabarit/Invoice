@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_accountSignInFragment_to_userListFragment"
             app:destination="@id/userListFragment" />
+        <action
+            android:id="@+id/action_accountSignInFragment_to_baseFragmentDialog"
+            app:destination="@id/baseFragmentDialog" />
+        <action
+            android:id="@+id/action_accountSignInFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
     </fragment>
     <fragment
         android:id="@+id/accountSignUpFragment"
@@ -26,4 +32,19 @@
         android:name="com.murray.account.ui.UserListFragment"
         android:label="@string/title_userlist"
         tools:layout="@layout/fragment_user_list" />
+    <dialog
+        android:id="@+id/baseFragmentDialog"
+        android:name="com.murray.invoice.base.BaseFragmentDialog"
+        android:label="BaseFragmentDialog" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string" />
+    </dialog>
+    <dialog
+        android:id="@+id/fragmentProgressDialog"
+        android:name="com.moronlu18.loginapplication.base.FragmentProgressDialog"
+        android:label="FragmentProgressDialog" />
 </navigation>

@@ -58,7 +58,7 @@ class UserRepository private constructor() {
         suspend fun login(email: String, password: String) : Resource {
             //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
             withContext(Dispatchers.IO){
-                delay(3000)
+                delay(2000)
                 //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
                 //el error ARN(Android Not Responding) porque puede bloquear la vista
             }

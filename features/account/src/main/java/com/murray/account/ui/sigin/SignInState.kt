@@ -1,6 +1,6 @@
 package com.murray.account.ui.sigin
 
-import android.accounts.Account
+import com.murray.entities.accounts.Account
 
 sealed class SignInState {
     object EmailEmptyError : SignInState()

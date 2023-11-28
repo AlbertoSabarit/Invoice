@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -9,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.murray.invoice"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 2
         versionName = "2.0"
@@ -75,4 +78,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.mikhaellopez:circularimageview:4.3.1")
+    // Declare the dependency for the Firebase Authentication library
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882147175354",
+    "project_id": "invoice-main",
+    "storage_bucket": "invoice-main.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882147175354:android:401cfc5ab529ceb75ecb83",
+        "android_client_info": {
+          "package_name": "com.murray.invoice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS6wR9-eR45tVSB2JlWUtT5l5x7Mw46gI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

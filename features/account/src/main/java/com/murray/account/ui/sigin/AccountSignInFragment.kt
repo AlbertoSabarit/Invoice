@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.murray.account.R
 import com.murray.account.databinding.FragmentAccountSignInBinding
 
 
@@ -65,6 +66,7 @@ class AccountSignInFragment : Fragment() {
                 SignInState.EmailEmptyError -> setEmailEmptyError()
                 SignInState.PasswordEmptyError -> setPasswordEmptyError()
                 is SignInState.AuthenticationError -> showMessage(it.message)
+                is SignInState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
             }
         })
@@ -72,10 +74,23 @@ class AccountSignInFragment : Fragment() {
     }
 
     /**
+     * Mostrar un progressbar en el comienzo de una opación larga como es una consulta
+     * a la base de datos, Firebase o bien ocultar cuando al operación ha terminado
+     */
+    private fun showProgressbar(value: Boolean) {
+        if(value)
+            findNavController().navigate(R.id.action_accountSignInFragment_to_fragmentProgressDialog)
+        else
+            findNavController().popBackStack()
+    }
+
+    /**
      * Función que muestra al usuario un mensaje
      */
     private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), "Mi primer MVVM $message", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "Mi primer MVVM $message", Toast.LENGTH_SHORT).show()
+        val action = AccountSignInFragmentDirections.actionAccountSignInFragmentToBaseFragmentDialog("Error","Incorrecto")
+        findNavController().navigate(action)
     }
 
     /**
@@ -83,7 +98,7 @@ class AccountSignInFragment : Fragment() {
      */
     private fun setEmailEmptyError() {
         binding.tilEmail.error = getString(com.murray.account.R.string.errEmailEmpty)
-        binding.tilEmail.requestFocus() //El cursor del foco se coloca en el til que tiene el error
+        binding.tilEmail.requestFocus()
     }
 
     private fun setPasswordEmptyError() {
@@ -94,8 +109,7 @@ class AccountSignInFragment : Fragment() {
     private fun onSuccess() {
         Toast.makeText(requireActivity(), "Caso de uso", Toast.LENGTH_SHORT).show()
     }
-
-
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

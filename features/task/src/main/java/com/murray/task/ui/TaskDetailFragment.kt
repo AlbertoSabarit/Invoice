@@ -29,10 +29,12 @@ class TaskDetailFragment : Fragment() {
         val cliente = arguments?.getString("cliente") ?: ""
         val tarea = arguments?.getString("tarea") ?: ""
         val estado = arguments?.getString("estado") ?: ""
+        val descripcion = arguments?.getString("descripcion") ?: ""
         binding.tvTaskTitle.text = titulo
         binding.tvclientetask.text = cliente
         binding.tvTaskTipo.text = tarea
         binding.tvTaskEstado.text = estado
+        binding.tvTaskDescripcion.text = descripcion
 
     }
 

@@ -8,9 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
-import com.murray.repositories.CustomerRepository
 import com.murray.task.R
 import com.murray.task.adapter.TaskAdapter
 import com.murray.repositories.TaskRepository
@@ -35,6 +33,7 @@ class TaskListFragment : Fragment(){
         setUpTaskRecycler()
         binding.btnCreateTask.setOnClickListener {
             findNavController().navigate(R.id.action_taskListFragment_to_taskCreationFragment)
+
         }
     }
 
@@ -45,7 +44,8 @@ class TaskListFragment : Fragment(){
                 "titulo" to task.titulo,
                 "cliente" to task.nombre,
                 "tarea" to task.tarea,
-                "estado" to task.estado
+                "estado" to task.estado,
+                "descripcion" to task.descripcion
             )
             findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
         }

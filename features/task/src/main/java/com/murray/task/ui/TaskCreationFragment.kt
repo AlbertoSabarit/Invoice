@@ -2,11 +2,19 @@ package com.murray.task.ui
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
+import com.murray.task.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -15,6 +23,7 @@ import com.murray.task.databinding.FragmentTaskCreationBinding
 class TaskCreationFragment : Fragment() {
 
     private var _binding: FragmentTaskCreationBinding? = null
+    private val viewModel: TaskViewModel by viewModels()
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,25 +33,13 @@ class TaskCreationFragment : Fragment() {
 
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
-        val nombres = arrayOf("Alberto Sabarit", "Christian Gaitán", "Marina Rey")
-        val tipo = arrayOf("Privado", "Llamada", "Visita")
-        val estado = arrayOf("Pendiente", "Modificado", "Vencido")
-
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
-
-        val adapterTipo = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipo)
-        adapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerTipo.adapter = adapterTipo
-
-        val adapterEstado =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, estado)
-        adapterEstado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerEstado.adapter = adapterEstado
+        binding.viewmodel = this.viewModel
+        binding.lifecycleOwner = this
 
         return binding.root
     }
+
+    private lateinit var twatcher:LogInTextWatcher
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,6 +50,35 @@ class TaskCreationFragment : Fragment() {
         binding.tieFechFin.setOnClickListener {
             showDatePickerFin()
         }
+
+        binding.button.setOnClickListener {
+            //findNavController().navigate(R.id.action_taskCreationFragment_to_taskListFragment)
+            findNavController().popBackStack()
+        }
+
+        twatcher= LogInTextWatcher(binding.tilTitulo)
+        binding.tieTitulo.addTextChangedListener(twatcher)
+
+        twatcher= LogInTextWatcher(binding.tilDescripcion)
+        binding.tieDescripcion.addTextChangedListener(twatcher)
+
+        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+            when(it){
+                TaskState.TitleEmptyError -> setTitleEmptyError()
+                TaskState.DescriptionEmptyError -> setDescriptionEmptyError()
+                //is TaskState.AuthenticationError -> showMessage(it.message)
+                is TaskState.Loading -> showProgressbar(it.value)
+                else -> onSuccess()
+            }
+        })
+
+    }
+
+    private fun showProgressbar(value: Boolean) {
+        if(value)
+            findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
+        else
+            findNavController().popBackStack()
     }
 
     private fun showDatePickerIni() {
@@ -96,5 +122,44 @@ class TaskCreationFragment : Fragment() {
 
         datePickerDialog.show()
     }
+
+
+    private fun setTitleEmptyError() {
+        binding.tilTitulo.error = "Debe escribir un título"
+        binding.tilTitulo.requestFocus()
+    }
+
+    private fun setDescriptionEmptyError() {
+        binding.tilDescripcion.error = "Debe escribir una descripción"
+        binding.tilDescripcion.requestFocus()
+    }
+
+    private fun onSuccess() {
+        Toast.makeText(requireActivity(), "Caso de uso", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+
+
+    /**
+     * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
+     */
+    open inner class LogInTextWatcher(var tilError: TextInputLayout) : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+        }
+        override fun afterTextChanged(s: Editable?) {
+            tilError.error = null
+        }
+    }
+
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_task_creation_clientes">
+        <item>Alberto Sabarit</item>
+        <item>Christian Gaitán</item>
+        <item>Marina Rey</item>
+    </string-array>
+
+</resources>

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_taskListFragment_to_taskDetailFragment"
             app:destination="@id/taskDetailFragment" />
+        <action
+            android:id="@+id/action_taskListFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
     </fragment>
     <fragment
         android:id="@+id/taskCreationFragment"
@@ -31,4 +34,8 @@
             android:id="@+id/action_taskDetailFragment_to_taskCreationFragment"
             app:destination="@id/taskCreationFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/fragmentProgressDialog"
+        android:name="com.moronlu18.loginapplication.base.FragmentProgressDialog"
+        android:label="FragmentProgressDialog" />
 </navigation>

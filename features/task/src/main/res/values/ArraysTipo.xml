@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_task_creation_tipo">
+        <item>Privado</item>
+        <item>Llamada</item>
+        <item>Visita</item>
+    </string-array>
+</resources>

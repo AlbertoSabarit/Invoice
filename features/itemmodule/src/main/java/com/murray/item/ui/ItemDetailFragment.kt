@@ -25,7 +25,6 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO cambiar a tipo de datos actual
         val itemName = arguments?.getString("itemName") ?: ""
         val itemType = arguments?.getString("itemType") ?: ""
         val itemRate = arguments?.getDouble("itemRate") ?: ""

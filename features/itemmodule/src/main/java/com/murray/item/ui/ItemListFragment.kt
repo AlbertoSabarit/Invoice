@@ -47,7 +47,6 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
         }
     }
 
-    //TODO cambiar a tipo de datos actual
     override fun onItemClick(item: Item) {
         val bundle = bundleOf(
             "itemName" to item.name,

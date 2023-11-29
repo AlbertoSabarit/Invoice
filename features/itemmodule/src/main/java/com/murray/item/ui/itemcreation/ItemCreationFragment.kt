@@ -1,4 +1,4 @@
-package com.murray.item.ui
+package com.murray.item.ui.itemcreation
 
 import android.os.Bundle
 import android.view.LayoutInflater

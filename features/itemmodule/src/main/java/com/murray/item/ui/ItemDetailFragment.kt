@@ -1,7 +1,6 @@
 package com.murray.item.ui
 
 import android.os.Bundle
-import android.provider.MediaStore.Images
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
+        //TODO cambiar a tipo de datos actual
         val itemName = arguments?.getString("itemName") ?: ""
         val itemType = arguments?.getString("itemType") ?: ""
         val itemRate = arguments?.getString("itemRate") ?: ""

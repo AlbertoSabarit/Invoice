@@ -56,13 +56,13 @@ class ItemListAdapter(
         fun bind(item: Item, context: Context) {
             with(binding) {
                 tvNombreText.text = item.name
-                tvTipoText.text = item.type
+                tvTipoText.text = item.type.name
                 if (item.isTaxable){
                     tvImpuestoText.text = context.getString(R.string.true_string) //no me deja poner getResources()
                 } else{
                     tvImpuestoText.text = context.getString(R.string.false_string)
                 }
-                tvPrecioText.text = item.rate
+                tvPrecioText.text = item.rate.toString()
                 imgItem.setImageResource(ImagesItem.getImageDrawable(item.image.name));
                 }
         }

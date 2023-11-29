@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.entities.items.Item
-import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.R
-import com.murray.repositories.ItemRepository
+import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
+import com.murray.repositories.ItemRepository
 
 class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
 
@@ -47,6 +47,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
         }
     }
 
+    //TODO cambiar a tipo de datos actual
     override fun onItemClick(item: Item) {
         val bundle = bundleOf(
             "itemName" to item.name,

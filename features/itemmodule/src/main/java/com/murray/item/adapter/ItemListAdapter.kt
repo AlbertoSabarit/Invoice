@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.items.Item
+import com.murray.entities.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
 import com.murray.repositories.ImagesItem
@@ -56,13 +57,17 @@ class ItemListAdapter(
         fun bind(item: Item, context: Context) {
             with(binding) {
                 tvNombreText.text = item.name
-                tvTipoText.text = item.type.name
+                when(item.type){
+                    ItemType.PRODUCT -> tvTipoText.text = context.getString(R.string.product_string)
+                    ItemType.SERVICE -> tvTipoText.text = context.getString(R.string.service_string)
+                }
+
                 if (item.isTaxable){
                     tvImpuestoText.text = context.getString(R.string.true_string) //no me deja poner getResources()
                 } else{
                     tvImpuestoText.text = context.getString(R.string.false_string)
                 }
-                tvPrecioText.text = item.rate.toString()
+                tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
                 imgItem.setImageResource(ImagesItem.getImageDrawable(item.image.name));
                 }
         }

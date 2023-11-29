@@ -2,10 +2,9 @@ package com.murray.entities.items
 
 import com.murray.repositories.ImagesItem
 
-enum class ItemType(name: String) {
-    //TODO especificar strings.xml
-    PRODUCT("Producto"),
-    SERVICE("Servicio")
+enum class ItemType() {
+    PRODUCT,
+    SERVICE
 }
 
 data class Item(

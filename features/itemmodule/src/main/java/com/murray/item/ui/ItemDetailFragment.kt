@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.murray.entities.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
 import com.murray.repositories.ImagesItem
@@ -27,15 +28,18 @@ class ItemDetailFragment : Fragment() {
         //TODO cambiar a tipo de datos actual
         val itemName = arguments?.getString("itemName") ?: ""
         val itemType = arguments?.getString("itemType") ?: ""
-        val itemRate = arguments?.getString("itemRate") ?: ""
+        val itemRate = arguments?.getDouble("itemRate") ?: ""
         val itemTaxable = arguments?.getBoolean("itemTaxable") ?: false
         val itemDescr = arguments?.getString("itemDescr") ?: ""
         val itemImage = arguments?.getString("itemImage") ?: ""
 
         with(binding){
             tvItemDetailName.text = itemName
-            tvItemDetailType.text = itemType
-            tvItemDetailRate.text = itemRate
+            when(itemType){
+                ItemType.PRODUCT.name -> tvItemDetailType.text = context?.getString(R.string.product_string)
+                ItemType.SERVICE.name -> tvItemDetailType.text = context?.getString(R.string.service_string)
+            }
+            tvItemDetailRate.text = "${String.format("%.2f", itemRate)}€"
 
             if (itemTaxable){
                 tvItemDetailTaxable.text = resources.getString(R.string.true_string) //'resources' es lo mismo que usar 'getResources()'
@@ -44,17 +48,6 @@ class ItemDetailFragment : Fragment() {
             }
             tvItemDetailDescr.text = itemDescr
             ivItemDetail.setImageResource(ImagesItem.getImageDrawable(itemImage));
-            /* (sin meter en funcion)
-            var imageDrawable:Int = R.drawable.img_maleta_cuero; //placeholder
-
-            when (itemImage){
-                ImagesItem.MALETA_CUERO.name -> imageDrawable = com.murray.invoice.R.drawable.img_maleta_cuero
-                ImagesItem.LAPICES_ACUARELA.name -> imageDrawable = com.murray.invoice.R.drawable.img_lapices_acuarela
-                ImagesItem.CUADERNO.name -> imageDrawable = com.murray.invoice.R.drawable.img_cuaderno
-                ImagesItem.PORTATIL.name -> imageDrawable = com.murray.invoice.R.drawable.img_portatil
-                ImagesItem.OLEO.name -> imageDrawable = com.murray.invoice.R.drawable.img_oleo
-                ImagesItem.BOTAS_NIEVE.name -> imageDrawable = com.murray.invoice.R.drawable.img_botas_nieve
-            }*/
         }
     }
 

@@ -8,7 +8,13 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 
 import android.app.DatePickerDialog
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import com.murray.entities.invoices.Invoice
+import com.murray.invoicemodule.R
+import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
+import com.murray.repositories.InvoiceRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -21,6 +27,7 @@ class InvoiceCreationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
+
         val nombres = arrayOf("Alberto", "Ender", "Kateryna", "Alejandro")
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
@@ -32,6 +39,15 @@ class InvoiceCreationFragment : Fragment() {
 
         binding.spinner.adapter = adapter
 
+        val cliente = arguments?.getString("cliente") ?: ""
+        val fcrear = arguments?.getString("fechacrear") ?: ""
+        val fven = arguments?.getString("fechavenc") ?: ""
+
+        val d = binding.spinner.adapter as ArrayAdapter<String>
+        val index = d.getPosition(cliente)
+        binding.spinner.setSelection(index)
+        binding.tiefechaIni.setText(" $fcrear")
+        binding.tiefechaFin.setText(" $fven")
         return binding.root
     }
 
@@ -44,6 +60,7 @@ class InvoiceCreationFragment : Fragment() {
             showDatePickerFin()
         }
     }
+
 
     private fun showDatePickerIni() {
         val calendar = Calendar.getInstance()
@@ -79,12 +96,12 @@ class InvoiceCreationFragment : Fragment() {
                 //val formattedDate = dateFormat.format(selectedDate.time)
                 //val fechaIniDate = dateFormat.parse(fechaIniText)
 
-               /* if (selectedDate.before(fechaIniDate)) {
-                    binding.btnGuardarFactura.isEnabled = true
-                } else {
-                    binding.btnGuardarFactura.isEnabled = false
-                    binding.tiefechaFin.setText(formattedDate)
-                }*/
+                /* if (selectedDate.before(fechaIniDate)) {
+                     binding.btnGuardarFactura.isEnabled = true
+                 } else {
+                     binding.btnGuardarFactura.isEnabled = false
+                     binding.tiefechaFin.setText(formattedDate)
+                 }*/
 
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)

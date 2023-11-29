@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/invoiceListFragment"
         android:name="com.murray.invoicemodule.ui.InvoiceListFragment"
-        android:label="fragment_invoice_list"
+        android:label="@string/label_lista"
         tools:layout="@layout/fragment_invoice_list" >
         <action
             android:id="@+id/action_invoiceListFragment_to_invoiceCreationFragment"
@@ -20,12 +20,16 @@
     <fragment
         android:id="@+id/invoiceCreationFragment"
         android:name="com.murray.invoicemodule.ui.InvoiceCreationFragment"
-        android:label="fragment_invoice_creation"
-        tools:layout="@layout/fragment_invoice_creation" />
+        android:label="@string/label_creacion"
+        tools:layout="@layout/fragment_invoice_creation" >
+        <action
+            android:id="@+id/action_invoiceCreationFragment_to_invoiceListFragment"
+            app:destination="@id/invoiceListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/invoiceDetailFragment"
         android:name="com.murray.invoicemodule.ui.InvoiceDetailFragment"
-        android:label="fragment_invoice_detail"
+        android:label="@string/label_detalle"
         tools:layout="@layout/fragment_invoice_detail" >
         <action
             android:id="@+id/action_invoiceDetailFragment_to_invoiceCreationFragment"

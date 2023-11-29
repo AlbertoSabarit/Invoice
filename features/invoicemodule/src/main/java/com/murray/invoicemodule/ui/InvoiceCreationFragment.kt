@@ -21,6 +21,16 @@ class InvoiceCreationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
+        val nombres = arrayOf("Alberto", "Ender", "Kateryna", "Alejandro")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        /*binding.btnAnadirArt.setOnClickListener {
+            findNavController().navigate(R.id.act)
+        }*/
+
+        binding.spinner.adapter = adapter
 
         return binding.root
     }

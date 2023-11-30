@@ -32,7 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/tiet_item_creation_name"
-                android:text="@={itemviewmodel.name}"/>
+                android:maxLength="30"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@={itemviewmodel.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -51,19 +54,24 @@
                 android:id="@+id/tietItemCreationRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:digits="0123456789."
                 android:hint="@string/tiet_item_creation_rate"
-                android:text="@={itemviewmodel.rate}"
-                />
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@={itemviewmodel.rate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--TODO databinding layout switch item-->
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/cbItemCreationTax"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/tiet_item_creation_tax"
+            android:checked="@={itemviewmodel.isTaxable}"
             app:layout_constraintBottom_toTopOf="@+id/tilItemCreationType"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
             app:layout_constraintHorizontal_weight="3"
@@ -84,18 +92,19 @@
                 android:id="@+id/tvItemCreationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="@string/tiet_item_creation_type"
-                android:textSize="20sp"
-                android:padding="5dp" />
-
+                android:textSize="20sp" />
+            <!--TODO databinding layout spinner item-->
             <Spinner
-                android:entries="@array/sp_item_creation_type"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:id="@+id/sItemCreationType"
+                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/sp_item_creation_type"
+                android:hint="@string/tiet_item_creation_type"
                 android:padding="15dp"
-                android:hint="@string/tiet_item_creation_type" />
+                android:selectedItemPosition="@={itemviewmodel.spinnerSelectedPosition}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -113,7 +122,9 @@
                 android:id="@+id/tietItemCreationDescr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/tiet_item_creation_descr" />
+                android:hint="@string/tiet_item_creation_descr"
+                android:maxLines="8"
+                android:text="@={itemviewmodel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Button-->

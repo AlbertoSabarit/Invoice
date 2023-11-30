@@ -44,7 +44,7 @@ class CustomerListFragment : Fragment() {
         _binding = null
     }
     private fun setUpUserRecycler(){
-        var adapter = CustomAdapter (CustomerRepository.dataSet, requireContext()) { customer: Customer ->
+        var adapter = CustomAdapter (CustomerRepository.getDataSetCustomer(), requireContext()) { customer: Customer ->
             val bundle = bundleOf(
                 "name" to customer.name,
                 "email" to customer.email,

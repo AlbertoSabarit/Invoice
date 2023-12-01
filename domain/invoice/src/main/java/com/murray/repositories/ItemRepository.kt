@@ -32,7 +32,15 @@ enum class ImagesItem {
 class ItemRepository private constructor() {
 
     companion object {
-        val dataSet: MutableList<Item> = InitDataSetItem()
+        private var dataSet: MutableList<Item> = InitDataSetItem()
+
+        fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description: String, image:ImagesItem = ImagesItem.MALETA_CUERO){
+            dataSet.add(Item(name,type,rate,isTaxable,description,image))
+        }
+
+        fun getDataSetItem():MutableList<Item>{
+            return dataSet
+        }
 
         private fun InitDataSetItem(): MutableList<Item> {
             var dataSet: MutableList<Item> = ArrayList()

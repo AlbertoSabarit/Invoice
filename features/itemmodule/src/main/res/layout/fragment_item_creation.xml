@@ -5,14 +5,14 @@
 
     <data>
         <variable
-            name="itemviewmodel"
-            type="com.murray.item.ui.ItemViewModel" />
+            name="itemcreationviewmodel"
+            type="com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.murray.item.ui.ItemCreationFragment">
+        tools:context="com.murray.item.ui.itemcreation.ItemCreationFragment">
 
         <!--Input-->
         <com.google.android.material.textfield.TextInputLayout
@@ -35,7 +35,7 @@
                 android:maxLength="30"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@={itemviewmodel.name}" />
+                android:text="@={itemcreationviewmodel.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +60,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@={itemviewmodel.rate}" />
+                android:text="@={itemcreationviewmodel.rate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/tiet_item_creation_tax"
-            android:checked="@={itemviewmodel.isTaxable}"
+            android:checked="@={itemcreationviewmodel.isTaxable}"
             app:layout_constraintBottom_toTopOf="@+id/tilItemCreationType"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
             app:layout_constraintHorizontal_weight="3"
@@ -104,7 +104,7 @@
                 android:entries="@array/sp_item_creation_type"
                 android:hint="@string/tiet_item_creation_type"
                 android:padding="15dp"
-                android:selectedItemPosition="@={itemviewmodel.spinnerSelectedPosition}" />
+                android:selectedItemPosition="@={itemcreationviewmodel.spinnerSelectedPosition}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/tiet_item_creation_descr"
                 android:maxLines="8"
-                android:text="@={itemviewmodel.description}" />
+                android:text="@={itemcreationviewmodel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Button-->
@@ -134,6 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="@string/b_item_creation_add"
+            android:onClick="@{()->itemcreationviewmodel.validateItemCreation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
             app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"

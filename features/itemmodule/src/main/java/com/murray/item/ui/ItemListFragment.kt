@@ -38,7 +38,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
     }
 
     private fun setUpItemRecycler() {
-        var adapter = ItemListAdapter(ItemRepository.dataSet, requireContext(), this)
+        var adapter = ItemListAdapter(ItemRepository.getDataSetItem(), requireContext(), this)
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())

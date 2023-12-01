@@ -21,7 +21,7 @@ class SignInViewModel : ViewModel() {
     //liveData que tendrá su Observador en el Fragment y controla las excepciones/casos de uso
     // de la operación Login
 
-    private var state = MutableLiveData<SignInState>()
+    var state = MutableLiveData<SignInState>()
 
     //Crear la clase sellada que permitirá gestionar las excepciones de la vista
 

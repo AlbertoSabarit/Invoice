@@ -68,6 +68,7 @@ class AccountSignInFragment : Fragment() {
             when(it){
                 SignInState.EmailEmptyError -> setEmailEmptyError()
                 SignInState.PasswordEmptyError -> setPasswordEmptyError()
+                SignInState.Completed -> {}
                 is SignInState.AuthenticationError -> showMessage(it.message)
                 is SignInState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
@@ -109,6 +110,7 @@ class AccountSignInFragment : Fragment() {
     }
 
     private fun onSuccess() {
+        viewModel.state.value = SignInState.Completed
         Toast.makeText(requireActivity(), "Te has logeado", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_accountSignInFragment_to_userListFragment)
     }

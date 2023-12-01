@@ -1,66 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".MainFragment"
+    android:background="#CEE7EF">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="50dp"
+        android:fontFamily="casual"
+        android:text="INVOICE"
+        android:textColor="#000000"
+        android:textSize="90dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="50dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#08000000">
 
             <Button
                 android:id="@+id/btSignin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btSignIn" />
-
+                android:layout_width="0dp"
+                android:layout_height="78dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:text="Iniciar Sesión"
+                android:textSize="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="206dp" />
 
             <Button
                 android:id="@+id/btCustomerList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lista clientes" />
+                android:layout_width="160dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/shape_button_main"
+                android:text="Clientes"
+                android:textSize="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btSignin"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="206dp" />
 
             <Button
                 android:id="@+id/btInvoiceList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lista facturas" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btSignUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btSignUp" />
+                android:layout_width="160dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/shape_button_main"
+                android:text="Facturas"
+                android:textSize="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btCustomerList"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="206dp" />
 
 
             <Button
                 android:id="@+id/btItemList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lista artículos" />
+                android:layout_width="160dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/shape_button_main"
+                android:text="Artículos"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btSignin"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="206dp" />
 
             <Button
                 android:id="@+id/btTaskList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lista tareas" />
-        </LinearLayout>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                android:layout_width="160dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/shape_button_main"
+                android:text="Tareas"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btCustomerList"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="206dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

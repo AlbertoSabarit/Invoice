@@ -4,7 +4,7 @@ import com.murray.entities.customers.Customer
 
 class CustomerRepository private constructor(){
     companion object {
-        private var dataSet: MutableList<Customer> = ArrayList()
+        var dataSet: MutableList<Customer> = ArrayList()
         init{
             initDataSetUser()
         }

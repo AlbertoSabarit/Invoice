@@ -35,7 +35,7 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
             findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceCreationFragment)
         }
 
-        var adapter: InvoiceAdapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
+        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
         if (adapter.itemCount == 0) {
             binding.lnlSinFactura.visibility = View.VISIBLE
         } else {
@@ -44,7 +44,7 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
     }
 
     private fun setUpUserRecycler() {
-        var adapter: InvoiceAdapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
+        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
 
         adapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
             override fun onItemClick(item:Invoice) {
@@ -74,8 +74,6 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
                 )
             }
         })
-
-
 
         if (adapter.itemCount == 0) {
             binding.lnlSinFactura.visibility = View.VISIBLE

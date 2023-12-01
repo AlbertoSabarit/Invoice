@@ -2,6 +2,7 @@ package com.murray.customer.ui
 
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,10 +86,10 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         gMap = googleMap
         //var address:String = Address
         var zoom:Float = 16f
-        if(address.equals("España"))
-            zoom = 4.5f
+        //Lat: 40.46366700000001 Lon: -3.7492199999999998
         val latLng = getLatLngFromAddress(address)
-
+        if(latLng?.latitude == 40.46366700000001 && latLng?.longitude ==-3.7492199999999998)
+            zoom = 4.8f
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng!!, zoom))
         gMap.addMarker(MarkerOptions().position(latLng!!).title("Casa"))
     }
@@ -101,6 +102,16 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
             if (addresses?.isNotEmpty() == true) {
                 val latitude = addresses?.get(0)?.latitude
                 val longitude = addresses?.get(0)?.longitude
+                return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
+            }
+            else{
+                val addresses = geocoder.getFromLocationName("España", 1)
+                val latitude = addresses?.get(0)?.latitude
+                val longitude = addresses?.get(0)?.longitude
+                Log.i("TAG", "------------------------------------------")
+                Log.i("Datos","Lat: " + latitude + " Lon: " + longitude)
+                Log.i("TAG", "------------------------------------------")
+
                 return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
             }
         } catch (e: IOException) {

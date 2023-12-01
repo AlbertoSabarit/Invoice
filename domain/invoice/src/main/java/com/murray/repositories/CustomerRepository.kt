@@ -13,8 +13,12 @@ class CustomerRepository private constructor(){
             return dataSet
         }
 
-        fun addCustomer(n:String, e:String, p:Int, c:String, a:String){
+        fun aaddCustomer(n:String, e:String, p:Int, c:String, a:String){
             dataSet.add(Customer(n, e, p, c ,a))
+        }
+
+        fun addCustomer(c:Customer){
+            dataSet.add(c)
         }
 
         private fun initDataSetUser(){
@@ -29,7 +33,7 @@ class CustomerRepository private constructor(){
             dataSet.add(Customer("Eliseo Moreno", "Eliseo@gmail.com",682103410, "Málaga", "Calle Competa 29"))
             dataSet.add(Customer("Francisco Cabrera", "Francisco@gmail.com",696412057, "Málaga", "Calle Competa 29"))
             dataSet.add(Customer("Jose Millan", "Jose@gmail.com",604153895, "Málaga", "Calle Competa 29"))
-            dataSet.add(Customer("Pello Mir", "Pello@gmail.com",680259805, "Málaga", "Calle Competa 29"))
+            dataSet.add(Customer("Pello Mir", "Pello@gmail.com",680259805, "Málaga", "8"))
         }
     }
 

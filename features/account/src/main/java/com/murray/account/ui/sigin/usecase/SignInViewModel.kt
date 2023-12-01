@@ -1,4 +1,4 @@
-package com.murray.account.ui.sigin
+package com.murray.account.ui.sigin.usecase
 
 import android.text.TextUtils
 import android.util.Log
@@ -50,22 +50,25 @@ class SignInViewModel : ViewModel() {
                     //La respuesta del Repositorio es asíncrona
 
                     //val result = UserRepository.login(email.value!!, password.value!!)
-                    val authFirebase:AuthFirebase = AuthFirebase()
+                    val authFirebase = AuthFirebase()
                     val result = authFirebase.login(email.value!!, password.value!!)
 
                     //ES OBLIGATORIO: pausar/quitar el FragmentDialog antes de mostrar el error. Ya que el Fragment SignIn está pausado.
                     state.value = SignInState.Loading(false)
+
+
                     when (result) {
                         //"is" cuando sea un dataclass
                         is Resource.Success<*> -> {
                                 // Manejo de error si el tipo de dato no es el esperado
                                 Log.e(TAG, "Login correcto del usuario")
-                            state.value = SignInState.Success(result.data as Account)
+                            state.value = SignInState.Success(result.data as? Account)
 
                         }
                         is Resource.Error -> {
                             Log.i(TAG, "Informacion del dato ${result.exception.message}")
-                            state.value = SignInState.AuthenticationError(result.exception.message!!)
+                            state.value =
+                                SignInState.AuthenticationError(result.exception.message!!)
                         }
                     }
                 }

@@ -6,24 +6,38 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.murray.account.ui.sigin.SignInViewModel" />
+            type="com.murray.account.ui.sigin.usecase.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.murray.account.ui.UserListFragment">
+        android:layout_height="wrap_content"
+        tools:context="com.murray.account.ui.userlist.UserListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
             android:id="@+id/rv_user"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/imgNoData"
+        <com.airbnb.lottie.LottieAnimationView
+            android:visibility="invisible"
+            android:id="@+id/animationView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:src="@tools:sample/avatars" />
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/datalottie" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

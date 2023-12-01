@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemCreationFragment"
-        android:name="com.murray.item.ui.itemcreation.ItemCreationFragment"
+        android:name="com.murray.item.ui.ItemCreationFragment"
         android:label="@string/fragment_item_creation_label"
         tools:layout="@layout/fragment_item_creation" />
     <fragment

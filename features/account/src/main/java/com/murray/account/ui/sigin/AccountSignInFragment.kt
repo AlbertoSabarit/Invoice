@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.account.R
 import com.murray.account.databinding.FragmentAccountSignInBinding
+import com.murray.account.ui.sigin.usecase.SignInState
+import com.murray.account.ui.sigin.usecase.SignInViewModel
 
 
 class AccountSignInFragment : Fragment() {
@@ -89,7 +91,6 @@ class AccountSignInFragment : Fragment() {
      * Función que muestra al usuario un mensaje
      */
     private fun showMessage(message: String) {
-        //Toast.makeText(requireContext(), "Mi primer MVVM $message", Toast.LENGTH_SHORT).show()
         val action = AccountSignInFragmentDirections.actionAccountSignInFragmentToBaseFragmentDialog("Error",message)
         findNavController().navigate(action)
     }
@@ -108,7 +109,8 @@ class AccountSignInFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Caso de uso", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "Te has logeado", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_accountSignInFragment_to_userListFragment)
     }
     
     override fun onDestroyView() {

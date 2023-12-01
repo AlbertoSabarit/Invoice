@@ -51,4 +51,9 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
 
+    //libreria de animaciones
+
+    val lottieVersion = "3.4.0"
+    implementation ("com.airbnb.android:lottie:$lottieVersion")
+
 }

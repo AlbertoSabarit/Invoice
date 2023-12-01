@@ -8,12 +8,14 @@ import com.murray.account.databinding.LayoutUserItemBinding
 import com.murray.entities.accounts.User
 
 class UserAdapter(
-    private val dataset: MutableList<User>,
-    private val context: Context,
     private val listener: OnUserClick,
     private val onItemClick: (user: User) -> Unit
 ) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+
+    //Se crea la colección de datos del adapter
+    private var dataset = (arrayListOf <User>())
+
 
     /**
      * Esta interfaz es el contrato entre el adapter y el fragmento que lo contiene
@@ -33,7 +35,7 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = dataset.get(position)
-        holder.bind(item, context)
+        holder.bind(item)
     }
 
     /**
@@ -45,15 +47,25 @@ class UserAdapter(
     }
 
     /**
+     * Funcion que actualiza los datos del adapter y le dice a la vista que se invalide y vuelva a dibujarse
+     */
+    fun update(newDataSet: ArrayList<User>){
+        //Actualizar mi dataset y notificar a la vista el cambio
+
+            dataset = newDataSet
+
+        notifyDataSetChanged()
+    }
+
+    /**
      * La clase ViewHolder contiene todos los elementos de View o del layout XML que sea ha inflado
      */
 
     inner class UserViewHolder(private val binding: LayoutUserItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        //val imgUser = view.findViewById(R.id.circularImageView) as ImageView
 
-        fun bind(item: User, context: Context) {
+        fun bind(item: User) {
             with(binding) {
                 tvNombre.text = item.name
                 tvApellido.text = item.surname

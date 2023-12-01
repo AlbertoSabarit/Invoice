@@ -1,4 +1,4 @@
-package com.murray.account.ui.sigin
+package com.murray.account.ui.sigin.usecase
 
 import com.murray.entities.accounts.Account
 
@@ -8,7 +8,7 @@ sealed class SignInState {
     data object PasswordEmptyError: SignInState()
     data object PasswordFormatError: SignInState()
     data class AuthenticationError(var message: String): SignInState()
-    data class Success (var account: Account) : SignInState()
+    data class Success (var account: Account?) : SignInState()
 
     //Se debe crear una clase que contiene un valor booleano que indica si se muestra el ProgressBar
 

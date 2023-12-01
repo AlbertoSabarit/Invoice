@@ -11,17 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
+import com.murray.invoicemodule.adapter.InvoiceAdapter.OnEditClickListener
 import com.murray.repositories.InvoiceRepository
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 
-class InvoiceListFragment : Fragment() {
+class InvoiceListFragment : Fragment(), OnEditClickListener{
 
     private var _binding: FragmentInvoiceListBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,13 +34,20 @@ class InvoiceListFragment : Fragment() {
         binding.btnCrearFactura.setOnClickListener {
             findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceCreationFragment)
         }
+
+        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
+        if (adapter.itemCount == 0) {
+            binding.lnlSinFactura.visibility = View.VISIBLE
+        } else {
+            binding.lnlSinFactura.visibility = View.INVISIBLE
+        }
     }
 
     private fun setUpUserRecycler() {
-        var adapter: InvoiceAdapter = InvoiceAdapter(com.murray.repositories.InvoiceRepository.dataSet, requireContext())
+        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
 
         adapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
-            override fun onItemClick(item: com.murray.entities.invoices.Invoice) {
+            override fun onItemClick(item:Invoice) {
                 val bundle = bundleOf(
                     "cliente" to item.cliente,
                     "fechacrear" to item.fcreacion,
@@ -56,6 +60,26 @@ class InvoiceListFragment : Fragment() {
                 )
             }
         })
+        adapter.setOnEditClickListener(object : OnEditClickListener {
+            override fun onEditClick(item: Invoice) {
+                val bundle = bundleOf(
+                    "cliente" to item.cliente,
+                    "fechacrear" to item.fcreacion,
+                    "fechavenc" to item.fvencimiento,
+                    "articulo" to item.articulo
+                )
+                findNavController().navigate(
+                    R.id.action_invoiceListFragment_to_invoiceCreationFragment,
+                    bundle
+                )
+            }
+        })
+
+        if (adapter.itemCount == 0) {
+            binding.lnlSinFactura.visibility = View.VISIBLE
+        } else {
+            binding.lnlSinFactura.visibility = View.INVISIBLE
+        }
 
         with(binding.invoicerv) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -68,4 +92,9 @@ class InvoiceListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onEditClick(item: Invoice) {
+        TODO("Not yet implemented")
+    }
+
 }

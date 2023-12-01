@@ -83,14 +83,13 @@
                 android:id="@+id/txtFechaCreacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="21/09/2023"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.059"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.742"
+                app:layout_constraintVertical_bias="0.744"
                 tools:ignore="TextSizeCheck" />
 
             <TextView
@@ -107,16 +106,15 @@
 
             <TextView
                 android:id="@+id/txtCliente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="189dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="16dp"
                 android:text="Rodrigo Gaitán Del Rio"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.085"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.294" />
+                app:layout_constraintVertical_bias="0.305" />
 
             <TextView
                 android:id="@+id/textView4"

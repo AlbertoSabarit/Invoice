@@ -20,4 +20,9 @@
     <string name="tx_impuesto">Impuesto</string>
     <string name="tx_total">Total</string>
     <string name="tx_btn">Pendiente</string>
+
+    <string name="label_lista">Lista de factura</string>
+    <string name="label_detalle">Detalles de factura</string>
+    <string name="label_creacion">Creacion de factura</string>
+
 </resources>

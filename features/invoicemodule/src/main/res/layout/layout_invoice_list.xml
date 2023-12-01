@@ -30,7 +30,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_cardview"
-                android:layout_width="match_parent"
+                android:layout_width="393dp"
                 android:layout_height="190dp"
                 android:background="@color/md_theme_light_secondaryContainer">
 
@@ -42,7 +42,7 @@
                     android:src="@drawable/ic_delete"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.954"
+                    app:layout_constraintHorizontal_bias="0.915"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.106"
@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cliente"
-                    android:textSize="17dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -65,20 +65,21 @@
 
                 <TextView
                     android:id="@+id/txtncliente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="142dp"
+                    android:layout_height="27dp"
                     android:layout_marginStart="16dp"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.509" />
 
                 <TextView
                     android:id="@+id/txtCreacion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Creación"
-                    android:textSize="17dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -92,19 +93,19 @@
                     android:id="@+id/txtfvencimiento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="240dp"
-                    android:textSize="15dp"
+                    android:layout_marginStart="248dp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.823" />
+                    app:layout_constraintVertical_bias="0.833" />
 
                 <TextView
                     android:id="@+id/txtArticulos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Articulos"
-                    android:textSize="17dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -116,13 +117,14 @@
 
                 <TextView
                     android:id="@+id/txtnarticulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="240dp"
-                    android:textSize="15dp"
+                    android:layout_width="132dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="248dp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.487" />
 
                 <TextView
                     android:id="@+id/txtnfacturas"
@@ -143,7 +145,7 @@
                     android:background="@color/md_theme_light_secondaryContainer"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.842"
+                    app:layout_constraintHorizontal_bias="0.801"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.106"
@@ -154,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -165,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vencimiento"
-                    android:textSize="17dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -17,8 +17,8 @@ class InvoiceItemViewHolder (private val binding: LayoutInvoiceItemBinding): Rec
     fun bind(item: Item, context: Context) {
         with(binding) {
             txtnArticulo.text = item.name
-            txtparticulo.text = item.rate
-            txtptotal.text = item.rate
+            txtparticulo.text = item.rate.toString()
+            txtptotal.text = item.rate.toString()
         }
         binding.imgQuitarArticulo.setOnClickListener {
             deleteClickListener?.onDeleteClick(item)

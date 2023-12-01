@@ -56,7 +56,7 @@ class ItemCreationFragment : Fragment() {
                     else -> ItemType.PRODUCT //va a ser uno u otro si o si
                 }
             var rate:Double = rate.value!!.toDouble()
-            var isTaxable:Boolean = isTaxable.value!!
+            var isTaxable:Boolean = isTaxable.value ?: false
             var description:String = description.value ?: ""
             //todo imagen placeholder
             var image:ImagesItem = ImagesItem.MALETA_CUERO

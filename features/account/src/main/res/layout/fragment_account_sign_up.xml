@@ -100,10 +100,9 @@
         android:id="@+id/tvProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Tipo usuario"
         app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tvType" />
+        tools:layout_editor_absoluteY="368dp" />
 
     <TextView
         android:id="@+id/tvType"

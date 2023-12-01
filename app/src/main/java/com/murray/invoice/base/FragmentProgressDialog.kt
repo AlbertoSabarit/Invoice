@@ -1,4 +1,4 @@
-package com.moronlu18.loginapplication.base
+package com.murray.invoice.base
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.murray.invoice.R
 
-class FragmentProgressDialog : DialogFragment() {
+class  FragmentProgressDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Utilizar la instancia de LayoutInfater para inflar el diseño XML que contiene un

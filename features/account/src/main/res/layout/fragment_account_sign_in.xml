@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.murray.account.ui.sigin.SignInViewModel" />
+            type="com.murray.account.ui.sigin.usecase.SignInViewModel" />
     </data>
 
     <LinearLayout

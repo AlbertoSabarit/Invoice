@@ -1,7 +1,11 @@
 package com.murray.repositories
 
+import com.murray.entities.accounts.Account
+import com.murray.entities.accounts.AccountState
+import com.murray.entities.accounts.Email
 import com.murray.entities.accounts.User
 import com.murray.network.Resource
+import com.murray.network.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -14,55 +18,77 @@ import java.lang.Exception
 class UserRepository private constructor() {
 
     companion object {
-        val dataSet: MutableList<User> = mutableListOf()
+        var dataSet: MutableList<User> = mutableListOf()
 
         init {
             initDataSetUser()
         }
 
-        private fun initDataSetUser(){
-            var dataset: MutableList<User> = ArrayList()
-            dataset.add(
+        private fun initDataSetUser(): MutableList<User> {
+            dataSet.add(
                 User(
                     "Alberto",
                     "Sabarit",
                     "albertosabarit@iesportada.org"
                 )
             )
-            dataset.add(
+            dataSet.add(
                 User(
                     "Ender",
                     "Watts",
                     "enderwatts@iesportada.org"
                 )
             )
-            dataset.add(
+            dataSet.add(
                 User(
                     "Kateryna",
                     "Nikitenko",
                     "katerynanikitenko@iesportada.org"
                 )
             )
-            dataset.add(
+            dataSet.add(
                 User(
                     "Alejandro",
                     "Valle",
                     "alevalle@iesportada.org"
                 )
             )
+            return dataSet
         }
 
         /**
          * La funcion que se pregunta a Firebase/Room (Sqlite) por el usuario
          */
-        suspend fun login(email: String, password: String) : Resource {
+        suspend fun login(email: String, password: String): Resource {
             //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 delay(2000)
                 //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
                 //el error ARN(Android Not Responding) porque puede bloquear la vista
             }
-            return Resource.Error(Exception("El password es incorrecto"))
+            return Resource.Success(
+                data = Account.create(
+                    1,
+                    Email("murray@gmail.com"),
+                    "12345678",
+                    "Murray",
+                    AccountState.VERIFIED
+                )
+            )
+            //return Resource.Error(Exception("El password es incorrecto"))
+        }
+
+        /**
+         * Esta función simula una consulta asincrona y devuelve el conjunto de usuarios de la aplicación
+         */
+        suspend fun getUserList(): ResourceList {
+            return withContext(Dispatchers.IO) {
+                delay(2000)
+                when {
+                    dataSet.isEmpty() -> ResourceList.Error(Exception("No hay datos"))
+                    else -> ResourceList.Success(dataSet as ArrayList<User>)
+                }
+            }
         }
     }
 }

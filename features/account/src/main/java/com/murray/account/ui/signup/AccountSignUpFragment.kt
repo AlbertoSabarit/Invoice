@@ -1,4 +1,4 @@
-package com.murray.account.ui
+package com.murray.account.ui.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater

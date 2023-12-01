@@ -8,7 +8,8 @@ import java.util.regex.Pattern
  */
 class Email(val value: String) {
 
-    private val pattern = Pattern.compile("")
+    //private val pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+    private val pattern = Pattern.compile("^\\S+@\\S+\\.\\S+$")
 
     init {
         if (!pattern.matcher(value).matches())

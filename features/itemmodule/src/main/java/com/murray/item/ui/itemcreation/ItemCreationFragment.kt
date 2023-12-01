@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.entities.items.ItemType
 import com.murray.item.databinding.FragmentItemCreationBinding
@@ -75,6 +76,7 @@ class ItemCreationFragment : Fragment() {
             ItemRepository.addItem(name, type, rate, isTaxable, description, image)
         }
         Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
     }
 
     private fun setNameEmptyError() {

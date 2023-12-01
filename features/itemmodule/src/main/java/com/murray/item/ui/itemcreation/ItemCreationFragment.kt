@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.murray.entities.items.ItemType
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
+import com.murray.repositories.ImagesItem
+import com.murray.repositories.ItemRepository
 
 class ItemCreationFragment : Fragment() {
 
@@ -34,12 +38,45 @@ class ItemCreationFragment : Fragment() {
 
         itemcreationviewmodel.getState().observe(viewLifecycleOwner){
             when(it){
-                ItemCreationState.NameEmptyError -> set
-
+                ItemCreationState.NameEmptyError -> setNameEmptyError()
+                ItemCreationState.InvalidFormatRateError -> setInvalidFormatRateError()
+                ItemCreationState.TypeIsMandatoryError -> setTypeIsMandatoryError()
+                else -> onSuccess()
             }
         }
-
-
-
     }
+
+    private fun onSuccess() {
+        with(itemcreationviewmodel){
+            var name:String = name.value!!
+            var type:ItemType =
+                when(typeSpinnerPosition.value){
+                    0 -> ItemType.PRODUCT
+                    1 -> ItemType.SERVICE
+                    else -> ItemType.PRODUCT //va a ser uno u otro si o si
+                }
+            var rate:Double = rate.value!!.toDouble()
+            var isTaxable:Boolean = isTaxable.value!!
+            var description:String = description.value ?: ""
+            //todo imagen placeholder
+            var image:ImagesItem = ImagesItem.MALETA_CUERO
+
+            ItemRepository.addItem(name, type, rate, isTaxable, description, image)
+        }
+        Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setNameEmptyError() {
+        binding.tilItemCreationName.error = "Introduce un nombre"
+        binding.tilItemCreationName.requestFocus()
+    }
+    private fun setInvalidFormatRateError() {
+        binding.tilItemCreationRate.error = "Introduce un precio válido"
+        binding.tilItemCreationRate.requestFocus()
+    }
+    private fun setTypeIsMandatoryError() {
+        binding.tilItemCreationType.error = "Elige un tipo válido"
+        binding.tilItemCreationType.requestFocus()
+    }
+
 }

@@ -34,7 +34,7 @@ class ItemRepository private constructor() {
     companion object {
         private var dataSet: MutableList<Item> = InitDataSetItem()
 
-        fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description: String, image:ImagesItem = ImagesItem.MALETA_CUERO){
+        fun addItem(name:String, type:ItemType, rate: Double, isTaxable:Boolean, description: String, image:ImagesItem){
             dataSet.add(Item(name,type,rate,isTaxable,description,image))
         }
 

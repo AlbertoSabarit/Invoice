@@ -84,5 +84,8 @@ dependencies {
 
     implementation("com.google.firebase:firebase-analytics")
 
+    //lottie
+    implementation ("com.airbnb.android:lottie:3.4.0")
+
 
 }

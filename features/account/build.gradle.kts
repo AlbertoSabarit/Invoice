@@ -53,7 +53,7 @@ dependencies {
 
     //libreria de animaciones
 
-    val lottieVersion = "3.4.0"
-    implementation ("com.airbnb.android:lottie:$lottieVersion")
-
+    implementation("com.airbnb.android:lottie:6.2.0")
 }
+
+

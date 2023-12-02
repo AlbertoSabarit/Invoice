@@ -41,9 +41,7 @@ class TaskCreateViewModel : ViewModel() {
                             // Manejo de error si el tipo de dato no es el esperado
                             Log.e(TAG, "Login correcto del usuario")
                             state.value = TaskCreateState.Success
-
                         }
-
                         is Resource.Error -> {
                             Log.i(TAG, "Informacion del dato ${result.exception.message}")
                             state.value = TaskCreateState.TaskCreateError(result.exception.message!!)

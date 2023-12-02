@@ -70,7 +70,7 @@ class AccountSignInFragment : Fragment() {
                 SignInState.PasswordEmptyError -> setPasswordEmptyError()
                 SignInState.Completed -> {}
                 is SignInState.AuthenticationError -> showMessage(it.message)
-                is SignInState.Loading -> showProgressbar(it.value)
+                //is SignInState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
             }
         })

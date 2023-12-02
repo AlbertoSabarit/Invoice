@@ -46,7 +46,7 @@ class SignInViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     //Vamos a ejecutar el Login del repositorio -> que pregunta a la capa de la infraestructura
-                    state.value = SignInState.Loading(true)
+                    //state.value = SignInState.Loading(true)
                     //La respuesta del Repositorio es asíncrona
 
                     //val result = UserRepository.login(email.value!!, password.value!!)
@@ -54,7 +54,7 @@ class SignInViewModel : ViewModel() {
                     val result = authFirebase.login(email.value!!, password.value!!)
 
                     //ES OBLIGATORIO: pausar/quitar el FragmentDialog antes de mostrar el error. Ya que el Fragment SignIn está pausado.
-                    state.value = SignInState.Loading(false)
+                    //state.value = SignInState.Loading(false)
 
 
                     when (result) {

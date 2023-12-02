@@ -1,5 +1,6 @@
 package com.murray.task.ui
 
+import android.R
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
@@ -8,12 +9,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.task.R
+import com.murray.entities.customers.Customer
+import com.murray.entities.tasks.Task
+import com.murray.repositories.CustomerRepository
+import com.murray.repositories.TaskRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -31,8 +36,14 @@ class TaskCreationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
+
+        val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spTaskClientes.adapter = adapter
+
 
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
@@ -136,8 +147,9 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
+        TaskRepository.addTask(Task(binding.tieTitulo.text.toString(), binding.spTaskClientes.selectedItem.toString(), binding.spinnerTipo.selectedItem.toString(), binding.tieFechCreacion.text.toString(), binding.tieFechFin.text.toString(),binding.spinnerEstado.selectedItem.toString(),binding.tieDescripcion.text.toString()))
         Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
-        findNavController().navigateUp()
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

@@ -1,6 +1,7 @@
 package com.murray.repositories
 
 import com.murray.entities.accounts.User
+import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
 import com.murray.network.Resource
 import com.murray.network.ResourceList
@@ -20,50 +21,64 @@ class TaskRepository private constructor() {
 
         private fun initDataSetTask(): MutableList<Task> {
             dataSet.add(Task(
-                    "Citación", "Antonio García", "Privado", "Modificado", "Cita privada con Antonio"
+                    "Citación", "Antonio García", "Privado","10/11/2023","25/12/2023", "Modificado", "Cita privada con Antonio"
                 )
             )
             dataSet.add(Task(
-                    "Visita fábrica", "Estela Perez", "Llamada", "Vencido", "Visita con Estela"
+                    "Visita fábrica", "Estela Perez", "Llamada","10/11/2023","25/12/2023", "Vencido", "Visita con Estela"
                 )
             )
             dataSet.add(Task(
-                    "Ver presupuesto", "Alejandro Castaño", "Visita", "Pendiente", "Reunión para presupuesto Alejandro"
+                    "Ver presupuesto", "Alejandro Castaño", "Visita","10/11/2023","25/12/2023", "Pendiente", "Reunión para presupuesto Alejandro"
                 )
             )
             dataSet.add(Task(
-                    "Cancelar visita", "Fernando Carmona", "Visita", "Modificado", "Cancelar la visita con Fernando por problemas"
+                    "Cancelar visita", "Fernando Carmona", "Visita", "10/11/2023","25/12/2023","Modificado", "Cancelar la visita con Fernando por problemas"
                 )
             )
             dataSet.add(Task(
-                    "Agendar", "Marina Rey", "Llamada", "Vencido", "Agendar una quedada con Marina"
+                    "Agendar", "Marina Rey", "Llamada","10/11/2023","25/12/2023", "Vencido", "Agendar una quedada con Marina"
                 )
             )
             dataSet.add(Task(
-                    "Citación", "Daniel Hernandez", "Visita", "Vencido", "Cita privada con Daniel"
+                    "Citación", "Daniel Hernandez", "Visita","10/11/2023","25/12/2023", "Vencido", "Cita privada con Daniel"
                 )
             )
             dataSet.add(Task(
-                    "Agendar", "Luciano Torres", "Privado", "Vencido", "Agendar a Luciano para hablar de asuntos laborales"
+                    "Agendar", "Luciano Torres", "Privado","10/11/2023","25/12/2023", "Vencido", "Agendar a Luciano para hablar de asuntos laborales"
                 )
             )
             dataSet.add(Task(
-                    "Ver informe", "Lucia Cabrera", "Privado", "Modificado", "Modificar informe de Lucia"
+                    "Ver informe", "Lucia Cabrera", "Privado","10/11/2023","25/12/2023", "Modificado", "Modificar informe de Lucia"
                 )
             )
             dataSet.add(Task(
-                    "Ver resultados", "Alicia Dominguez", "Privado", "Pendiente", "Cita privada con Alicia"
+                    "Ver resultados", "Alicia Dominguez", "Privado","10/11/2023","25/12/2023", "Pendiente", "Cita privada con Alicia"
                 )
             )
             dataSet.add(Task(
-                    "Citación", "Federico Valverde", "Visita", "Pendiente", "Citar para renovar a Federico"
+                    "Citación", "Federico Valverde", "Visita","10/11/2023","25/12/2023", "Pendiente", "Citar para renovar a Federico"
                 )
             )
             dataSet.add(Task(
-                    "Agendar", "David García", "Llamada", "Vencido", "David va a la calle"
+                    "Agendar", "David García", "Llamada","10/11/2023","25/12/2023", "Vencido", "David va a la calle"
                 )
             )
             return dataSet
+        }
+
+        fun addTask(t: Task){
+            dataSet.add(t)
+        }
+
+        suspend fun getTaskList(): ResourceList{
+            return withContext(Dispatchers.IO) {
+                //delay(2000)
+                when {
+                    dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
+                    else -> ResourceList.Success(dataSet as ArrayList<Task>)
+                }
+            }
         }
 
         suspend fun createTask(titulo: String, descripcion: String) : Resource {
@@ -76,14 +91,6 @@ class TaskRepository private constructor() {
             return Resource.Error(Exception("El password es incorrecto"))
         }
 
-        suspend fun getTaskList(): ResourceList{
-            return withContext(Dispatchers.IO) {
-                delay(2000)
-                when {
-                    dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
-                    else -> ResourceList.Success(dataSet as ArrayList<Task>)
-                }
-            }
-        }
+
     }
 }

@@ -45,7 +45,7 @@ class TaskListFragment : Fragment() {
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer{
             when(it){
-                is TaskListState.Loading -> showProgressBar(it.value)
+                is TaskListState.Loading -> {} //showProgressBar(it.value)
                 TaskListState.NoDataError -> showNoDataError()
                 is TaskListState.Success -> onSuccess(it.dataset)
             }

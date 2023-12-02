@@ -75,7 +75,6 @@ class UserRepository private constructor() {
                     AccountState.VERIFIED
                 )
             )
-            //return Resource.Error(Exception("El password es incorrecto"))
         }
 
         /**

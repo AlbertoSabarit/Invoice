@@ -1,6 +1,5 @@
 package com.murray.account.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,7 @@ class UserAdapter(
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     //Se crea la colección de datos del adapter
-    private var dataset = (arrayListOf <User>())
+    private var dataset = (arrayListOf<User>())
 
 
     /**
@@ -49,10 +48,10 @@ class UserAdapter(
     /**
      * Funcion que actualiza los datos del adapter y le dice a la vista que se invalide y vuelva a dibujarse
      */
-    fun update(newDataSet: ArrayList<User>){
+    fun update(newDataSet: ArrayList<User>) {
         //Actualizar mi dataset y notificar a la vista el cambio
 
-            dataset = newDataSet
+        dataset = newDataSet
 
         notifyDataSetChanged()
     }

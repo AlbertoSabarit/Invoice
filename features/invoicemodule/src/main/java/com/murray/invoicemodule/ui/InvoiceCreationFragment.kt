@@ -88,7 +88,7 @@ class InvoiceCreationFragment : Fragment() {
     }
 
     private fun setUpUserRecycler() {
-        var adapter = InvoiceAdapterItem(ItemRepository.dataSet, requireContext())
+        var adapter = InvoiceAdapterItem(ItemRepository.getDataSetItem(), requireContext())
         with(binding.rvArticulos) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.murray.task.ui.TaskViewModel" />
+            type="com.murray.task.ui.usecase.TaskCreateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-
+            android:onClick="@{() -> viewmodel.validateCredentials()}"
             app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
             app:layout_constraintVertical_bias="0.867" />
 

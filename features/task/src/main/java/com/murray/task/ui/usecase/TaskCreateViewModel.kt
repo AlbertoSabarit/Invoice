@@ -1,4 +1,4 @@
-package com.murray.task.ui
+package com.murray.task.ui.usecase
 
 import android.text.TextUtils
 import android.util.Log
@@ -11,42 +11,42 @@ import com.murray.repositories.TaskRepository
 import kotlinx.coroutines.launch
 
 const val TAG = "ViewModel"
-class TaskViewModel : ViewModel() {
+class TaskCreateViewModel : ViewModel() {
 
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
 
     //liveData que tendrá su Observador en el Fragment y controla las excepciones/casos de uso
-    private var state = MutableLiveData<TaskState>()
+    private var state = MutableLiveData<TaskCreateState>()
 
 
     fun validateCredentials() {
 
         when {
-            TextUtils.isEmpty(title.value) -> state.value = TaskState.TitleEmptyError
-            TextUtils.isEmpty(description.value) -> state.value = TaskState.DescriptionEmptyError
+            TextUtils.isEmpty(title.value) -> state.value = TaskCreateState.TitleEmptyError
+            TextUtils.isEmpty(description.value) -> state.value = TaskCreateState.DescriptionEmptyError
             else -> {
                 viewModelScope.launch {
 
-                    state.value = TaskState.Loading(true)
+                    state.value = TaskCreateState.Loading(true)
                     //La respuesta del Repositorio es asíncrona
 
                     val result = TaskRepository.createTask(title.value!!, description.value!!)
 
                     //ES OBLIGATORIO: pausar/quitar el FragmentDialog antes de mostrar el error. Ya que el Fragment SignIn está pausado.
-                    state.value = TaskState.Loading(false)
+                    state.value = TaskCreateState.Loading(false)
                     when (result) {
                         //"is" cuando sea un dataclass
                         is Resource.Success<*> -> {
                             // Manejo de error si el tipo de dato no es el esperado
                             Log.e(TAG, "Login correcto del usuario")
-                            state.value = TaskState.Success
+                            state.value = TaskCreateState.Success
 
                         }
 
                         is Resource.Error -> {
                             Log.i(TAG, "Informacion del dato ${result.exception.message}")
-                            state.value = TaskState.TaskError(result.exception.message!!)
+                            state.value = TaskCreateState.TaskCreateError(result.exception.message!!)
                         }
                     }
                 }
@@ -55,7 +55,7 @@ class TaskViewModel : ViewModel() {
 
     }
 
-    fun getState(): LiveData<TaskState> {
+    fun getState(): LiveData<TaskCreateState> {
         return state
     }
 }

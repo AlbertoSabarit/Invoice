@@ -3,7 +3,10 @@ package com.murray.repositories
 import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
 import com.murray.invoice.R
-
+import com.murray.network.ResourceList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 
 enum class ImagesItem {
@@ -40,6 +43,16 @@ class ItemRepository private constructor() {
 
         fun getDataSetItem():MutableList<Item>{
             return dataSet
+        }
+
+        suspend fun getItemList():ResourceList{
+            return withContext(Dispatchers.IO){
+                delay(500)
+                when{
+                    dataSet.isEmpty() -> ResourceList.Error(Exception("No hay artículos"))
+                    else -> ResourceList.Success(dataSet as ArrayList<Item>)
+                }
+            }
         }
 
         private fun InitDataSetItem(): MutableList<Item> {

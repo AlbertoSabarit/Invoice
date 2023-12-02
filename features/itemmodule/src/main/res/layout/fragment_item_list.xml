@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ItemListFragment">
+    tools:context=".ui.itemlist.ItemListFragment">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,12 +31,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ivItemListEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="102dp"
-            android:src="@drawable/img_estrellitas"
-            tools:layout_editor_absoluteX="500dp"
-            tools:layout_editor_absoluteY="500dp" />
+            android:id="@+id/lavNoItems"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <!--
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lavNoItems"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/noitems" />-->
 
         <TextView
             android:id="@+id/tvItemListEmptyTitle"
@@ -59,7 +72,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvItemList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/itemListFragment"
-        android:name="com.murray.item.ui.ItemListFragment"
+        android:name="com.murray.item.ui.itemlist.ItemListFragment"
         android:label="@string/fragment_item_list_label"
         tools:layout="@layout/fragment_item_list" >
         <action
@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_itemListFragment_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
+        <action
+            android:id="@+id/action_itemListFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
     </fragment>
     <fragment
         android:id="@+id/itemCreationFragment"
@@ -31,4 +34,20 @@
             android:id="@+id/action_itemDetailFragment_to_itemCreationFragment"
             app:destination="@id/itemCreationFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/baseFragmentDialog"
+        android:name="com.murray.invoice.base.BaseFragmentDialog"
+        android:label="BaseFragmentDialog" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string" />
+    </dialog>
+    <dialog
+        android:id="@+id/fragmentProgressDialog"
+        android:name="com.murray.invoice.base.FragmentProgressDialog"
+        android:label="FragmentProgressDialog" />
 </navigation>

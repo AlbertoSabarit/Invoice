@@ -11,11 +11,13 @@ import com.murray.item.databinding.LayoutItemListBinding
 import com.murray.repositories.ImagesItem
 
 class ItemListAdapter(
-    private val dataSet: MutableList<Item>,
+    //private val dataSet: MutableList<Item>,
     private val context: Context,
     private val clickListener: OnItemClickListener
 ) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
+
+    private var dataset:ArrayList<Item> = arrayListOf()
 
     interface OnItemClickListener {
         fun onItemClick(item: Item)
@@ -27,11 +29,11 @@ class ItemListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size
+        return dataset.size
     }
 
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
-        val item = dataSet[position]
+        val item = dataset[position]
         holder.bind(item, context)
 
         holder.itemView.setOnClickListener {
@@ -47,8 +49,14 @@ class ItemListAdapter(
     }
 
     fun removeItem(position: Int){
-        dataSet.removeAt(position)
+        dataset.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    fun update(newDataSet: ArrayList<Item>){
+        //Actualizar mi dataset y notificar a la vista el cambio
+        dataset = newDataSet
+        notifyDataSetChanged()
     }
 
     class ItemListViewHolder(val binding: LayoutItemListBinding) :

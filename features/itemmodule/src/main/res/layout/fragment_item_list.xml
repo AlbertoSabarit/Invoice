@@ -14,62 +14,57 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
-    <LinearLayout
-        android:visibility="invisible"
-        android:id="@+id/lnlItemListEmpty"
-        android:layout_width="332dp"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lavNoItems"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.40"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/noitems" />
+<!--
+    <ImageView
+        android:id="@+id/lavNoItems"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/img_estrellitas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />-->
 
-        <ImageView
-            android:id="@+id/lavNoItems"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <!--
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lavNoItems"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/noitems" />-->
+    <TextView
+        android:id="@+id/tvItemListEmptyTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/tv_item_list_empty_title"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lavNoItems" />
 
-        <TextView
-            android:id="@+id/tvItemListEmptyTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:padding="10dp"
-            android:text="@string/tv_item_list_empty_title"
-            android:textAlignment="center"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/tvItemListEmptyText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foregroundTint="#807B7B"
-            android:text="@string/tv_item_list_empty_text"
-            android:textAlignment="center"
-            android:textSize="16dp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvItemListEmptyText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_item_list_empty_text"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvItemListEmptyTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvItemList"

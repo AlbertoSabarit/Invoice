@@ -57,6 +57,7 @@ class ItemRepository private constructor() {
 
         private fun InitDataSetItem(): MutableList<Item> {
             var dataSet: MutableList<Item> = ArrayList()
+            /*
             dataSet.add(
                 Item(
                     "Maleta de Cuero",
@@ -116,7 +117,7 @@ class ItemRepository private constructor() {
                     "¡Disfruta de los grandes espacios nevados! Estas botas altas impermeables de piel te abrigarán bien hasta -24 °C. Agarre óptimo en la nieve para disfrutar al máximo de tus salidas. ¿Quieres salir por caminos apisonados? Progresa con total comodidad gracias a la caña alta de piel y conserva los pies secos gracias a su impermeabilidad.",
                     ImagesItem.BOTAS_NIEVE
                 )
-            )
+            )*/
             return dataSet
         }
 

@@ -61,9 +61,9 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         this.address = address
         binding.txtName.text = cliente
         binding.txtEmail.text = email
-        binding.txtPhone.text = phone.toString()
+        binding.txtPhone.text = phone.toString()?: ""
         binding.txtCity.text = city
-        binding.txtAddress.text = address
+        binding.txtAddress.text = address.takeIf { it.isNotEmpty() }?: "España"
 
         mapView = binding.map
         mapView.onCreate(savedInstanceState)
@@ -87,7 +87,7 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         //var address:String = Address
         var zoom:Float = 16f
         //Lat: 40.46366700000001 Lon: -3.7492199999999998
-        val latLng = getLatLngFromAddress(address)
+        val latLng = getLatLngFromAddress(address?: "España")
         if(latLng?.latitude == 40.46366700000001 && latLng?.longitude ==-3.7492199999999998)
             zoom = 4.8f
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng!!, zoom))
@@ -115,7 +115,14 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
                 return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            val addresses = geocoder.getFromLocationName("España", 1)
+            val latitude = addresses?.get(0)?.latitude
+            val longitude = addresses?.get(0)?.longitude
+            Log.i("TAG", "------------------------------------------")
+            Log.i("Datos","Lat: " + latitude + " Lon: " + longitude)
+            Log.i("TAG", "------------------------------------------")
+
+            return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
         }
         return null
     }

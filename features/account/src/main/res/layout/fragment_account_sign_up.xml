@@ -83,7 +83,6 @@
         android:id="@+id/spProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         app:layout_constraintBottom_toBottomOf="@+id/tvProfile"
         app:layout_constraintEnd_toStartOf="@+id/gdEnd"
         app:layout_constraintStart_toEndOf="@+id/barrier"
@@ -100,9 +99,10 @@
         android:id="@+id/tvProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="Tipo usuario"
         app:layout_constraintStart_toStartOf="@+id/gdStart"
-        tools:layout_editor_absoluteY="368dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
     <TextView
         android:id="@+id/tvType"

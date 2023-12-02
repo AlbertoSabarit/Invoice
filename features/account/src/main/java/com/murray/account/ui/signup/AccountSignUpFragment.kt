@@ -68,10 +68,9 @@ class AccountSignUpFragment : Fragment() {
         //Se usa el modismo with que dado un objeto se pueden modificar propiedades dentro del bloque
         with(binding.spProfile) {
             this.adapter = adapter
-            setSelection(2)
+            //setSelection(2)
             onItemSelectedListener = listener
         }
-
     }
     override fun onDestroyView() {
         super.onDestroyView()

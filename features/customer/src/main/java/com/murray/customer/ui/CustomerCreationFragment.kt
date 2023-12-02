@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerCreationBinding
 import com.murray.entities.customers.Customer
@@ -62,8 +63,9 @@ class CustomerCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        CustomerRepository.addCustomer(Customer(binding.tieName.text.toString(), binding.tieEmail.text.toString(), binding.tiePhone.text.toString().toInt(), binding.tieCity.text.toString(), binding.tieAddress.text.toString()))
+        CustomerRepository.addCustomer(Customer(binding.tieName.text.toString(), binding.tieEmail.text.toString(), binding.tiePhone.text.toString().takeIf { it.isNotEmpty() }?.toInt() ?: null, binding.tieCity.text.toString(), binding.tieAddress.text.toString()))
         Toast.makeText(requireActivity(), "Cliente creado con éxito!", Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
     }
 
     private fun setNameEmptyError() {

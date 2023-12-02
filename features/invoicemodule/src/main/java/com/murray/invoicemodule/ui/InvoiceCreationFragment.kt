@@ -1,5 +1,6 @@
 package com.murray.invoicemodule.ui
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,19 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 
 import android.app.DatePickerDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.AdapterView
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
+import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
+import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
@@ -24,6 +33,8 @@ class InvoiceCreationFragment : Fragment() {
     private var _binding: FragmentInvoiceCreationBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: InvoiceCreateViewModel by viewModels()
+    private lateinit var twatcher: LogInTextWatcher
     private var contadorArt = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +42,13 @@ class InvoiceCreationFragment : Fragment() {
     ): View? {
         _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
 
-        val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
+        binding.viewmodel = this.viewModel
+        binding.lifecycleOwner = this
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
 
         val cliente = arguments?.getString("cliente") ?: ""
@@ -69,8 +83,8 @@ class InvoiceCreationFragment : Fragment() {
 
         val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.toMutableList()
 
-        val itemadapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, narticulos)
-        itemadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val itemadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, narticulos)
+        itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spArticulos.adapter = itemadapter
 
         binding.spArticulos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -95,6 +109,8 @@ class InvoiceCreationFragment : Fragment() {
             }
         }
         itemadapter.notifyDataSetChanged()
+
+
         return binding.root
     }
 
@@ -108,6 +124,12 @@ class InvoiceCreationFragment : Fragment() {
         binding.tiefechaFin.setOnClickListener {
             showDatePickerFin()
         }
+
+        twatcher= LogInTextWatcher(binding.tilFechaIni)
+        binding.tiefechaIni.addTextChangedListener(twatcher)
+
+        twatcher= LogInTextWatcher(binding.tilFechaFin)
+        binding.tiefechaFin.addTextChangedListener(twatcher)
 
         binding.btnGuardarFactura.setOnClickListener{
             var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
@@ -126,7 +148,7 @@ class InvoiceCreationFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val narticulos: Array<String> = ItemRepository.getDataSetItem().map { it.name }.toTypedArray()
+        val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.sorted().toMutableList()
 
         val itemadapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, narticulos)
         itemadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -175,6 +197,16 @@ class InvoiceCreationFragment : Fragment() {
             binding.cvArticulo.visibility = View.VISIBLE
         }
 
+        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+            when(it){
+                InvoiceCreateState.DataIniEmptyError -> setDateIniError()
+                InvoiceCreateState.DataFinEmptyError -> setDateFinError()
+                InvoiceCreateState.IncorrectDateRangeError -> setDateRangeError()
+                //is TaskState.AuthenticationError -> showMessage(it.message)
+                //is TaskCreateState.Loading -> showProgressbar(it.value)
+                else -> onSuccess()
+            }
+        })
     }
 
 
@@ -227,7 +259,47 @@ class InvoiceCreationFragment : Fragment() {
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
-
         datePickerDialog.show()
+    }
+    private fun showProgressbar(value: Boolean) {
+        if(value)
+        //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
+        else
+            findNavController().popBackStack()
+    }
+    private fun setDateIniError() {
+        binding.tilFechaIni.error = "Debe elejir una fecha"
+        binding.tilFechaIni.requestFocus()
+    }
+
+    private fun setDateFinError() {
+        binding.tilFechaFin.error = "Debe elejir una fecha"
+        binding.tilFechaFin.requestFocus()
+    }
+
+    private fun setDateRangeError() {
+        binding.tilFechaFin.error = "Error rango de la fecha"
+        binding.tilFechaFin.requestFocus()
+    }
+
+    private fun onSuccess() {
+        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        findNavController().navigateUp()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    open inner class LogInTextWatcher(var tilError: TextInputLayout) : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+        }
+        override fun afterTextChanged(s: Editable?) {
+            tilError.error = null
+        }
     }
 }

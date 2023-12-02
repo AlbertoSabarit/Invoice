@@ -1,6 +1,13 @@
 package com.murray.repositories
 
 import com.murray.entities.invoices.Invoice
+import com.murray.entities.tasks.Task
+import com.murray.network.Resource
+import com.murray.network.ResourceList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class InvoiceRepository private constructor() {
     companion object{
@@ -43,6 +50,26 @@ class InvoiceRepository private constructor() {
                 )
             )
             return dataSet
+        }
+
+        suspend fun createInvoice(fini: String, ffin: String) : Resource {
+            //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
+            withContext(Dispatchers.IO){
+                delay(2000)
+                //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
+                //el error ARN(Android Not Responding) porque puede bloquear la vista
+            }
+            return Resource.Error(Exception("La fecha incorrecta"))
+        }
+
+        suspend fun getInvoiceList(): ResourceList {
+            return withContext(Dispatchers.IO) {
+                delay(2000)
+                when {
+                    TaskRepository.dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
+                    else -> ResourceList.Success(TaskRepository.dataSet as ArrayList<Task>)
+                }
+            }
         }
     }
 }

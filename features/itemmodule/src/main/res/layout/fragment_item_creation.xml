@@ -85,8 +85,6 @@
             android:id="@+id/tilItemCreationType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/tilItemCreationDescr"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
             app:layout_constraintStart_toStartOf="@+id/gItemCreationStart"
@@ -96,7 +94,7 @@
                 android:id="@+id/tvItemCreationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:paddingBottom="5dp"
                 android:text="@string/tiet_item_creation_type"
                 android:textSize="20sp" />
             <!--TODO databinding layout spinner item-->
@@ -116,7 +114,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/bItemCreationAddItem"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
             app:layout_constraintHorizontal_bias="0.5"
@@ -127,8 +124,11 @@
                 android:id="@+id/tietItemCreationDescr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top|start"
                 android:hint="@string/tiet_item_creation_descr"
-                android:maxLines="8"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:maxLines="5"
                 android:text="@={itemcreationviewmodel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,6 +161,20 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.95" />
 
+        <ImageView
+            android:id="@+id/ivAddImage"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/shape_item_img"
+            android:clipToOutline="true"
+            android:elevation="8dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_addphoto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.murray.item.ui.itemcreation
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,6 +28,9 @@ class ItemCreationFragment : Fragment() {
         get() = _binding!!
 
     private val itemcreationviewmodel: ItemCreationViewModel by viewModels()
+
+    private lateinit var getContent: ActivityResultLauncher<String>
+    private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +52,6 @@ class ItemCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //itemviewmodel.isTaxable.observe(viewLifecycleOwner, { isTaxable -> })
 
         itemcreationviewmodel.getState().observe(viewLifecycleOwner){
             when(it){
@@ -55,6 +60,17 @@ class ItemCreationFragment : Fragment() {
                 ItemCreationState.TypeIsMandatoryError -> setTypeIsMandatoryError()
                 else -> onSuccess()
             }
+        }
+
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null){
+                binding.ivAddImage.setImageURI(uri)
+                selectedImageUri = uri
+            }
+        }
+
+        binding.ivAddImage.setOnClickListener {
+            getContent.launch("image/*")
         }
     }
 

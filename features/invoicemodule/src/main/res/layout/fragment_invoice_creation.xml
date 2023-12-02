@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
-        app:layout_constraintVertical_bias="0.074" />
+        app:layout_constraintVertical_bias="0.059" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFechaFin"
@@ -107,35 +107,222 @@
         android:src="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvArticulo"
-        android:layout_width="361dp"
-        android:layout_height="267dp"
+        android:layout_width="370dp"
+        android:layout_height="271dp"
         android:layout_marginTop="15dp"
+        android:visibility="invisible"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAnadirArt">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/md_theme_light_secondaryContainer">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvArticulos"
-                android:layout_width="358dp"
-                android:layout_height="240dp"
+            <TextView
+                android:id="@+id/txtparticulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45.000,00€"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.28"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.934"
+                tools:ignore="TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/txtpsubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="71.100,00€"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.859"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2"
+                app:layout_constraintVertical_bias="0.203" />
+
+            <TextView
+                android:id="@+id/txtpimpuestos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18.900,00€"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.861"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2"
+                app:layout_constraintVertical_bias="0.555" />
+
+            <TextView
+                android:id="@+id/txtptotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="90.000,00€"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.861"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.934" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="310dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.36"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511" />
+
+            <TextView
+                android:id="@+id/txtSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tx_subtotal"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2"
+                app:layout_constraintVertical_bias="0.134" />
+
+            <TextView
+                android:id="@+id/txtImpuesto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/tx_impuesto"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSubtotal"
+                app:layout_constraintVertical_bias="0.206" />
+
+            <TextView
+                android:id="@+id/txtTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/tx_total"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.089"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtImpuesto"
+                app:layout_constraintVertical_bias="0.272" />
+
+            <TextView
+                android:id="@+id/txtnArticulo"
+                android:layout_width="109dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="56dp"
+                android:text="Ferrari SF90\n"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toTopOf="@+id/txtparticulo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/txtparticulototal"
+                android:layout_width="86dp"
+                android:layout_height="24dp"
+                android:text="90.000,00€"
+                android:textSize="17dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.853"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.863" />
+
+            <ImageButton
+                android:id="@+id/imgQuitarArticulo"
+                android:layout_width="51dp"
+                android:layout_height="54dp"
+                android:background="@color/md_theme_light_secondaryContainer"
+                android:src="@drawable/ic_quitar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtnArticulo"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.389" />
+
+
+            <Spinner
+                android:id="@+id/spArticulos"
+                android:layout_width="239dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="116dp"
+                android:background="@color/md_theme_light_secondaryContainer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnMas"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/md_theme_light_secondaryContainer"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
+                app:layout_constraintEnd_toStartOf="@+id/btnMenos"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.306" />
+
+            <ImageButton
+                android:id="@+id/btnMenos"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="@color/md_theme_light_secondaryContainer"
+                android:src="@drawable/ic_remove"
+                app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.306" />
+
+            <TextView
+                android:id="@+id/contArt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textSize="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toStartOf="@+id/txtparticulo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

@@ -36,6 +36,7 @@ class UserListViewModel : ViewModel() {
                 is ResourceList.Error -> state.value = UserListState.NoDataError
             }
 
+
             //Opcion 2: me devuelve la lista, porque solo tenemos 2 posibles estados, el de error no datos y el de exito
             /* val data = UserRepository.getUserList()
              when{

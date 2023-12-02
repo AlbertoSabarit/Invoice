@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,11 +18,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import com.murray.task.databinding.FragmentTaskCreationBinding
+import com.murray.task.ui.usecase.TaskCreateState
+import com.murray.task.ui.usecase.TaskCreateViewModel
 
 class TaskCreationFragment : Fragment() {
 
     private var _binding: FragmentTaskCreationBinding? = null
-    private val viewModel: TaskViewModel by viewModels()
+    private val viewModel: TaskCreateViewModel by viewModels()
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -64,10 +65,10 @@ class TaskCreationFragment : Fragment() {
 
         viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
             when(it){
-                TaskState.TitleEmptyError -> setTitleEmptyError()
-                TaskState.DescriptionEmptyError -> setDescriptionEmptyError()
+                TaskCreateState.TitleEmptyError -> setTitleEmptyError()
+                TaskCreateState.DescriptionEmptyError -> setDescriptionEmptyError()
                 //is TaskState.AuthenticationError -> showMessage(it.message)
-                is TaskState.Loading -> showProgressbar(it.value)
+                //is TaskCreateState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
             }
         })
@@ -76,7 +77,7 @@ class TaskCreationFragment : Fragment() {
 
     private fun showProgressbar(value: Boolean) {
         if(value)
-            findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
+            //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
@@ -135,7 +136,8 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Caso de uso", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+        findNavController().navigateUp()
     }
 
     override fun onDestroyView() {

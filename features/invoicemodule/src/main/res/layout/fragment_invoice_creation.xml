@@ -128,7 +128,7 @@
         android:layout_width="365dp"
         android:layout_height="282dp"
         android:layout_marginTop="15dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"

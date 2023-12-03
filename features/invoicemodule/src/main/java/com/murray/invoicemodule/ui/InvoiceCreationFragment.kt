@@ -12,6 +12,7 @@ import android.app.DatePickerDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
+import androidx.core.text.set
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,8 @@ class InvoiceCreationFragment : Fragment() {
     ): View? {
         _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
 
+        binding.viewmodel = this.viewModel
+        binding.lifecycleOwner = this
         val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
 
         val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
@@ -60,8 +63,6 @@ class InvoiceCreationFragment : Fragment() {
         binding.tiefechaFin.setText("$fven")
         binding.txtnArticulo.setText("$art")
 
-        binding.viewmodel = this.viewModel
-        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -214,12 +215,12 @@ class InvoiceCreationFragment : Fragment() {
             findNavController().popBackStack()
     }
     private fun setDateIniError() {
-        binding.tilFechaIni.error = "Debe elejir una fecha"
+        binding.tilFechaIni.error = "Debe elegir una fecha"
         binding.tilFechaIni.requestFocus()
     }
 
     private fun setDateFinError() {
-        binding.tilFechaFin.error = "Debe elejir una fecha"
+        binding.tilFechaFin.error = "Debe elegir una fecha"
         binding.tilFechaFin.requestFocus()
     }
 

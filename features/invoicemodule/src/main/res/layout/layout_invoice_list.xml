@@ -117,14 +117,14 @@
 
                 <TextView
                     android:id="@+id/txtnarticulo"
-                    android:layout_width="95dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="252dp"
+                    android:layout_width="132dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/contArticulos"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.497" />
+                    app:layout_constraintVertical_bias="0.515" />
 
                 <TextView
                     android:id="@+id/txtnfacturas"
@@ -180,9 +180,9 @@
                     android:id="@+id/contArticulos"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toStartOf="@+id/txtnarticulo"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/txtncliente"
                     app:layout_constraintTop_toBottomOf="@+id/txtArticulos" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

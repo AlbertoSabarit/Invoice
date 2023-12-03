@@ -6,19 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.murray.invoicemodule.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter.OnEditClickListener
-import com.murray.repositories.InvoiceRepository
+import com.murray.invoicemodule.adapter.InvoiceViewHolder
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
+import com.murray.invoicemodule.ui.usecase.InvoiceListState
+import com.murray.invoicemodule.ui.usecase.InvoiceListViewModel
+import com.murray.repositories.InvoiceRepository
 
 class InvoiceListFragment : Fragment(), OnEditClickListener{
 
     private var _binding: FragmentInvoiceListBinding? = null
     private val binding get() = _binding!!
+    private val viewmodel: InvoiceListViewModel by viewModels()
+    private lateinit var invoiceAdapter: InvoiceAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,18 +42,22 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
             findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceCreationFragment)
         }
 
-        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
-        if (adapter.itemCount == 0) {
-            binding.lnlSinFactura.visibility = View.VISIBLE
-        } else {
-            binding.lnlSinFactura.visibility = View.INVISIBLE
-        }
+        viewmodel.getState().observe(viewLifecycleOwner, Observer{
+            when(it){
+                is InvoiceListState.Loading -> showProgressBar(it.value)
+                InvoiceListState.NoDataError -> showNoDataError()
+                is InvoiceListState.Success -> onSuccess(it.dataset)
+            }
+        })
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewmodel.getInvocieList()
+    }
     private fun setUpUserRecycler() {
-        var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
-
-        adapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
+        invoiceAdapter = InvoiceAdapter(requireContext())
+        invoiceAdapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
             override fun onItemClick(item:Invoice) {
                 val bundle = bundleOf(
                     "cliente" to item.cliente,
@@ -60,7 +71,7 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
                 )
             }
         })
-        adapter.setOnEditClickListener(object : OnEditClickListener {
+        invoiceAdapter.setOnEditClickListener(object : OnEditClickListener {
             override fun onEditClick(item: Invoice) {
                 val bundle = bundleOf(
                     "cliente" to item.cliente,
@@ -75,19 +86,42 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
             }
         })
 
-        if (adapter.itemCount == 0) {
-            binding.lnlSinFactura.visibility = View.VISIBLE
-        } else {
-            binding.lnlSinFactura.visibility = View.INVISIBLE
-        }
+        invoiceAdapter.setOnDeleteClickListener(object : InvoiceViewHolder.OnDeleteClickListener {
+            override fun onDeleteClick(item: Invoice) {
+                InvoiceRepository.dataSet.remove(item)
+                if (invoiceAdapter.itemCount == 0){
+                    binding.lnlSinFactura.visibility = View.VISIBLE
+                }
+                invoiceAdapter.notifyDataSetChanged()
+            }
+        })
 
         with(binding.invoicerv) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            this.adapter = adapter
+            this.adapter = invoiceAdapter
         }
     }
 
+    private fun onSuccess(dataset: ArrayList<Invoice>){
+        hideNoDataError()
+        invoiceAdapter.update(dataset)
+    }
+
+    private fun hideNoDataError() {
+        binding.lnlSinFactura.visibility = View.GONE
+        binding.invoicerv.visibility = View.VISIBLE
+    }
+    private fun showNoDataError(){
+        binding.lnlSinFactura.visibility = View.VISIBLE
+        binding.invoicerv.visibility = View.GONE
+    }
+    private fun showProgressBar(value : Boolean){
+        if(value)
+            findNavController().navigate(R.id.action_invoiceListFragment_to_fragmentProgressDialog)
+        else
+            findNavController().popBackStack()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

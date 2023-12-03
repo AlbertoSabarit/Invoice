@@ -163,24 +163,33 @@
             android:background="@color/md_theme_light_secondaryContainer">
 
             <TextView
+                android:id="@+id/contArt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="1 x"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toStartOf="@+id/txtparticulo" />
+
+            <TextView
                 android:id="@+id/txtparticulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 x 45.000,00€"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/divider2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.071"
+                app:layout_constraintHorizontal_bias="0.129"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.734"
+                app:layout_constraintVertical_bias="0.875"
                 tools:ignore="TextSizeCheck" />
 
             <TextView
                 android:id="@+id/txtpsubtotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="71.100,00€"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +202,6 @@
                 android:id="@+id/txtpimpuestos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18.900,00€"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +214,6 @@
                 android:id="@+id/txtptotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="90.000,00€"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -274,21 +281,19 @@
 
             <TextView
                 android:id="@+id/txtnArticulo"
-                android:layout_width="109dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="20dp"
-                android:text="Ferrari SF90\n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:textSize="17dp"
                 app:layout_constraintBottom_toTopOf="@+id/txtparticulo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.781" />
 
             <TextView
                 android:id="@+id/txtparticulototal"
-                android:layout_width="86dp"
-                android:layout_height="24dp"
-                android:text="90.000,00€"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textSize="17dp"
                 app:layout_constraintBottom_toTopOf="@+id/divider2"
                 app:layout_constraintEnd_toEndOf="parent"

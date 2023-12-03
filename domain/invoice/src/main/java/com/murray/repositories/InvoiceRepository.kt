@@ -11,9 +11,17 @@ import java.lang.Exception
 
 class InvoiceRepository private constructor() {
     companion object{
-        var dataSet:MutableList<Invoice> = initDataSetInvoice()
+        var dataSet:MutableList<Invoice> = mutableListOf()
+
+        init {
+            initDataSetInvoice()
+        }
+
+
+        fun addInvoice(i: Invoice){
+            dataSet.add(i)
+        }
         private fun initDataSetInvoice():MutableList<Invoice>{
-            var dataSet: MutableList<Invoice> = ArrayList()
             dataSet.add(Invoice(
                     "Katya Nikitenko",
                     "Ferrari SD95",
@@ -53,11 +61,8 @@ class InvoiceRepository private constructor() {
         }
 
         suspend fun createInvoice(fini: String, ffin: String) : Resource {
-            //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
             withContext(Dispatchers.IO){
                 delay(2000)
-                //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
-                //el error ARN(Android Not Responding) porque puede bloquear la vista
             }
             return Resource.Error(Exception("La fecha incorrecta"))
         }
@@ -66,8 +71,8 @@ class InvoiceRepository private constructor() {
             return withContext(Dispatchers.IO) {
                 delay(2000)
                 when {
-                    TaskRepository.dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
-                    else -> ResourceList.Success(TaskRepository.dataSet as ArrayList<Task>)
+                    dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
+                    else -> ResourceList.Success(dataSet as ArrayList<Invoice>)
                 }
             }
         }

@@ -7,15 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.databinding.LayoutInvoiceListBinding
 
-class InvoiceAdapter (private val dataset: MutableList<Invoice>, private val context: Context) :
+class InvoiceAdapter(private val context: Context) :
     RecyclerView.Adapter<InvoiceViewHolder>() {
-
-    private var contador = 0
+    private var dataset = (arrayListOf<Invoice>())
     private var itemClickListener: OnItemClickListener? = null
     private var editClickListener: OnEditClickListener? = null
+    private var deleteClickListener: InvoiceViewHolder.OnDeleteClickListener? = null
 
     fun setOnEditClickListener(listener: OnEditClickListener) {
         this.editClickListener = listener
+    }
+    fun setOnDeleteClickListener(listener: InvoiceViewHolder.OnDeleteClickListener) {
+        this.deleteClickListener = listener
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -29,8 +32,7 @@ class InvoiceAdapter (private val dataset: MutableList<Invoice>, private val con
 
     override fun onBindViewHolder(holder: InvoiceViewHolder, position: Int) {
         val item = dataset.get(position)
-        contador++
-        holder.bind(item, context, contador)
+        holder.bind(item,context, position+1)
 
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(item)
@@ -44,16 +46,15 @@ class InvoiceAdapter (private val dataset: MutableList<Invoice>, private val con
 
         holder.setOnDeleteClickListener(object : InvoiceViewHolder.OnDeleteClickListener {
             override fun onDeleteClick(item: Invoice) {
-                val position = dataset.indexOf(item)
-                if (position != -1) {
-                    dataset.removeAt(position)
-                    notifyItemRemoved(position)
-                }
+                deleteClickListener?.onDeleteClick(item)
             }
         })
 
     }
-
+    fun update(newDataSet: ArrayList<Invoice>) {
+        dataset = newDataSet
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return dataset.size
     }

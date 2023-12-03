@@ -12,13 +12,11 @@ import android.app.DatePickerDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.entities.invoices.Invoice
-import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
@@ -36,87 +34,43 @@ class InvoiceCreationFragment : Fragment() {
     private val viewModel: InvoiceCreateViewModel by viewModels()
     private lateinit var twatcher: LogInTextWatcher
     private var contadorArt = 1
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInvoiceCreationBinding.inflate(inflater, container, false)
 
-        binding.viewmodel = this.viewModel
-        binding.lifecycleOwner = this
-
         val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
+        val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+        cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinner.adapter = cliadapter
 
         val cliente = arguments?.getString("cliente") ?: ""
         val fcrear = arguments?.getString("fechacrear") ?: ""
         val fven = arguments?.getString("fechavenc") ?: ""
+        val art = arguments?.getString("articulo")?:""
 
-        //arreglar
         val d = binding.spinner.adapter as ArrayAdapter<String>
         val index = d.getPosition(cliente)
         binding.spinner.setSelection(index)
-        binding.tiefechaIni.setText(" $fcrear")
-        binding.tiefechaFin.setText(" $fven")
+        binding.tiefechaIni.setText("$fcrear")
+        binding.tiefechaFin.setText("$fven")
+        binding.txtnArticulo.setText("$art")
 
-        binding.btnMas.setOnClickListener{
-            contadorArt++
-            binding.contArt.text = contadorArt.toString() + " x "
-        }
-
-        binding.btnMenos.setOnClickListener{
-            if(contadorArt>1) {
-                contadorArt--
-                binding.contArt.text = contadorArt.toString() + " x "
-            }
-        }
-
-        binding.imgQuitarArticulo.setOnClickListener{
-            binding.txtparticulo.text = ""
-            binding.txtptotal.text = ""
-            binding.txtnArticulo.text =""
-        }
-
-
-        val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.toMutableList()
-
-        val itemadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, narticulos)
-        itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spArticulos.adapter = itemadapter
-
-        binding.spArticulos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                val selectedArticulo = parentView.getItemAtPosition(position).toString()
-
-                val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == selectedArticulo }
-
-                if (articuloSeleccionado != null) {
-
-                    var total :Double = contadorArt * articuloSeleccionado.rate
-                    binding.txtnArticulo.text = articuloSeleccionado.name
-                    binding.txtparticulo.text = articuloSeleccionado.rate.toString()
-                    binding.txtptotal.text = total.toString()
-                    binding.txtparticulototal.text = total.toString()
-
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-        itemadapter.notifyDataSetChanged()
-
-
+        binding.viewmodel = this.viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnAnadirArt.setOnClickListener{
+            binding.cvArticulo.visibility = View.VISIBLE
+        }
 
         binding.tiefechaIni.setOnClickListener {
             showDatePickerIni()
@@ -125,14 +79,31 @@ class InvoiceCreationFragment : Fragment() {
             showDatePickerFin()
         }
 
+        binding.btnGuardarFactura.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.imgQuitarArticulo.setOnClickListener{
+            binding.txtparticulo.text = ""
+            binding.txtptotal.text = ""
+            binding.txtnArticulo.text =""
+            binding.txtparticulototal.text = ""
+            binding.txtpsubtotal.text = ""
+            binding.txtpimpuestos.text = ""
+            binding.txtnArticulo.text = ""
+            binding.contArt.text= ""
+            binding.imgQuitarArticulo.visibility = View.GONE
+            binding.txtSubtotal.visibility = View.GONE
+            binding.txtImpuesto.visibility = View.GONE
+            binding.txtTotal.visibility = View.GONE
+        }
+
         twatcher= LogInTextWatcher(binding.tilFechaIni)
         binding.tiefechaIni.addTextChangedListener(twatcher)
 
         twatcher= LogInTextWatcher(binding.tilFechaFin)
         binding.tiefechaFin.addTextChangedListener(twatcher)
 
-        binding.btnGuardarFactura.setOnClickListener{
-            var adapter = InvoiceAdapter(InvoiceRepository.dataSet, requireContext())
+        /*binding.btnGuardarFactura.setOnClickListener{
 
             val cliente = binding.spinner.selectedItem.toString()
             val fCreacion = binding.tiefechaIni.text.toString()
@@ -143,15 +114,13 @@ class InvoiceCreationFragment : Fragment() {
 
             InvoiceRepository.dataSet.add(nuevaFactura)
 
-            adapter.notifyDataSetChanged()
-
             findNavController().navigateUp()
-        }
+        }*/
 
         val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.sorted().toMutableList()
 
-        val itemadapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, narticulos)
-        itemadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val itemadapter = ArrayAdapter(requireContext(),R.layout.simple_spinner_item, narticulos)
+        itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spArticulos.adapter = itemadapter
         binding.btnMas.setOnClickListener{
             contadorArt++
@@ -167,8 +136,6 @@ class InvoiceCreationFragment : Fragment() {
             }
         }
 
-
-
         binding.spArticulos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                 val selectedArticulo = parentView.getItemAtPosition(position).toString()
@@ -176,15 +143,19 @@ class InvoiceCreationFragment : Fragment() {
                 val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == selectedArticulo }
 
                 if (articuloSeleccionado != null) {
+                    binding.imgQuitarArticulo.visibility = View.VISIBLE
+                    binding.txtSubtotal.visibility = View.VISIBLE
+                    binding.txtImpuesto.visibility = View.VISIBLE
+                    binding.txtTotal.visibility = View.VISIBLE
                     var total :Double = contadorArt * articuloSeleccionado.rate
                     var impuesto:Double =  0.21 * articuloSeleccionado.rate
                     var subtotal :Double = articuloSeleccionado.rate-impuesto
                     binding.txtnArticulo.text = articuloSeleccionado.name
                     binding.txtparticulo.text = articuloSeleccionado.rate.toString()
-                    binding.txtptotal.text = total.toString()
-                    binding.txtparticulototal.text = total.toString()
-                    binding.txtpimpuestos.text = impuesto.toString()
-                    binding.txtpsubtotal.text = subtotal.toString()
+                    binding.txtptotal.text = "$total €"
+                    binding.txtparticulototal.text = "$total €"
+                    binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+                    binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
                 }
                 itemadapter.notifyDataSetChanged()
             }
@@ -192,9 +163,6 @@ class InvoiceCreationFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
-        }
-        binding.btnAnadirArt.setOnClickListener{
-            binding.cvArticulo.visibility = View.VISIBLE
         }
 
         viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
@@ -239,18 +207,6 @@ class InvoiceCreationFragment : Fragment() {
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, monthOfYear, dayOfMonth)
 
-                //val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                //val fechaIniText = binding.tiefechaIni.text.toString()
-                //val formattedDate = dateFormat.format(selectedDate.time)
-                //val fechaIniDate = dateFormat.parse(fechaIniText)
-
-                /* if (selectedDate.before(fechaIniDate)) {
-                     binding.btnGuardarFactura.isEnabled = true
-                 } else {
-                     binding.btnGuardarFactura.isEnabled = false
-                     binding.tiefechaFin.setText(formattedDate)
-                 }*/
-
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)
                 binding.tiefechaFin.setText(formattedDate)
@@ -278,12 +234,19 @@ class InvoiceCreationFragment : Fragment() {
     }
 
     private fun setDateRangeError() {
-        binding.tilFechaFin.error = "Error rango de la fecha"
+        binding.tilFechaFin.error = "Error el rango de la fecha "
         binding.tilFechaFin.requestFocus()
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        val cliente = binding.spinner.selectedItem.toString()
+        val fCreacion = binding.tiefechaIni.text.toString()
+        val fVencimiento = binding.tiefechaFin.text.toString()
+        val articulo = binding.txtnArticulo.text.toString()
+
+        val nuevaFactura = Invoice(cliente, articulo, fCreacion, fVencimiento)
+
+        InvoiceRepository.addInvoice(nuevaFactura)
         findNavController().navigateUp()
     }
 

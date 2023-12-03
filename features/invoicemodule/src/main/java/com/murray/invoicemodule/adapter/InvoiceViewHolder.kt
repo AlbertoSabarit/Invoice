@@ -15,7 +15,7 @@ class InvoiceViewHolder(private val binding: LayoutInvoiceListBinding): Recycler
     fun setOnDeleteClickListener(listener: OnDeleteClickListener) {
         this.deleteClickListener = listener
     }
-    fun bind(item:Invoice, context: Context,contador: Int) {
+    fun bind(item:Invoice, context: Context, contador: Int) {
         with(binding) {
             txtnfacturas.text = "Factura " + contador
             txtncliente.text = item.cliente

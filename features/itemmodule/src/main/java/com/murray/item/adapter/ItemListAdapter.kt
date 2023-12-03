@@ -45,19 +45,9 @@ class ItemListAdapter(
 
         holder.binding.imgBtDeleteItem.setOnClickListener {
             clickDeleteListener(item)
-            /*
-            val adapterPosition = holder.adapterPosition
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                removeItem(adapterPosition)
-            }*/
         }
     }
 
-    /*
-    fun removeItem(position: Int) {
-        dataset.removeAt(position)
-        notifyItemRemoved(position)
-    }*/
 
     fun update(newDataSet: ArrayList<Item>) {
         dataset = newDataSet

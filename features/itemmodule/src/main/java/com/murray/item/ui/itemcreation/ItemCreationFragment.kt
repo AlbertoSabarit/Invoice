@@ -1,6 +1,10 @@
 package com.murray.item.ui.itemcreation
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,14 +41,24 @@ class ItemCreationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentItemCreationBinding.inflate(inflater, container,false)
+        _binding = FragmentItemCreationBinding.inflate(inflater, container, false)
         binding.itemcreationviewmodel = this.itemcreationviewmodel
         binding.lifecycleOwner = this
         addTextWatcher()
+
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null){
+                binding.ivAddImage.setImageURI(uri)
+                selectedImageUri = uri
+            }
+        }
+
+        binding.ivAddImage.setOnClickListener { getContent.launch("image/*") }
+
         return binding.root
     }
 
-    private fun addTextWatcher(){
+    private fun addTextWatcher() {
         val textWatcherName = LayoutTextWatcher(binding.tilItemCreationName)
         val textWatcherRate = LayoutTextWatcher(binding.tilItemCreationRate)
         binding.tietItemCreationName.addTextChangedListener(textWatcherName)
@@ -53,41 +68,30 @@ class ItemCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemcreationviewmodel.getState().observe(viewLifecycleOwner){
-            when(it){
+        itemcreationviewmodel.getState().observe(viewLifecycleOwner) {
+            when (it) {
                 ItemCreationState.NameEmptyError -> setNameEmptyError()
                 ItemCreationState.InvalidFormatRateError -> setInvalidFormatRateError()
                 ItemCreationState.TypeIsMandatoryError -> setTypeIsMandatoryError()
                 else -> onSuccess()
             }
         }
-
-        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if (uri != null){
-                binding.ivAddImage.setImageURI(uri)
-                selectedImageUri = uri
-            }
-        }
-
-        binding.ivAddImage.setOnClickListener {
-            getContent.launch("image/*")
-        }
     }
 
     private fun onSuccess() {
-        with(itemcreationviewmodel){
-            var name:String = name.value!!
-            var type:ItemType =
-                when(typeSpinnerPosition.value){
+        with(itemcreationviewmodel) {
+            var name: String = name.value!!
+            var type: ItemType =
+                when (typeSpinnerPosition.value) {
                     0 -> ItemType.PRODUCT
                     1 -> ItemType.SERVICE
                     else -> ItemType.PRODUCT //va a ser uno u otro si o si
                 }
-            var rate:Double = rate.value!!.toDouble()
-            var isTaxable:Boolean = isTaxable.value ?: false
-            var description:String = description.value ?: ""
+            var rate: Double = rate.value!!.toDouble()
+            var isTaxable: Boolean = isTaxable.value ?: false
+            var description: String = description.value ?: ""
             //todo imagen placeholder
-            var image:ImagesItem = ImagesItem.MALETA_CUERO
+            var image: ImagesItem = ImagesItem.MALETA_CUERO
 
             ItemRepository.addItem(name, type, rate, isTaxable, description, image)
         }
@@ -99,10 +103,12 @@ class ItemCreationFragment : Fragment() {
         binding.tilItemCreationName.error = "Introduce un nombre"
         binding.tilItemCreationName.requestFocus()
     }
+
     private fun setInvalidFormatRateError() {
         binding.tilItemCreationRate.error = "Introduce un precio válido"
         binding.tilItemCreationRate.requestFocus()
     }
+
     private fun setTypeIsMandatoryError() {
         binding.tilItemCreationType.error = "Elige un tipo válido"
         binding.tilItemCreationType.requestFocus()
@@ -113,10 +119,12 @@ class LayoutTextWatcher(private val til: TextInputLayout) : TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         //no se implementa
     }
+
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         //no se implementa
     }
+
     override fun afterTextChanged(s: Editable?) {
-        til.error =null
+        til.error = null
     }
 }

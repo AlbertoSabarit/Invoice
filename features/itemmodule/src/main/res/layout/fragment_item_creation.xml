@@ -67,7 +67,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--TODO databinding layout switch item-->
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/cbItemCreationTax"
             android:layout_width="0dp"
@@ -97,7 +96,6 @@
                 android:paddingBottom="5dp"
                 android:text="@string/tiet_item_creation_type"
                 android:textSize="20sp" />
-            <!--TODO databinding layout spinner item-->
             <Spinner
                 android:id="@+id/sItemCreationType"
                 style="@android:style/Widget.Holo.Light.Spinner"
@@ -167,8 +165,8 @@
             android:layout_height="170dp"
             android:background="@drawable/shape_item_img"
             android:clipToOutline="true"
+
             android:elevation="8dp"
-            android:padding="10dp"
             android:src="@drawable/ic_addphoto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

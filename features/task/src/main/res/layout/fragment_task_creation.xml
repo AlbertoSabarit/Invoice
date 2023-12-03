@@ -59,7 +59,6 @@
                 android:textSize="18dp"
                 app:layout_constraintVertical_bias="0.62" />
 
-            <!--android:entries="@array/sp_task_creation_clientes"-->
             <Spinner
                 android:id="@+id/sp_task_clientes"
                 android:layout_width="0dp"
@@ -70,7 +69,6 @@
                 android:tooltipText="Contacto" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-<!-- android:onClick="@{() -> viewmodel.validateCredentials()}"-->
         <Button
             android:id="@+id/button"
             android:layout_width="148dp"
@@ -134,6 +132,7 @@
                 android:layout_height="50dp"
                 android:drawableEnd="@drawable/baseline_calendar_today_24"
                 android:focusable="false"
+                android:text="@={viewmodel.fini}"
                 android:hint="Fecha creación" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,11 +160,11 @@
                 android:layout_height="50dp"
                 android:drawableEnd="@drawable/baseline_calendar_today_24"
                 android:focusable="false"
+                android:text="@={viewmodel.ffin}"
                 android:hint="Fecha fin" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
-            android:entries="@array/sp_task_creation_estado"
             android:id="@+id/spinnerEstado"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
@@ -188,7 +187,6 @@
             app:layout_constraintStart_toStartOf="@+id/txtTipo" />
 
         <Spinner
-            android:entries="@array/sp_task_creation_tipo"
             android:id="@+id/spinnerTipo"
             android:layout_width="350dp"
             android:layout_height="wrap_content"

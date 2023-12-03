@@ -21,7 +21,7 @@ class TaskRepository private constructor() {
 
         private fun initDataSetTask(): MutableList<Task> {
             dataSet.add(Task(
-                    "Citación", "Antonio García", "Privado","10/11/2023","25/12/2023", "Modificado", "Cita privada con Antonio"
+                    Task.lastId++, "Citación", "Alberto Sabarit", "Privado","10/11/2023","25/12/2023", "Modificado", "Cita privada con Antonio"
                 )
             )
             return dataSet
@@ -41,14 +41,14 @@ class TaskRepository private constructor() {
             }
         }
 
-        suspend fun createTask(titulo: String, descripcion: String) : Resource {
+        suspend fun createTask(titulo: String, descripcion: String, fini: String, ffin: String) : Resource {
             //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
             withContext(Dispatchers.IO){
-                delay(2000)
+                //delay(2000)
                 //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
                 //el error ARN(Android Not Responding) porque puede bloquear la vista
             }
-            return Resource.Error(Exception("El password es incorrecto"))
+            return Resource.Error(Exception("Es incorrecto"))
         }
 
 

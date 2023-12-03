@@ -32,26 +32,81 @@ class TaskCreationFragment : Fragment() {
     private val viewModel: TaskCreateViewModel by viewModels()
     private val binding get() = _binding!!
 
+    private lateinit var twatcher: LogInTextWatcher
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
-        val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spTaskClientes.adapter = adapter
 
 
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
 
+
+        if(requireArguments().containsKey(Task.TAG)){
+            val task: Task? = requireArguments().getParcelable(Task.TAG)
+            viewModel.title.value = task!!.titulo
+            viewModel.description.value = task.descripcion
+            viewModel.fini.value = task.fechaCreacion
+            viewModel.ffin.value = task.fechaFin
+            viewModel.task = task
+        }else{
+            viewModel.task = Task.createDefaultTask()
+        }
+
+        initSpinnerClientes()
+        initSpinnerTipo()
+        initSpinnerEstado()
+
         return binding.root
     }
 
-    private lateinit var twatcher:LogInTextWatcher
+    private fun initSpinnerClientes(){
+        val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spTaskClientes.adapter = adapter
+
+        if(viewModel.task.id != -1){
+            var pos = nombres.indexOf(viewModel.task.nombre)
+
+            binding.spTaskClientes.setSelection(pos, false)
+        }
+    }
+
+    private fun initSpinnerTipo(){
+        val tipos: Array<String> = arrayOf("Privado", "Llamada", "Visita")
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, tipos)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTipo.adapter = adapter
+
+        if(viewModel.task.id != -1){
+            var pos = tipos.indexOf(viewModel.task.tarea)
+
+            binding.spinnerTipo.setSelection(pos, false)
+        }
+    }
+
+    private fun initSpinnerEstado(){
+        val estados: Array<String> = arrayOf("Pendiente", "Modificado", "Vencido")
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, estados)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerEstado.adapter = adapter
+
+        if(viewModel.task.id != -1){
+            var pos = estados.indexOf(viewModel.task.estado)
+
+            binding.spinnerEstado.setSelection(pos, false)
+        }
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,27 +123,40 @@ class TaskCreationFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        twatcher= LogInTextWatcher(binding.tilTitulo)
+        twatcher = LogInTextWatcher(binding.tilTitulo)
         binding.tieTitulo.addTextChangedListener(twatcher)
 
-        twatcher= LogInTextWatcher(binding.tilDescripcion)
+        twatcher = LogInTextWatcher(binding.tilDescripcion)
         binding.tieDescripcion.addTextChangedListener(twatcher)
 
-        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
-            when(it){
-                TaskCreateState.TitleEmptyError -> setTitleEmptyError()
-                TaskCreateState.DescriptionEmptyError -> setDescriptionEmptyError()
-                //is TaskState.AuthenticationError -> showMessage(it.message)
-                //is TaskCreateState.Loading -> showProgressbar(it.value)
-                else -> onSuccess()
-            }
-        })
+        twatcher = LogInTextWatcher(binding.tilFechaIni)
+        binding.tieFechCreacion.addTextChangedListener(twatcher)
+
+        twatcher = LogInTextWatcher(binding.tilFechaFin)
+        binding.tieFechFin.addTextChangedListener(twatcher)
+
+
+        viewModel.getState().observe(
+            viewLifecycleOwner,
+            Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+                when (it) {
+                    TaskCreateState.TitleEmptyError -> setTitleEmptyError()
+                    TaskCreateState.DescriptionEmptyError -> setDescriptionEmptyError()
+                    TaskCreateState.DataIniEmptyError -> setDateIniError()
+                    TaskCreateState.DataFinEmptyError -> setDateFinError()
+                    TaskCreateState.IncorrectDateRangeError -> setDateRangeError()
+                    is TaskCreateState.Loading -> {} //showProgressbar(it.value)
+                    is TaskCreateState.TaskCreateError -> setErrorCreateTask()
+
+                    else -> onSuccess()
+                }
+            })
 
     }
 
     private fun showProgressbar(value: Boolean) {
-        if(value)
-            //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
+        if (value)
+        //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
@@ -135,6 +203,9 @@ class TaskCreationFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    private fun setErrorCreateTask() {
+        Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
+    }
 
     private fun setTitleEmptyError() {
         binding.tilTitulo.error = "Debe escribir un título"
@@ -146,8 +217,34 @@ class TaskCreationFragment : Fragment() {
         binding.tilDescripcion.requestFocus()
     }
 
+    private fun setDateIniError() {
+        binding.tilFechaIni.error = "Debe elejir una fecha"
+        binding.tilFechaIni.requestFocus()
+    }
+
+    private fun setDateFinError() {
+        binding.tilFechaFin.error = "Debe elejir una fecha"
+        binding.tilFechaFin.requestFocus()
+    }
+
+    private fun setDateRangeError() {
+        binding.tilFechaFin.error = "Error rango de la fecha"
+        binding.tilFechaFin.requestFocus()
+    }
+
     private fun onSuccess() {
-        TaskRepository.addTask(Task(binding.tieTitulo.text.toString(), binding.spTaskClientes.selectedItem.toString(), binding.spinnerTipo.selectedItem.toString(), binding.tieFechCreacion.text.toString(), binding.tieFechFin.text.toString(),binding.spinnerEstado.selectedItem.toString(),binding.tieDescripcion.text.toString()))
+        TaskRepository.addTask(
+            Task(
+                Task.lastId++,
+                binding.tieTitulo.text.toString(),
+                binding.spTaskClientes.selectedItem.toString(),
+                binding.spinnerTipo.selectedItem.toString(),
+                binding.tieFechCreacion.text.toString(),
+                binding.tieFechFin.text.toString(),
+                binding.spinnerEstado.selectedItem.toString(),
+                binding.tieDescripcion.text.toString()
+            )
+        )
         Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }
@@ -158,8 +255,6 @@ class TaskCreationFragment : Fragment() {
     }
 
 
-
-
     /**
      * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
      */
@@ -167,9 +262,11 @@ class TaskCreationFragment : Fragment() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
+
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
         }
+
         override fun afterTextChanged(s: Editable?) {
             tilError.error = null
         }

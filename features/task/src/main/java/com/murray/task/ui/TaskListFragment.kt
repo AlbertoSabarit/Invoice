@@ -39,7 +39,8 @@ class TaskListFragment : Fragment() {
 
         setUpTaskRecycler()
         binding.btnCreateTask.setOnClickListener {
-            findNavController().navigate(R.id.action_taskListFragment_to_taskCreationFragment)
+            var bundle = Bundle()
+            findNavController().navigate(R.id.action_taskListFragment_to_taskCreationFragment, bundle)
 
         }
 
@@ -89,11 +90,14 @@ class TaskListFragment : Fragment() {
     private fun setUpTaskRecycler() {
         taskAdapter = TaskAdapter() { task: Task ->
             val bundle = bundleOf(
+                "id" to task.id,
                 "titulo" to task.titulo,
                 "cliente" to task.nombre,
                 "tarea" to task.tarea,
                 "estado" to task.estado,
-                "descripcion" to task.descripcion
+                "descripcion" to task.descripcion,
+                "fechaCreacion" to task.fechaCreacion,
+                "fechaFin" to task.fechaFin
             )
             findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
         }

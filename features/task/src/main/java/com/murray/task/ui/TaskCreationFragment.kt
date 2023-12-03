@@ -217,17 +217,17 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun setDateIniError() {
-        binding.tilFechaIni.error = "Debe elejir una fecha"
+        binding.tilFechaIni.error = "Debe elegir una fecha"
         binding.tilFechaIni.requestFocus()
     }
 
     private fun setDateFinError() {
-        binding.tilFechaFin.error = "Debe elejir una fecha"
+        binding.tilFechaFin.error = "Debe elegir una fecha"
         binding.tilFechaFin.requestFocus()
     }
 
     private fun setDateRangeError() {
-        binding.tilFechaFin.error = "Error rango de la fecha"
+        binding.tilFechaFin.error = "Error de rango de la fecha"
         binding.tilFechaFin.requestFocus()
     }
 

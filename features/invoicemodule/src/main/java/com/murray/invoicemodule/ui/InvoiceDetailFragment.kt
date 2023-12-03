@@ -28,26 +28,30 @@ class InvoiceDetailFragment : Fragment() {
         val fcrear = arguments?.getString("fechacrear") ?: ""
         val fven = arguments?.getString("fechavenc") ?: ""
         val art = arguments?.getString("articulo") ?: ""
+        val partes = art.split(" x ")
+        val nombre = partes[1]
+        val cont:Int  = partes[0].toInt()
 
         binding.txtCliente.text = "$cliente"
         binding.txtFechaCreacion.text = " $fcrear"
         binding.txtFechaVenc.text = " $fven"
-        binding.txtnArticulo.text = "$art"
+        binding.txtnArticulo.text = "$nombre"
+        binding.txtcontArticulo.text = "$cont x"
 
-        val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == art }
+        val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == nombre }
 
         if (articuloSeleccionado != null) {
             val precioArticulo = articuloSeleccionado.rate
-            val impuesto: Double = precioArticulo * 0.21
-            var subtotal: Double = precioArticulo - impuesto
 
-            binding.txtparticulototal.text = "$precioArticulo €"
-            binding.txtptotal.text = "$precioArticulo €"
+            val total: Double = cont * precioArticulo
+            binding.txtptotal.text = "$total €"
+            binding.txtparticulototal.text = "$total €"
+            var impuesto:Double =  0.21 * total
+            var subtotal :Double = total-impuesto
             binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
             binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
-            binding.txtparticulo.text = "$precioArticulo"
+            binding.txtparticulo.text = precioArticulo.toString()
         }
-
     }
     override fun onDestroyView() {
         super.onDestroyView()

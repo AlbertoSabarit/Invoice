@@ -46,14 +46,14 @@ class TaskCreationFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        if(requireArguments().containsKey(Task.TAG)){
+        if (requireArguments().containsKey(Task.TAG)) {
             val task: Task? = requireArguments().getParcelable(Task.TAG)
             viewModel.title.value = task!!.titulo
             viewModel.description.value = task.descripcion
             viewModel.fini.value = task.fechaCreacion
             viewModel.ffin.value = task.fechaFin
             viewModel.task = task
-        }else{
+        } else {
             viewModel.task = Task.createDefaultTask()
         }
 
@@ -64,48 +64,47 @@ class TaskCreationFragment : Fragment() {
         return binding.root
     }
 
-    private fun initSpinnerClientes(){
+    private fun initSpinnerClientes() {
         val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spTaskClientes.adapter = adapter
 
-        if(viewModel.task.id != -1){
+        if (viewModel.task.id != -1) {
             var pos = nombres.indexOf(viewModel.task.nombre)
 
             binding.spTaskClientes.setSelection(pos, false)
         }
     }
 
-    private fun initSpinnerTipo(){
+    private fun initSpinnerTipo() {
         val tipos: Array<String> = arrayOf("Privado", "Llamada", "Visita")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, tipos)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinnerTipo.adapter = adapter
 
-        if(viewModel.task.id != -1){
+        if (viewModel.task.id != -1) {
             var pos = tipos.indexOf(viewModel.task.tarea)
 
             binding.spinnerTipo.setSelection(pos, false)
         }
     }
 
-    private fun initSpinnerEstado(){
+    private fun initSpinnerEstado() {
         val estados: Array<String> = arrayOf("Pendiente", "Modificado", "Vencido")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, estados)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinnerEstado.adapter = adapter
 
-        if(viewModel.task.id != -1){
+        if (viewModel.task.id != -1) {
             var pos = estados.indexOf(viewModel.task.estado)
 
             binding.spinnerEstado.setSelection(pos, false)
         }
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -233,19 +232,39 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        TaskRepository.addTask(
-            Task(
-                Task.lastId++,
-                binding.tieTitulo.text.toString(),
-                binding.spTaskClientes.selectedItem.toString(),
-                binding.spinnerTipo.selectedItem.toString(),
-                binding.tieFechCreacion.text.toString(),
-                binding.tieFechFin.text.toString(),
-                binding.spinnerEstado.selectedItem.toString(),
-                binding.tieDescripcion.text.toString()
+
+        if (viewModel.task.id == -1) {
+            TaskRepository.addTask(
+                Task(
+                    Task.lastId++,
+                    binding.tieTitulo.text.toString(),
+                    binding.spTaskClientes.selectedItem.toString(),
+                    binding.spinnerTipo.selectedItem.toString(),
+                    binding.tieFechCreacion.text.toString(),
+                    binding.tieFechFin.text.toString(),
+                    binding.spinnerEstado.selectedItem.toString(),
+                    binding.tieDescripcion.text.toString()
+                )
             )
-        )
-        Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+        } else {
+
+            for (task in TaskRepository.dataSet) {
+                if (viewModel.task.id == task.id) {
+
+                    task.titulo = binding.tieTitulo.text.toString()
+                    task.nombre = binding.spTaskClientes.selectedItem.toString()
+                    task.tarea = binding.spinnerTipo.selectedItem.toString()
+                    task.fechaCreacion = binding.tieFechCreacion.text.toString()
+                    task.fechaFin = binding.tieFechFin.text.toString()
+                    task.estado = binding.spinnerEstado.selectedItem.toString()
+                    task.descripcion = binding.tieDescripcion.text.toString()
+                }
+            }
+
+            Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
+        }
+
         findNavController().popBackStack()
     }
 

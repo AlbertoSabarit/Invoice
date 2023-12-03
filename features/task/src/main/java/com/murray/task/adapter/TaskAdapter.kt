@@ -3,13 +3,13 @@ package com.murray.task.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.entities.accounts.User
 import com.murray.task.databinding.CardviewLayoutBinding
 import com.murray.entities.tasks.Task
 
 class TaskAdapter(
     //private val listener: OnUserClick,
-    private val clickListener: (task: Task) -> Unit
+    private val clickListener: (task: Task) -> Unit,
+    private val clickDeleteListener: (task: Task) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
     //Se crea la colección de datos del adapter
 
@@ -25,6 +25,9 @@ class TaskAdapter(
         holder.bind(item)
         holder.itemView.setOnClickListener {
             clickListener(item)
+        }
+        holder.binding.imgbtnDelete.setOnClickListener {
+            clickDeleteListener(item)
         }
     }
 
@@ -44,6 +47,7 @@ class TaskAdapter(
             binding.txtCliente.text = item.nombre
             binding.txtTipo.text = item.tarea
             binding.txtEstado.text = item.estado
+
         }
     }
 

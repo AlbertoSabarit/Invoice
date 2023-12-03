@@ -30,46 +30,18 @@ class TaskDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = arguments?.getInt("id") ?: ""
-        val titulo = arguments?.getString("titulo") ?: ""
-        val cliente = arguments?.getString("cliente") ?: ""
-        val tarea = arguments?.getString("tarea") ?: ""
-        val estado = arguments?.getString("estado") ?: ""
-        val descripcion = arguments?.getString("descripcion") ?: ""
-        val fechaCreacion = arguments?.getString("fechaCreacion") ?: ""
-        val fechaFin = arguments?.getString("fechaFin") ?: ""
-
-        var task = Task(
-            id.toString().toInt(),
-            titulo,
-            cliente,
-            tarea,
-            fechaCreacion,
-            fechaFin,
-            estado,
-            descripcion
-        )
+        binding.task = requireArguments().getParcelable(Task.TAG)
 
         binding.btnEditar.setOnClickListener {
 
             var bundle = Bundle()
-            bundle.putParcelable(Task.TAG, task)
+           bundle.putParcelable(Task.TAG, binding.task)
 
             findNavController().navigate(
                 R.id.action_taskDetailFragment_to_taskCreationFragment,
                 bundle
             )
         }
-
-
-
-        binding.tvTaskTitle.text = "$titulo"
-        binding.tvclientetask.text = "$cliente"
-        binding.tvTaskTipo.text = "$tarea"
-        binding.tvTaskEstado.text = "$estado"
-        binding.tvTaskDescripcion.text = "$descripcion"
-        binding.fechCreacion.text = "$fechaCreacion"
-        binding.fechFin.text = "$fechaFin"
 
     }
 

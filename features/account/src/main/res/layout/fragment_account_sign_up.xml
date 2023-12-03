@@ -1,179 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gdStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.murray.account.ui.signup.usecase.SignUpViewModel" />
+    </data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gdEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tieEmailSignUp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tilEmailSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="E-mail" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiePasswordSignUp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tieEmailSignUp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tilPasswordSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contraseña" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tieConfirmsPasswordsSignUp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tiePasswordSignUp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tilConfirmsPasswordsSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Repetir contraseña" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Spinner
-        android:id="@+id/spType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/typeuser_signup"
-        app:layout_constraintBottom_toBottomOf="@+id/tvType"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintStart_toEndOf="@+id/barrier"
-        app:layout_constraintTop_toTopOf="@+id/tvType" />
-
-    <Spinner
-        android:id="@+id/spProfile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tvProfile"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintStart_toEndOf="@+id/barrier"
-        app:layout_constraintTop_toTopOf="@+id/tvProfile" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="tvProfile,tvType" />
-
-    <TextView
-        android:id="@+id/tvProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Tipo usuario"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tvType" />
-
-    <TextView
-        android:id="@+id/tvType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Visibilidad"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/tieConfirmsPasswordsSignUp" />
-
-    <Button
-        android:id="@+id/btnCrearCuenta"
-        style="@style/ButtonTrasnparent.TexColor"
-        android:textColor="@color/md_theme_light_onSecondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_weight="0.3"
-        android:text="Crear cuenta"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/spProfile" />
-
-    <TextView
-        android:id="@+id/txCalificacion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:gravity="center"
-        android:text="@string/calificacionUusario"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintStart_toStartOf="@+id/gdStart"
-        app:layout_constraintTop_toBottomOf="@+id/txCalificacion">
-
-        <RadioButton
-            android:id="@+id/rblevel1"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1 estrella"
-            tools:layout_editor_absoluteX="119dp"
-            tools:layout_editor_absoluteY="530dp" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
 
-        <RadioButton
-            android:id="@+id/rblevel2"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2 estrellas"
-            tools:layout_editor_absoluteX="119dp"
-            tools:layout_editor_absoluteY="530dp" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
 
-        <RadioButton
-            android:id="@+id/rblevel3"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tieEmailSignUp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tilEmailSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewmodel.email}"
+                android:hint="E-mail" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiePasswordSignUp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tieEmailSignUp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tilPasswordSignUp"
+                android:text="@={viewmodel.password}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contraseña" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tieConfirmsPasswordsSignUp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tiePasswordSignUp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tilConfirmsPasswordsSignUp"
+                android:text="@={viewmodel.password2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Repetir contraseña" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/typeuser_signup"
+            app:layout_constraintBottom_toBottomOf="@+id/tvType"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toEndOf="@+id/tvType"
+            app:layout_constraintTop_toTopOf="@+id/tvType" />
+
+        <Spinner
+            android:id="@+id/spProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProfile"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toEndOf="@+id/tvProfile"
+            app:layout_constraintTop_toTopOf="@+id/tvProfile" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3 estrellas"
-            tools:layout_editor_absoluteX="119dp"
-            tools:layout_editor_absoluteY="530dp" />
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvProfile,tvType" />
 
-    </RadioGroup>
+        <TextView
+            android:id="@+id/tvProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Tipo usuario"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvType" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="Visibilidad"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tieConfirmsPasswordsSignUp" />
+
+        <Button
+            android:id="@+id/btnCrearCuenta"
+            style="@style/ButtonTrasnparent.TexColor"
+            android:textColor="@color/md_theme_light_onSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_weight="0.3"
+            android:text="Crear cuenta"
+            android:onClick="@{() -> viewmodel.validateCredentials()}"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/spProfile" />
+
+        <TextView
+            android:id="@+id/txCalificacion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="96dp"
+            android:gravity="center"
+            android:text="@string/calificacionUusario"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintHorizontal_bias="0.537"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/txCalificacion">
+
+            <RadioButton
+                android:id="@+id/rblevel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 estrella"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="530dp" />
+
+            <RadioButton
+                android:id="@+id/rblevel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 estrellas"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="530dp" />
+
+            <RadioButton
+                android:id="@+id/rblevel3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 estrellas"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="530dp" />
+
+        </RadioGroup>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

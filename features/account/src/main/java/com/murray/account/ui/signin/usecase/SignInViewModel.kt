@@ -1,4 +1,4 @@
-package com.murray.account.ui.sigin.usecase
+package com.murray.account.ui.signin.usecase
 
 import android.text.TextUtils
 import android.util.Log

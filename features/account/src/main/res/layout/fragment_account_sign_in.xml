@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.murray.account.ui.sigin.usecase.SignInViewModel" />
+            type="com.murray.account.ui.signin.usecase.SignInViewModel" />
     </data>
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.murray.account.ui.sigin.AccountSignInFragment">
+        tools:context="com.murray.account.ui.signin.AccountSignInFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"

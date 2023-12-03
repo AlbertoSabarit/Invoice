@@ -1,4 +1,4 @@
-package com.murray.account.ui.sigin
+package com.murray.account.ui.signin
 
 
 import android.os.Bundle
@@ -15,18 +15,18 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.account.R
 import com.murray.account.databinding.FragmentAccountSignInBinding
-import com.murray.account.ui.sigin.usecase.SignInState
-import com.murray.account.ui.sigin.usecase.SignInViewModel
+import com.murray.account.ui.signin.usecase.SignInState
+import com.murray.account.ui.signin.usecase.SignInViewModel
 
 
 class AccountSignInFragment : Fragment() {
 
     private var _binding: FragmentAccountSignInBinding? = null
-    //Se inicializará posteriormente
-    //private lateinit var viewModel: SignInViewModel
 
     private val viewModel: SignInViewModel by viewModels()
     private val binding get() = _binding!!
+
+    private lateinit var twatcher:LogInTextWatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class AccountSignInFragment : Fragment() {
 
         return binding.root
     }
-    private lateinit var twatcher:LogInTextWatcher
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

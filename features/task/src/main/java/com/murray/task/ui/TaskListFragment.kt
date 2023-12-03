@@ -66,7 +66,9 @@ class TaskListFragment : Fragment() {
     }
 
     private fun hideNoDataError() {
-        binding.lnlSinTareas.visibility = View.GONE
+        binding.animationView.visibility = View.GONE
+        binding.tv1.visibility = View.GONE
+        binding.tv2.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
     }
 
@@ -75,7 +77,9 @@ class TaskListFragment : Fragment() {
      * Funcion que muestra el error de no hay datos
      */
     private fun showNoDataError(){
-        binding.lnlSinTareas.visibility = View.VISIBLE
+        binding.animationView.visibility = View.VISIBLE
+        binding.tv1.visibility = View.VISIBLE
+        binding.tv2.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
     }
 

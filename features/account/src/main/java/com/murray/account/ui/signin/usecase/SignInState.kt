@@ -1,4 +1,4 @@
-package com.murray.account.ui.sigin.usecase
+package com.murray.account.ui.signin.usecase
 
 import com.murray.entities.accounts.Account
 

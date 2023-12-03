@@ -65,7 +65,7 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun initSpinnerClientes() {
-        val nombres: Array<String> = CustomerRepository.dataSet.map { it.name }.toTypedArray()
+        val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)

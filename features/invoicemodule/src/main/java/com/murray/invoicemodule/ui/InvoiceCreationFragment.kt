@@ -34,7 +34,7 @@ class InvoiceCreationFragment : Fragment() {
     private val viewModel: InvoiceCreateViewModel by viewModels()
     private lateinit var twatcher: LogInTextWatcher
     private var contadorArt = 1
-
+    private var precioActualArticulo: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,20 +103,6 @@ class InvoiceCreationFragment : Fragment() {
         twatcher= LogInTextWatcher(binding.tilFechaFin)
         binding.tiefechaFin.addTextChangedListener(twatcher)
 
-        /*binding.btnGuardarFactura.setOnClickListener{
-
-            val cliente = binding.spinner.selectedItem.toString()
-            val fCreacion = binding.tiefechaIni.text.toString()
-            val fVencimiento = binding.tiefechaFin.text.toString()
-            val articulo = binding.txtnArticulo.text.toString()
-
-            val nuevaFactura = Invoice(cliente, articulo, fCreacion, fVencimiento)
-
-            InvoiceRepository.dataSet.add(nuevaFactura)
-
-            findNavController().navigateUp()
-        }*/
-
         val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.sorted().toMutableList()
 
         val itemadapter = ArrayAdapter(requireContext(),R.layout.simple_spinner_item, narticulos)
@@ -125,6 +111,7 @@ class InvoiceCreationFragment : Fragment() {
         binding.btnMas.setOnClickListener{
             contadorArt++
             binding.contArt.text = contadorArt.toString() + " x "
+            updatePrecioTotal()
             itemadapter.notifyDataSetChanged()
         }
 
@@ -132,6 +119,7 @@ class InvoiceCreationFragment : Fragment() {
             if(contadorArt>1) {
                 contadorArt--
                 binding.contArt.text = contadorArt.toString() + " x "
+                updatePrecioTotal()
                 itemadapter.notifyDataSetChanged()
             }
         }
@@ -143,40 +131,42 @@ class InvoiceCreationFragment : Fragment() {
                 val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == selectedArticulo }
 
                 if (articuloSeleccionado != null) {
+                    precioActualArticulo = articuloSeleccionado.rate
                     binding.imgQuitarArticulo.visibility = View.VISIBLE
                     binding.txtSubtotal.visibility = View.VISIBLE
                     binding.txtImpuesto.visibility = View.VISIBLE
                     binding.txtTotal.visibility = View.VISIBLE
-                    var total :Double = contadorArt * articuloSeleccionado.rate
-                    var impuesto:Double =  0.21 * articuloSeleccionado.rate
-                    var subtotal :Double = articuloSeleccionado.rate-impuesto
+                    updatePrecioTotal()
                     binding.txtnArticulo.text = articuloSeleccionado.name
                     binding.txtparticulo.text = articuloSeleccionado.rate.toString()
-                    binding.txtptotal.text = "$total €"
-                    binding.txtparticulototal.text = "$total €"
-                    binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
-                    binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+
                 }
                 itemadapter.notifyDataSetChanged()
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
         }
+
 
         viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
             when(it){
                 InvoiceCreateState.DataIniEmptyError -> setDateIniError()
                 InvoiceCreateState.DataFinEmptyError -> setDateFinError()
                 InvoiceCreateState.IncorrectDateRangeError -> setDateRangeError()
-                //is TaskState.AuthenticationError -> showMessage(it.message)
-                //is TaskCreateState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
             }
         })
     }
-
+    private fun updatePrecioTotal() {
+        val total: Double = contadorArt * precioActualArticulo
+        binding.txtptotal.text = "$total €"
+        binding.txtparticulototal.text = "$total €"
+        var impuesto:Double =  0.21 * total
+        var subtotal :Double = total-impuesto
+        binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+        binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+    }
 
     private fun showDatePickerIni() {
         val calendar = Calendar.getInstance()
@@ -243,8 +233,8 @@ class InvoiceCreationFragment : Fragment() {
         val fCreacion = binding.tiefechaIni.text.toString()
         val fVencimiento = binding.tiefechaFin.text.toString()
         val articulo = binding.txtnArticulo.text.toString()
-
-        val nuevaFactura = Invoice(cliente, articulo, fCreacion, fVencimiento)
+        val artcont = "$contadorArt x $articulo"
+        val nuevaFactura = Invoice(cliente, artcont, fCreacion, fVencimiento)
 
         InvoiceRepository.addInvoice(nuevaFactura)
         findNavController().navigateUp()

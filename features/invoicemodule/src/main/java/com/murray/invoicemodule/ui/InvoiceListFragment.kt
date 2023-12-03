@@ -77,7 +77,7 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
                     "cliente" to item.cliente,
                     "fechacrear" to item.fcreacion,
                     "fechavenc" to item.fvencimiento,
-                    "articulo" to item.articulo
+                    "articulo" to item.articulo,
                 )
                 findNavController().navigate(
                     R.id.action_invoiceListFragment_to_invoiceCreationFragment,

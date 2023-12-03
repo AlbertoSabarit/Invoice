@@ -15,7 +15,6 @@
     tools:context="com.murray.invoicemodule.ui.InvoiceCreationFragment">
 
 
-
     <Button
         android:id="@+id/btnAnadirArt"
         android:layout_width="150dp"
@@ -26,7 +25,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.044" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFechaFin"
@@ -126,8 +125,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvArticulo"
-        android:layout_width="370dp"
-        android:layout_height="271dp"
+        android:layout_width="365dp"
+        android:layout_height="282dp"
         android:layout_marginTop="15dp"
         android:visibility="visible"
         app:cardCornerRadius="20dp"
@@ -145,14 +144,13 @@
                 android:id="@+id/txtparticulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="45.000,00€"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/divider2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.28"
+                app:layout_constraintHorizontal_bias="0.257"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.934"
+                app:layout_constraintVertical_bias="0.937"
                 tools:ignore="TextSizeCheck" />
 
             <TextView
@@ -174,10 +172,10 @@
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.861"
+                app:layout_constraintHorizontal_bias="0.863"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2"
-                app:layout_constraintVertical_bias="0.555" />
+                app:layout_constraintVertical_bias="0.525" />
 
             <TextView
                 android:id="@+id/txtptotal"
@@ -231,7 +229,7 @@
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSubtotal"
-                app:layout_constraintVertical_bias="0.206" />
+                app:layout_constraintVertical_bias="0.169" />
 
             <TextView
                 android:id="@+id/txtTotal"
@@ -243,10 +241,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.089"
+                app:layout_constraintHorizontal_bias="0.091"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtImpuesto"
-                app:layout_constraintVertical_bias="0.272" />
+                app:layout_constraintVertical_bias="0.384" />
 
             <TextView
                 android:id="@+id/txtnArticulo"
@@ -319,7 +317,9 @@
                 android:text="1 x"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/divider2"
-                app:layout_constraintEnd_toStartOf="@+id/txtparticulo" />
+                app:layout_constraintEnd_toStartOf="@+id/txtparticulo"
+                app:layout_constraintHorizontal_bias="0.955"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
                 android:id="@+id/spArticulos"

@@ -15,8 +15,9 @@ import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
 import com.murray.item.ui.itemlist.usecase.ItemListState
 import com.murray.item.ui.itemlist.usecase.ItemListViewModel
+import com.murray.repositories.ItemRepository
 
-class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
+class ItemListFragment : Fragment(){
 
     private var _binding: FragmentItemListBinding? = null
     private val binding
@@ -84,7 +85,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
     }
 
     private fun setUpItemRecycler() {
-        itemListAdapter = ItemListAdapter(requireContext(), this)
+        itemListAdapter = ItemListAdapter(requireContext(), {viewItemDetail(it)},{deleteItem(it)})
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -93,7 +94,7 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemClick(item: Item) {
+    fun viewItemDetail(item: Item) {
         val bundle = bundleOf(
             "itemName" to item.name,
             "itemType" to item.type,
@@ -103,6 +104,14 @@ class ItemListFragment : Fragment(), ItemListAdapter.OnItemClickListener {
             "itemImage" to item.image.name
         )
         findNavController().navigate(R.id.action_itemListFragment_to_itemDetailFragment, bundle)
+    }
+
+    fun deleteItem(item: Item){
+        ItemRepository.getDataSetItem().remove(item)
+        itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
+        if (ItemRepository.getDataSetItem().isEmpty()){
+            showNoDataError()
+        }
     }
 
     override fun onDestroyView() {

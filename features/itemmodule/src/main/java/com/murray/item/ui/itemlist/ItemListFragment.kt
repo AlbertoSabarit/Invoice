@@ -1,29 +1,33 @@
 package com.murray.item.ui.itemlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.murray.entities.invoices.Invoice
 import com.murray.entities.items.Item
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
 import com.murray.item.ui.itemlist.usecase.ItemListState
 import com.murray.item.ui.itemlist.usecase.ItemListViewModel
+import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
 
-class ItemListFragment : Fragment(){
+class ItemListFragment : Fragment() {
 
     private var _binding: FragmentItemListBinding? = null
     private val binding
         get() = _binding!!
 
-    private val itemlistviewmodel :ItemListViewModel by viewModels()
+    private val itemlistviewmodel: ItemListViewModel by viewModels()
 
     private lateinit var itemListAdapter: ItemListAdapter
 
@@ -43,8 +47,8 @@ class ItemListFragment : Fragment(){
             findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
         }
 
-        itemlistviewmodel.getState().observe(viewLifecycleOwner){
-            when(it){
+        itemlistviewmodel.getState().observe(viewLifecycleOwner) {
+            when (it) {
                 is ItemListState.Loading -> showProgressBar(it.value)
                 ItemListState.NoDataError -> showNoDataError()
                 is ItemListState.Success -> onSuccess(it.dataset)
@@ -59,7 +63,7 @@ class ItemListFragment : Fragment(){
     }
 
     private fun onSuccess(dataset: ArrayList<Item>) {
-        with(binding){
+        with(binding) {
             lavNoItems.visibility = View.GONE
             tvItemListEmptyTitle.visibility = View.GONE
             tvItemListEmptyText.visibility = View.GONE
@@ -69,7 +73,7 @@ class ItemListFragment : Fragment(){
     }
 
     private fun showNoDataError() {
-        with(binding){
+        with(binding) {
             lavNoItems.visibility = View.VISIBLE
             tvItemListEmptyTitle.visibility = View.VISIBLE
             tvItemListEmptyText.visibility = View.VISIBLE
@@ -85,7 +89,8 @@ class ItemListFragment : Fragment(){
     }
 
     private fun setUpItemRecycler() {
-        itemListAdapter = ItemListAdapter(requireContext(), {viewItemDetail(it)},{deleteItem(it)})
+        itemListAdapter =
+            ItemListAdapter(requireContext(), { viewItemDetail(it) }, { validateDeleteItem(it) })
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -110,10 +115,28 @@ class ItemListFragment : Fragment(){
         //findNavController().navigate(action)
     }
 
-    private fun deleteItem(item: Item){
+    //TODO este metodo deberia estar en InvoiceRepository
+    fun getInvoiceItemName(cadena: String): String? {
+        val regex = Regex("\\d+ x (.+)")
+        val matchResult = regex.find(cadena)
+        return matchResult?.groupValues?.get(1)
+    }
+
+    private fun validateDeleteItem(item: Item) {
+        var dataSet = InvoiceRepository.dataSet
+
+        if (dataSet.any { invoice -> getInvoiceItemName(invoice.articulo) == item.name}) {
+            Toast.makeText(requireContext(),"No se puede eliminar un artículo asignado a una factura",Toast.LENGTH_SHORT).show()
+        } else {
+            Log.d("Validation", "Delete item")
+            deleteItem(item)
+        }
+    }
+
+    private fun deleteItem(item: Item) {
         ItemRepository.getDataSetItem().remove(item)
         itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
-        if (ItemRepository.getDataSetItem().isEmpty()){
+        if (ItemRepository.getDataSetItem().isEmpty()) {
             showNoDataError()
         }
     }

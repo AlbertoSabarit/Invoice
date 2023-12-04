@@ -24,7 +24,6 @@ class ItemCreationViewModel:ViewModel() {
             rate.value?.toDoubleOrNull() == null -> state.value = ItemCreationState.InvalidFormatRateError
             rate.value!!.toDouble() < 0 -> state.value = ItemCreationState.InvalidFormatRateError
             typeSpinnerPosition.value != 0 && typeSpinnerPosition.value != 1 -> ItemCreationState.TypeIsMandatoryError
-            //todo NotEnoughDataError
             else -> state.value = ItemCreationState.Success
         }
     }

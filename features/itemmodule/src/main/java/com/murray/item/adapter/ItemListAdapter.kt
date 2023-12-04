@@ -48,7 +48,6 @@ class ItemListAdapter(
         }
     }
 
-
     fun update(newDataSet: ArrayList<Item>) {
         dataset = newDataSet
         notifyDataSetChanged()

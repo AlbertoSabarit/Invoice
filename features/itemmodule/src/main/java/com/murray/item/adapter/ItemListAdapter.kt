@@ -14,8 +14,8 @@ import com.murray.repositories.ImagesItem
 class ItemListAdapter(
     //private val dataSet: MutableList<Item>,
     private val context: Context,
-    private val clickListener: (item: Item) -> Unit,
-    private val clickDeleteListener: (item: Item) -> Unit
+    private val detailClickListener: (item: Item) -> Unit,
+    private val deleteClickListener: (item: Item) -> Unit
 ) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
@@ -40,11 +40,11 @@ class ItemListAdapter(
         holder.bind(item, context)
 
         holder.itemView.setOnClickListener {
-            clickListener(item)
+            detailClickListener(item)
         }
 
         holder.binding.imgBtDeleteItem.setOnClickListener {
-            clickDeleteListener(item)
+            deleteClickListener(item)
         }
     }
 
@@ -72,7 +72,17 @@ class ItemListAdapter(
                     tvImpuestoText.text = context.getString(R.string.false_string)
                 }
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
-                imgItem.setImageResource(ImagesItem.getImageDrawable(item.image.name));
+
+                when{
+                    item.id == 1 -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                    item.id == 2 -> imgItem.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
+                    item.id == 3 -> imgItem.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
+                    item.id == 4 -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
+                    item.id == 5 -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
+                    item.id == 6 -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                    item.imageUri == null -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                    else -> imgItem.setImageURI(item.imageUri)
+                }
             }
         }
     }

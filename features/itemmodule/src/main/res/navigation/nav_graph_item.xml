@@ -15,7 +15,12 @@
             app:destination="@id/itemCreationFragment" />
         <action
             android:id="@+id/action_itemListFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            app:destination="@id/itemDetailFragment" >
+            <argument
+                android:name="item"
+                app:argType="com.murray.entities.items.Item"
+                />
+        </action>
         <action
             android:id="@+id/action_itemListFragment_to_fragmentProgressDialog"
             app:destination="@id/fragmentProgressDialog" />

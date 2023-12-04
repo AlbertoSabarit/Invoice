@@ -46,6 +46,8 @@ class ItemCreationFragment : Fragment() {
         binding.lifecycleOwner = this
         addTextWatcher()
 
+
+
         getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null){
                 binding.ivAddImage.setImageURI(uri)
@@ -90,10 +92,8 @@ class ItemCreationFragment : Fragment() {
             var rate: Double = rate.value!!.toDouble()
             var isTaxable: Boolean = isTaxable.value ?: false
             var description: String = description.value ?: ""
-            //todo imagen placeholder
-            var image: ImagesItem = ImagesItem.MALETA_CUERO
 
-            ItemRepository.addItem(name, type, rate, isTaxable, description, image)
+            ItemRepository.addItem(name, type, rate, isTaxable, description, selectedImageUri)
         }
         Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()

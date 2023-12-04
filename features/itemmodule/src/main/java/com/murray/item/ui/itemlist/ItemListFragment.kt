@@ -94,19 +94,23 @@ class ItemListFragment : Fragment(){
         }
     }
 
-    fun viewItemDetail(item: Item) {
+    private fun viewItemDetail(item: Item) {
         val bundle = bundleOf(
+            "itemId" to item.id,
             "itemName" to item.name,
             "itemType" to item.type,
             "itemRate" to item.rate,
             "itemTaxable" to item.isTaxable,
             "itemDescr" to item.description,
-            "itemImage" to item.image.name
+            "itemImageString" to item.imageUri.toString()
         )
         findNavController().navigate(R.id.action_itemListFragment_to_itemDetailFragment, bundle)
+
+        //val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)
+        //findNavController().navigate(action)
     }
 
-    fun deleteItem(item: Item){
+    private fun deleteItem(item: Item){
         ItemRepository.getDataSetItem().remove(item)
         itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
         if (ItemRepository.getDataSetItem().isEmpty()){

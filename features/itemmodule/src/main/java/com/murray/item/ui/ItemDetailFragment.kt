@@ -36,7 +36,7 @@ class ItemDetailFragment : Fragment() {
         val itemRate = arguments?.getDouble("itemRate") ?: ""
         val itemTaxable = arguments?.getBoolean("itemTaxable") ?: false
         val itemDescr = arguments?.getString("itemDescr") ?: ""
-        val itemImageString = arguments?.getString("itemImageUri") ?: ""
+        val itemImageString = arguments?.getString("itemImageString") ?: ""
 
         with(binding){
             tvItemDetailName.text = itemName

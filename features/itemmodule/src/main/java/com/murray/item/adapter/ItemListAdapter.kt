@@ -80,7 +80,7 @@ class ItemListAdapter(
                     item.id == 4 -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
                     item.id == 5 -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
                     item.id == 6 -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
-                    item.imageUri == null -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                    item.imageUri == null -> imgItem.setImageResource(R.drawable.item_default_image)
                     else -> imgItem.setImageURI(item.imageUri)
                 }
             }

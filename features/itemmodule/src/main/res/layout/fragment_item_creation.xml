@@ -165,7 +165,6 @@
             android:layout_height="170dp"
             android:background="@drawable/shape_item_img"
             android:clipToOutline="true"
-
             android:elevation="8dp"
             android:src="@drawable/ic_addphoto"
             app:layout_constraintBottom_toBottomOf="parent"

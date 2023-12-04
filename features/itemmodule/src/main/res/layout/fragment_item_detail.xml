@@ -245,7 +245,6 @@
         android:background="@drawable/shape_item_img"
         android:clipToOutline="true"
         android:elevation="8dp"
-        android:padding="10dp"
         android:src="@drawable/img_maleta_cuero"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

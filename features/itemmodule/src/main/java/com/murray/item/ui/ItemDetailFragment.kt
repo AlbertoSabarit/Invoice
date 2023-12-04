@@ -60,7 +60,7 @@ class ItemDetailFragment : Fragment() {
                 itemId == 4 -> ivItemDetail.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
                 itemId == 5 -> ivItemDetail.setImageResource(ImagesItem.OLEO.imagenDrawable)
                 itemId == 6 -> ivItemDetail.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
-                itemImageString.isNullOrEmpty() -> ivItemDetail.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                Uri.parse(itemImageString) == null -> ivItemDetail.setImageResource(R.drawable.item_default_image)
                 else -> ivItemDetail.setImageURI(Uri.parse(itemImageString))
             }
         }

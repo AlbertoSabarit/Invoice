@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.murray.invoice.SplashFragment"
-        android:label="Logo" >
+        android:label="Logo">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

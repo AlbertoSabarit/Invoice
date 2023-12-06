@@ -5,13 +5,13 @@
 
     <data>
         <variable name="viewmodel"
-            type="com.murray.customer.ui.CustomerCreationViewModel"/>
+            type="com.murray.customer.ui.creation.usecase.CustomerCreationViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.murray.customer.ui.CustomerCreationFragment">
+        tools:context="com.murray.customer.ui.creation.CustomerCreationFragment">
 
         <Button
             android:id="@+id/button"

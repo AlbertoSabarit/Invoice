@@ -1,4 +1,4 @@
-package com.murray.customer.ui
+package com.murray.customer.ui.creation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerCreationBinding
+import com.murray.customer.ui.creation.usecase.CustomerCreationState
+import com.murray.customer.ui.LayoutTextWatcher
+import com.murray.customer.ui.creation.usecase.CustomerCreationViewModel
 import com.murray.entities.customers.Customer
+import com.murray.entities.email.Email
 import com.murray.repositories.CustomerRepository
 
 
@@ -55,27 +59,33 @@ class CustomerCreationFragment : Fragment() {
 
         viewModel.getState().observe(viewLifecycleOwner) {
             when(it){
-                CustomerCreationState.NameEmptyError -> setNameEmptyError()
-                CustomerCreationState.EmailEmptyError -> setEmailEmptyError()
+                CustomerCreationState.NameIsMandatory -> setNameEmptyError()
+                CustomerCreationState.NonExistentContact -> setEmailEmptyError()
+                CustomerCreationState.EmailFormatError -> setEmailFormatError()
                 else -> onSuccess()
             }
         }
     }
 
+    private fun setEmailFormatError() {
+        binding.tilEmail.error = "El email no es válido"
+        binding.tilEmail.requestFocus()
+    }
+
     private fun onSuccess() {
-        CustomerRepository.addCustomer(Customer(binding.tieName.text.toString(), binding.tieEmail.text.toString(), binding.tiePhone.text.toString().takeIf { it.isNotEmpty() }?.toInt() ?: null, binding.tieCity.text.toString(), binding.tieAddress.text.toString()))
+        CustomerRepository.addCustomer(Customer(CustomerRepository.getNextId(),binding.tieName.text.toString(), Email(binding.tieEmail.text.toString()), binding.tiePhone.text.toString().takeIf { it.isNotEmpty() }?.toInt() ?: null, binding.tieCity.text.toString(), binding.tieAddress.text.toString()))
         Toast.makeText(requireActivity(), "Cliente creado con éxito!", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }
 
     private fun setNameEmptyError() {
         binding.tilName.error = "El nombre no puede estar vacío"
-        binding.tilName.requestFocus() //cursor de foco se modifica
+        binding.tilName.requestFocus()
     }
 
     private fun setEmailEmptyError() {
         binding.tilEmail.error = "El email no puede estar vacío"
-        binding.tilEmail.requestFocus() //cursor de foco se modifica
+        binding.tilEmail.requestFocus()
     }
 
 }

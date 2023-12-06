@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/customerListFragment"
-        android:name="com.murray.customer.ui.CustomerListFragment"
+        android:name="com.murray.customer.ui.list.CustomerListFragment"
         android:label="Lista de Clientes"
         tools:layout="@layout/fragment_customer_list" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/customerCreationFragment"
-        android:name="com.murray.customer.ui.CustomerCreationFragment"
+        android:name="com.murray.customer.ui.creation.CustomerCreationFragment"
         android:label="Creación de Cliente"
         tools:layout="@layout/fragment_customer_creation" />
 </navigation>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.CustomerListFragment">
+    tools:context=".ui.list.CustomerListFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -22,7 +22,7 @@
     <LinearLayout
         android:id="@+id/lnlSinClientes"
         android:layout_width="332dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,13 +30,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieNoCustomer"
             android:layout_width="match_parent"
-            android:layout_height="102dp"
-            android:src="@drawable/ic_missingclient"
-            tools:layout_editor_absoluteX="500dp"
-            tools:layout_editor_absoluteY="500dp" />
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.40"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/nodata" />
 
         <TextView
             android:id="@+id/tvMissing"

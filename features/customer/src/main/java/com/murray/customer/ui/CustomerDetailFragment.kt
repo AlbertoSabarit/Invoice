@@ -69,12 +69,15 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
-        binding.checkBox.setOnCheckedChangeListener(){ _, isChecked ->
-            if(isChecked)
-                gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-            else
-                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                binding.radio1.id -> gMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                binding.radio2.id-> gMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                binding.radio3.id -> gMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+            }
         }
+
     }
 
     override fun onDestroyView() {

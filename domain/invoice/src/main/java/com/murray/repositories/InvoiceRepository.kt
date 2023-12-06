@@ -21,7 +21,9 @@ class InvoiceRepository private constructor() {
             dataSet.add(i)
         }
         private fun initDataSetInvoice():MutableList<Invoice>{
-
+            dataSet.add(Invoice(
+                 "Alberto Sabarit", "2 x Cuaderno", "10/11/2023","25/12/2023")
+            )
             return dataSet
         }
 

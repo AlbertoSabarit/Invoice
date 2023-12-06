@@ -22,8 +22,8 @@
 
     <LinearLayout
         android:id="@+id/lnlSinFactura"
-        android:layout_width="332dp"
-        android:layout_height="200dp"
+        android:layout_width="353dp"
+        android:layout_height="425dp"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,13 +31,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="102dp"
-            android:src="@drawable/baseline_auto_awesome_24"
-            tools:layout_editor_absoluteX="500dp"
-            tools:layout_editor_absoluteY="500dp" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="258dp"
+            android:layout_height="251dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/noinvoice" />
 
         <TextView
             android:id="@+id/textView"

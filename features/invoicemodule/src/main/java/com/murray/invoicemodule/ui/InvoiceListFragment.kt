@@ -73,6 +73,7 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
         })
         invoiceAdapter.setOnEditClickListener(object : OnEditClickListener {
             override fun onEditClick(item: Invoice) {
+                //InvoiceRepository.dataSet.remove(item)
                 val bundle = bundleOf(
                     "cliente" to item.cliente,
                     "fechacrear" to item.fcreacion,
@@ -83,6 +84,8 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
                     R.id.action_invoiceListFragment_to_invoiceCreationFragment,
                     bundle
                 )
+
+                invoiceAdapter.notifyDataSetChanged()
             }
         })
 

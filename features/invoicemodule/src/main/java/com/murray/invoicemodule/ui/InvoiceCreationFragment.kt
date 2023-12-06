@@ -51,6 +51,12 @@ class InvoiceCreationFragment : Fragment() {
         cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = cliadapter
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val cliente = arguments?.getString("cliente") ?: ""
         val fcrear = arguments?.getString("fechacrear") ?: ""
         val fven = arguments?.getString("fechavenc") ?: ""
@@ -63,11 +69,6 @@ class InvoiceCreationFragment : Fragment() {
         binding.tiefechaFin.setText("$fven")
         binding.txtnArticulo.setText("$art")
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.btnAnadirArt.setOnClickListener{
             binding.cvArticulo.visibility = View.VISIBLE
@@ -207,12 +208,6 @@ class InvoiceCreationFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
         datePickerDialog.show()
-    }
-    private fun showProgressbar(value: Boolean) {
-        if(value)
-        //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
-        else
-            findNavController().popBackStack()
     }
     private fun setDateIniError() {
         binding.tilFechaIni.error = "Debe elegir una fecha"

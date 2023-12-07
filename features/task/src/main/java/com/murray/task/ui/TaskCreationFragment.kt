@@ -137,27 +137,20 @@ class TaskCreationFragment : Fragment() {
 
         viewModel.getState().observe(
             viewLifecycleOwner,
-            Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+            Observer {
                 when (it) {
                     TaskCreateState.TitleEmptyError -> setTitleEmptyError()
                     TaskCreateState.DescriptionEmptyError -> setDescriptionEmptyError()
                     TaskCreateState.DataIniEmptyError -> setDateIniError()
                     TaskCreateState.DataFinEmptyError -> setDateFinError()
                     TaskCreateState.IncorrectDateRangeError -> setDateRangeError()
-                    is TaskCreateState.Loading -> {} //showProgressbar(it.value)
+                    is TaskCreateState.Loading -> {}
                     is TaskCreateState.TaskCreateError -> setErrorCreateTask()
 
                     else -> onSuccess()
                 }
             })
 
-    }
-
-    private fun showProgressbar(value: Boolean) {
-        if (value)
-        //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
-        else
-            findNavController().popBackStack()
     }
 
     private fun showDatePickerIni() {
@@ -273,10 +266,6 @@ class TaskCreationFragment : Fragment() {
         _binding = null
     }
 
-
-    /**
-     * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
-     */
     open inner class LogInTextWatcher(var tilError: TextInputLayout) : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -290,6 +279,4 @@ class TaskCreationFragment : Fragment() {
             tilError.error = null
         }
     }
-
-
 }

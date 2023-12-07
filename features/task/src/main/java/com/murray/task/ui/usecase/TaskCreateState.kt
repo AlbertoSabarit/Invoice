@@ -9,7 +9,5 @@ sealed class TaskCreateState {
     data object DataFinEmptyError: TaskCreateState()
     data object Success: TaskCreateState()
 
-    //Se debe crear una clase que contiene un valor booleano que indica si se muestra el ProgressBar
-
     data class Loading(var value: Boolean) : TaskCreateState()
 }

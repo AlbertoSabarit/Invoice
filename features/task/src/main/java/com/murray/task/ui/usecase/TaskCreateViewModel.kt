@@ -42,33 +42,12 @@ class TaskCreateViewModel : ViewModel() {
                 viewModelScope.launch {
 
                     state.value = TaskCreateState.Loading(true)
-                    //La respuesta del Repositorio es asíncrona
-
-                    //val result = TaskRepository.createTask(title.value!!, description.value!!,fini.value!!, ffin.value!!)
-
-                    //ES OBLIGATORIO: pausar/quitar el FragmentDialog antes de mostrar el error. Ya que el Fragment SignIn está pausado.
                     state.value = TaskCreateState.Loading(false)
-
                     state.value = TaskCreateState.Success
 
-                    /*
-                    when (result) {
-                        //"is" cuando sea un dataclass
-                        is Resource.Success<*> -> {
-                            // Manejo de error si el tipo de dato no es el esperado
-                            Log.e(TAG, "Tarea creada")
-                            state.value = TaskCreateState.Success
-                        }
-                        is Resource.Error -> {
-                            Log.i(TAG, "Informacion del dato ${result.exception.message}")
-                            state.value = TaskCreateState.TaskCreateError(result.exception.message!!)
-                        }
-                    }
-                     */
                 }
             }
         }
-
     }
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

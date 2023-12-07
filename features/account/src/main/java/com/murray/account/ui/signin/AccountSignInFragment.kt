@@ -36,16 +36,9 @@ class AccountSignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentAccountSignInBinding.inflate(inflater, container, false)
 
-        //Pasamos a la interfaz la instancia del ViewModel para que actualice/recoja los valores
-        //del email y password automáticamente y asociar el evento onClick del botón a una función
         binding.viewmodel = this.viewModel
-
-        //IMPORTANTE: Hay que establecer el Fragment/Activity vinculado al binding para actualizar
-        // los valores del Binding en base al ciclo de vida
-
         binding.lifecycleOwner = this
 
         return binding.root
@@ -64,23 +57,17 @@ class AccountSignInFragment : Fragment() {
         twatcher= LogInTextWatcher(binding.tilPasswordSignIn)
         binding.tiePasswordSignIn.addTextChangedListener(twatcher)
 
-        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+        viewModel.getState().observe(viewLifecycleOwner, Observer {
             when(it){
                 SignInState.EmailEmptyError -> setEmailEmptyError()
                 SignInState.PasswordEmptyError -> setPasswordEmptyError()
                 SignInState.Completed -> {}
                 is SignInState.AuthenticationError -> showMessage(it.message)
-                //is SignInState.Loading -> showProgressbar(it.value)
                 else -> onSuccess()
             }
         })
 
     }
-
-    /**
-     * Mostrar un progressbar en el comienzo de una opación larga como es una consulta
-     * a la base de datos, Firebase o bien ocultar cuando al operación ha terminado
-     */
     private fun showProgressbar(value: Boolean) {
         if(value)
             findNavController().navigate(R.id.action_accountSignInFragment_to_fragmentProgressDialog)
@@ -88,17 +75,11 @@ class AccountSignInFragment : Fragment() {
             findNavController().popBackStack()
     }
 
-    /**
-     * Función que muestra al usuario un mensaje
-     */
     private fun showMessage(message: String) {
         val action = AccountSignInFragmentDirections.actionAccountSignInFragmentToBaseFragmentDialog("Error",message)
         findNavController().navigate(action)
     }
 
-    /**
-     * Función que muestra el error de Email Empty
-     */
     private fun setEmailEmptyError() {
         binding.tilEmail.error = getString(com.murray.account.R.string.errEmailEmpty)
         binding.tilEmail.requestFocus()
@@ -120,9 +101,6 @@ class AccountSignInFragment : Fragment() {
         _binding = null
     }
 
-    /**
-     * Creamos una clase interna para acceder a las propiedades sy funciones de la clase externa
-     */
     open inner class LogInTextWatcher(var tilError: TextInputLayout) : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -135,7 +113,6 @@ class AccountSignInFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             tilError.error = null
         }
-
     }
 }
 

@@ -60,7 +60,7 @@ class TaskListFragment : Fragment() {
     }
 
     private fun onSuccess(dataset: ArrayList<Task>){
-        //Desactivar la animacion y visualizar el recyclerview
+
         hideNoDataError()
         taskAdapter.update(dataset)
     }
@@ -72,10 +72,6 @@ class TaskListFragment : Fragment() {
         binding.recyclerView.visibility = View.VISIBLE
     }
 
-
-    /**
-     * Funcion que muestra el error de no hay datos
-     */
     private fun showNoDataError(){
         binding.animationView.visibility = View.VISIBLE
         binding.tv1.visibility = View.VISIBLE

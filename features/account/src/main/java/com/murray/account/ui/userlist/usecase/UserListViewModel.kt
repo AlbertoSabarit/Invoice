@@ -17,14 +17,10 @@ class UserListViewModel : ViewModel() {
         return state
     }
 
-    /**
-     * Funcion que pide el listado de usuarios al repositorio
-     */
+
     fun getUserList() {
-        //Iniciar la corrutina
         viewModelScope.launch {
 
-            //Opcion 1: me devuelve diferentes estados
             state.value = UserListState.Loading(true)
             val result = UserRepository.getUserList()
             state.value = UserListState.Loading(false)
@@ -35,13 +31,6 @@ class UserListViewModel : ViewModel() {
 
                 is ResourceList.Error -> state.value = UserListState.NoDataError
             }
-
-
-            //Opcion 2: me devuelve la lista, porque solo tenemos 2 posibles estados, el de error no datos y el de exito
-            /* val data = UserRepository.getUserList()
-             when{
-                 data.isEmpty() -> state.value = UserListState.NoDataError
-                 else -> state.value = UserListState.Success(data)*/
         }
     }
 }

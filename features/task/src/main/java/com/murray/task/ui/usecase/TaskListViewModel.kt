@@ -19,18 +19,16 @@ class TaskListViewModel : ViewModel() {
     }
 
     fun getTaskList() {
-        //Iniciar la corrutina
         viewModelScope.launch {
 
-            //Opcion 1: me devuelve diferentes estados
+
             state.value = TaskListState.Loading(true)
-            val result = TaskRepository.getTaskList() // val result = TaskRepository.dataSet
+            val result = TaskRepository.getTaskList()
             state.value = TaskListState.Loading(false)
 
 
             when (result) {
                 is ResourceList.Success<*> -> state.value = TaskListState.Success(result.data as ArrayList<Task>)
-
                 is ResourceList.Error -> state.value = TaskListState.NoDataError
             }
         }

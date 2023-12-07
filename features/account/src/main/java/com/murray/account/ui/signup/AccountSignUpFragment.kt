@@ -38,7 +38,6 @@ class AccountSignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentAccountSignUpBinding.inflate(inflater, container,false)
 
         binding.viewmodel = this.viewModel
@@ -50,9 +49,9 @@ class AccountSignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //1. Crear colección de datos
+
         val itemList = arrayListOf("Privado", "Publico", "Vacío")
-        //2. Crear Adapter
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, itemList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -73,7 +72,6 @@ class AccountSignUpFragment : Fragment() {
             }
 
         }
-        //Se usa el modismo with que dado un objeto se pueden modificar propiedades dentro del bloque
         with(binding.spProfile) {
             this.adapter = adapter
             onItemSelectedListener = listener
@@ -90,7 +88,7 @@ class AccountSignUpFragment : Fragment() {
         twatcher= LogInTextWatcher(binding.tieConfirmsPasswordsSignUp)
         binding.tilConfirmsPasswordsSignUp.addTextChangedListener(twatcher)
 
-        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+        viewModel.getState().observe(viewLifecycleOwner, Observer {
             when(it){
                 SignUpState.EmailEmptyError -> setEmailEmptyError()
                 SignUpState.PasswordEmptyError -> setPasswordEmptyError()

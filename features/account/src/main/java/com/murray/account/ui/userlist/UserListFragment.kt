@@ -49,21 +49,12 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick {
             }
         })
     }
-
-    /**
-     * Cuando el fragment se inicia debe pedir el listado de usuarios al ViewModel - Infraestructura
-     * (Firebase, Json, Room...)
-     */
     override fun onStart() {
         super.onStart()
         viewmodel.getUserList()
     }
 
-    /**
-     * Funcion que contiene el listado de usuarios
-     */
     private fun onSuccess(dataset: ArrayList<User>){
-       //Desactivar la animacion y visualizar el recyclerview
         hideNoDataError()
         userAdapter.update(dataset)
     }
@@ -74,17 +65,11 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick {
     }
 
 
-    /**
-     * Funcion que muestra el error de no hay datos
-     */
     private fun showNoDataError(){
         binding.animationView.visibility = View.VISIBLE
         binding.rvUser.visibility = View.GONE
     }
 
-    /**
-     * Mostrar el progressbar en la vista
-     */
     private fun showProgressBar(value : Boolean){
        if(value)
             findNavController().navigate(R.id.action_userListFragment_to_fragmentProgressDialog)
@@ -92,26 +77,18 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick {
             findNavController().popBackStack()
     }
 
-    /**
-     * Funcion que inicializa el RecyclerView que muestra el listado de usuarios de la app
-     */
     private fun setUpUserRecycler(){
-        //Crear el Adapter con los valores en el constructor primario
         userAdapter = UserAdapter ( this){
             Toast.makeText(requireContext(), "Usuario seleccionado mediante lambda $it", Toast.LENGTH_SHORT).show()
         }
 
-        //1. ¿Como quiero que se muestren los elementos de la lista?
+
         with(binding.rvUser){
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             this.adapter = userAdapter
         }
     }
-
-    /**
-     * Esta funcion se llama de forma asincrona cuando el usuario pulse sobre un elemento del RecyclerView
-     */
 
     override fun userClick(user: User) {
         Toast.makeText(requireActivity(), "Pulsacion cota en el usuario $user", Toast.LENGTH_SHORT).show()

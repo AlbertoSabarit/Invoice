@@ -15,16 +15,12 @@ class ItemListAdapter(
     //private val dataSet: MutableList<Item>,
     private val context: Context,
     private val detailClickListener: (item: Item) -> Unit,
-    private val deleteClickListener: (item: Item) -> Unit
+    private val deleteClickListener: (item: Item) -> Unit,
+    private val editClickListener: (item: Item) -> Unit
 ) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
     private var dataset: ArrayList<Item> = arrayListOf()
-
-    /*
-    interface OnItemClickListener {
-        fun onItemClick(item: Item)
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -45,6 +41,10 @@ class ItemListAdapter(
 
         holder.binding.imgBtDeleteItem.setOnClickListener {
             deleteClickListener(item)
+        }
+
+        holder.binding.imgBtEditItem.setOnClickListener{
+            editClickListener(item)
         }
     }
 
@@ -71,14 +71,14 @@ class ItemListAdapter(
                     tvImpuestoText.text = context.getString(R.string.false_string)
                 }
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
-
                 when{
+                    /*
                     item.id == 1 -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
                     item.id == 2 -> imgItem.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
                     item.id == 3 -> imgItem.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
                     item.id == 4 -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
                     item.id == 5 -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
-                    item.id == 6 -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                    item.id == 6 -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)*/
                     item.imageUri == null -> imgItem.setImageResource(R.drawable.item_default_image)
                     else -> imgItem.setImageURI(item.imageUri)
                 }

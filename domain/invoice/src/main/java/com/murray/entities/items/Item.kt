@@ -3,6 +3,7 @@ package com.murray.entities.items
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.entities.tasks.Task
 
 enum class ItemType {
     PRODUCT,
@@ -18,6 +19,7 @@ data class Item(
     var imageUri: Uri? = null,
     ): Parcelable {
     companion object CREATOR : Parcelable.Creator<Item> {
+        val TAG = "Item"
         override fun createFromParcel(parcel: Parcel): Item {
             return Item(parcel)
         }
@@ -25,14 +27,19 @@ data class Item(
         override fun newArray(size: Int): Array<Item?> {
             return arrayOfNulls(size)
         }
+
+        /*
+        fun createDefaultTask() : Task {
+            return Task(-1, "", "", "","","", "", "")
+        }*/
     }
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString()!!,
-        ItemType.valueOf(parcel.readString()!!), // Convertir el nombre del enum de nuevo a enum
+        parcel.readString() ?: "",
+        ItemType.valueOf(parcel.readString() ?: ItemType.PRODUCT.name), // Convertir el nombre del enum de nuevo a enum
         parcel.readDouble(),
         parcel.readByte() != 0.toByte(),
-        parcel.readString()!!,
+        parcel.readString() ?: "",
         parcel.readParcelable(Uri::class.java.classLoader)
     )
     override fun writeToParcel(parcel: Parcel, flags: Int) {

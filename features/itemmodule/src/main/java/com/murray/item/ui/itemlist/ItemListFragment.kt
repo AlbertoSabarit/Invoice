@@ -90,7 +90,7 @@ class ItemListFragment : Fragment() {
 
     private fun setUpItemRecycler() {
         itemListAdapter =
-            ItemListAdapter(requireContext(), { viewItemDetail(it) }, { validateDeleteItem(it) })
+            ItemListAdapter(requireContext(), { viewItemDetail(it) }, { validateDeleteItem(it) }, {editItem(it)})
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -99,20 +99,14 @@ class ItemListFragment : Fragment() {
         }
     }
 
-    private fun viewItemDetail(item: Item) {
-        val bundle = bundleOf(
-            "itemId" to item.id,
-            "itemName" to item.name,
-            "itemType" to item.type,
-            "itemRate" to item.rate,
-            "itemTaxable" to item.isTaxable,
-            "itemDescr" to item.description,
-            "itemImageString" to item.imageUri.toString()
-        )
-        findNavController().navigate(R.id.action_itemListFragment_to_itemDetailFragment, bundle)
 
-        //val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)
-        //findNavController().navigate(action)
+    private fun viewItemDetail(item: Item) {
+        val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)
+        findNavController().navigate(action)
+    }
+    private fun editItem(item: Item) {
+        val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
+        findNavController().navigate(action)
     }
 
     //TODO este metodo deberia estar en InvoiceRepository

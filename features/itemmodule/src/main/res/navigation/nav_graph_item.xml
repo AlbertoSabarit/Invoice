@@ -29,7 +29,13 @@
         android:id="@+id/itemCreationFragment"
         android:name="com.murray.item.ui.itemcreation.ItemCreationFragment"
         android:label="@string/fragment_item_creation_label"
-        tools:layout="@layout/fragment_item_creation" />
+        tools:layout="@layout/fragment_item_creation" >
+        <argument
+            android:name="item"
+            app:argType="com.murray.entities.items.Item"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/itemDetailFragment"
         android:name="com.murray.item.ui.ItemDetailFragment"
@@ -38,6 +44,9 @@
         <action
             android:id="@+id/action_itemDetailFragment_to_itemCreationFragment"
             app:destination="@id/itemCreationFragment" />
+        <argument
+            android:name="item"
+            app:argType="com.murray.entities.items.Item" />
     </fragment>
 
     <dialog

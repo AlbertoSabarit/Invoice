@@ -1,267 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.murray.item.ui.ItemDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Info -->
+    <data>
+        <!--
+        <variable
+            name="item"
+            type="com.murray.entities.items.Item" />-->
+    </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvItemDetailInfo"
-        android:layout_width="325dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="24dp"
-        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.murray.item.ui.ItemDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!-- Info -->
 
-            <!-- item values -->
-            <TextView
-                android:id="@+id/tvItemDetailName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Maleta de cuero"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle"
-                app:layout_constraintVertical_bias="0.0" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvItemDetailInfo"
+            android:layout_width="325dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/tvItemDetailRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="60€"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailRateTitle"
-                app:layout_constraintVertical_bias="0.0" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvItemDetailTaxable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Si"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTaxableTitle"
-                app:layout_constraintVertical_bias="0.0" />
+                <!-- item values -->
+                <TextView
+                    android:id="@+id/tvItemDetailName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Maleta de cuero"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/tvItemDetailType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Producto"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTypeTitle"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/tvItemDetailRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="60€"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailRateTitle"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <!-- helpers -->
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gItemDetailStartCardInfo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.05" />
+                <TextView
+                    android:id="@+id/tvItemDetailTaxable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Si"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTaxableTitle"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gItemDetailMiddleCardInfo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                <TextView
+                    android:id="@+id/tvItemDetailType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Producto"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTypeTitle"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <!-- decoration lines-->
-            <View
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle" />
+                <!-- helpers -->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gItemDetailStartCardInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.05" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTypeTitle" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gItemDetailMiddleCardInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTaxableTitle" />
+                <!-- decoration lines-->
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailNameTitle" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailRateTitle" />
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTypeTitle" />
 
-            <!-- titles -->
-            <TextView
-                android:id="@+id/tvItemDetailNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/tiet_item_detail_name"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailTaxableTitle" />
 
-            <TextView
-                android:id="@+id/tvItemDetailTypeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/tiet_item_detail_type"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailRateTitle" />
 
-            <TextView
-                android:id="@+id/tvItemDetailRateTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tiet_item_detail_rate"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.6" />
+                <!-- titles -->
+                <TextView
+                    android:id="@+id/tvItemDetailNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/tiet_item_detail_name"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/tvItemDetailTaxableTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tiet_item_detail_tax"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.59000003" />
+                <TextView
+                    android:id="@+id/tvItemDetailTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/tiet_item_detail_type"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/tvItemDetailRateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tiet_item_detail_rate"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardInfo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.6" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvItemDetailDescr"
-        android:layout_width="325dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="24dp"
-        app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvItemDetailInfo"
-        app:layout_constraintVertical_bias="0.0">
+                <TextView
+                    android:id="@+id/tvItemDetailTaxableTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tiet_item_detail_tax"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailMiddleCardInfo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.59000003" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/tvItemDetailDescr"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:justificationMode="inter_word"
-                android:text="Cuero de cabra de grano superior superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente.  Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción. "
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailDescrTitle"
-                app:layout_constraintVertical_bias="0.0" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvItemDetailDescr"
+            android:layout_width="325dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvItemDetailInfo"
+            app:layout_constraintVertical_bias="0.0">
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
-                app:layout_constraintTop_toBottomOf="@+id/tvItemDetailDescrTitle" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvItemDetailDescrTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/tiet_item_detail_descr"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tvItemDetailDescr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:justificationMode="inter_word"
+                    android:text="Cuero de cabra de grano superior superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente.  Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción. "
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailDescrTitle"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gItemDetailStartCardDescr"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.05" />
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
+                    app:layout_constraintTop_toBottomOf="@+id/tvItemDetailDescrTitle" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/tvItemDetailDescrTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/tiet_item_detail_descr"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/gItemDetailStartCardDescr"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivItemDetail"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/shape_item_img"
-        android:clipToOutline="true"
-        android:elevation="8dp"
-        android:src="@drawable/img_maleta_cuero"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cvItemDetailDescr"
-        app:layout_constraintVertical_bias="0.6" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gItemDetailStartCardDescr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.05" />
 
-    <Button
-        android:id="@+id/bItemCreationAddItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="@string/b_item_detail_edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ivItemDetail"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/shape_item_img"
+            android:clipToOutline="true"
+            android:elevation="8dp"
+            android:src="@drawable/img_maleta_cuero"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cvItemDetailDescr"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <Button
+            android:id="@+id/bItemDetailEditItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/b_item_detail_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

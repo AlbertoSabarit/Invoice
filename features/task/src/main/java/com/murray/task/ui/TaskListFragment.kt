@@ -97,13 +97,10 @@ class TaskListFragment : Fragment() {
     }
 
     private fun deleteTask(task: Task){
-        TaskRepository.dataSet.remove(task)
 
-        taskAdapter.update(TaskRepository.dataSet as ArrayList<Task>)
+        viewmodel.removeFromList(task)
 
-        if(TaskRepository.dataSet.isEmpty()){
-            showNoDataError()
-        }
+        viewmodel.getTaskList()
     }
 
     private fun viewTask(task : Task){

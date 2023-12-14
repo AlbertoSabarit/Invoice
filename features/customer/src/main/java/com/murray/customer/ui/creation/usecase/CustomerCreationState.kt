@@ -6,5 +6,4 @@ sealed class CustomerCreationState {
     data object PhoneFormatError: CustomerCreationState()
     data object NameIsMandatory: CustomerCreationState()
     data object Success: CustomerCreationState()
-    data object Fail: CustomerCreationState() //TODO Error
 }

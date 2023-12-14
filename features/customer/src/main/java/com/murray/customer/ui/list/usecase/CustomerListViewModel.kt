@@ -1,6 +1,5 @@
 package com.murray.customer.ui.list.usecase
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,7 +44,7 @@ class CustomerListViewModel: ViewModel() {
             customerAdapter.update(CustomerRepository.getCustomers() as ArrayList<Customer>)
         }
         else
-            state.value = CustomerListState.IdReferenciado
+            state.value = CustomerListState.ReferencedCustomer
 
         return CustomerRepository.getCustomers().isEmpty()
     }

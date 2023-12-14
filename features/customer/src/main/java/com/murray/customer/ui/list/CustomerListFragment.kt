@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +15,6 @@ import com.murray.customer.ui.adapter.CustomAdapter
 import com.murray.customer.ui.list.usecase.CustomerListState
 import com.murray.customer.ui.list.usecase.CustomerListViewModel
 import com.murray.entities.customers.Customer
-import com.murray.repositories.CustomerRepository
 
 class CustomerListFragment : Fragment() {
     private var _binding: FragmentCustomerListBinding? = null
@@ -55,7 +53,7 @@ class CustomerListFragment : Fragment() {
             when(it){
                 CustomerListState.NoDataError -> showNoDataError()
                 is CustomerListState.Success -> onSuccess(it.dataset)
-                CustomerListState.IdReferenciado -> showReferencedCustomerError()
+                CustomerListState.ReferencedCustomer -> showReferencedCustomerError()
             }
         }
     }

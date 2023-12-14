@@ -2,12 +2,12 @@ package com.murray.item.ui.itemcreation.usecase
 
 import android.net.Uri
 import android.text.TextUtils
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
+import com.murray.entities.items.Item
+import com.murray.entities.items.ItemType
+import com.murray.repositories.ItemRepository
 
 class ItemCreationViewModel : ViewModel() {
     var id = MutableLiveData<Int>()
@@ -35,6 +35,23 @@ class ItemCreationViewModel : ViewModel() {
 
             else -> state.value = ItemCreationState.Success
         }
+    }
+
+    fun editItem(itemArgs: Item) {
+        for (itemDataset in ItemRepository.getDataSetItem()) {
+            if (itemDataset.id == itemArgs.id) {
+                itemDataset.name = itemArgs.name
+                itemDataset.type = itemArgs.type
+                itemDataset.rate = itemArgs.rate
+                itemDataset.isTaxable = itemArgs.isTaxable
+                itemDataset.description = itemArgs.description
+                itemDataset.imageUri = itemArgs.imageUri
+            }
+        }
+    }
+
+    fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description:String, imageUri: Uri?){
+        ItemRepository.addItem(name, type, rate, isTaxable, description, imageUri)
     }
 
 }

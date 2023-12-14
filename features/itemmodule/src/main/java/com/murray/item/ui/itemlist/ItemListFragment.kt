@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.murray.entities.invoices.Invoice
 import com.murray.entities.items.Item
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter
@@ -27,7 +25,8 @@ class ItemListFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val itemlistviewmodel: ItemListViewModel by viewModels()
+
+    private val viewmodel: ItemListViewModel by viewModels()
 
     private lateinit var itemListAdapter: ItemListAdapter
 
@@ -47,7 +46,7 @@ class ItemListFragment : Fragment() {
             findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
         }
 
-        itemlistviewmodel.getState().observe(viewLifecycleOwner) {
+        viewmodel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 is ItemListState.Loading -> showProgressBar(it.value)
                 ItemListState.NoDataError -> showNoDataError()
@@ -59,7 +58,7 @@ class ItemListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        itemlistviewmodel.getItemList()
+        viewmodel.getItemList()
     }
 
     private fun onSuccess(dataset: ArrayList<Item>) {
@@ -109,31 +108,20 @@ class ItemListFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    //TODO este metodo deberia estar en InvoiceRepository
-    fun getInvoiceItemName(cadena: String): String? {
-        val regex = Regex("\\d+ x (.+)")
-        val matchResult = regex.find(cadena)
-        return matchResult?.groupValues?.get(1)
-    }
-
     private fun validateDeleteItem(item: Item) {
-        var dataSet = InvoiceRepository.dataSet
+        var dataSet = viewmodel.getInvoiceRepository()
 
-        if (dataSet.any { invoice -> getInvoiceItemName(invoice.articulo) == item.name}) {
+        if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name}) {
             Toast.makeText(requireContext(),"No se puede eliminar un artículo asignado a una factura",Toast.LENGTH_SHORT).show()
         } else {
-            Log.d("Validation", "Delete item")
-            deleteItem(item)
+            viewmodel.deleteItem(item)
+            viewmodel.updateItemList(itemListAdapter)
+            if (viewmodel.checkItemListEmpty()) {
+                showNoDataError()
+            }
         }
     }
 
-    private fun deleteItem(item: Item) {
-        ItemRepository.getDataSetItem().remove(item)
-        itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
-        if (ItemRepository.getDataSetItem().isEmpty()) {
-            showNoDataError()
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

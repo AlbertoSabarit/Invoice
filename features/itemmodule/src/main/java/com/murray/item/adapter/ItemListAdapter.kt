@@ -78,13 +78,14 @@ class ItemListAdapter(
                 }
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
                 when{
-                    /*
-                    item.id == 1 -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
-                    item.id == 2 -> imgItem.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
-                    item.id == 3 -> imgItem.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
-                    item.id == 4 -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
-                    item.id == 5 -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
-                    item.id == 6 -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)*/
+                    //Elegir imágenes predeterminadas
+                    item.name == "Maleta de Cuero" -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                    item.name == "Lápices Acuarela" -> imgItem.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
+                    item.name == "Cuaderno" -> imgItem.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
+                    item.name == "Portátil" -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
+                    item.name == "Pinturas al óleo" -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
+                    item.name == "Botas de nieve" -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                    //Imagen galería
                     item.imageUri == null -> imgItem.setImageResource(R.drawable.item_default_image)
                     else -> imgItem.setImageURI(item.imageUri)
                 }

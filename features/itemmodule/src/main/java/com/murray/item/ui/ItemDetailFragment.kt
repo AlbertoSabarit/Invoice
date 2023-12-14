@@ -12,6 +12,7 @@ import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
+import com.murray.repositories.ImagesItem
 
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null
@@ -46,13 +47,14 @@ class ItemDetailFragment : Fragment() {
             tvItemDetailDescr.text = item.description
 
             when{
-                /*
-                item.id == 1 -> ivItemDetail.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
-                item.id == 2 -> ivItemDetail.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
-                item.id == 3 -> ivItemDetail.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
-                item.id == 4 -> ivItemDetail.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
-                item.id == 5 -> ivItemDetail.setImageResource(ImagesItem.OLEO.imagenDrawable)
-                item.id == 6 -> ivItemDetail.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)*/
+                //Elegir imágenes predeterminadas
+                item.name == "Maleta de Cuero" -> ivItemDetail.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                item.name == "Lápices Acuarela" -> ivItemDetail.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
+                item.name == "Cuaderno" -> ivItemDetail.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
+                item.name == "Portátil" -> ivItemDetail.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
+                item.name == "Pinturas al óleo" -> ivItemDetail.setImageResource(ImagesItem.OLEO.imagenDrawable)
+                item.name == "Botas de nieve" -> ivItemDetail.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                //Imagen galería
                 item.imageUri == null || item.imageUri.toString().isEmpty() -> ivItemDetail.setImageResource(R.drawable.item_default_image)
                 else -> ivItemDetail.setImageURI(item.imageUri)
             }

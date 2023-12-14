@@ -64,9 +64,9 @@ class ItemCreationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val itemArgs: Item? = args.item
-        Log.d("ShowItemUnchanged", itemArgs.toString())
+        //Log.d("ShowItemUnchanged", itemArgs.toString())
         if (itemArgs != null) {
-            Log.d("ShowItemUnchanged", "Item: $itemArgs")
+            //Log.d("ShowItemUnchanged", "Item: $itemArgs")
             showItemUnchangedValuesEdit(itemArgs)
         }
 

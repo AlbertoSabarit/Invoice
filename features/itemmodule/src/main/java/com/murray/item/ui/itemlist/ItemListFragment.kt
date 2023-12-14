@@ -109,14 +109,14 @@ class ItemListFragment : Fragment() {
     }
 
     private fun validateDeleteItem(item: Item) {
-        var dataSet = InvoiceRepository.dataSet
+        var dataSet = viewmodel.getInvoiceRepository()
 
         if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name}) {
             Toast.makeText(requireContext(),"No se puede eliminar un artículo asignado a una factura",Toast.LENGTH_SHORT).show()
         } else {
             viewmodel.deleteItem(item)
-            itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
-            if (ItemRepository.getDataSetItem().isEmpty()) {
+            viewmodel.updateItemList(itemListAdapter)
+            if (viewmodel.checkItemListEmpty()) {
                 showNoDataError()
             }
         }

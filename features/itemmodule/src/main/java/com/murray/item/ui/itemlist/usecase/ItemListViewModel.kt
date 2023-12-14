@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.murray.entities.invoices.Invoice
 import com.murray.entities.items.Item
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.network.ResourceList
+import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.launch
 
@@ -37,9 +39,19 @@ class ItemListViewModel: ViewModel() {
     }
 
     fun deleteItem(item: Item) {
-        
-
         ItemRepository.getDataSetItem().remove(item)
+    }
+
+    fun updateItemList(itemListAdapter:ItemListAdapter){
+        itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
+    }
+
+    fun checkItemListEmpty(): Boolean{
+        return ItemRepository.getDataSetItem().isEmpty()
+    }
+
+    fun getInvoiceRepository(): MutableList<Invoice>{
+        return InvoiceRepository.dataSet
     }
 
 

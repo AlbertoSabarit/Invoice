@@ -15,10 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
-import com.murray.repositories.CustomerRepository
-import com.murray.repositories.TaskRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -41,10 +38,8 @@ class TaskCreationFragment : Fragment() {
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
 
-
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
-
 
         if (requireArguments().containsKey(Task.TAG)) {
             val task: Task? = requireArguments().getParcelable(Task.TAG)
@@ -66,7 +61,8 @@ class TaskCreationFragment : Fragment() {
 
     private fun initSpinnerClientes() {
         val nombres: MutableList<String> =
-            CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
+            viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
+
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)

@@ -65,7 +65,8 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun initSpinnerClientes() {
-        val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
+        val nombres: MutableList<String> =
+            CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
@@ -226,34 +227,24 @@ class TaskCreationFragment : Fragment() {
 
     private fun onSuccess() {
 
-        if (viewModel.task.id == -1) {
-            TaskRepository.addTask(
-                Task(
-                    Task.lastId++,
-                    binding.tieTitulo.text.toString(),
-                    binding.spTaskClientes.selectedItem.toString(),
-                    binding.spinnerTipo.selectedItem.toString(),
-                    binding.tieFechCreacion.text.toString(),
-                    binding.tieFechFin.text.toString(),
-                    binding.spinnerEstado.selectedItem.toString(),
-                    binding.tieDescripcion.text.toString()
-                )
+        val taskTmp =
+            Task(
+                -2,
+                binding.tieTitulo.text.toString(),
+                binding.spTaskClientes.selectedItem.toString(),
+                binding.spinnerTipo.selectedItem.toString(),
+                binding.tieFechCreacion.text.toString(),
+                binding.tieFechFin.text.toString(),
+                binding.spinnerEstado.selectedItem.toString(),
+                binding.tieDescripcion.text.toString()
             )
+
+        if (viewModel.task.id == -1) {
+            taskTmp.id = Task.lastId++
+            viewModel.addToList(taskTmp)
             Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
         } else {
-
-            for (task in TaskRepository.dataSet) {
-                if (viewModel.task.id == task.id) {
-
-                    task.titulo = binding.tieTitulo.text.toString()
-                    task.nombre = binding.spTaskClientes.selectedItem.toString()
-                    task.tarea = binding.spinnerTipo.selectedItem.toString()
-                    task.fechaCreacion = binding.tieFechCreacion.text.toString()
-                    task.fechaFin = binding.tieFechFin.text.toString()
-                    task.estado = binding.spinnerEstado.selectedItem.toString()
-                    task.descripcion = binding.tieDescripcion.text.toString()
-                }
-            }
+            viewModel.editTask(taskTmp)
 
             Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
         }

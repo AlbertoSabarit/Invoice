@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.murray.entities.tasks.Task
 import com.murray.network.ResourceList
 import com.murray.repositories.TaskRepository
-import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
 
 class TaskListViewModel : ViewModel() {
@@ -32,5 +31,9 @@ class TaskListViewModel : ViewModel() {
                 is ResourceList.Error -> state.value = TaskListState.NoDataError
             }
         }
+    }
+
+    fun removeFromList(task: Task){
+        TaskRepository.dataSet.remove(task)
     }
 }

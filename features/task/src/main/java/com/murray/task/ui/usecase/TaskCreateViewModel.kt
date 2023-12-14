@@ -49,6 +49,24 @@ class TaskCreateViewModel : ViewModel() {
             }
         }
     }
+
+    fun editTask(taskTmp: Task){
+        for (t in TaskRepository.dataSet) {
+            if (t.id == task.id) {
+
+                t.titulo = taskTmp.titulo
+                t.nombre = taskTmp.nombre
+                t.tarea = taskTmp.tarea
+                t.fechaCreacion = taskTmp.fechaCreacion
+                t.fechaFin = taskTmp.fechaFin
+                t.estado = taskTmp.estado
+                t.descripcion = taskTmp.descripcion
+            }
+        }
+    }
+    fun addToList(task: Task){
+        TaskRepository.addTask(task)
+    }
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         try {

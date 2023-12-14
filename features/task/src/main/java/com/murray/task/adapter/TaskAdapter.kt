@@ -35,6 +35,11 @@ class TaskAdapter(
         notifyDataSetChanged()
     }
 
+    fun sort(){
+        dataset.sortBy { it.nombre }
+        notifyDataSetChanged()
+    }
+
     class ListViewHolder(val binding: CardviewLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

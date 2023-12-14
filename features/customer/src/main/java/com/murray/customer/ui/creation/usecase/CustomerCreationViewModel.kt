@@ -4,12 +4,19 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.murray.entities.customers.Customer
+import com.murray.entities.email.Email
+import com.murray.repositories.CustomerRepository
 import java.util.regex.Pattern
 
 class CustomerCreationViewModel : ViewModel() {
 
     var name = MutableLiveData<String>()
     var email = MutableLiveData<String>()
+    var phone = MutableLiveData<String>()
+    var city = MutableLiveData<String>()
+    var address = MutableLiveData<String>()
+
 
     private var state = MutableLiveData<CustomerCreationState>()
 
@@ -19,8 +26,13 @@ class CustomerCreationViewModel : ViewModel() {
             TextUtils.isEmpty(name.value) -> state.value = CustomerCreationState.NameIsMandatory
             TextUtils.isEmpty(email.value) -> state.value = CustomerCreationState.NonExistentContact
             !validateEmail(email.value) -> state.value = CustomerCreationState.EmailFormatError
-            else -> state.value = CustomerCreationState.Success
+            !validatePhone(phone.value) -> state.value = CustomerCreationState.PhoneFormatError
+            else -> success()
         }
+    }
+    fun success(){
+        CustomerRepository.addCustomer(Customer(CustomerRepository.getNextId(), name.value!!, Email(email.value!!), phone.value?.toInt() ?: null, city.value, address.value))
+        state.value = CustomerCreationState.Success
     }
 
     fun validateEmail(value: String?): Boolean{
@@ -30,5 +42,12 @@ class CustomerCreationViewModel : ViewModel() {
 
     fun getState(): LiveData<CustomerCreationState> {
         return state
+    }
+    fun validatePhone(value: String?): Boolean{
+        val pattern: Pattern = Pattern.compile("\\d+")
+        return when (value) {
+            null -> return true
+            else -> pattern.matcher(value).matches()
+        }
     }
 }

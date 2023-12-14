@@ -62,9 +62,15 @@ class CustomerCreationFragment : Fragment() {
                 CustomerCreationState.NameIsMandatory -> setNameEmptyError()
                 CustomerCreationState.NonExistentContact -> setEmailEmptyError()
                 CustomerCreationState.EmailFormatError -> setEmailFormatError()
+                CustomerCreationState.PhoneFormatError -> setPhoneFormatError()
                 else -> onSuccess()
             }
         }
+    }
+
+    private fun setPhoneFormatError() {
+        binding.tilPhone.error = "El teléfono no es válido"
+        binding.tilEmail.requestFocus()
     }
 
     private fun setEmailFormatError() {
@@ -73,7 +79,6 @@ class CustomerCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        CustomerRepository.addCustomer(Customer(CustomerRepository.getNextId(),binding.tieName.text.toString(), Email(binding.tieEmail.text.toString()), binding.tiePhone.text.toString().takeIf { it.isNotEmpty() }?.toInt() ?: null, binding.tieCity.text.toString(), binding.tieAddress.text.toString()))
         Toast.makeText(requireActivity(), "Cliente creado con éxito!", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }

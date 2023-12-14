@@ -39,11 +39,7 @@ class ItemListAdapter(
             detailClickListener(item)
         }
 
-        holder.binding.root.setOnClickListener {
-            editClickListener(item)
-        }
-
-        holder.binding.root.setOnLongClickListener{
+        holder.itemView.setOnLongClickListener{
             deleteClickListener(item)
             true
         }

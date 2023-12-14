@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerDetailBinding
 import java.io.IOException
 import java.util.Locale
@@ -26,6 +29,7 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     lateinit var gMap: GoogleMap
     lateinit var mapView: MapView
     var address:String = "España"
+    var id:Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,20 +52,31 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCustomerDetailBinding.inflate(inflater, container, false)
+        binding.btnEditar.setOnClickListener{
+            val bundle = bundleOf(
+                "id" to id
+            )
+            findNavController().navigate(R.id.action_customerDetailFragment_to_customerEditFragment, bundle)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        id = arguments?.getInt("id")
         val cliente = arguments?.getString("name") ?: ""
         val email = arguments?.getString("email") ?: ""
-        val phone = arguments?.getInt("phone") ?: ""
+        var phone = arguments?.getInt("phone") ?: null
         val city = arguments?.getString("city") ?: ""
         val address = arguments?.getString("address") ?: "España"
         this.address = address
+        if(phone == 0)
+            binding.txtPhone.text  = null
+        else
+            binding.txtPhone.text = phone.toString()?: ""
         binding.txtName.text = cliente
         binding.txtEmail.text = email
-        binding.txtPhone.text = phone.toString()?: ""
+
         binding.txtCity.text = city
         binding.txtAddress.text = address.takeIf { it.isNotEmpty() }?: "España"
 

@@ -84,6 +84,7 @@ class CustomerListFragment : Fragment() {
     private fun setUpUserRecycler(){
         customerAdapter = CustomAdapter (requireContext(), {deleteItem(it)}) { customer: Customer ->
             val bundle = bundleOf(
+                "id" to customer.id,
                 "name" to customer.name,
                 "email" to customer.email.getEmail(),
                 "phone" to customer.phone,

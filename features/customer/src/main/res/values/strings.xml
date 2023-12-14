@@ -12,7 +12,7 @@
     <string name="AddressHint">Dirección</string>
     <string name="toastMessage">Próximamente...</string>
 
-    <string name="tvName" >Nombre:&#160;</string>
+    <string name="tvName">Nombre:&#160;</string>
     <string name="tvEmail" translatable="false">Email:&#160;</string>
     <string name="tvPhone">Teléfono:&#160;</string>
     <string name="tvCity">Ciudad:&#160;</string>

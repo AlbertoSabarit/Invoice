@@ -34,6 +34,14 @@ class CustomerRepository private constructor(){
             dataSet.add(c)
         }
 
+        fun updateCustomer(_id: Int, n:String, e:String, p:Int?, c:String?, a:String?){
+            dataSet[_id].name = n
+            dataSet[_id].email.value = e
+            dataSet[_id].phone = p
+            dataSet[_id].city = c
+            dataSet[_id].address = a
+        }
+
         private fun initDataSetUser(){
             dataSet.add(Customer(getNextId(),"Alejandro Valle", Email("alejandro@gmail.es"), 693296746, "Torre del Mar", "Calle Juan Aguayo Moreno 3"))
             dataSet.add(Customer(getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"))

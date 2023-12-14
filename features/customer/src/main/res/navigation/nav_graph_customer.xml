@@ -25,9 +25,10 @@
         android:name="com.murray.customer.ui.CustomerDetailFragment"
         android:label="Detalles de Cliente"
         tools:layout="@layout/fragment_customer_detail" >
+
         <action
-            android:id="@+id/action_customerDetailFragment_to_customerCreationFragment"
-            app:destination="@id/customerCreationFragment" />
+            android:id="@+id/action_customerDetailFragment_to_customerEditFragment"
+            app:destination="@id/customerEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerCreationFragment"
@@ -38,4 +39,9 @@
         android:id="@+id/baseFragmentDialog"
         android:name="com.murray.customer.ui.list.BaseFragmentDialog"
         android:label="BaseFragmentDialog" />
+    <fragment
+        android:id="@+id/customerEditFragment"
+        android:name="com.murray.customer.ui.edit.CustomerEditFragment"
+        android:label="Edición de Cliente"
+        tools:layout="@layout/fragment_customer_edit" />
 </navigation>

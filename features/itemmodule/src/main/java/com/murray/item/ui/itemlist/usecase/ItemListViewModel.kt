@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.entities.items.Item
+import com.murray.item.adapter.ItemListAdapter
 import com.murray.network.ResourceList
 import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.launch
@@ -27,4 +28,19 @@ class ItemListViewModel: ViewModel() {
             }
         }
     }
+
+    //TODO este metodo deberia estar en InvoiceRepository
+    fun getInvoiceItemName(cadena: String): String? {
+        val regex = Regex("\\d+ x (.+)")
+        val matchResult = regex.find(cadena)
+        return matchResult?.groupValues?.get(1)
+    }
+
+    fun deleteItem(item: Item) {
+        
+
+        ItemRepository.getDataSetItem().remove(item)
+    }
+
+
 }

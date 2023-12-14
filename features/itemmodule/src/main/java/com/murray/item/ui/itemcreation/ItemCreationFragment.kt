@@ -29,7 +29,7 @@ class ItemCreationFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: ItemCreationFragmentArgs by navArgs()
 
-    private val itemcreationviewmodel: ItemCreationViewModel by viewModels()
+    private val viewmodel: ItemCreationViewModel by viewModels()
 
     private lateinit var getContent: ActivityResultLauncher<String>
     private var selectedImageUri: Uri? = null
@@ -39,7 +39,7 @@ class ItemCreationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentItemCreationBinding.inflate(inflater, container, false)
-        binding.itemcreationviewmodel = this.itemcreationviewmodel
+        binding.itemcreationviewmodel = this.viewmodel
         binding.lifecycleOwner = this
         addTextWatcher()
 
@@ -70,7 +70,7 @@ class ItemCreationFragment : Fragment() {
             showItemUnchangedValuesEdit(itemArgs)
         }
 
-        itemcreationviewmodel.getState().observe(viewLifecycleOwner) {
+        viewmodel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 ItemCreationState.NameEmptyError -> setNameEmptyError()
                 ItemCreationState.InvalidFormatRateError -> setInvalidFormatRateError()
@@ -101,7 +101,7 @@ class ItemCreationFragment : Fragment() {
     private fun onSuccess() {
         val itemArgs: Item? = args.item
         if (itemArgs == null) {
-            with(itemcreationviewmodel) {
+            with(viewmodel) {
                 val name: String = name.value!!
                 val type: ItemType =
                     when (typeSpinnerPosition.value) {
@@ -112,35 +112,32 @@ class ItemCreationFragment : Fragment() {
                 val rate: Double = rate.value!!.toDouble()
                 val isTaxable: Boolean = isTaxable.value ?: false
                 val description: String = description.value ?: ""
-
-                ItemRepository.addItem(name, type, rate, isTaxable, description, selectedImageUri)
+                viewmodel.addItem(name, type, rate, isTaxable, description, selectedImageUri)
             }
             Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         } else {
-            for (itemDataset in ItemRepository.getDataSetItem()) {
-                if (itemDataset.id == itemArgs.id) {
-                    with(binding) {
-                        itemDataset.name = tietItemCreationName.text.toString()
-                        itemDataset.type =
-                            when (sItemCreationType.selectedItemPosition) {
-                                0 -> ItemType.PRODUCT
-                                1 -> ItemType.SERVICE
-                                else -> ItemType.PRODUCT //va a ser uno u otro si o si
-                            }
-                        itemDataset.rate = tietItemCreationRate.text.toString().toDouble()
-                        itemDataset.isTaxable = cbItemCreationTax.isChecked
-                        itemDataset.description = tietItemCreationDescr.text.toString()
-                        itemDataset.imageUri = selectedImageUri
-
+            with(binding) {
+                itemArgs.name = tietItemCreationName.text.toString()
+                itemArgs.type =
+                    when (sItemCreationType.selectedItemPosition) {
+                        0 -> ItemType.PRODUCT
+                        1 -> ItemType.SERVICE
+                        else -> ItemType.PRODUCT //va a ser uno u otro si o si
                     }
-
-                }
+                itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
+                itemArgs.isTaxable = cbItemCreationTax.isChecked
+                itemArgs.description = tietItemCreationDescr.text.toString()
+                itemArgs.imageUri = selectedImageUri
+                viewmodel.editItem(itemArgs)
             }
+
             Toast.makeText(requireActivity(), "Artículo editado", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }
+
+
 
     private fun setNameEmptyError() {
         binding.tilItemCreationName.error = "Introduce un nombre"

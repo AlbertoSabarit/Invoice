@@ -12,18 +12,19 @@ import android.app.DatePickerDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
-import androidx.core.text.set
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.entities.invoices.Invoice
+import com.murray.entities.tasks.Task
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
 import com.murray.repositories.CustomerRepository
-import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
+import com.murray.task.ui.usecase.TaskCreateState
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -36,6 +37,17 @@ class InvoiceCreationFragment : Fragment() {
     private lateinit var twatcher: LogInTextWatcher
     private var contadorArt = 1
     private var precioActualArticulo: Double = 0.0
+    private var comprobar = false;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (requireArguments().containsKey(Invoice.TAG)) {
+            val invoice: Invoice? = requireArguments().getParcelable(Invoice.TAG)
+            viewModel.invoice = invoice ?: Invoice.createDefaultInvoice()
+        } else {
+            viewModel.invoice = Invoice.createDefaultInvoice()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,27 +63,27 @@ class InvoiceCreationFragment : Fragment() {
         cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = cliadapter
 
+       if (viewModel.invoice.id != -1) {
+            var pos = nombres.indexOf(viewModel.invoice.cliente)
+            binding.spinner.setSelection(pos, false)
+        }
+
+        if (requireArguments().containsKey(Invoice.TAG)) {
+            val invoice: Invoice? = requireArguments().getParcelable(Invoice.TAG)
+            viewModel.fini.value = invoice!!.fcreacion
+            viewModel.ffin.value = invoice!!.fvencimiento
+        } else {
+            viewModel.invoice = Invoice.createDefaultInvoice()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cliente = arguments?.getString("cliente") ?: ""
-        val fcrear = arguments?.getString("fechacrear") ?: ""
-        val fven = arguments?.getString("fechavenc") ?: ""
-        val art = arguments?.getString("articulo")?:""
-
-        val d = binding.spinner.adapter as ArrayAdapter<String>
-        val index = d.getPosition(cliente)
-        binding.spinner.setSelection(index)
-        binding.tiefechaIni.setText("$fcrear")
-        binding.tiefechaFin.setText("$fven")
-        binding.txtnArticulo.setText("$art")
-
-
         binding.btnAnadirArt.setOnClickListener{
             binding.cvArticulo.visibility = View.VISIBLE
+            comprobar= true;
         }
 
         binding.tiefechaIni.setOnClickListener {
@@ -110,6 +122,12 @@ class InvoiceCreationFragment : Fragment() {
         val itemadapter = ArrayAdapter(requireContext(),R.layout.simple_spinner_item, narticulos)
         itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spArticulos.adapter = itemadapter
+
+        if (viewModel.invoice.id != -1) {
+            var pos = narticulos.indexOf(viewModel.invoice.articulo)
+            binding.spArticulos.setSelection(pos, false)
+        }
+
         binding.btnMas.setOnClickListener{
             contadorArt++
             binding.contArt.text = contadorArt.toString() + " x "
@@ -129,8 +147,8 @@ class InvoiceCreationFragment : Fragment() {
         binding.spArticulos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                 val selectedArticulo = parentView.getItemAtPosition(position).toString()
-
                 val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == selectedArticulo }
+
 
                 if (articuloSeleccionado != null) {
                     precioActualArticulo = articuloSeleccionado.rate
@@ -151,14 +169,22 @@ class InvoiceCreationFragment : Fragment() {
         }
 
 
-        viewModel.getState().observe(viewLifecycleOwner, Observer {//importante este metodo que recoge lo de vista/modelo(creo)
+        viewModel.getState().observe(viewLifecycleOwner, Observer {
             when(it){
                 InvoiceCreateState.DataIniEmptyError -> setDateIniError()
                 InvoiceCreateState.DataFinEmptyError -> setDateFinError()
                 InvoiceCreateState.IncorrectDateRangeError -> setDateRangeError()
+                is InvoiceCreateState.InvoiceCreateError -> setErrorCreateInvoice()
+                is InvoiceCreateState.Loading -> {}
                 else -> onSuccess()
             }
         })
+    }
+
+    private fun setErrorCreateInvoice() {
+        if(comprobar == false) {
+            Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
+        }
     }
     private fun updatePrecioTotal() {
         val total: Double = contadorArt * precioActualArticulo
@@ -213,27 +239,36 @@ class InvoiceCreationFragment : Fragment() {
         binding.tilFechaIni.error = "Debe elegir una fecha"
         binding.tilFechaIni.requestFocus()
     }
-
     private fun setDateFinError() {
         binding.tilFechaFin.error = "Debe elegir una fecha"
         binding.tilFechaFin.requestFocus()
     }
-
     private fun setDateRangeError() {
         binding.tilFechaFin.error = "Error el rango de la fecha "
         binding.tilFechaFin.requestFocus()
     }
 
     private fun onSuccess() {
+
+        if (comprobar == true){
         val cliente = binding.spinner.selectedItem.toString()
         val fCreacion = binding.tiefechaIni.text.toString()
         val fVencimiento = binding.tiefechaFin.text.toString()
         val articulo = binding.txtnArticulo.text.toString()
         val artcont = "$contadorArt x $articulo"
-        val nuevaFactura = Invoice(cliente, artcont, fCreacion, fVencimiento)
+        val nuevaFactura = Invoice(-2, cliente, artcont, fCreacion, fVencimiento)
 
-        InvoiceRepository.addInvoice(nuevaFactura)
-        findNavController().navigateUp()
+        if (viewModel.invoice.id == -1) {
+            nuevaFactura.id = Invoice.lastId++
+            viewModel.addToList(nuevaFactura)
+            Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.editInvoice(nuevaFactura)
+
+            Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT).show()
+        }
+            findNavController().popBackStack()
+    }
     }
 
     override fun onDestroyView() {

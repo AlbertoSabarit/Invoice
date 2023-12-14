@@ -1,41 +1,43 @@
 package com.murray.invoicemodule.ui.usecase
 
-import android.content.ContentValues
+
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.text.TextUtils
-import android.util.Log
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.entities.invoices.Invoice
-import com.murray.network.Resource
 import com.murray.repositories.InvoiceRepository
+import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.launch
 import java.util.Locale
 
+const val TAG = "ViewModel"
 class InvoiceCreateViewModel:ViewModel() {
 
     var fini =  MutableLiveData<String>()
     var ffin =  MutableLiveData<String>()
-
+    lateinit var invoice : Invoice
     private var state = MutableLiveData<InvoiceCreateState>()
 
     fun validateCredentials(){
+
         when{
             TextUtils.isEmpty(fini.value) -> state.value = InvoiceCreateState.DataIniEmptyError
             TextUtils.isEmpty(ffin.value) -> state.value = InvoiceCreateState.DataFinEmptyError
             !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = InvoiceCreateState.IncorrectDateRangeError
 
-
             else -> {
                 viewModelScope.launch {
                     state.value = InvoiceCreateState.Loading(true)
-                    val result = InvoiceRepository.createInvoice(fini.value!!, ffin.value!!)
+                    //val result = InvoiceRepository.createInvoice(fini.value!!, ffin.value!!)
                     state.value = InvoiceCreateState.Loading(false)
+                    state.value = InvoiceCreateState.Success
 
-                    when(result){
+                    /*when(result){
                         is Resource.Success<*>->{
                             Log.i(ContentValues.TAG, "Informacion del dato ${result.data}")
                             state.value = InvoiceCreateState.Success(result.data as Invoice)
@@ -44,10 +46,29 @@ class InvoiceCreateViewModel:ViewModel() {
                             Log.i(ContentValues.TAG, "Informacion del dato ${result.exception.message}")
                             state.value = InvoiceCreateState.InvoiceCreateError(result.exception.message!!)
                         }
-                    }
+                    }*/
                 }
             }
         }
+    }
+
+    fun editInvoice(invoiceTmp: Invoice){
+        for (inv in InvoiceRepository.dataSet) {
+            if (inv.id == invoice.id) {
+                inv.cliente = invoiceTmp.cliente
+                inv.articulo = invoiceTmp.articulo
+                inv.fcreacion = invoiceTmp.fcreacion
+                inv.fvencimiento = invoiceTmp.fvencimiento
+
+            }
+        }
+    }
+    fun addToList(invoice: Invoice){
+        InvoiceRepository.addInvoice(invoice)
+    }
+    fun getPrecio(nombreArticulo: String?): Double {
+        val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == nombreArticulo }
+        return articuloSeleccionado?.rate ?: 0.0
     }
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

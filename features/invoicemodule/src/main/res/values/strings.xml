@@ -24,5 +24,6 @@
     <string name="label_lista">Lista de factura</string>
     <string name="label_detalle">Detalles de factura</string>
     <string name="label_creacion">Creacion de factura</string>
+    <string name="label_editar">Editar factura</string>
 
 </resources>

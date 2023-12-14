@@ -1,31 +1,47 @@
 package com.murray.invoicemodule.ui
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import com.murray.invoicemodule.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
-import com.murray.invoicemodule.adapter.InvoiceAdapter.OnEditClickListener
-import com.murray.invoicemodule.adapter.InvoiceViewHolder
+import com.murray.entities.tasks.Task
+import com.murray.invoice.MainActivity
+import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceListState
 import com.murray.invoicemodule.ui.usecase.InvoiceListViewModel
-import com.murray.repositories.InvoiceRepository
+import com.murray.invoicemodule.ui.usecase.TAG
 
-class InvoiceListFragment : Fragment(), OnEditClickListener{
+
+class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvider {
 
     private var _binding: FragmentInvoiceListBinding? = null
     private val binding get() = _binding!!
     private val viewmodel: InvoiceListViewModel by viewModels()
+
     private lateinit var invoiceAdapter: InvoiceAdapter
+
+    val TAG = "ListInvoice"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,10 +52,13 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpToolbar()
         setUpUserRecycler()
 
         binding.btnCrearFactura.setOnClickListener {
-            findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceCreationFragment)
+            var bundle = Bundle()
+            findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceCreationFragment, bundle)
         }
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer{
@@ -51,54 +70,39 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
         })
     }
 
+    private fun setUpToolbar() {
+        (requireActivity() as? MainActivity)?.toolbar?.apply {
+            visibility = View.VISIBLE
+        }
+
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_invoice_list, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when(menuItem.itemId){
+            R.id.action_sortInvoice ->{
+                invoiceAdapter.sort()
+                return true
+            }
+            R.id.action_refreshInvoice ->{
+                viewmodel.getInvocieList()
+                return true
+            }
+            else-> false
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         viewmodel.getInvocieList()
     }
     private fun setUpUserRecycler() {
-        invoiceAdapter = InvoiceAdapter(requireContext())
-        invoiceAdapter.setOnItemClickListener(object : InvoiceAdapter.OnItemClickListener {
-            override fun onItemClick(item:Invoice) {
-                val bundle = bundleOf(
-                    "cliente" to item.cliente,
-                    "fechacrear" to item.fcreacion,
-                    "fechavenc" to item.fvencimiento,
-                    "articulo" to item.articulo
-                )
-                findNavController().navigate(
-                    R.id.action_invoiceListFragment_to_invoiceDetailFragment,
-                    bundle
-                )
-            }
-        })
-        invoiceAdapter.setOnEditClickListener(object : OnEditClickListener {
-            override fun onEditClick(item: Invoice) {
-                //InvoiceRepository.dataSet.remove(item)
-                val bundle = bundleOf(
-                    "cliente" to item.cliente,
-                    "fechacrear" to item.fcreacion,
-                    "fechavenc" to item.fvencimiento,
-                    "articulo" to item.articulo,
-                )
-                findNavController().navigate(
-                    R.id.action_invoiceListFragment_to_invoiceCreationFragment,
-                    bundle
-                )
-
-                invoiceAdapter.notifyDataSetChanged()
-            }
-        })
-
-        invoiceAdapter.setOnDeleteClickListener(object : InvoiceViewHolder.OnDeleteClickListener {
-            override fun onDeleteClick(item: Invoice) {
-                InvoiceRepository.dataSet.remove(item)
-                if (invoiceAdapter.itemCount == 0){
-                    binding.lnlSinFactura.visibility = View.VISIBLE
-                }
-                invoiceAdapter.notifyDataSetChanged()
-            }
-        })
-
+        invoiceAdapter = InvoiceAdapter(this)
         with(binding.invoicerv) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -130,8 +134,34 @@ class InvoiceListFragment : Fragment(), OnEditClickListener{
         _binding = null
     }
 
-    override fun onEditClick(item: Invoice) {
-        TODO("Not yet implemented")
+    override fun clickListener(invoice: Invoice) {
+        var bundle = Bundle()
+        bundle.putParcelable(Invoice.TAG, invoice)
+
+        findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceDetailFragment, bundle)
+
+    }
+
+    override fun userOnLongClickDelete(invoice: Invoice) : Boolean {
+
+        val dialog = BaseFragmentDialog.newInstance("Atención",
+            "¿Estás seguro de que deseas borrar esta factura?"
+        )
+
+        dialog.show((context as AppCompatActivity).supportFragmentManager, TAG)
+
+        dialog.parentFragmentManager.setFragmentResultListener(
+            BaseFragmentDialog.request, viewLifecycleOwner
+        ) {_, bundle ->
+            val result = bundle.getBoolean(BaseFragmentDialog.result)
+            if (result) {
+                viewmodel.removeFromList(invoice)
+                viewmodel.getInvocieList()
+            }
+        }
+        return true
     }
 
 }
+
+

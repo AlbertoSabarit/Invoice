@@ -20,12 +20,11 @@ class InvoiceListViewModel :ViewModel(){
         viewModelScope.launch {
 
             state.value = InvoiceListState.Loading(true)
-            val result = InvoiceRepository.getInvoiceList() // val result = TaskRepository.dataSet
+            val result = InvoiceRepository.getInvoiceList()
             state.value = InvoiceListState.Loading(false)
 
             when (result) {
                 is ResourceList.Success<*> -> state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
-
                 is ResourceList.Error -> state.value = InvoiceListState.NoDataError
             }
         }

@@ -30,6 +30,29 @@ class InvoiceDetailFragment : Fragment() {
         
         binding.invoice = requireArguments().getParcelable(Invoice.TAG)
 
+            val nombreArticulo = binding.invoice!!.articulo!!
+            if (!nombreArticulo.isNullOrEmpty()) {
+                val partes = nombreArticulo.split(" x ")
+                val cont= partes[0]
+                val nombre = partes[1]
+                val articuloSeleccionado = ItemRepository.getDataSetItem()?.find { it.name.equals(nombre, ignoreCase = true) }
+
+                if (articuloSeleccionado != null) {
+                    val precioArticulo = articuloSeleccionado.rate
+
+                    val total: Double = cont.toInt() * precioArticulo
+                    binding.txtnArticulo.text = nombre
+                    binding.txtptotal.text = "$total €"
+                    binding.txtparticulototal.text = "$total €"
+                    var impuesto:Double =  0.21 * total
+                    var subtotal :Double = total-impuesto
+                    binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+                    binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+                    binding.txtparticulo.text = precioArticulo.toString()
+                }
+            }
+
+
 
         binding.btnEditarEdita.setOnClickListener {
             var bundle = Bundle()

@@ -37,16 +37,7 @@ class InvoiceCreateViewModel:ViewModel() {
                     state.value = InvoiceCreateState.Loading(false)
                     state.value = InvoiceCreateState.Success
 
-                    /*when(result){
-                        is Resource.Success<*>->{
-                            Log.i(ContentValues.TAG, "Informacion del dato ${result.data}")
-                            state.value = InvoiceCreateState.Success(result.data as Invoice)
-                        }
-                        is Resource.Error->{
-                            Log.i(ContentValues.TAG, "Informacion del dato ${result.exception.message}")
-                            state.value = InvoiceCreateState.InvoiceCreateError(result.exception.message!!)
-                        }
-                    }*/
+
                 }
             }
         }

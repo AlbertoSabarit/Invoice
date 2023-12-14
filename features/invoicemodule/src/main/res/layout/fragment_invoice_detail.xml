@@ -281,7 +281,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:textSize="17dp"
-                android:text="@{invoice.articulo}"
+                android:text=""
                 app:layout_constraintBottom_toTopOf="@+id/txtparticulo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

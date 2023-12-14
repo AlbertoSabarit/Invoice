@@ -1,7 +1,6 @@
 package com.murray.invoicemodule.ui
 
-import android.app.AlertDialog
-import android.app.Dialog
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,11 +8,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,13 +20,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
-import com.murray.entities.tasks.Task
 import com.murray.invoice.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceListState
 import com.murray.invoicemodule.ui.usecase.InvoiceListViewModel
-import com.murray.invoicemodule.ui.usecase.TAG
 
 
 class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvider {
@@ -139,7 +134,6 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
         bundle.putParcelable(Invoice.TAG, invoice)
 
         findNavController().navigate(R.id.action_invoiceListFragment_to_invoiceDetailFragment, bundle)
-
     }
 
     override fun userOnLongClickDelete(invoice: Invoice) : Boolean {

@@ -10,12 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.entities.items.Item
+import com.murray.invoice.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter
@@ -49,6 +52,7 @@ class ItemListFragment : Fragment(), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpToolbar()
         setUpItemRecycler()
         binding.btnCrearArticulo.setOnClickListener {
             findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
@@ -153,12 +157,30 @@ class ItemListFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
+    private fun setUpToolbar() {
+        (requireActivity() as? MainActivity)?.toolbar?.apply {
+            visibility = View.VISIBLE
+        }
+
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        //TODO("Not yet implemented")
+        menuInflater.inflate(R.menu.menu_item_list, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        //TODO("Not yet implemented")
-        return false
+        return when(menuItem.itemId){
+            R.id.action_sortTask ->{
+                itemListAdapter.sortPersonalizado()
+                return true
+            }
+            R.id.action_refreshTask ->{
+                viewmodel.getItemList()
+                return true
+            }
+            else-> false
+        }
     }
 }

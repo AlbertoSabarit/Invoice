@@ -39,17 +39,23 @@ class ItemListAdapter(
             detailClickListener(item)
         }
 
-        holder.binding.imgBtDeleteItem.setOnClickListener {
-            deleteClickListener(item)
+        holder.binding.root.setOnClickListener {
+            editClickListener(item)
         }
 
-        holder.binding.imgBtEditItem.setOnClickListener{
-            editClickListener(item)
+        holder.binding.root.setOnLongClickListener{
+            deleteClickListener(item)
+            true
         }
     }
 
     fun update(newDataSet: ArrayList<Item>) {
         dataset = newDataSet
+        notifyDataSetChanged()
+    }
+
+    fun sortPersonalizado() {
+        dataset.sortBy { it.rate }
         notifyDataSetChanged()
     }
 

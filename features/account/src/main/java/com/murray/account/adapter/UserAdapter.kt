@@ -38,16 +38,16 @@ class UserAdapter(
 
     fun update(newDataSet: ArrayList<User>) {
         //Actualizar mi dataset y notificar a la vista el cambio
-
         dataset = newDataSet
 
         notifyDataSetChanged()
     }
 
-    fun sort(){
+    fun sortPersonalizado(){
         dataset.sortBy { it.email }
         notifyDataSetChanged()
     }
+
 
     inner class UserViewHolder(private val binding: LayoutUserItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

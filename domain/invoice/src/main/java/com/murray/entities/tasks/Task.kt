@@ -2,6 +2,7 @@ package com.murray.entities.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.entities.accounts.User
 
 data class Task(
     var id: Int,
@@ -12,8 +13,11 @@ data class Task(
     var fechaFin: String,
     var estado: String,
     var descripcion: String
-) : Parcelable {
+) : Parcelable, Comparable<Task> {
 
+    override fun compareTo(other: Task): Int {
+        return nombre.compareTo(other.nombre)
+    }
 
     companion object CREATOR : Parcelable.Creator<Task> {
         val TAG = "Task"
@@ -56,6 +60,4 @@ data class Task(
     override fun describeContents(): Int {
         return 0
     }
-
-
 }

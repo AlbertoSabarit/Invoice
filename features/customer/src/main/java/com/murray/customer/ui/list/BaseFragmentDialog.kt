@@ -27,7 +27,7 @@ class BaseFragmentDialog() : DialogFragment() {
         builder.setTitle("Error")
         //builder.setMessage("Este cliente no se puede eliminar ya que posee una o más en facturas...")
 
-        val message = SpannableString("Este cliente no se puede eliminar ya que posee una o más en facturas...")
+        val message = SpannableString("Este cliente no se puede eliminar ya que posee una o más facturas...")
         message.setSpan(RelativeSizeSpan(1.3f), 0, message.length, 0) // 1.5f es el factor de escala para aumentar el tamaño
         //message.setSpan(CenterSpan(), 0, message.length, 0)
         builder.setMessage(message)

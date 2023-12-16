@@ -19,18 +19,22 @@ class UserListViewModel : ViewModel() {
 
 
     fun getUserList() {
+
         viewModelScope.launch {
 
             state.value = UserListState.Loading(true)
             val result = UserRepository.getUserList()
             state.value = UserListState.Loading(false)
 
-
             when (result) {
-                is ResourceList.Success<*> -> state.value = UserListState.Success(result.data as ArrayList<User>)
+                is ResourceList.Success<*> -> {
+                    (result.data as ArrayList<User>).sort()
+                    state.value = UserListState.Success(result.data as ArrayList<User>)
+                }
 
                 is ResourceList.Error -> state.value = UserListState.NoDataError
             }
         }
     }
+
 }

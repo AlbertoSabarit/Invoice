@@ -100,7 +100,7 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when(menuItem.itemId){
             R.id.action_sort ->{
-                userAdapter.sort()
+                userAdapter.sortPersonalizado()
                 return true
             }
             R.id.action_refresh ->{

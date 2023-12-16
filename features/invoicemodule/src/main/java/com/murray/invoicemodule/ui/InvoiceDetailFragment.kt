@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.murray.entities.invoices.Invoice
+import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
 import com.murray.repositories.ItemRepository
-
 
 class InvoiceDetailFragment : Fragment() {
 
@@ -23,39 +25,45 @@ class InvoiceDetailFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        binding.invoice = requireArguments().getParcelable(Invoice.TAG)
 
-        val cliente = arguments?.getString("cliente") ?: ""
-        val fcrear = arguments?.getString("fechacrear") ?: ""
-        val fven = arguments?.getString("fechavenc") ?: ""
-        val art = arguments?.getString("articulo") ?: ""
-        val partes = art.split(" x ")
-        val nombre = partes[1]
-        val cont:Int  = partes[0].toInt()
+            val nombreArticulo = binding.invoice!!.articulo!!
+            if (!nombreArticulo.isNullOrEmpty()) {
+                val partes = nombreArticulo.split(" x ")
+                val cont= partes[0]
+                val nombre = partes[1]
+                val articuloSeleccionado = ItemRepository.getDataSetItem()?.find { it.name.equals(nombre, ignoreCase = true) }
 
-        binding.txtCliente.text = "$cliente"
-        binding.txtFechaCreacion.text = " $fcrear"
-        binding.txtFechaVenc.text = " $fven"
-        binding.txtnArticulo.text = "$nombre"
-        binding.txtcontArticulo.text = "$cont x"
+                if (articuloSeleccionado != null) {
+                    val precioArticulo = articuloSeleccionado.rate
 
-        val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == nombre }
+                    val total: Double = cont.toInt() * precioArticulo
+                    binding.txtnArticulo.text = nombre
+                    binding.txtptotal.text = "$total €"
+                    binding.txtparticulototal.text = "$total €"
+                    var impuesto:Double =  0.21 * total
+                    var subtotal :Double = total-impuesto
+                    binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+                    binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+                    binding.txtparticulo.text = precioArticulo.toString()
+                }
+            }
 
-        if (articuloSeleccionado != null) {
-            val precioArticulo = articuloSeleccionado.rate
 
-            val total: Double = cont * precioArticulo
-            binding.txtptotal.text = "$total €"
-            binding.txtparticulototal.text = "$total €"
-            var impuesto:Double =  0.21 * total
-            var subtotal :Double = total-impuesto
-            binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
-            binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
-            binding.txtparticulo.text = precioArticulo.toString()
+
+        binding.btnEditarEdita.setOnClickListener {
+            var bundle = Bundle()
+            bundle.putParcelable(Invoice.TAG, binding.invoice)
+
+            findNavController().navigate(
+                R.id.action_invoiceDetailFragment_to_invoiceCreationFragment,
+                bundle
+            )
         }
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

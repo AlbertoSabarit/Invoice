@@ -25,7 +25,11 @@ class ItemListViewModel: ViewModel() {
             val result = ItemRepository.getItemList()
             state.value = ItemListState.Loading(false)
             when(result){
-                is ResourceList.Success<*> -> state.value = ItemListState.Success(result.data as ArrayList<Item>)
+                is ResourceList.Success<*> -> {
+                    val dataset = result.data as ArrayList<Item>
+                    dataset.sort()
+                    state.value = ItemListState.Success(result.data as ArrayList<Item>)
+                }
                 is ResourceList.Error -> state.value = ItemListState.NoDataError
             }
         }
@@ -38,16 +42,20 @@ class ItemListViewModel: ViewModel() {
         return matchResult?.groupValues?.get(1)
     }
 
-    fun deleteItem(item: Item) {
+    fun deleteItem(item: Item, itemListAdapter:ItemListAdapter) {
         ItemRepository.getDataSetItem().remove(item)
+        updateItemList(itemListAdapter)
+        checkItemListEmpty()
     }
 
     fun updateItemList(itemListAdapter:ItemListAdapter){
         itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
     }
 
-    fun checkItemListEmpty(): Boolean{
-        return ItemRepository.getDataSetItem().isEmpty()
+    fun checkItemListEmpty(){
+        if (ItemRepository.getDataSetItem().isEmpty()){
+            state.value = ItemListState.NoDataError
+        }
     }
 
     fun getInvoiceRepository(): MutableList<Invoice>{

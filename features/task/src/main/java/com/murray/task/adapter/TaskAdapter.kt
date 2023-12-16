@@ -7,12 +7,16 @@ import com.murray.task.databinding.CardviewLayoutBinding
 import com.murray.entities.tasks.Task
 
 class TaskAdapter(
-    private val clickListener: (task: Task) -> Unit,
-    private val clickDeleteListener: (task: Task) -> Unit
-) : RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
+    private val listener: onTaskClick) :
+    RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
 
+    private var dataset = arrayListOf<Task>()
 
-    private var dataset = (arrayListOf<Task>())
+    interface onTaskClick {
+
+        fun onClickDetails(task: Task)
+        fun userOnLongClickDelete(task: Task) : Boolean
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,11 +26,14 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = dataset.get(position)
         holder.bind(item)
-        holder.itemView.setOnClickListener {
-            clickListener(item)
+
+        holder.binding.root.setOnClickListener() { _ ->
+            listener.onClickDetails(item)
         }
-        holder.binding.imgbtnDelete.setOnClickListener {
-            clickDeleteListener(item)
+
+        holder.binding.root.setOnLongClickListener { _ ->
+            listener.userOnLongClickDelete(item)
+            true
         }
     }
 
@@ -35,12 +42,12 @@ class TaskAdapter(
         notifyDataSetChanged()
     }
 
-    fun sort(){
-        dataset.sortBy { it.nombre }
+    fun sortPersonalizado() {
+        dataset.sortBy { it.titulo }
         notifyDataSetChanged()
     }
 
-    class ListViewHolder(val binding: CardviewLayoutBinding) :
+    inner class ListViewHolder(val binding: CardviewLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Task) {

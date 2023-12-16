@@ -64,7 +64,6 @@ class ItemRepository private constructor() {
         }
 
         private fun initDataSetItem(): MutableList<Item> {
-            /*
             addItem(
                     "Maleta de Cuero",
                     ItemType.PRODUCT,
@@ -106,7 +105,7 @@ class ItemRepository private constructor() {
                 15.00,
                 true,
                 "¡Disfruta de los grandes espacios nevados! Estas botas altas impermeables de piel te abrigarán bien hasta -24 °C. Agarre óptimo en la nieve para disfrutar al máximo de tus salidas. ¿Quieres salir por caminos apisonados? Progresa con total comodidad gracias a la caña alta de piel y conserva los pies secos gracias a su impermeabilidad.",
-            )*/
+            )
             return dataSet
         }
 

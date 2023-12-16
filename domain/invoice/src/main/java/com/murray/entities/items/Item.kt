@@ -17,7 +17,7 @@ data class Item(
     var isTaxable: Boolean,
     var description: String="",
     var imageUri: Uri? = null,
-    ): Parcelable {
+    ): Parcelable, Comparable<Item> {
     companion object CREATOR : Parcelable.Creator<Item> {
         val TAG = "Item"
         override fun createFromParcel(parcel: Parcel): Item {
@@ -53,6 +53,10 @@ data class Item(
     }
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun compareTo(other: Item): Int {
+        return name.compareTo(other.name)
     }
 }
 

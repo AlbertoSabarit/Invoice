@@ -29,7 +29,7 @@ class UserRepository private constructor() {
                 User(
                     "Alberto",
                     "Sabarit",
-                    "albertosabarit@iesportada.org"
+                    "blbertosabarit@iesportada.org"
                 )
             )
             dataSet.add(
@@ -48,9 +48,23 @@ class UserRepository private constructor() {
             )
             dataSet.add(
                 User(
-                    "Alejandro",
+                    "Carlos",
                     "Valle",
-                    "alevalle@iesportada.org"
+                    "zlevalle@iesportada.org"
+                )
+            )
+            dataSet.add(
+                User(
+                    "Javier",
+                    "Zarcia",
+                    "kavier@iesportada.org"
+                )
+            )
+            dataSet.add(
+                User(
+                    "Manolo",
+                    "Perez",
+                    "manolo@iesportada.org"
                 )
             )
             return dataSet

@@ -8,8 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
 import com.murray.network.Resource
+import com.murray.repositories.CustomerRepository
 import com.murray.repositories.TaskRepository
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -66,6 +68,10 @@ class TaskCreateViewModel : ViewModel() {
     }
     fun addToList(task: Task){
         TaskRepository.addTask(task)
+    }
+
+    fun getCustomerList() : MutableList<Customer>{
+        return CustomerRepository.getCustomers()
     }
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

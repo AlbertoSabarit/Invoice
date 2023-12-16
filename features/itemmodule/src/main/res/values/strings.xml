@@ -25,4 +25,6 @@
     <string name="false_string">No</string>
     <string name="product_string">Producto</string>
     <string name="service_string">Servicio</string>
+    <string name="refrescar">Refrescar</string>
+    <string name="ordenar">Ordenar</string>
 </resources>

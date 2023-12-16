@@ -137,8 +137,6 @@ class ItemCreationFragment : Fragment() {
         }
     }
 
-
-
     private fun setNameEmptyError() {
         binding.tilItemCreationName.error = "Introduce un nombre"
         binding.tilItemCreationName.requestFocus()

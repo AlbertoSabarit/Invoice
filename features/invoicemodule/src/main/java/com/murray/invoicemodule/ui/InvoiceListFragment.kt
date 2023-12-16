@@ -1,6 +1,5 @@
 package com.murray.invoicemodule.ui
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -25,7 +24,6 @@ import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceListState
 import com.murray.invoicemodule.ui.usecase.InvoiceListViewModel
-
 
 class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvider {
 

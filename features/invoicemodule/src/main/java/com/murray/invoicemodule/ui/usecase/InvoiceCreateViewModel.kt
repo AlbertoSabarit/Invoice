@@ -4,7 +4,6 @@ package com.murray.invoicemodule.ui.usecase
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.text.TextUtils
-import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

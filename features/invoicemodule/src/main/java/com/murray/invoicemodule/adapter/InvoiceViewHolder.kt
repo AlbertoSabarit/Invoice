@@ -5,7 +5,6 @@ import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.databinding.LayoutInvoiceListBinding
 
 class InvoiceViewHolder(val binding: LayoutInvoiceListBinding): RecyclerView.ViewHolder(binding.root){
-
     fun bind(item: Invoice, contador: Int) {
         with(binding) {
             txtnfacturas.text = "Factura " + contador

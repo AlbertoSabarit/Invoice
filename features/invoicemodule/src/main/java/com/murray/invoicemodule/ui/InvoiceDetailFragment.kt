@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
-import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
 import com.murray.repositories.ItemRepository
 
 class InvoiceDetailFragment : Fragment() {

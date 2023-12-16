@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-
 import android.app.DatePickerDialog
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,13 +17,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.entities.invoices.Invoice
-import com.murray.entities.tasks.Task
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.ItemRepository
-import com.murray.task.ui.usecase.TaskCreateState
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.murray.entities.tasks.Task
 import com.murray.invoice.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -26,7 +27,7 @@ import com.murray.task.databinding.FragmentTaskListBinding
 import com.murray.task.ui.usecase.TaskListState
 import com.murray.task.ui.usecase.TaskListViewModel
 
-class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
+class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
@@ -53,14 +54,17 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
 
         binding.btnCreateTask.setOnClickListener {
             var bundle = Bundle()
-            findNavController().navigate(R.id.action_taskListFragment_to_taskCreationFragment, bundle)
+            findNavController().navigate(
+                R.id.action_taskListFragment_to_taskCreationFragment,
+                bundle
+            )
 
         }
 
-        viewmodel.getState().observe(viewLifecycleOwner, Observer{
-            when(it){
-                is TaskListState.Loading -> {} //showProgressBar(it.value)
+        viewmodel.getState().observe(viewLifecycleOwner, Observer {
+            when (it) {
                 TaskListState.NoDataError -> showNoDataError()
+                is TaskListState.Loading -> onLoading(it.value)
                 is TaskListState.Success -> onSuccess(it.dataset)
             }
         })
@@ -81,16 +85,23 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when(menuItem.itemId){
-            R.id.action_sortTask ->{
-                taskAdapter.sortPersonalizado()
-                return true
-            }
-            R.id.action_refreshTask ->{
+        return when (menuItem.itemId) {
+
+            R.id.action_refreshTask -> {
                 viewmodel.getTaskList()
+                Snackbar.make(requireView(), "Tarea ordenada por nombre", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
                 return true
             }
-            else-> false
+
+            R.id.action_sortTask -> {
+                taskAdapter.sortPersonalizado()
+                Snackbar.make(requireView(), "Tarea ordenada por título", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                return true
+            }
+
+            else -> false
         }
     }
 
@@ -99,8 +110,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
         viewmodel.getTaskList()
     }
 
-    private fun onSuccess(dataset: ArrayList<Task>){
-
+    private fun onSuccess(dataset: ArrayList<Task>) {
         hideNoDataError()
         taskAdapter.update(dataset)
     }
@@ -112,22 +122,22 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
         binding.recyclerView.visibility = View.VISIBLE
     }
 
-    private fun showNoDataError(){
+    private fun showNoDataError() {
         binding.animationView.visibility = View.VISIBLE
         binding.tv1.visibility = View.VISIBLE
         binding.tv2.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
     }
 
-    private fun showProgressBar(value : Boolean){
-        if(value)
-            //findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
+    private fun onLoading(value: Boolean) {
+        if (value)
+            findNavController().navigate(R.id.action_taskListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
 
     private fun setUpTaskRecycler() {
-        taskAdapter = TaskAdapter(this )
+        taskAdapter = TaskAdapter(this)
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -143,23 +153,28 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick,MenuProvider {
         findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment, bundle)
     }
 
-    override fun userOnLongClickDelete(task: Task) : Boolean {
+    override fun userOnLongClickDelete(task: Task): Boolean {
 
-        val dialog = BaseFragmentDialog.newInstance("Atención",
-           "¿Deseas borrarlo?"
+        val dialog = BaseFragmentDialog.newInstance(
+            "Atención",
+            "¿Deseas borrarlo?"
         )
 
         dialog.show((context as AppCompatActivity).supportFragmentManager, TAG)
 
         dialog.parentFragmentManager.setFragmentResultListener(
             BaseFragmentDialog.request, viewLifecycleOwner
-        ) {_, bundle ->
+        ) { _, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
                 viewmodel.removeFromList(task)
                 viewmodel.getTaskList()
 
-                Toast.makeText(requireActivity(), "Tarea ${task.titulo} borrada con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireActivity(),
+                    "Tarea ${task.titulo} borrada con éxito",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return true

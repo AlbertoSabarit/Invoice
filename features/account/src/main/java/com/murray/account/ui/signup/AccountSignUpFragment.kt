@@ -18,6 +18,12 @@ import com.murray.account.R
 import com.murray.account.databinding.FragmentAccountSignUpBinding
 import com.murray.account.ui.signup.usecase.SignUpState
 import com.murray.account.ui.signup.usecase.SignUpViewModel
+import com.murray.entities.accounts.AccountException
+import com.murray.entities.accounts.Email
+import com.murray.entities.accounts.EnumTipoUsuario
+import com.murray.entities.accounts.EnumVisibilidad
+import com.murray.entities.accounts.UserSignUp
+import com.murray.entities.tasks.Task
 
 
 class AccountSignUpFragment : Fragment() {
@@ -38,25 +44,25 @@ class AccountSignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAccountSignUpBinding.inflate(inflater, container,false)
+        _binding = FragmentAccountSignUpBinding.inflate(inflater, container, false)
+
 
         binding.viewmodel = this.viewModel
-
-
         binding.lifecycleOwner = this
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemList = arrayListOf("Privado", "Publico", "Vacío")
+        val itemList = EnumVisibilidad.values()
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, itemList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
 
-        val listener = object : AdapterView.OnItemSelectedListener{
+        val listener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -64,7 +70,8 @@ class AccountSignUpFragment : Fragment() {
                 id: Long
             ) {
                 val profile = parent?.adapter?.getItem(position)
-                Toast.makeText(requireActivity(), "Elemento pulsado $profile", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Elemento pulsado $profile", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -78,29 +85,72 @@ class AccountSignUpFragment : Fragment() {
         }
 
 
-
-        twatcher= LogInTextWatcher(binding.tieEmailSignUp)
+        twatcher = LogInTextWatcher(binding.tieEmailSignUp)
         binding.tilEmailSignUp.addTextChangedListener(twatcher)
 
-        twatcher= LogInTextWatcher(binding.tiePasswordSignUp)
+        twatcher = LogInTextWatcher(binding.tiePasswordSignUp)
         binding.tilPasswordSignUp.addTextChangedListener(twatcher)
 
-        twatcher= LogInTextWatcher(binding.tieConfirmsPasswordsSignUp)
+        twatcher = LogInTextWatcher(binding.tieConfirmsPasswordsSignUp)
         binding.tilConfirmsPasswordsSignUp.addTextChangedListener(twatcher)
 
+
+        binding.btnCrearCuenta.setOnClickListener{
+            var tipoDeUsuario : EnumTipoUsuario = EnumTipoUsuario.Usuario
+
+            when(binding.spType.selectedItem) {
+                "Usuario" -> tipoDeUsuario = EnumTipoUsuario.Usuario
+                "Administrador" -> tipoDeUsuario = EnumTipoUsuario.Administrador
+                "Invitado" -> tipoDeUsuario = EnumTipoUsuario.Invitado
+                "Cliente" -> tipoDeUsuario = EnumTipoUsuario.Cliente
+            }
+            var visibilidad : EnumVisibilidad = EnumVisibilidad.Público
+
+            when(binding.spProfile.selectedItem) {
+                "Privado" -> visibilidad = EnumVisibilidad.Privado
+                "Público" -> visibilidad = EnumVisibilidad.Público
+                "Vacío" -> visibilidad = EnumVisibilidad.Vacío
+            }
+            val newUser =
+                UserSignUp(
+                    "Anónimo",
+                    "Anonimín",
+                    Email(binding.tilEmailSignUp.text.toString()) ,
+                    tipoDeUsuario,
+                    visibilidad
+                )
+
+            viewModel.validateCredentials(newUser)
+            viewModel.state.value = SignUpState.Completed
+        }
+
         viewModel.getState().observe(viewLifecycleOwner, Observer {
-            when(it){
+            when (it) {
                 SignUpState.EmailEmptyError -> setEmailEmptyError()
                 SignUpState.PasswordEmptyError -> setPasswordEmptyError()
                 SignUpState.PasswordEmptyError2 -> setPasswordEmptyError2()
                 SignUpState.PasswordsNotEquals -> setDifferentPasswordError()
+                SignUpState.InvalidFormat -> setInvalidFormat()
                 SignUpState.Completed -> {}
-                else -> onSuccess()
+                is SignUpState.UserExist -> setUsuarioExiste()
+                is SignUpState.Loading -> onLoading(it.value)
+                SignUpState.Success -> onSuccess()
             }
         })
     }
-
-
+    private fun setUsuarioExiste() {
+        binding.tieEmailSignUp.error = "Usuario ya existe"
+        Toast.makeText(context, "El usuario ya existe en el repositorio", Toast.LENGTH_SHORT).show()
+        binding.tieEmailSignUp.requestFocus()
+    }
+    private fun onLoading(value : Boolean) {
+        if(value){
+            findNavController().navigate(R.id.action_accountSignUpFragment_to_fragmentProgressDialog)
+        }
+        else{
+            findNavController().popBackStack()
+        }
+    }
     private fun setEmailEmptyError() {
         binding.tieEmailSignUp.error = getString(com.murray.account.R.string.errEmailEmpty)
         binding.tieEmailSignUp.requestFocus()
@@ -112,7 +162,8 @@ class AccountSignUpFragment : Fragment() {
     }
 
     private fun setPasswordEmptyError2() {
-        binding.tieConfirmsPasswordsSignUp.error = getString(com.murray.account.R.string.errPasswordEmpty)
+        binding.tieConfirmsPasswordsSignUp.error =
+            getString(com.murray.account.R.string.errPasswordEmpty)
         binding.tieConfirmsPasswordsSignUp.requestFocus()
     }
 
@@ -121,12 +172,15 @@ class AccountSignUpFragment : Fragment() {
         binding.tieConfirmsPasswordsSignUp.requestFocus()
     }
 
-    private fun onSuccess() {
-        viewModel.state.value = SignUpState.Completed
-        Toast.makeText(requireActivity(), "Te has registrado", Toast.LENGTH_SHORT).show()
-        findNavController().popBackStack()
+    private fun setInvalidFormat(){
+        binding.tieEmailSignUp.error = "Formato de email no válido"
+        binding.tieEmailSignUp.requestFocus()
     }
 
+    private fun onSuccess() {
+        Toast.makeText(requireActivity(), "Usuario registrado", Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
+    }
 
 
     override fun onDestroyView() {

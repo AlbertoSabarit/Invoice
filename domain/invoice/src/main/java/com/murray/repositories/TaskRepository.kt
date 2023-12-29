@@ -1,7 +1,5 @@
 package com.murray.repositories
 
-import com.murray.entities.accounts.User
-import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
 import com.murray.network.Resource
 import com.murray.network.ResourceList
@@ -20,38 +18,45 @@ class TaskRepository private constructor() {
         }
 
         private fun initDataSetTask(): MutableList<Task> {
-            dataSet.add(Task(
-                    Task.lastId++, "Citación", "Alberto Sabarit", "Privado","10/11/2023","25/12/2023", "Modificado", "Cita privada con Antonio"
+            dataSet.add(
+                Task(
+                    Task.lastId++,
+                    "Citación",
+                    "Alberto Sabarit",
+                    "Privado",
+                    "10/11/2023",
+                    "25/12/2023",
+                    "Modificado",
+                    "Cita privada con Antonio"
                 )
             )
             return dataSet
         }
 
-        fun addTask(t: Task){
-            dataSet.add(t)
-        }
-
-        suspend fun getTaskList(): ResourceList{
+        suspend fun getTaskList(): ResourceList {
             return withContext(Dispatchers.IO) {
-                //delay(2000)
+                delay(1000)
                 when {
-                    dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
+                    dataSet.isEmpty() -> ResourceList.NoData(Exception("No hay datos"))
                     else -> ResourceList.Success(dataSet as ArrayList<Task>)
                 }
             }
         }
 
-
-        suspend fun createTask(titulo: String, descripcion: String, fini: String, ffin: String) : Resource {
-            //Este codigo se ejecuta en un hilo especifico para oepraciones entrada/salida (IO)
-            withContext(Dispatchers.IO){
-                //delay(2000)
-                //Se ejecutará el codigo de consulta a Firebase que puede tardar mas de 5sg y en ese caso se obtiene
-                //el error ARN(Android Not Responding) porque puede bloquear la vista
+        suspend fun createTask(task: Task): Resource {
+            return withContext(Dispatchers.IO) {
+                delay(1000)
+                if (dataSet.any { it.titulo == task.titulo }) {
+                    Resource.Error(Exception("Esta tarea ya existe"))
+                } else {
+                    dataSet.add(task)
+                    Resource.Success(dataSet)
+                }
             }
-            return Resource.Error(Exception("Es incorrecto"))
         }
 
-
+        fun removeFromList(task: Task) {
+            dataSet.remove(task)
+        }
     }
 }

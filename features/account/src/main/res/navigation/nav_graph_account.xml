@@ -26,7 +26,11 @@
     <fragment
         android:id="@+id/accountSignUpFragment"
         android:name="com.murray.account.ui.signup.AccountSignUpFragment"
-        android:label="@string/title_accountsignup" />
+        android:label="@string/title_accountsignup" >
+        <action
+            android:id="@+id/action_accountSignUpFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
+    </fragment>
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.murray.account.ui.userlist.UserListFragment"

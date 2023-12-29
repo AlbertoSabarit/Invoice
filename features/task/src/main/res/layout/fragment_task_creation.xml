@@ -73,12 +73,11 @@
             android:id="@+id/button"
             android:layout_width="148dp"
             android:layout_height="46dp"
-            android:text="Añadir tarea"
+            android:text="Guardar tarea"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{() -> viewmodel.validateCredentials()}"
             app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
             app:layout_constraintVertical_bias="0.867" />
 

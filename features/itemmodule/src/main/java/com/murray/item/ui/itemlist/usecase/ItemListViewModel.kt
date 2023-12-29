@@ -30,7 +30,7 @@ class ItemListViewModel: ViewModel() {
                     dataset.sort()
                     state.value = ItemListState.Success(result.data as ArrayList<Item>)
                 }
-                is ResourceList.Error -> state.value = ItemListState.NoDataError
+                is ResourceList.NoData -> state.value = ItemListState.NoDataError
             }
         }
     }

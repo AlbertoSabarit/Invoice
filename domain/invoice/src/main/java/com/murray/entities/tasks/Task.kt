@@ -2,13 +2,12 @@ package com.murray.entities.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.murray.entities.accounts.User
 
 data class Task(
     var id: Int,
     var titulo: String,
     var nombre: String,
-    var tarea: String,
+    var tipoTarea: String,
     var fechaCreacion: String,
     var fechaFin: String,
     var estado: String,
@@ -50,7 +49,7 @@ data class Task(
         parcel.writeInt(id)
         parcel.writeString(titulo)
         parcel.writeString(nombre)
-        parcel.writeString(tarea)
+        parcel.writeString(tipoTarea)
         parcel.writeString(fechaCreacion)
         parcel.writeString(fechaFin)
         parcel.writeString(estado)

@@ -57,7 +57,7 @@ class ItemRepository private constructor() {
             return withContext(Dispatchers.IO) {
                 delay(500)
                 when {
-                    dataSet.isEmpty() -> ResourceList.Error(Exception("No hay artículos"))
+                    dataSet.isEmpty() -> ResourceList.NoData(Exception("No hay artículos"))
                     else -> ResourceList.Success(dataSet as ArrayList<Item>)
                 }
             }

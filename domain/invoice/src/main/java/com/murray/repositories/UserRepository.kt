@@ -29,42 +29,42 @@ class UserRepository private constructor() {
                 User(
                     "Alberto",
                     "Sabarit",
-                    "blbertosabarit@iesportada.org"
+                    Email("blbertosabarit@iesportada.org")
                 )
             )
             dataSet.add(
                 User(
                     "Ender",
                     "Watts",
-                    "enderwatts@iesportada.org"
+                    Email("enderwatts@iesportada.org")
                 )
             )
             dataSet.add(
                 User(
                     "Kateryna",
                     "Nikitenko",
-                    "katerynanikitenko@iesportada.org"
+                    Email("katerynanikitenko@iesportada.org")
                 )
             )
             dataSet.add(
                 User(
                     "Carlos",
                     "Valle",
-                    "zlevalle@iesportada.org"
+                    Email("zlevalle@iesportada.org")
                 )
             )
             dataSet.add(
                 User(
                     "Javier",
                     "Zarcia",
-                    "kavier@iesportada.org"
+                    Email("kavier@iesportada.org")
                 )
             )
             dataSet.add(
                 User(
                     "Manolo",
                     "Perez",
-                    "manolo@iesportada.org"
+                    Email("manolo@iesportada.org")
                 )
             )
             return dataSet
@@ -90,7 +90,6 @@ class UserRepository private constructor() {
                 )
             )
         }
-
         /**
          * Esta función simula una consulta asincrona y devuelve el conjunto de usuarios de la aplicación
          */
@@ -98,8 +97,20 @@ class UserRepository private constructor() {
             return withContext(Dispatchers.IO) {
                 delay(2000)
                 when {
-                    dataSet.isEmpty() -> ResourceList.Error(Exception("No hay datos"))
+                    dataSet.isEmpty() -> ResourceList.NoData(Exception("No hay datos"))
                     else -> ResourceList.Success(dataSet as ArrayList<User>)
+                }
+            }
+        }
+
+        suspend fun createUser(user: User): Resource {
+            return withContext(Dispatchers.IO) {
+                delay(1000)
+                if (dataSet.any { it.name == user.name }) {
+                    Resource.Error(Exception("El usuario ya existe en la base de datos"))
+                } else {
+                    dataSet.add(user)
+                    Resource.Success(dataSet)
                 }
             }
         }

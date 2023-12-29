@@ -26,7 +26,7 @@ class InvoiceListViewModel :ViewModel(){
                     (result.data as ArrayList<Invoice>).sort()
                     state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
                 }
-                is ResourceList.Error -> state.value = InvoiceListState.NoDataError
+                is ResourceList.NoData -> state.value = InvoiceListState.NoDataError
             }
         }
     }

@@ -3,7 +3,6 @@ package com.murray.task.ui.usecase
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,48 +16,55 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 const val TAG = "ViewModel"
+
 class TaskCreateViewModel : ViewModel() {
 
     var title = MutableLiveData<String>()
     var description = MutableLiveData<String>()
-    var fini =  MutableLiveData<String>()
-    var ffin =  MutableLiveData<String>()
+    var fini = MutableLiveData<String>()
+    var ffin = MutableLiveData<String>()
 
-    lateinit var task : Task
-
-    //liveData que tendrá su Observador en el Fragment y controla las excepciones/casos de uso
+    lateinit var task: Task
     private var state = MutableLiveData<TaskCreateState>()
 
-
-    fun validateCredentials() {
+    fun validateCredentials(task: Task) {
 
         when {
             TextUtils.isEmpty(title.value) -> state.value = TaskCreateState.TitleEmptyError
-            TextUtils.isEmpty(description.value) -> state.value = TaskCreateState.DescriptionEmptyError
+            TextUtils.isEmpty(description.value) -> state.value =
+                TaskCreateState.DescriptionEmptyError
 
             TextUtils.isEmpty(fini.value) -> state.value = TaskCreateState.DataIniEmptyError
             TextUtils.isEmpty(ffin.value) -> state.value = TaskCreateState.DataFinEmptyError
-            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = TaskCreateState.IncorrectDateRangeError
+            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value =
+                TaskCreateState.IncorrectDateRangeError
 
             else -> {
                 viewModelScope.launch {
 
                     state.value = TaskCreateState.Loading(true)
+                    val result = TaskRepository.createTask(task)
                     state.value = TaskCreateState.Loading(false)
-                    state.value = TaskCreateState.Success
+
+                    when (result) {
+                        is Resource.Error -> state.value =
+                            TaskCreateState.TaskExist(result.exception.message!!)
+
+                        is Resource.Success<*> -> state.value = TaskCreateState.Success
+                    }
 
                 }
             }
         }
     }
 
-    fun editTask(taskTmp: Task){
+    fun editTask(taskTmp: Task) {
         for (t in TaskRepository.dataSet) {
             if (t.id == task.id) {
 
                 t.titulo = taskTmp.titulo
                 t.nombre = taskTmp.nombre
-                t.tarea = taskTmp.tarea
+                t.tipoTarea = taskTmp.tipoTarea
                 t.fechaCreacion = taskTmp.fechaCreacion
                 t.fechaFin = taskTmp.fechaFin
                 t.estado = taskTmp.estado
@@ -66,13 +72,11 @@ class TaskCreateViewModel : ViewModel() {
             }
         }
     }
-    fun addToList(task: Task){
-        TaskRepository.addTask(task)
-    }
 
-    fun getCustomerList() : MutableList<Customer>{
+    fun getCustomerList(): MutableList<Customer> {
         return CustomerRepository.getCustomers()
     }
+
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         try {
@@ -84,6 +88,7 @@ class TaskCreateViewModel : ViewModel() {
             return false
         }
     }
+
     fun getState(): LiveData<TaskCreateState> {
         return state
     }

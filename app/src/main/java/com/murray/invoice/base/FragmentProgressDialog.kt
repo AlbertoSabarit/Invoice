@@ -18,10 +18,11 @@ class  FragmentProgressDialog : DialogFragment() {
         // Crea un cuadro de diálogo con el diseño inflado
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(view)
-        builder.setTitle("Esperando...")
         builder.setCancelable(false)
-        //
+        builder.setTitle("Esperando...")
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
         // Devuelve el cuadro de diálogo creado
-        return builder.create()
+        return dialog
     }
 }

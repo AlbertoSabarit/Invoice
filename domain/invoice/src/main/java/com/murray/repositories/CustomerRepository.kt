@@ -24,7 +24,7 @@ class CustomerRepository private constructor(){
         suspend fun getDataSetCustomer(): ResourceList{
             return withContext(Dispatchers.IO){
                 when {
-                    dataSet.isEmpty() -> ResourceList.Error(Exception("No hay datos"))
+                    dataSet.isEmpty() -> ResourceList.NoData(Exception("No hay datos"))
                     else -> ResourceList.Success(dataSet as ArrayList<Customer>)
                 }
             }

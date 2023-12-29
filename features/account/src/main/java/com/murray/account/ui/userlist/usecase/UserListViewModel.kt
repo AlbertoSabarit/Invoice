@@ -32,7 +32,7 @@ class UserListViewModel : ViewModel() {
                     state.value = UserListState.Success(result.data as ArrayList<User>)
                 }
 
-                is ResourceList.Error -> state.value = UserListState.NoDataError
+                is ResourceList.NoData -> state.value = UserListState.NoDataError
             }
         }
     }

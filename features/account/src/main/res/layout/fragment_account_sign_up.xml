@@ -40,8 +40,8 @@
                 android:id="@+id/tilEmailSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewmodel.email}"
-                android:hint="E-mail" />
+                android:hint="E-mail"
+                android:text="@={viewmodel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +87,7 @@
             android:entries="@array/typeuser_signup"
             app:layout_constraintBottom_toBottomOf="@+id/tvType"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-            app:layout_constraintStart_toEndOf="@+id/tvType"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
             app:layout_constraintTop_toTopOf="@+id/tvType" />
 
         <Spinner
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/tvProfile"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-            app:layout_constraintStart_toEndOf="@+id/tvProfile"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
             app:layout_constraintTop_toTopOf="@+id/tvProfile" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -111,7 +111,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Tipo usuario"
+            android:text="Visibilidad"
+            app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
             app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
@@ -120,7 +121,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
-            android:text="Visibilidad"
+            android:text="Tipo usuario"
+            app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
             app:layout_constraintTop_toBottomOf="@+id/tieConfirmsPasswordsSignUp" />
 
@@ -133,7 +135,6 @@
             android:layout_marginTop="32dp"
             android:layout_weight="0.3"
             android:text="Crear cuenta"
-            android:onClick="@{() -> viewmodel.validateCredentials()}"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@+id/gdStart"

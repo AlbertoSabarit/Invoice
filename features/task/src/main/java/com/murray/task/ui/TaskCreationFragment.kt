@@ -1,6 +1,7 @@
 package com.murray.task.ui
 
-import android.R
+import com.murray.task.R
+//import android.R
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
@@ -37,9 +38,9 @@ class TaskCreationFragment : Fragment() {
     ): View? {
         _binding = FragmentTaskCreationBinding.inflate(inflater, container, false)
 
-
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
+
 
         if (requireArguments().containsKey(Task.TAG)) {
             val task: Task? = requireArguments().getParcelable(Task.TAG)
@@ -59,51 +60,6 @@ class TaskCreationFragment : Fragment() {
         return binding.root
     }
 
-    private fun initSpinnerClientes() {
-        val nombres: MutableList<String> =
-            viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
-
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spTaskClientes.adapter = adapter
-
-        if (viewModel.task.id != -1) {
-            var pos = nombres.indexOf(viewModel.task.nombre)
-
-            binding.spTaskClientes.setSelection(pos, false)
-        }
-    }
-
-    private fun initSpinnerTipo() {
-        val tipos: Array<String> = arrayOf("Privado", "Llamada", "Visita")
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, tipos)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spinnerTipo.adapter = adapter
-
-        if (viewModel.task.id != -1) {
-            var pos = tipos.indexOf(viewModel.task.tarea)
-
-            binding.spinnerTipo.setSelection(pos, false)
-        }
-    }
-
-    private fun initSpinnerEstado() {
-        val estados: Array<String> = arrayOf("Pendiente", "Modificado", "Vencido")
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, estados)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spinnerEstado.adapter = adapter
-
-        if (viewModel.task.id != -1) {
-            var pos = estados.indexOf(viewModel.task.estado)
-
-            binding.spinnerEstado.setSelection(pos, false)
-        }
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -115,7 +71,6 @@ class TaskCreationFragment : Fragment() {
         }
 
         binding.button.setOnClickListener {
-            //findNavController().navigate(R.id.action_taskCreationFragment_to_taskListFragment)
             findNavController().popBackStack()
         }
 
@@ -132,6 +87,31 @@ class TaskCreationFragment : Fragment() {
         binding.tieFechFin.addTextChangedListener(twatcher)
 
 
+        binding.button.setOnClickListener {
+
+            val taskTmp =
+                Task(
+                    -2,
+                    binding.tieTitulo.text.toString(),
+                    binding.spTaskClientes.selectedItem.toString(),
+                    binding.spinnerTipo.selectedItem.toString(),
+                    binding.tieFechCreacion.text.toString(),
+                    binding.tieFechFin.text.toString(),
+                    binding.spinnerEstado.selectedItem.toString(),
+                    binding.tieDescripcion.text.toString()
+                )
+
+            if (viewModel.task.id == -1) {
+                taskTmp.id = Task.lastId++
+                viewModel.validateCredentials(taskTmp)
+
+            } else {
+                viewModel.editTask(taskTmp)
+                findNavController().popBackStack()
+                Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         viewModel.getState().observe(
             viewLifecycleOwner,
             Observer {
@@ -141,13 +121,70 @@ class TaskCreationFragment : Fragment() {
                     TaskCreateState.DataIniEmptyError -> setDateIniError()
                     TaskCreateState.DataFinEmptyError -> setDateFinError()
                     TaskCreateState.IncorrectDateRangeError -> setDateRangeError()
-                    is TaskCreateState.Loading -> {}
+                    is TaskCreateState.TaskExist -> setTaskExist()
+                    is TaskCreateState.Loading -> onLoading(it.value)
                     is TaskCreateState.TaskCreateError -> setErrorCreateTask()
 
                     else -> onSuccess()
                 }
             })
+    }
 
+    private fun initSpinnerClientes() {
+        val nombres: MutableList<String> = viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spTaskClientes.adapter = adapter
+
+        if (viewModel.task.id != -1) {
+            var pos = nombres.indexOf(viewModel.task.nombre)
+
+            binding.spTaskClientes.setSelection(pos, false)
+        }
+    }
+
+    private fun initSpinnerTipo() {
+        val tipos: Array<String> = arrayOf("Privado", "Llamada", "Visita")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipos)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTipo.adapter = adapter
+
+        if (viewModel.task.id != -1) {
+            var pos = tipos.indexOf(viewModel.task.tipoTarea)
+
+            binding.spinnerTipo.setSelection(pos, false)
+        }
+    }
+
+    private fun initSpinnerEstado() {
+        val estados: Array<String> = arrayOf("Pendiente", "Modificado", "Vencido")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, estados)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerEstado.adapter = adapter
+
+        if (viewModel.task.id != -1) {
+            var pos = estados.indexOf(viewModel.task.estado)
+
+            binding.spinnerEstado.setSelection(pos, false)
+        }
+    }
+
+    private fun onLoading(value: Boolean) {
+
+        if (value) {
+            findNavController().navigate(R.id.action_taskCreationFragment_to_fragmentProgressDialog)
+        } else {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun setTaskExist() {
+        binding.tilTitulo.error = "Ya existe una tarea con ese título"
+        Toast.makeText(context, "Ya existe una tarea con ese título", Toast.LENGTH_SHORT).show()
+        binding.tilTitulo.requestFocus()
     }
 
     private fun showDatePickerIni() {
@@ -222,29 +259,7 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-
-        val taskTmp =
-            Task(
-                -2,
-                binding.tieTitulo.text.toString(),
-                binding.spTaskClientes.selectedItem.toString(),
-                binding.spinnerTipo.selectedItem.toString(),
-                binding.tieFechCreacion.text.toString(),
-                binding.tieFechFin.text.toString(),
-                binding.spinnerEstado.selectedItem.toString(),
-                binding.tieDescripcion.text.toString()
-            )
-
-        if (viewModel.task.id == -1) {
-            taskTmp.id = Task.lastId++
-            viewModel.addToList(taskTmp)
-            Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
-        } else {
-            viewModel.editTask(taskTmp)
-
-            Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
-        }
-
+        Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }
 

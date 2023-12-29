@@ -1,7 +1,6 @@
 package com.murray.repositories
 
 import com.murray.entities.invoices.Invoice
-import com.murray.entities.tasks.Task
 import com.murray.network.Resource
 import com.murray.network.ResourceList
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +37,7 @@ class InvoiceRepository private constructor() {
             return withContext(Dispatchers.IO) {
                 delay(2000)
                 when {
-                    dataSet.isEmpty()-> ResourceList.Error(Exception("No hay datos"))
+                    dataSet.isEmpty()-> ResourceList.NoData(Exception("No hay datos"))
                     else -> ResourceList.Success(dataSet as ArrayList<Invoice>)
                 }
             }

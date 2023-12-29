@@ -23,7 +23,7 @@ class CustomerListViewModel: ViewModel() {
             val result = CustomerRepository.getDataSetCustomer()
             when(result){
                 is ResourceList.Success<*> -> state.value = CustomerListState.Success(result.data as ArrayList<Customer>)
-                is ResourceList.Error -> state.value = CustomerListState.NoDataError
+                is ResourceList.NoData -> state.value = CustomerListState.NoDataError
             }
         }
     }

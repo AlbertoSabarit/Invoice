@@ -11,8 +11,12 @@ class Email(val value: String) {
     //private val pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
     private val pattern = Pattern.compile("^\\S+@\\S+\\.\\S+$")
 
+    var error: String? = null
+        private set
+
     init {
-        if (!pattern.matcher(value).matches())
-            throw AccountException.InvalidEmailFormat()
+        if (value.isNullOrEmpty() || !pattern.matcher(value).matches()) {
+            error = "Formato de correo electrónico inválido"
+        }
     }
 }

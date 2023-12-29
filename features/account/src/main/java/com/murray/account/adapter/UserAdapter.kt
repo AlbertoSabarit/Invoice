@@ -44,7 +44,7 @@ class UserAdapter(
     }
 
     fun sortPersonalizado(){
-        dataset.sortBy { it.email }
+        dataset.sortBy { it.email.value }
         notifyDataSetChanged()
     }
 
@@ -52,15 +52,15 @@ class UserAdapter(
     inner class UserViewHolder(private val binding: LayoutUserItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: User) {
+        fun bind(user: User) {
             with(binding) {
-                tvNombre.text = item.name
-                tvApellido.text = item.surname
-                tvEmail.text = item.email
-                root.setOnClickListener { _ -> onItemClick(item) }
+                tvNombre.text = user.name
+                tvApellido.text = user.surname
+                tvEmail.text = user.email.value
+                root.setOnClickListener { _ -> onItemClick(user) }
 
                 root.setOnLongClickListener { _ ->
-                    listener.userOnLongClick(item)
+                    listener.userOnLongClick(user)
                     true
                 }
             }

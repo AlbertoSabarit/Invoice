@@ -106,7 +106,7 @@ class UserRepository private constructor() {
         suspend fun createUser(user: User): Resource {
             return withContext(Dispatchers.IO) {
                 delay(1000)
-                if (dataSet.any { it.name == user.name }) {
+                if (dataSet.any { it.email.value == user.email.value}) {
                     Resource.Error(Exception("El usuario ya existe en la base de datos"))
                 } else {
                     dataSet.add(user)

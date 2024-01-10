@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.murray.invoice.SplashFragment"
+        android:name="com.murray.invoice.ui.SplashFragment"
         android:label="Logo">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.murray.invoice.MainFragment"
+        android:name="com.murray.invoice.ui.MainFragment"
         android:label="@string/mainFragment"
         tools:layout="@layout/fragment_main" >
         <action
@@ -70,5 +70,17 @@
         app:graphPackage="${applicationId}.task"
         app:graphResName="nav_graph_task"
         app:moduleName="task"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.murray.invoice.ui.preferences.SettingsFragment"
+        android:label="Opciones" >
+        <action
+            android:id="@+id/action_settingsFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.murray.invoice.ui.preferences.AccountFragment"
+        android:label="Cuenta de usuario" />
 
 </navigation>

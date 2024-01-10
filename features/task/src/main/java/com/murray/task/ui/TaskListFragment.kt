@@ -19,7 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.murray.entities.tasks.Task
-import com.murray.invoice.MainActivity
+import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.task.R
 import com.murray.task.adapter.TaskAdapter

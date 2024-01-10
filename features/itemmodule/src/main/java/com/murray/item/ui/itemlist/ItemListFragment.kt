@@ -18,7 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.entities.items.Item
-import com.murray.invoice.MainActivity
+import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter

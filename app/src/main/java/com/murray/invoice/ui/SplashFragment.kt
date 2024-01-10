@@ -1,4 +1,4 @@
-package com.murray.invoice
+package com.murray.invoice.ui
 
 import android.os.Bundle
 import android.os.Handler

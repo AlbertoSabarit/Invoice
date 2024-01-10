@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="summary_account">Información de la cuenta del usuario</string>
+    <string name="key_account">Account</string>
+    <string name="title_account_setting">Cuenta del usuario</string>
+    <string name="key_active_notifications">activar_notificaciones</string>
+    <string name="title_active_notifications">Activar notificaciones</string>
+    <string name="key_ringtone">ringtone</string>
+    <string name="title_ringtone">Tono de llamada</string>
+    <string name="category_notification">Configuración notificaciones</string>
+    <string name="key_email">email</string>
+    <string name="title_email">E-mail</string>
+    <string name="key_password">password</string>
+    <string name="title_password">Password</string>
+
+</resources>

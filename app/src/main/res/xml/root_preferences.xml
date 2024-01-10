@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:icon = "@drawable/ic_account"
+        android:key="@string/key_account"
+        android:summary="@string/summary_account"
+        android:title="@string/title_account_setting">
+    </Preference>
+
+    <PreferenceCategory android:title="@string/category_notification">
+        <SwitchPreference
+            android:key="@string/key_active_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:title="@string/title_active_notifications" />
+        <ListPreference
+            android:key="@string/key_ringtone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1"
+            android:entries="@array/ringtone_entries"
+            android:entryValues="@array/ringtone_values"
+            android:title="@string/title_ringtone" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

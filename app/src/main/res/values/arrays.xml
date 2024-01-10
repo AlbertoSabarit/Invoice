@@ -6,4 +6,17 @@
         <item>Invitado</item>
         <item>Cliente</item>
     </string-array>
+
+    <string-array name="ringtone_entries">
+        <item>Maluma</item>
+        <item>Feid</item>
+        <item>Quevedo</item>
+    </string-array>
+
+    <string-array name="ringtone_values">
+        <item>MA</item>
+        <item>FE</item>
+        <item>QU</item>
+    </string-array>
+
 </resources>

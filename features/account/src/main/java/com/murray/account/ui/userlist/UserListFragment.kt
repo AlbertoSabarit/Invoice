@@ -23,7 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.murray.account.R
-import com.murray.invoice.MainActivity
+import com.murray.invoice.ui.MainActivity
 
 class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
 

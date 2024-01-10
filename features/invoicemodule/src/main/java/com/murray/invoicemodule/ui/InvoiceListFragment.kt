@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
-import com.murray.invoice.MainActivity
+import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceListState

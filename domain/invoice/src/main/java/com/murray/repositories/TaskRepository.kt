@@ -1,5 +1,7 @@
 package com.murray.repositories
 
+import com.murray.entities.customers.Customer
+import com.murray.entities.email.Email
 import com.murray.entities.tasks.Task
 import com.murray.network.Resource
 import com.murray.network.ResourceList
@@ -22,7 +24,7 @@ class TaskRepository private constructor() {
                 Task(
                     Task.lastId++,
                     "Citación",
-                    "Alberto Sabarit",
+                    Customer(CustomerRepository.getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
                     "Privado",
                     "10/11/2023",
                     "25/12/2023",

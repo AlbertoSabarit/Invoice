@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.murray.entities.customers.Customer
 import com.murray.entities.tasks.Task
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -23,6 +24,7 @@ import java.util.Locale
 import com.murray.task.databinding.FragmentTaskCreationBinding
 import com.murray.task.ui.usecase.TaskCreateState
 import com.murray.task.ui.usecase.TaskCreateViewModel
+import java.sql.ClientInfoStatus
 
 class TaskCreationFragment : Fragment() {
 
@@ -89,11 +91,22 @@ class TaskCreationFragment : Fragment() {
 
         binding.button.setOnClickListener {
 
+            var cliente = Customer()
+            val clientes: List<Customer> = viewModel.getCustomerList()
+
+            for (c in clientes) {
+                if (c.name ==  binding.spTaskClientes.selectedItem.toString()) {
+                    cliente = c
+                    break
+                }
+            }
+
+
             val taskTmp =
                 Task(
                     -2,
                     binding.tieTitulo.text.toString(),
-                    binding.spTaskClientes.selectedItem.toString(),
+                    cliente,
                     binding.spinnerTipo.selectedItem.toString(),
                     binding.tieFechCreacion.text.toString(),
                     binding.tieFechFin.text.toString(),
@@ -138,7 +151,7 @@ class TaskCreationFragment : Fragment() {
         binding.spTaskClientes.adapter = adapter
 
         if (viewModel.task.id != -1) {
-            var pos = nombres.indexOf(viewModel.task.nombre)
+            var pos = nombres.indexOf(viewModel.task.cliente.name)
 
             binding.spTaskClientes.setSelection(pos, false)
         }

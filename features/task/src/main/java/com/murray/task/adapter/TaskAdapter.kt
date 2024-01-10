@@ -52,7 +52,7 @@ class TaskAdapter(
 
         fun bind(item: Task) {
             binding.txtTit.text = item.titulo
-            binding.txtCliente.text = item.nombre
+            binding.txtCliente.text = item.cliente.name
             binding.txtTipo.text = item.tipoTarea
             binding.txtEstado.text = item.estado
 

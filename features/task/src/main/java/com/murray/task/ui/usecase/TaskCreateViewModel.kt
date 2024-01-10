@@ -63,7 +63,7 @@ class TaskCreateViewModel : ViewModel() {
             if (t.id == task.id) {
 
                 t.titulo = taskTmp.titulo
-                t.nombre = taskTmp.nombre
+                t.cliente.name = taskTmp.cliente.name
                 t.tipoTarea = taskTmp.tipoTarea
                 t.fechaCreacion = taskTmp.fechaCreacion
                 t.fechaFin = taskTmp.fechaFin

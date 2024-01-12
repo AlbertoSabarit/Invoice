@@ -11,6 +11,7 @@
     <string name="key_email">email</string>
     <string name="title_email">E-mail</string>
     <string name="key_password">password</string>
-    <string name="title_password">Password</string>
+    <string name="title_password">Contraseña</string>
+    <string name="account_header">Información del usuario</string>
 
 </resources>

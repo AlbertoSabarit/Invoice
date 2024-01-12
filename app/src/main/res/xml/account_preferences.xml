@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:key="@string/key_email"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/title_email" />
-    <EditTextPreference
-        android:key="@string/key_password"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/title_password" />
+    <PreferenceCategory android:title="@string/account_header">
+        <EditTextPreference
+            android:key="@string/key_email"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_email" />
+        <EditTextPreference
+            android:key="@string/key_password"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_password" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

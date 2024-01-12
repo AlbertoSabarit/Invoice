@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.entities.accounts.Account
 import com.murray.firebase.AuthFirebase
+import com.murray.invoice.Locator
 import com.murray.network.Resource
 import kotlinx.coroutines.launch
 
@@ -35,13 +36,14 @@ class SignInViewModel : ViewModel() {
                     val result = authFirebase.login(email.value!!, password.value!!)
 
                     when (result) {
-
                         is Resource.Success<*> -> {
-
-                                Log.e(TAG, "Login correcto del usuario")
+                            val account = result.data as Account
+                            Log.e(TAG, "Login correcto del usuario")
                             state.value = SignInState.Success(result.data as? Account)
-
+                            //Guardar la informacion del usuario en el almacen de datos user_preferences
+                            Locator.userPreferencesRepository.saveUser(account.email.value, account.password.toString(), account.id)
                         }
+
                         is Resource.Error -> {
                             Log.i(TAG, "Informacion del dato ${result.exception.message}")
                             state.value =

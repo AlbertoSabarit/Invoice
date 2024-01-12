@@ -15,8 +15,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.settings_preferences, rootKey)
         //Obtener el DataStore que se quiere que utilicen los componentes visuales de las Preferencias
         //Cuando se modifica el gestor de las preferencias se utiliza en todos los PreferenceFragment de la jerarquia de vistas
-        //
-        preferenceManager.preferenceDataStore = Locator.settingsPreferencesRepository
+        //Ya no se utiliza el fichero shared_preferences
+        val store = Locator.settingsPreferencesRepository
+        preferenceManager.preferenceDataStore = store
 
         val accountPreference = preferenceManager.findPreference<Preference>(getString(R.string.key_account))
         accountPreference?.setOnPreferenceClickListener {

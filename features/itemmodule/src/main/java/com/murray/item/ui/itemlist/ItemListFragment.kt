@@ -93,7 +93,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
     private fun showProgressBar(value: Boolean) {
         if (value)
-            findNavController().navigate((R.id.action_itemListFragment_to_fragmentProgressDialog))
+            findNavController().navigate(R.id.action_itemListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
@@ -111,7 +111,6 @@ class ItemListFragment : Fragment(), MenuProvider {
             this.adapter = itemListAdapter
         }
     }
-
 
     private fun viewItemDetail(item: Item) {
         val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)

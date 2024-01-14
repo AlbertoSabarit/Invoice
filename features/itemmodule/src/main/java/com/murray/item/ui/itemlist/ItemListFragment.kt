@@ -103,8 +103,7 @@ class ItemListFragment : Fragment(), MenuProvider {
             ItemListAdapter(
                 requireContext(),
                 { viewItemDetail(it) },
-                { initDeleteFragmentDialog(it) },
-                { editItem(it) })
+                { initDeleteFragmentDialog(it) })
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -116,11 +115,6 @@ class ItemListFragment : Fragment(), MenuProvider {
 
     private fun viewItemDetail(item: Item) {
         val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)
-        findNavController().navigate(action)
-    }
-
-    private fun editItem(item: Item) {
-        val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
         findNavController().navigate(action)
     }
 

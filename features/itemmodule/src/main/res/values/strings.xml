@@ -3,18 +3,13 @@
     <string name="tv_item_list_empty_title">Sin artículos</string>
     <string name="tv_item_list_empty_text">Toca el boton &quot;+&quot; para crear un nuevo artículo</string>
 
-    <string name="tiet_item_creation_name">Nombre</string>
-    <string name="tiet_item_creation_rate">Precio</string>
-    <string name="tiet_item_creation_tax">¿Impuesto?</string>
-    <string name="tiet_item_creation_type">Tipo</string>
-    <string name="tiet_item_creation_descr">Descripción</string>
-    <string name="b_item_creation_add">Añadir</string>
+    <string name="item_name_title">Nombre</string>
+    <string name="item_rate_title">Precio</string>
+    <string name="item_taxable_title">¿Impuesto?</string>
+    <string name="item_type_title">Tipo</string>
+    <string name="item_descr_title">Descripción</string>
 
-    <string name="tiet_item_detail_name">Nombre</string>
-    <string name="tiet_item_detail_rate">Precio</string>
-    <string name="tiet_item_detail_tax">¿Impuesto?</string>
-    <string name="tiet_item_detail_type">Tipo</string>
-    <string name="tiet_item_detail_descr">Descripción</string>
+    <string name="b_item_creation_add">Añadir</string>
     <string name="b_item_detail_edit">Editar</string>
 
     <string name="fragment_item_list_label">Lista de artículos</string>
@@ -23,8 +18,18 @@
 
     <string name="true_string">Sí</string>
     <string name="false_string">No</string>
+
     <string name="product_string">Producto</string>
     <string name="service_string">Servicio</string>
+
     <string name="refrescar">Refrescar</string>
     <string name="ordenar">Ordenar</string>
+
+    <string name="ed_digits">0123456789.</string>
+
+    <string name="placeholder_item_name">Maleta de cuero</string>
+    <string name="placeholder_item_rate">60€</string>
+    <string name="placeholder_item_taxable">Si</string>
+    <string name="placeholder_item_type">Producto</string>
+    <string name="placeholder_item_descr">Cuero de cabra de grano superior superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente. Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción.</string>
 </resources>

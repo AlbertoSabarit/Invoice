@@ -2,6 +2,7 @@ package com.murray.item.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,25 +39,23 @@ class ItemDetailFragment : Fragment() {
                 ItemType.SERVICE -> tvItemDetailType.text = context?.getString(R.string.service_string)
             }
             tvItemDetailRate.text = "${String.format("%.2f", item.rate)}€"
-
-            if (item.isTaxable){
-                tvItemDetailTaxable.text = resources.getString(R.string.true_string) //'resources' es lo mismo que usar 'getResources()'
-            } else{
-                tvItemDetailTaxable.text = resources.getString(R.string.false_string)
-            }
+            tvItemDetailTaxable.text = if (item.isTaxable) "Sí" else "No"
             tvItemDetailDescr.text = item.description
 
-            when{
-                //Elegir imágenes predeterminadas
-                item.name == "Maleta de Cuero" -> ivItemDetail.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
-                item.name == "Lápices Acuarela" -> ivItemDetail.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
-                item.name == "Cuaderno" -> ivItemDetail.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
-                item.name == "Portátil" -> ivItemDetail.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
-                item.name == "Pinturas al óleo" -> ivItemDetail.setImageResource(ImagesItem.OLEO.imagenDrawable)
-                item.name == "Botas de nieve" -> ivItemDetail.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
-                //Imagen galería
-                item.imageUri == null || item.imageUri.toString().isEmpty() -> ivItemDetail.setImageResource(R.drawable.item_default_image)
-                else -> ivItemDetail.setImageURI(item.imageUri)
+            when(item.name){
+                "Maleta de Cuero" -> ivItemDetail.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                "Lápices Acuarela" -> ivItemDetail.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
+                "Cuaderno" -> ivItemDetail.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
+                "Portátil" -> ivItemDetail.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
+                "Pinturas al óleo" -> ivItemDetail.setImageResource(ImagesItem.OLEO.imagenDrawable)
+                "Botas de nieve" -> ivItemDetail.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                else ->  {
+                    if (item.imageUri == null || TextUtils.isEmpty(item.imageUri.toString())) {
+                        ivItemDetail.setImageResource(R.drawable.item_default_image)
+                    } else {
+                        ivItemDetail.setImageURI(item.imageUri)
+                    }
+                }
             }
         }
 

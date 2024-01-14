@@ -65,7 +65,6 @@ class ItemListFragment : Fragment(), MenuProvider {
                 is ItemListState.Success -> onSuccess(it.dataset)
             }
         }
-
     }
 
     override fun onStart() {
@@ -104,7 +103,7 @@ class ItemListFragment : Fragment(), MenuProvider {
             ItemListAdapter(
                 requireContext(),
                 { viewItemDetail(it) },
-                { validateDeleteItem(it) },
+                { initDeleteFragmentDialog(it) },
                 { editItem(it) })
 
         with(binding.rvItemList) {
@@ -125,7 +124,7 @@ class ItemListFragment : Fragment(), MenuProvider {
         findNavController().navigate(action)
     }
 
-    private fun validateDeleteItem(item: Item): Boolean {
+    private fun initDeleteFragmentDialog(item: Item): Boolean {
         val dialog = BaseFragmentDialog.newInstance(
             "Atención",
             "¿Deseas borrar el artículo?"
@@ -136,21 +135,24 @@ class ItemListFragment : Fragment(), MenuProvider {
         ) { _, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
-                var dataSet = viewmodel.getInvoiceRepository()
-                if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name }) {
-                    Toast.makeText(
-                        requireContext(),
-                        "No se puede eliminar un artículo asignado a una factura",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    viewmodel.deleteItem(item,itemListAdapter)
-                }
+                validateDeleteItem(item)
             }
         }
         return true
     }
 
+    private fun validateDeleteItem(item: Item) {
+        val dataSet = viewmodel.getInvoiceRepository()
+        if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name }) {
+            Toast.makeText(
+                requireContext(),
+                "No se puede eliminar un artículo asignado a una factura",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            viewmodel.deleteItem(item,itemListAdapter)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

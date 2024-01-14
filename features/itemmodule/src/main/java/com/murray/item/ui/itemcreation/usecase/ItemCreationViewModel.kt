@@ -36,6 +36,9 @@ class ItemCreationViewModel : ViewModel() {
             else -> state.value = ItemCreationState.Success
         }
     }
+    fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description:String, imageUri: Uri?){
+        ItemRepository.addItem(name, type, rate, isTaxable, description, imageUri)
+    }
 
     fun editItem(itemArgs: Item) {
         for (itemDataset in ItemRepository.getDataSetItem()) {
@@ -50,8 +53,5 @@ class ItemCreationViewModel : ViewModel() {
         }
     }
 
-    fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description:String, imageUri: Uri?){
-        ItemRepository.addItem(name, type, rate, isTaxable, description, imageUri)
-    }
 
 }

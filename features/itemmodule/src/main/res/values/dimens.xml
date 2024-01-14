@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_top_large">32dp</dimen>
+    <dimen name="margin_top_medium">24dp</dimen>
+    <dimen name="margin_top_small">8dp</dimen>
+    <dimen name="margin_end">16dp</dimen>
+
+    <dimen name="margin_bottom_button">24dp</dimen>
+
+    <dimen name="padding_spinner">15dp</dimen>
+    <dimen name="tv_title_spinner_padding_bottom">5dp</dimen>
+
+    <dimen name="tv_title_spinner_text_size">20sp</dimen>
+    <dimen name="tv_card_text_size">16sp</dimen>
+    <dimen name="tv_card_descr_text_size">14sp</dimen>
+    <dimen name="tv_title_no_items">30sp</dimen>
+    <dimen name="tv_text_no_items">16sp</dimen>
+
+    <dimen name="add_img_size">170dp</dimen>
+    <dimen name="detail_img_size">140dp</dimen>
+    <dimen name="no_items_img_size">200dp</dimen>
+    <dimen name="recycler_img_size">120dp</dimen>
+
+    <dimen name="elevation">8dp</dimen>
+    <dimen name="elevation_small">5dp</dimen>
+
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_width_small">325dp</dimen>
+    <dimen name="card_height_small">200dp</dimen>
+    <dimen name="card_height_large">300dp</dimen>
+
+    <dimen name="decoration_lines_width">100dp</dimen>
+    <dimen name="decoration_lines_width_small">80dp</dimen>
+    <dimen name="decoration_lines_height">1dp</dimen>
+
+    <dimen name="card_width_recycler">380dp</dimen>
+    <dimen name="card_height_recycler">180dp</dimen>
+    <dimen name="margin_recycler">10dp</dimen>
+</resources>

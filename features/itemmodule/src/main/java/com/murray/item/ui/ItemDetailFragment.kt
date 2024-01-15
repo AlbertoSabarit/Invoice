@@ -1,6 +1,5 @@
 package com.murray.item.ui
 
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -14,7 +13,7 @@ import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
-import com.murray.repositories.ImagesItem
+import com.murray.entities.items.ImagesItem
 
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null

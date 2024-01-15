@@ -8,10 +8,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
-import com.murray.entities.tasks.Task
 import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
-import com.murray.repositories.ImagesItem
+import com.murray.entities.items.ImagesItem
 
 class ItemListAdapter(
     //private val dataSet: MutableList<Item>,

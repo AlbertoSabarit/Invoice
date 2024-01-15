@@ -7,18 +7,17 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvcardviewTaskList"
-        android:layout_width="380dp"
-        android:layout_height="180dp"
-        android:layout_margin="10dp"
+        android:layout_width="@dimen/card_width_recycler"
+        android:layout_height="@dimen/card_height_recycler"
+        android:layout_margin="@dimen/margin_recycler"
         app:cardBackgroundColor="@color/md_theme_light_secondaryContainer"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintVertical_weight="2">
 
@@ -45,8 +44,8 @@
                 android:id="@+id/tvNombreTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textSize="14sp"
+                android:text="@string/item_name_title"
+                android:textSize="@dimen/tv_card_text_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvNombreText"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -58,8 +57,8 @@
                 android:id="@+id/tvNombreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maleta de cuero"
-                android:textSize="16sp"
+                android:text="@string/placeholder_item_name"
+                android:textSize="@dimen/tv_card_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/tvPrecioTitle"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
                 app:layout_constraintTop_toBottomOf="@+id/tvNombreTitle" />
@@ -68,9 +67,9 @@
                 android:id="@+id/tvPrecioTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Precio"
-                android:textSize="14sp"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:text="@string/item_rate_title"
+                android:textSize="@dimen/tv_card_text_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvPrecioText"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -80,8 +79,8 @@
                 android:id="@+id/tvPrecioText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60€"
-                android:textSize="16sp"
+                android:text="@string/placeholder_item_rate"
+                android:textSize="@dimen/tv_card_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
                 app:layout_constraintTop_toBottomOf="@+id/tvPrecioTitle" />
@@ -90,8 +89,8 @@
                 android:id="@+id/tvTipoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipo"
-                android:textSize="14sp"
+                android:text="@string/item_type_title"
+                android:textSize="@dimen/tv_card_text_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvTipoText"
                 app:layout_constraintStart_toEndOf="@+id/gdMiddle"
@@ -103,8 +102,8 @@
                 android:id="@+id/tvTipoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Producto"
-                android:textSize="16sp"
+                android:text="@string/placeholder_item_type"
+                android:textSize="@dimen/tv_card_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/tvImpuestoTitle"
                 app:layout_constraintStart_toEndOf="@+id/gdMiddle"
                 app:layout_constraintTop_toBottomOf="@+id/tvTipoTitle" />
@@ -113,9 +112,9 @@
                 android:id="@+id/tvImpuestoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="¿Impuesto?"
-                android:textSize="14sp"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:text="@string/item_taxable_title"
+                android:textSize="@dimen/tv_card_text_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvImpuestoText"
                 app:layout_constraintStart_toEndOf="@+id/gdMiddle"
@@ -125,17 +124,17 @@
                 android:id="@+id/tvImpuestoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sí"
-                android:textSize="16sp"
+                android:text="@string/true_string"
+                android:textSize="@dimen/tv_card_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/gdMiddle"
                 app:layout_constraintTop_toBottomOf="@+id/tvImpuestoTitle" />
 
             <ImageView
                 android:id="@+id/imgItem"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="@dimen/recycler_img_size"
+                android:layout_height="@dimen/recycler_img_size"
+                android:layout_marginEnd="@dimen/margin_end"
                 android:background="@drawable/shape_item_img"
                 android:clipToOutline="true"
                 android:src="@drawable/img_maleta_cuero"
@@ -148,36 +147,37 @@
 
             <View
                 android:id="@+id/view"
-                android:layout_width="80dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/decoration_lines_width_small"
+                android:layout_height="@dimen/decoration_lines_height"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
                 app:layout_constraintTop_toBottomOf="@+id/tvNombreTitle" />
 
             <View
                 android:id="@+id/view1"
-                android:layout_width="80dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/decoration_lines_width_small"
+                android:layout_height="@dimen/decoration_lines_height"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@+id/gdMiddle"
                 app:layout_constraintTop_toBottomOf="@+id/tvTipoTitle" />
 
             <View
                 android:id="@+id/view2"
-                android:layout_width="80dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/decoration_lines_width_small"
+                android:layout_height="@dimen/decoration_lines_height"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@+id/gdStart"
                 app:layout_constraintTop_toBottomOf="@+id/tvPrecioTitle" />
 
             <View
                 android:id="@+id/view3"
-                android:layout_width="80dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/decoration_lines_width_small"
+                android:layout_height="@dimen/decoration_lines_height"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@+id/gdMiddle"
                 app:layout_constraintTop_toBottomOf="@+id/tvImpuestoTitle" />
 
+            <!--
             <ImageButton
                 android:visibility="invisible"
                 android:id="@+id/imgBtDeleteItem"
@@ -206,9 +206,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.08"
-                app:srcCompat="@drawable/ic_edit" />
-
-
+                app:srcCompat="@drawable/ic_edit" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -1,22 +1,22 @@
 package com.murray.item.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
-import com.murray.entities.tasks.Task
 import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
-import com.murray.repositories.ImagesItem
+import com.murray.entities.items.ImagesItem
 
 class ItemListAdapter(
     //private val dataSet: MutableList<Item>,
     private val context: Context,
     private val detailClickListener: (item: Item) -> Unit,
     private val deleteClickListener: (item: Item) -> Unit,
-    private val editClickListener: (item: Item) -> Unit
 ) :
     RecyclerView.Adapter<ItemListAdapter.ItemListViewHolder>() {
 
@@ -65,25 +65,26 @@ class ItemListAdapter(
                     ItemType.PRODUCT -> tvTipoText.text = context.getString(R.string.product_string)
                     ItemType.SERVICE -> tvTipoText.text = context.getString(R.string.service_string)
                 }
-
-                if (item.isTaxable) {
-                    tvImpuestoText.text =
-                        context.getString(R.string.true_string) //no me deja poner getResources()
-                } else {
-                    tvImpuestoText.text = context.getString(R.string.false_string)
-                }
+                tvImpuestoText.text = if (item.isTaxable) "Sí" else "No"
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
-                when{
-                    //Elegir imágenes predeterminadas
-                    item.name == "Maleta de Cuero" -> imgItem.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
-                    item.name == "Lápices Acuarela" -> imgItem.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
-                    item.name == "Cuaderno" -> imgItem.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
-                    item.name == "Portátil" -> imgItem.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
-                    item.name == "Pinturas al óleo" -> imgItem.setImageResource(ImagesItem.OLEO.imagenDrawable)
-                    item.name == "Botas de nieve" -> imgItem.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
-                    //Imagen galería
-                    item.imageUri == null -> imgItem.setImageResource(R.drawable.item_default_image)
-                    else -> imgItem.setImageURI(item.imageUri)
+                initImage(item, imgItem)
+            }
+        }
+
+        private fun initImage(item: Item, imageView: ImageView) {
+            when(item.name){
+                "Maleta de Cuero" -> imageView.setImageResource(ImagesItem.MALETA_CUERO.imagenDrawable)
+                "Lápices Acuarela" -> imageView.setImageResource(ImagesItem.LAPICES_ACUARELA.imagenDrawable)
+                "Cuaderno" -> imageView.setImageResource(ImagesItem.CUADERNO.imagenDrawable)
+                "Portátil" -> imageView.setImageResource(ImagesItem.PORTATIL.imagenDrawable)
+                "Pinturas al óleo" -> imageView.setImageResource(ImagesItem.OLEO.imagenDrawable)
+                "Botas de nieve" -> imageView.setImageResource(ImagesItem.BOTAS_NIEVE.imagenDrawable)
+                else ->  {
+                    if (item.imageUri == null || TextUtils.isEmpty(item.imageUri.toString())) {
+                        imageView.setImageResource(R.drawable.item_default_image)
+                    } else {
+                        imageView.setImageURI(item.imageUri)
+                    }
                 }
             }
         }

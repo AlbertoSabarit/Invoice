@@ -17,13 +17,13 @@
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.97" />
 
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lavNoItems"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/no_items_img_size"
+        android:layout_height="@dimen/no_items_img_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,17 +32,6 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/noitems" />
-<!--
-    <ImageView
-        android:id="@+id/lavNoItems"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/img_estrellitas"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />-->
 
     <TextView
         android:id="@+id/tvItemListEmptyTitle"
@@ -51,7 +40,7 @@
         android:fontFamily="sans-serif"
         android:text="@string/tv_item_list_empty_title"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="@dimen/tv_title_no_items"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lavNoItems" />
 
@@ -61,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tv_item_list_empty_text"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="@dimen/tv_text_no_items"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvItemListEmptyTitle" />

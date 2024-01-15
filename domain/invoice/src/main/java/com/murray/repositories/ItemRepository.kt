@@ -3,21 +3,11 @@ package com.murray.repositories
 import android.net.Uri
 import com.murray.entities.items.Item
 import com.murray.entities.items.ItemType
-import com.murray.invoice.R
 import com.murray.network.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-
-enum class ImagesItem(val imagenDrawable: Int, val idItem: Int) {
-    MALETA_CUERO(R.drawable.img_maleta_cuero, 1),
-    LAPICES_ACUARELA(R.drawable.img_lapices_acuarela, 2),
-    CUADERNO(R.drawable.img_cuaderno, 3),
-    PORTATIL(R.drawable.img_portatil, 4),
-    OLEO(R.drawable.img_oleo, 5),
-    BOTAS_NIEVE(R.drawable.img_botas_nieve, 6)
-}
 
 class ItemRepository private constructor() {
 
@@ -61,6 +51,10 @@ class ItemRepository private constructor() {
                     else -> ResourceList.Success(dataSet as ArrayList<Item>)
                 }
             }
+        }
+
+        fun getItemById(id: Int) : Item{
+            return dataSet.find { item -> item.id == id } as Item
         }
 
         private fun initDataSetItem(): MutableList<Item> {

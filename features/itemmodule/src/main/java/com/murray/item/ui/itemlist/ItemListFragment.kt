@@ -65,7 +65,6 @@ class ItemListFragment : Fragment(), MenuProvider {
                 is ItemListState.Success -> onSuccess(it.dataset)
             }
         }
-
     }
 
     override fun onStart() {
@@ -94,7 +93,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
     private fun showProgressBar(value: Boolean) {
         if (value)
-            findNavController().navigate((R.id.action_itemListFragment_to_fragmentProgressDialog))
+            findNavController().navigate(R.id.action_itemListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
@@ -104,8 +103,7 @@ class ItemListFragment : Fragment(), MenuProvider {
             ItemListAdapter(
                 requireContext(),
                 { viewItemDetail(it) },
-                { validateDeleteItem(it) },
-                { editItem(it) })
+                { initDeleteFragmentDialog(it) })
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -114,18 +112,12 @@ class ItemListFragment : Fragment(), MenuProvider {
         }
     }
 
-
     private fun viewItemDetail(item: Item) {
         val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(item)
         findNavController().navigate(action)
     }
 
-    private fun editItem(item: Item) {
-        val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
-        findNavController().navigate(action)
-    }
-
-    private fun validateDeleteItem(item: Item): Boolean {
+    private fun initDeleteFragmentDialog(item: Item): Boolean {
         val dialog = BaseFragmentDialog.newInstance(
             "Atención",
             "¿Deseas borrar el artículo?"
@@ -136,21 +128,24 @@ class ItemListFragment : Fragment(), MenuProvider {
         ) { _, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
-                var dataSet = viewmodel.getInvoiceRepository()
-                if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name }) {
-                    Toast.makeText(
-                        requireContext(),
-                        "No se puede eliminar un artículo asignado a una factura",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    viewmodel.deleteItem(item,itemListAdapter)
-                }
+                validateDeleteItem(item)
             }
         }
         return true
     }
 
+    private fun validateDeleteItem(item: Item) {
+        val dataSet = viewmodel.getInvoiceRepository()
+        if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name }) {
+            Toast.makeText(
+                requireContext(),
+                "No se puede eliminar un artículo asignado a una factura",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            viewmodel.deleteItem(item,itemListAdapter)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

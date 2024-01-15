@@ -41,24 +41,13 @@ class ItemCreationFragment : Fragment() {
         _binding = FragmentItemCreationBinding.inflate(inflater, container, false)
         binding.itemcreationviewmodel = this.viewmodel
         binding.lifecycleOwner = this
-        addTextWatcher()
 
-        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if (uri != null) {
-                binding.ivAddImage.setImageURI(uri)
-                selectedImageUri = uri
-            }
-        }
-        binding.ivAddImage.setOnClickListener { getContent.launch("image/*") }
+        initTextWatcher()
+        initImageUri()
+
         return binding.root
     }
 
-    private fun addTextWatcher() {
-        val textWatcherName = LayoutTextWatcher(binding.tilItemCreationName)
-        val textWatcherRate = LayoutTextWatcher(binding.tilItemCreationRate)
-        binding.tietItemCreationName.addTextChangedListener(textWatcherName)
-        binding.tietItemCreationRate.addTextChangedListener(textWatcherRate)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,17 +91,12 @@ class ItemCreationFragment : Fragment() {
         val itemArgs: Item? = args.item
         if (itemArgs == null) {
             with(viewmodel) {
-                val name: String = name.value!!
                 val type: ItemType =
                     when (typeSpinnerPosition.value) {
-                        0 -> ItemType.PRODUCT
                         1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT //va a ser uno u otro si o si
+                        else -> ItemType.PRODUCT
                     }
-                val rate: Double = rate.value!!.toDouble()
-                val isTaxable: Boolean = isTaxable.value ?: false
-                val description: String = description.value ?: ""
-                viewmodel.addItem(name, type, rate, isTaxable, description, selectedImageUri)
+                viewmodel.addItem(name.value!!, type,  rate.value!!.toDouble(), isTaxable.value ?: false, description.value ?: "", selectedImageUri)
             }
             Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
@@ -121,9 +105,8 @@ class ItemCreationFragment : Fragment() {
                 itemArgs.name = tietItemCreationName.text.toString()
                 itemArgs.type =
                     when (sItemCreationType.selectedItemPosition) {
-                        0 -> ItemType.PRODUCT
                         1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT //va a ser uno u otro si o si
+                        else -> ItemType.PRODUCT
                     }
                 itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
                 itemArgs.isTaxable = cbItemCreationTax.isChecked
@@ -150,6 +133,23 @@ class ItemCreationFragment : Fragment() {
     private fun setTypeIsMandatoryError() {
         binding.tilItemCreationType.error = "Elige un tipo válido"
         binding.tilItemCreationType.requestFocus()
+    }
+
+    private fun initImageUri() {
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                binding.ivAddImage.setImageURI(uri)
+                selectedImageUri = uri
+            }
+        }
+        binding.ivAddImage.setOnClickListener { getContent.launch("image/*") }
+    }
+
+    private fun initTextWatcher() {
+        val textWatcherName = LayoutTextWatcher(binding.tilItemCreationName)
+        val textWatcherRate = LayoutTextWatcher(binding.tilItemCreationRate)
+        binding.tietItemCreationName.addTextChangedListener(textWatcherName)
+        binding.tietItemCreationRate.addTextChangedListener(textWatcherRate)
     }
 }
 

@@ -35,7 +35,6 @@ class ItemListViewModel: ViewModel() {
         }
     }
 
-    //TODO este metodo deberia estar en InvoiceRepository
     fun getInvoiceItemName(cadena: String): String? {
         val regex = Regex("\\d+ x (.+)")
         val matchResult = regex.find(cadena)

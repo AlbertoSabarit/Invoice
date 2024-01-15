@@ -4,12 +4,16 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import com.murray.entities.tasks.Task
+import java.io.Serializable
 
+<<<<<<< HEAD
 enum class ItemType {
     PRODUCT,
     SERVICE
 }
 
+=======
+>>>>>>> 6f0a7a0d251dcaa6309bddafc2dceb1b382b14f8
 data class Item(
     var id: Int,
     var name: String,
@@ -18,6 +22,7 @@ data class Item(
     var isTaxable: Boolean,
     var description: String = "",
     var imageUri: Uri? = null,
+<<<<<<< HEAD
 ) : Parcelable, Comparable<Item> {
     companion object CREATOR : Parcelable.Creator<Item> {
         val TAG = "Item"
@@ -60,6 +65,9 @@ data class Item(
     override fun describeContents(): Int {
         return 0
     }
+=======
+    ): Serializable, Comparable<Item> {
+>>>>>>> 6f0a7a0d251dcaa6309bddafc2dceb1b382b14f8
 
     override fun compareTo(other: Item): Int {
         return name.compareTo(other.name)

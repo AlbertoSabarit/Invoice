@@ -2,7 +2,14 @@ package com.murray.entities.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
-data class Invoice( var id: Int,var cliente:String, var articulo:String, var fcreacion:String, var fvencimiento:String): Parcelable, Comparable<Invoice> {
+
+data class Invoice(
+    var id: Int,
+    var cliente: String,
+    var articulo: String,
+    var fcreacion: String,
+    var fvencimiento: String
+) : Parcelable, Comparable<Invoice> {
     companion object CREATOR : Parcelable.Creator<Invoice> {
         val TAG = "Invoice"
         var lastId: Int = 1
@@ -14,17 +21,17 @@ data class Invoice( var id: Int,var cliente:String, var articulo:String, var fcr
             return arrayOfNulls(size)
         }
 
-        fun createDefaultInvoice() : Invoice {
-            return Invoice(-1, "", "", "","")
+        fun createDefaultInvoice(): Invoice {
+            return Invoice(-1, "", "", "", "")
         }
     }
 
     constructor(parcel: Parcel) : this(
-    parcel.readInt(),
-    parcel.readString()!!,
-    parcel.readString()!!,
-    parcel.readString()!!,
-    parcel.readString()!!
+        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -35,6 +42,7 @@ data class Invoice( var id: Int,var cliente:String, var articulo:String, var fcr
         parcel.writeString(fvencimiento)
 
     }
+
     override fun describeContents(): Int {
         return 0
     }

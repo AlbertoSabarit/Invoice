@@ -52,8 +52,8 @@ data class Task(
             return arrayOfNulls(size)
         }
 
-        fun createDefaultTask() : Task{
-            return Task(-1, "", Customer(), "","","", "", "")
+        fun createDefaultTask(): Task {
+            return Task(-1, "", Customer(), "", "", "", "", "")
         }
     }
 

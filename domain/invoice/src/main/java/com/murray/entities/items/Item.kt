@@ -9,15 +9,16 @@ enum class ItemType {
     PRODUCT,
     SERVICE
 }
+
 data class Item(
     var id: Int,
     var name: String,
     var type: ItemType,
     var rate: Double,
     var isTaxable: Boolean,
-    var description: String="",
+    var description: String = "",
     var imageUri: Uri? = null,
-    ): Parcelable, Comparable<Item> {
+) : Parcelable, Comparable<Item> {
     companion object CREATOR : Parcelable.Creator<Item> {
         val TAG = "Item"
         override fun createFromParcel(parcel: Parcel): Item {
@@ -33,15 +34,19 @@ data class Item(
             return Task(-1, "", "", "","","", "", "")
         }*/
     }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",
-        ItemType.valueOf(parcel.readString() ?: ItemType.PRODUCT.name), // Convertir el nombre del enum de nuevo a enum
+        ItemType.valueOf(
+            parcel.readString() ?: ItemType.PRODUCT.name
+        ), // Convertir el nombre del enum de nuevo a enum
         parcel.readDouble(),
         parcel.readByte() != 0.toByte(),
         parcel.readString() ?: "",
         parcel.readParcelable(Uri::class.java.classLoader)
     )
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
@@ -51,6 +56,7 @@ data class Item(
         parcel.writeString(description)
         parcel.writeParcelable(imageUri, flags)
     }
+
     override fun describeContents(): Int {
         return 0
     }

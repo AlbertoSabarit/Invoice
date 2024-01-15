@@ -5,9 +5,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -18,12 +21,13 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     /**
      * Método que guarda la inforamcion del usuario de Firebase en user_preference
      */
-    suspend fun saveUser(email: String, password: String, id: Int) {
-
-        dataStore.edit { preferences ->
-            preferences[EMAIL] = email
-            preferences[PASSWORD] = password
-            preferences[ID] = id
+    fun saveUser(email: String, password: String, id: Int) {
+        GlobalScope.launch(Dispatchers.IO) {
+            dataStore.edit { preferences ->
+                preferences[EMAIL] = email
+                preferences[PASSWORD] = password
+                preferences[ID] = id
+            }
         }
     }
 

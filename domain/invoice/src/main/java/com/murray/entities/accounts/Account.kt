@@ -55,13 +55,19 @@ class Account private constructor(
      */
 
     companion object {
-        fun create(id: Int, email: Email, password: String?, displayName: String?, state: AccountState): Account {
+        fun create(
+            id: Int,
+            email: Email,
+            password: String?,
+            displayName: String?,
+            state: AccountState
+        ): Account {
             return Account(
                 id = id,
                 email = email,
-                password=password,
+                password = password,
                 displayName = displayName,
-                state=state,
+                state = state,
                 businessProfile = BusinessProfile(),
             )
         }

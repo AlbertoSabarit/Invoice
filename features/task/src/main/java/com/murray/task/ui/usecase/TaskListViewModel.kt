@@ -17,7 +17,7 @@ class TaskListViewModel : ViewModel() {
         return state
     }
 
-    fun getTaskList() {
+    fun getTaskListOrderByCustomer() {
         viewModelScope.launch {
 
             state.value = TaskListState.Loading(true)
@@ -28,6 +28,24 @@ class TaskListViewModel : ViewModel() {
                 is ResourceList.NoData -> state.value = TaskListState.NoDataError
                 is ResourceList.Success<*> -> {
                     (result.data as ArrayList<Task>).sort()
+                    state.value = TaskListState.Success(result.data as ArrayList<Task>)
+                }
+
+            }
+        }
+    }
+
+    fun getTaskListOrderByTitle() {
+        viewModelScope.launch {
+
+            state.value = TaskListState.Loading(true)
+            val result = TaskRepository.getTaskList()
+            state.value = TaskListState.Loading(false)
+
+            when (result) {
+                is ResourceList.NoData -> state.value = TaskListState.NoDataError
+                is ResourceList.Success<*> -> {
+                    (result.data as ArrayList<Task>).sortBy { it.titulo }
                     state.value = TaskListState.Success(result.data as ArrayList<Task>)
                 }
 

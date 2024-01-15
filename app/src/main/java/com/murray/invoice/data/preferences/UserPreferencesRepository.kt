@@ -54,7 +54,6 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
             }
         }
     }
-
     companion object {
         private val EMAIL = stringPreferencesKey("email")
         private val PASSWORD = stringPreferencesKey("password")

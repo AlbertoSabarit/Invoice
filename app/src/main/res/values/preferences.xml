@@ -13,5 +13,13 @@
     <string name="key_password">password</string>
     <string name="title_password">Contraseña</string>
     <string name="account_header">Información del usuario</string>
+    <string name="key_customer">customes</string>
+    <string name="title_customer">Ordenar clientes</string>
+    <string name="key_item">items</string>
+    <string name="title_item">Ordenar artículos</string>
+    <string name="key_invoice">invoices</string>
+    <string name="title_invoice">Ordenar facturas</string>
+    <string name="key_task">tasks</string>
+    <string name="title_task">Ordenar tareas</string>
 
 </resources>

@@ -3,11 +3,9 @@ package com.murray.invoice.ui.preferences
 import android.os.Bundle
 import android.text.InputType
 import androidx.preference.EditTextPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.murray.invoice.Locator
 import com.murray.invoice.R
-import com.murray.invoice.data.preferences.UserPreferencesRepository
 
 class AccountFragment : PreferenceFragmentCompat() {
 

@@ -19,4 +19,13 @@
         <item>QU</item>
     </string-array>
 
+    <string-array name="task_entries">
+        <item>Ordenar por título</item>
+        <item>Ordenar por cliente</item>
+    </string-array>
+
+    <string-array name="task_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 </resources>

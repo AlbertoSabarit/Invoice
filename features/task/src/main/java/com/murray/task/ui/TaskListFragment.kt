@@ -1,5 +1,6 @@
 package com.murray.task.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -38,12 +39,14 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
     val TAG = "ListTask"
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTaskListBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +61,6 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
                 R.id.action_taskListFragment_to_taskCreationFragment,
                 bundle
             )
-
         }
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer {
@@ -68,7 +70,6 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
                 is TaskListState.Success -> onSuccess(it.dataset)
             }
         })
-
     }
 
     private fun setUpToolbar() {
@@ -88,7 +89,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
         return when (menuItem.itemId) {
 
             R.id.action_refreshTask -> {
-                viewmodel.getTaskList()
+                viewmodel.getTaskListOrderByCustomer()
                 Snackbar.make(requireView(), "Tarea ordenada por nombre", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
                 return true
@@ -96,7 +97,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
             R.id.action_sortTask -> {
                 taskAdapter.sortPersonalizado()
-                Snackbar.make(requireView(), "Tarea ordenada por título", Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView(), "Tarea ordenada por cliente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
                 return true
             }
@@ -107,7 +108,25 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
     override fun onStart() {
         super.onStart()
-        viewmodel.getTaskList()
+
+        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val orderValue = preferences!!.getString("tasks", "0")
+
+
+        when (orderValue) {
+
+            "0" -> {
+                viewmodel.getTaskListOrderByTitle()
+                Snackbar.make(requireView(), "Tarea ordenada por título", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+
+            "1" -> {
+                viewmodel.getTaskListOrderByCustomer()
+                Snackbar.make(requireView(), "Tarea ordenada por cliente", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
     }
 
     private fun onSuccess(dataset: ArrayList<Task>) {
@@ -168,7 +187,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
                 viewmodel.removeFromList(task)
-                viewmodel.getTaskList()
+                viewmodel.getTaskListOrderByCustomer()
 
                 Toast.makeText(
                     requireActivity(),

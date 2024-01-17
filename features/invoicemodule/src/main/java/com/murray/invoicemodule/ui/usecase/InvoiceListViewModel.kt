@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.entities.invoices.Invoice
+import com.murray.entities.tasks.Task
 import com.murray.network.ResourceList
 import com.murray.repositories.InvoiceRepository
+import com.murray.repositories.TaskRepository
+import com.murray.task.ui.usecase.TaskListState
 import kotlinx.coroutines.launch
 
 class InvoiceListViewModel :ViewModel(){
@@ -27,6 +30,42 @@ class InvoiceListViewModel :ViewModel(){
                     state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
                 }
                 is ResourceList.NoData -> state.value = InvoiceListState.NoDataError
+            }
+        }
+    }
+
+    fun getInvoiceListOrderByCustomer() {
+        viewModelScope.launch {
+
+            state.value = InvoiceListState.Loading(true)
+            val result = InvoiceRepository.getInvoiceList()
+            state.value = InvoiceListState.Loading(false)
+
+            when (result) {
+                is ResourceList.NoData -> state.value = InvoiceListState.NoDataError
+                is ResourceList.Success<*> -> {
+                    (result.data as ArrayList<Invoice>).sortBy { it.cliente }
+                    state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
+                }
+
+            }
+        }
+    }
+
+    fun getInvoiceListOrderByItem() {
+        viewModelScope.launch {
+
+            state.value = InvoiceListState.Loading(true)
+            val result = InvoiceRepository.getInvoiceList()
+            state.value = InvoiceListState.Loading(false)
+
+            when (result) {
+                is ResourceList.NoData -> state.value = InvoiceListState.NoDataError
+                is ResourceList.Success<*> -> {
+                    (result.data as ArrayList<Invoice>).sortBy { it.articulo }
+                    state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
+                }
+
             }
         }
     }

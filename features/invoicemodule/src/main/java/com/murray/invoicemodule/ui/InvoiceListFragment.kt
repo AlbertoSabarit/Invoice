@@ -1,5 +1,6 @@
 package com.murray.invoicemodule.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import androidx.lifecycle.Observer
 import com.murray.invoicemodule.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.entities.invoices.Invoice
 import com.murray.invoice.ui.MainActivity
@@ -83,7 +86,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
                 return true
             }
             R.id.action_refreshInvoice ->{
-                viewmodel.getInvocieList()
+                viewmodel.getInvoiceListOrderByCustomer()
                 return true
             }
             else-> false
@@ -92,7 +95,27 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
     override fun onStart() {
         super.onStart()
-        viewmodel.getInvocieList()
+        //viewmodel.getInvocieList()
+
+        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val orderValue = preferences!!.getString("invoices", "0")
+
+
+        when (orderValue) {
+            "0" -> {
+                viewmodel.getInvoiceListOrderByItem()
+                Snackbar.make(requireView(), "Factura ordenada por articulo", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+
+            "1" -> {
+                viewmodel.getInvoiceListOrderByCustomer()
+                Snackbar.make(requireView(), "Factura ordenada por cliente", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
+
+
     }
     private fun setUpUserRecycler() {
         invoiceAdapter = InvoiceAdapter(this)

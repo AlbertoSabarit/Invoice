@@ -2,6 +2,7 @@ package com.murray.invoice.ui.preferences
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -40,6 +41,38 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
 
+        val orderValueinvoice = preferences!!.getString("invoices", "0")
+
+        val listPreferenceinvoice = findPreference<ListPreference>("invoices")
+        listPreferenceinvoice?.summary = listPreference?.entries?.get(orderValueinvoice!!.toInt())
+        listPreferenceinvoice?.value = orderValueinvoice
+        listPreferenceinvoice?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference)
+                preferences.edit()?.putString("invoices", newValue.toString())?.apply()
+            listPreferenceinvoice.summary = listPreferenceinvoice.entries?.get(newValue!!.toString().toInt())
+            true
+        }
+
+
+        val modoValue = preferences!!.getString("modo", "0")
+
+        val listPreferencemodo = findPreference<ListPreference>("modo")
+        listPreferencemodo?.summary = listPreferencemodo?.entries?.get(modoValue!!.toInt())
+        listPreferencemodo?.value = modoValue
+        listPreferencemodo?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                val newMode = newValue.toString().toInt()
+                preferences.edit()?.putString("modo", newMode.toString())?.apply()
+
+                when (newMode) {
+                    0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+
+                listPreferencemodo.summary = listPreferencemodo.entries?.get(newMode)
+            }
+            true
+        }
     }
 
 }

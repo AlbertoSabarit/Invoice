@@ -21,5 +21,7 @@
     <string name="title_invoice">Ordenar facturas</string>
     <string name="key_task">tasks</string>
     <string name="title_task">Ordenar tareas</string>
-
+    <string name="tema">Tema de Aplicacion</string>
+    <string name="title_modo">Modo</string>
+    <string name="key_modo">modo</string>
 </resources>

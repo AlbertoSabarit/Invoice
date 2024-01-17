@@ -23,6 +23,16 @@ class InvoiceRepository private constructor() {
             dataSet.add(Invoice(Invoice.lastId++,
                  "Alberto Sabarit", "2 x Cuaderno", "10/11/2023","25/12/2023")
             )
+            dataSet.add(Invoice(Invoice.lastId++,
+                "Kateryna Nikitenko", "2 x Maleta de cuero", "11/11/2023","26/12/2023")
+            )
+
+            dataSet.add(Invoice(Invoice.lastId++,
+                "Ender Watts", "3 x Portátil", "11/10/2023","30/12/2023")
+            )
+            dataSet.add(Invoice(Invoice.lastId++,
+                "Alejandro Valle", "3 x Cuaderno", "11/10/2023","30/12/2023")
+            )
             return dataSet
         }
 

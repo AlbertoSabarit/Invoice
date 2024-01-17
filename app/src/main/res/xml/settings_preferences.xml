@@ -24,8 +24,7 @@
             android:title="@string/title_ringtone" />
     </PreferenceCategory>
 
-    <PreferenceCategory></PreferenceCategory>
-
+    <PreferenceCategory android:title="@string/ordenar">
     <Preference
         android:key="@string/key_customer"
         android:title="@string/title_customer">
@@ -36,16 +35,28 @@
         android:title="@string/title_item">
 
     </Preference>
-    <Preference
+    <ListPreference
         android:key="@string/key_invoice"
-        android:title="@string/title_invoice">
-
-    </Preference>
+        android:title="@string/title_invoice"
+        android:defaultValue="0"
+        android:entries="@array/invoice_entries"
+        android:entryValues="@array/invoice_values">
+    </ListPreference>
     <ListPreference
         android:key="@string/key_task"
         android:title="@string/title_task"
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/task_entries"
         android:entryValues="@array/task_values">
     </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/tema">
+        <ListPreference
+            android:key="@string/key_modo"
+            android:title="@string/title_modo"
+            android:defaultValue="0"
+            android:entries="@array/modo_entries"
+            android:entryValues="@array/modo_values">
+        </ListPreference>
+    </PreferenceCategory>
 </PreferenceScreen>

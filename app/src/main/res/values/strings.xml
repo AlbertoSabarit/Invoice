@@ -27,5 +27,7 @@
     <string name="btSignUp">Registro</string>
     <string name="mainFragment">Pantalla Inicial</string>
     <string name="btTaskList_Text">Tareas</string>
+    <string name="ordenar">Ordenar</string>
+
 
 </resources>

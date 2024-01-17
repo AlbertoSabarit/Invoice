@@ -1,9 +1,11 @@
 package com.murray.invoice.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.murray.invoice.R
@@ -25,6 +27,24 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        val orderValue2 = preferences!!.getString("modo", "0")
+        when (orderValue2) {
+
+                "0" -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+
+                "1" -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

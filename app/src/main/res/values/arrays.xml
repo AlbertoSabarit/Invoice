@@ -28,4 +28,24 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string-array name="invoice_entries">
+        <item>Ordenar por articulo</item>
+        <item>Ordenar por cliente</item>
+    </string-array>
+
+    <string-array name="invoice_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="modo_entries">
+        <item>Claro</item>
+        <item>Oscuro</item>
+    </string-array>
+
+    <string-array name="modo_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 </resources>

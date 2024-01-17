@@ -19,7 +19,7 @@ class ItemListViewModel: ViewModel() {
         return state
     }
 
-    fun getItemList(){
+    fun getItemList(orderRate: Boolean){
         viewModelScope.launch {
             state.value = ItemListState.Loading(true)
             val result = ItemRepository.getItemList()
@@ -27,7 +27,7 @@ class ItemListViewModel: ViewModel() {
             when(result){
                 is ResourceList.Success<*> -> {
                     val dataset = result.data as ArrayList<Item>
-                    dataset.sort()
+                    if (orderRate) dataset.sortBy { it.rate } else dataset.sort()
                     state.value = ItemListState.Success(result.data as ArrayList<Item>)
                 }
                 is ResourceList.NoData -> state.value = ItemListState.NoDataError

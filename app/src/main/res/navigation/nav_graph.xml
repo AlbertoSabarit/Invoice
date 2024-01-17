@@ -77,10 +77,17 @@
         <action
             android:id="@+id/action_settingsFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_sortFragment"
+            app:destination="@id/sortFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.murray.invoice.ui.preferences.AccountFragment"
         android:label="Cuenta de usuario" />
+    <fragment
+        android:id="@+id/sortFragment"
+        android:name="com.murray.invoice.ui.preferences.SortFragment"
+        android:label="SortFragment" />
 
 </navigation>

@@ -50,7 +50,7 @@ class ItemListAdapter(
         notifyDataSetChanged()
     }
 
-    fun sortPersonalizado() {
+    fun sortPrecio() {
         dataset.sortBy { it.rate }
         notifyDataSetChanged()
     }
@@ -65,7 +65,7 @@ class ItemListAdapter(
                     ItemType.PRODUCT -> tvTipoText.text = context.getString(R.string.product_string)
                     ItemType.SERVICE -> tvTipoText.text = context.getString(R.string.service_string)
                 }
-                tvImpuestoText.text = if (item.isTaxable) "Sí" else "No"
+                tvImpuestoText.text = if (item.isTaxable) context.getString(R.string.true_string) else context.getString(R.string.false_string)
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
                 initImage(item, imgItem)
             }

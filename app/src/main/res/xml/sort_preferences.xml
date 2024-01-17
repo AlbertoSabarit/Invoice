@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/category_sort">
+        <ListPreference
+            android:key="@string/key_customer"
+            android:title="@string/title_customer">
+
+        </ListPreference>
+        <ListPreference
+            android:key="@string/key_item"
+            android:title="@string/title_item"
+            android:defaultValue="0"
+            android:entries="@array/item_entries"
+            android:entryValues="@array/item_values">
+        </ListPreference>
+        <ListPreference
+            android:key="@string/key_invoice"
+            android:title="@string/title_invoice"
+            android:defaultValue="0"
+            android:entries="@array/invoice_entries"
+            android:entryValues="@array/invoice_values">
+        </ListPreference>
+        <ListPreference
+            android:key="@string/key_task"
+            android:title="@string/title_task"
+            android:defaultValue="0"
+            android:entries="@array/task_entries"
+            android:entryValues="@array/task_values">
+        </ListPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,7 +1,7 @@
 package com.murray.item.ui.itemlist
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.murray.entities.items.Item
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -25,8 +26,6 @@ import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
 import com.murray.item.ui.itemlist.usecase.ItemListState
 import com.murray.item.ui.itemlist.usecase.ItemListViewModel
-import com.murray.repositories.InvoiceRepository
-import com.murray.repositories.ItemRepository
 
 class ItemListFragment : Fragment(), MenuProvider {
 
@@ -69,7 +68,23 @@ class ItemListFragment : Fragment(), MenuProvider {
 
     override fun onStart() {
         super.onStart()
-        viewmodel.getItemList()
+
+        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val orderValue = preferences!!.getString("items", "0")
+
+        when (orderValue) {
+            "0" -> {
+                viewmodel.getItemList(false)
+                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+
+            "1" -> {
+                viewmodel.getItemList(true)
+                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
     }
 
     private fun onSuccess(dataset: ArrayList<Item>) {
@@ -168,11 +183,11 @@ class ItemListFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when(menuItem.itemId){
             R.id.action_sortTask ->{
-                itemListAdapter.sortPersonalizado()
+                itemListAdapter.sortPrecio()
                 return true
             }
             R.id.action_refreshTask ->{
-                viewmodel.getItemList()
+                viewmodel.getItemList(false)
                 return true
             }
             else-> false

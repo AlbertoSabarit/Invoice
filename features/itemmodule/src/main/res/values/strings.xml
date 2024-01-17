@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tv_item_list_empty_title">Sin artículos</string>
-    <string name="tv_item_list_empty_text">Toca el boton &quot;+&quot; para crear un nuevo artículo</string>
+    <string name="tv_item_list_empty_text">Toca el boton \"+\" para crear un nuevo artículo</string>
 
     <string name="item_name_title">Nombre</string>
     <string name="item_rate_title">Precio</string>
@@ -31,5 +31,8 @@
     <string name="placeholder_item_rate">60€</string>
     <string name="placeholder_item_taxable">Si</string>
     <string name="placeholder_item_type">Producto</string>
-    <string name="placeholder_item_descr">Cuero de cabra de grano superior superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente. Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción.</string>
+    <string name="placeholder_item_descr">Cuero de cabra de grano superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente. Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción.</string>
+
+    <string name="snackbar_sort_item_name">Artículos ordenados por nombre</string>
+    <string name="snackbar_sort_item_rate">Artículos ordenados por precio</string>
 </resources>

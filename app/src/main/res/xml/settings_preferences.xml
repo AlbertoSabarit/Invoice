@@ -5,9 +5,16 @@
         android:icon="@drawable/ic_account"
         android:key="@string/key_account"
         android:summary="@string/summary_account"
-        android:title="@string/title_account_setting"></Preference>
+        android:title="@string/title_account_setting" />
 
-    <PreferenceCategory android:title="@string/category_notification">
+    <Preference
+        android:icon="@drawable/ic_action_sort"
+        android:key="@string/key_sort"
+        android:summary="@string/summary_sort"
+        android:title="@string/title_sort_setting" />
+
+    <PreferenceCategory android:title="@string/category_notification"
+        android:icon="@drawable/ic_notif">
         <SwitchPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,39 +31,23 @@
             android:title="@string/title_ringtone" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/ordenar">
-    <Preference
-        android:key="@string/key_customer"
-        android:title="@string/title_customer">
-
-    </Preference>
-    <Preference
-        android:key="@string/key_item"
-        android:title="@string/title_item">
-
-    </Preference>
-    <ListPreference
-        android:key="@string/key_invoice"
-        android:title="@string/title_invoice"
-        android:defaultValue="0"
-        android:entries="@array/invoice_entries"
-        android:entryValues="@array/invoice_values">
-    </ListPreference>
-    <ListPreference
-        android:key="@string/key_task"
-        android:title="@string/title_task"
-        android:defaultValue="0"
-        android:entries="@array/task_entries"
-        android:entryValues="@array/task_values">
-    </ListPreference>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/tema">
+    <PreferenceCategory android:title="@string/category_misc">
         <ListPreference
+            android:icon="@drawable/ic_mode"
             android:key="@string/key_modo"
             android:title="@string/title_modo"
             android:defaultValue="0"
             android:entries="@array/modo_entries"
             android:entryValues="@array/modo_values">
+        </ListPreference>
+
+        <ListPreference
+            android:icon="@drawable/ic_lang"
+            android:key="@string/key_lang"
+            android:title="@string/title_lang"
+            android:defaultValue="ES"
+            android:entries="@array/lang_entries"
+            android:entryValues="@array/lang_values">
         </ListPreference>
     </PreferenceCategory>
 </PreferenceScreen>

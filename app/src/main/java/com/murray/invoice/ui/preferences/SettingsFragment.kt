@@ -1,7 +1,10 @@
 package com.murray.invoice.ui.preferences
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
@@ -9,6 +12,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.murray.invoice.Locator
 import com.murray.invoice.R
+import java.util.Locale
+
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -26,34 +31,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findNavController().navigate(R.id.action_settingsFragment_to_accountFragment)
             true
         }
+
+        val sortPreference =
+            preferenceManager.findPreference<Preference>(getString(R.string.key_sort))
+        sortPreference?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_sortFragment)
+            true
+        }
+
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
-        val orderValue = preferences!!.getString("tasks", "0")
-
-        val listPreference = findPreference<ListPreference>("tasks")
-        listPreference?.summary = listPreference?.entries?.get(orderValue!!.toInt())
-        listPreference?.value = orderValue
-        listPreference?.setOnPreferenceChangeListener { preference, newValue ->
-            if (preference is ListPreference)
-                preferences.edit()?.putString("tasks", newValue.toString())?.apply()
-            listPreference.summary = listPreference.entries?.get(newValue!!.toString().toInt())
-            true
-        }
-
-
-        val orderValueinvoice = preferences!!.getString("invoices", "0")
-
-        val listPreferenceinvoice = findPreference<ListPreference>("invoices")
-        listPreferenceinvoice?.summary = listPreference?.entries?.get(orderValueinvoice!!.toInt())
-        listPreferenceinvoice?.value = orderValueinvoice
-        listPreferenceinvoice?.setOnPreferenceChangeListener { preference, newValue ->
-            if (preference is ListPreference)
-                preferences.edit()?.putString("invoices", newValue.toString())?.apply()
-            listPreferenceinvoice.summary = listPreferenceinvoice.entries?.get(newValue!!.toString().toInt())
-            true
-        }
-
-
+        /* MODO */
         val modoValue = preferences!!.getString("modo", "0")
 
         val listPreferencemodo = findPreference<ListPreference>("modo")
@@ -73,6 +61,40 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
+
+        /* IDIOMAS */
+        val langValue = preferences!!.getString(
+            getString(R.string.key_lang),
+            getString(R.string.def_value_lang))
+
+        val listPreferenceLang = findPreference<ListPreference>(getString(R.string.key_lang))
+        listPreferenceLang?.summary = listPreferenceLang?.entries?.get(langValue!!.toInt())
+        listPreferenceLang?.value = langValue
+        listPreferenceLang?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                val newLang = newValue.toString()
+                preferences.edit()?.putString(getString(R.string.key_lang), newLang)?.apply()
+
+                when(newLang.toInt()){
+                    0 -> setLocale(Locale.getDefault().language)
+                    1 -> setLocale("es")
+                    2 -> setLocale("en")
+                    3 -> setLocale("uk")
+                }
+                requireActivity().recreate()
+
+                listPreferenceLang.summary = listPreferenceLang.entries?.get(newLang.toInt())
+            }
+            true
+        }
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        //Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
 }

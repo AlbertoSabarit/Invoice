@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="summary_account">Información de la cuenta del usuario</string>
-    <string name="key_account">Account</string>
+    <!-- Cuenta del usuario -->
+    <string name="key_account">account</string>
     <string name="title_account_setting">Cuenta del usuario</string>
-    <string name="key_active_notifications">activar_notificaciones</string>
-    <string name="title_active_notifications">Activar notificaciones</string>
-    <string name="key_ringtone">ringtone</string>
-    <string name="title_ringtone">Tono de llamada</string>
-    <string name="category_notification">Configuración notificaciones</string>
-    <string name="key_email">email</string>
-    <string name="title_email">E-mail</string>
-    <string name="key_password">password</string>
-    <string name="title_password">Contraseña</string>
+    <string name="summary_account">Información de la cuenta del usuario</string>
     <string name="account_header">Información del usuario</string>
-    <string name="key_customer">customes</string>
-    <string name="title_customer">Ordenar clientes</string>
-    <string name="key_item">items</string>
-    <string name="title_item">Ordenar artículos</string>
-    <string name="key_invoice">invoices</string>
-    <string name="title_invoice">Ordenar facturas</string>
-    <string name="key_task">tasks</string>
-    <string name="title_task">Ordenar tareas</string>
-    <string name="tema">Tema de Aplicacion</string>
-    <string name="title_modo">Modo</string>
-    <string name="key_modo">modo</string>
+
+        <string name="key_email">email</string>
+        <string name="title_email">E-mail</string>
+
+        <string name="key_password">password</string>
+        <string name="title_password">Contraseña</string>
+
+    <!-- Notificaciones -->
+    <string name="key_notif">notif</string>
+    <string name="category_notification">Notificaciones</string>
+
+        <string name="key_active_notifications">activar_notificaciones</string>
+        <string name="title_active_notifications">Activar notificaciones</string>
+
+        <string name="key_ringtone">ringtone</string>
+        <string name="title_ringtone">Tono de llamada</string>
+
+    <!-- Ordenar -->
+    <string name="key_sort">sort</string>
+    <string name="title_sort_setting">Ordenar listas</string>
+    <string name="summary_sort">Ordenar clientes, artículos, facturas y tareas</string>
+    <string name="category_sort">Ordenar listas</string>
+
+        <!-- Customer -->
+        <string name="key_customer">customers</string>
+        <string name="title_customer">Clientes</string>
+
+        <!-- Item -->
+        <string name="key_item">items</string>
+        <string name="title_item">Artículos</string>
+        <string name="def_value_item">0</string>
+
+        <!-- Invoice -->
+        <string name="key_invoice">invoices</string>
+        <string name="title_invoice">Facturas</string>
+
+        <!-- Task -->
+        <string name="key_task">tasks</string>
+        <string name="title_task">Tareas</string>
+
+    <!-- Misceláneo -->
+    <string name="key_misc">misc</string>
+    <string name="category_misc">Otras preferencias</string>
+
+        <!-- Modo -->
+        <string name="tema">Tema de Aplicacion</string>
+        <string name="title_modo">Modo / Tema</string>
+        <string name="key_modo">modo</string>
+
+        <!--Idioma-->
+        <string name="key_lang">lang</string>
+        <string name="title_lang">Idioma</string>
+        <string name="def_value_lang">0</string>
 </resources>

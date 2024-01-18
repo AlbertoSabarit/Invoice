@@ -1,5 +1,7 @@
 package com.murray.entities.accounts
 
+import com.murray.entities.base.Entity
+
 
 class Account private constructor(
     override var id: Int,

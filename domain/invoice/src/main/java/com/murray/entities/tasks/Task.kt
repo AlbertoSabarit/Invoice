@@ -2,7 +2,7 @@ package com.murray.entities.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.murray.entities.accounts.Entity
+import com.murray.entities.base.Entity
 import com.murray.entities.customers.Customer
 
 data class Task(

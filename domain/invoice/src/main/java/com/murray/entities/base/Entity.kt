@@ -1,4 +1,4 @@
-package com.murray.entities.accounts
+package com.murray.entities.base
 
 open class Entity(open val id: Int){
     override fun equals(other: Any?): Boolean {

@@ -1,7 +1,7 @@
 package com.murray.entities.items
 
 import android.net.Uri
-import com.murray.entities.accounts.Entity
+import com.murray.entities.base.Entity
 import java.io.Serializable
 
 data class Item(

@@ -2,11 +2,12 @@ package com.murray.entities.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.murray.entities.accounts.Entity
+import com.murray.entities.base.Entity
 
 data class Invoice(
     override var id: Int,
     var cliente: String,
+    //TODO: List<InvoiceLine>
     var articulo: String,
     var fcreacion: String,
     var fvencimiento: String

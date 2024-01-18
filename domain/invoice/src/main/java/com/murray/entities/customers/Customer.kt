@@ -2,7 +2,7 @@ package com.murray.entities.customers
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.murray.entities.accounts.Entity
+import com.murray.entities.base.Entity
 import com.murray.entities.email.Email
 
 data class Customer(

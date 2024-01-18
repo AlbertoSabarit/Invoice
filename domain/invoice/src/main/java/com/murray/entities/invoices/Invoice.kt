@@ -2,14 +2,15 @@ package com.murray.entities.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.entities.accounts.Entity
 
 data class Invoice(
-    var id: Int,
+    override var id: Int,
     var cliente: String,
     var articulo: String,
     var fcreacion: String,
     var fvencimiento: String
-) : Parcelable, Comparable<Invoice> {
+) : Parcelable, Comparable<Invoice>, Entity(id) {
     companion object CREATOR : Parcelable.Creator<Invoice> {
         val TAG = "Invoice"
         var lastId: Int = 1

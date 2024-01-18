@@ -2,13 +2,13 @@ package com.murray.entities.accounts
 
 
 class Account private constructor(
-    val id: Int,
+    override var id: Int,
     val email: Email,
     val password: String?,
     val displayName: String?,
     state: AccountState = AccountState.UNVERIFIED,
-    private var businessProfile: BusinessProfile,
-) {
+    private var businessProfile: BusinessProfile?,
+): Entity(id) {
 
     private var hasActiveSession = false
     private var state = state
@@ -18,27 +18,27 @@ class Account private constructor(
     }
 
     fun businessName(): String {
-        return businessProfile.name
+        return businessProfile!!.name
     }
 
     fun renameBusiness(aName: String) {
-        businessProfile = businessProfile.copy(name = aName)
+        businessProfile = businessProfile!!.copy(name = aName)
     }
 
     fun businessAddress(): String {
-        return businessProfile.address
+        return businessProfile!!.address
     }
 
     fun changeBusinessAddress(aAddress: String) {
-        businessProfile = businessProfile.copy(address = aAddress)
+        businessProfile = businessProfile!!.copy(address = aAddress)
     }
 
     fun businessPhone(): String {
-        return businessProfile.phoneNumber
+        return businessProfile!!.phoneNumber
     }
 
     fun changeBusinessPhone(aPhoneNumber: String) {
-        businessProfile = businessProfile.copy(phoneNumber = aPhoneNumber)
+        businessProfile = businessProfile!!.copy(phoneNumber = aPhoneNumber)
     }
 
     fun signIn() {
@@ -73,5 +73,7 @@ class Account private constructor(
         }
 
     }
+
+
 
 }

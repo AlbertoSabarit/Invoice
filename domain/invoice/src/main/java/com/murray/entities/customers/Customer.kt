@@ -2,16 +2,17 @@ package com.murray.entities.customers
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.entities.accounts.Entity
 import com.murray.entities.email.Email
 
 data class Customer(
-    val id: Int,
+    override val id: Int,
     var name: String,
     var email: Email,
     var phone: Int?,
     var city: String?,
     var address: String?
-) : Parcelable {
+) : Parcelable, Entity(id) {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,

@@ -2,10 +2,11 @@ package com.murray.entities.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.entities.accounts.Entity
 import com.murray.entities.customers.Customer
 
 data class Task(
-    var id: Int,
+    override var id: Int,
     var titulo: String,
     var cliente: Customer,
     var tipoTarea: String,
@@ -13,7 +14,7 @@ data class Task(
     var fechaFin: String,
     var estado: String,
     var descripcion: String
-) : Comparable<Task>, Parcelable {
+) : Comparable<Task>, Parcelable, Entity(id) {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,

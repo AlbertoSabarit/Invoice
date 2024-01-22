@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.customer.databinding.CardviewLayoutBinding
-import com.murray.entities.customers.Customer
-import com.murray.entities.items.Item
+import com.murray.data.customers.Customer
 
 class CustomAdapter (
     //private val dataset: MutableList<Customer>,

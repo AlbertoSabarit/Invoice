@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.entities.items.Item
-import com.murray.entities.items.ItemType
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
-import com.murray.repositories.ItemRepository
 
 class ItemCreationFragment : Fragment() {
 

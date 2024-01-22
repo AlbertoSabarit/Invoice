@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.invoices.Invoice
-import com.murray.entities.items.Item
+import com.murray.data.invoices.Invoice
+import com.murray.data.items.Item
 import com.murray.item.adapter.ItemListAdapter
-import com.murray.network.ResourceList
+import com.murray.networkstate.ResourceList
 import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.launch

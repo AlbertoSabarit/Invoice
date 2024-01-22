@@ -18,7 +18,7 @@ import com.murray.account.adapter.UserAdapter
 import com.murray.account.databinding.FragmentUserListBinding
 import com.murray.account.ui.userlist.usecase.UserListState
 import com.murray.account.ui.userlist.usecase.UserListViewModel
-import com.murray.entities.accounts.User
+import com.murray.data.accounts.User
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar

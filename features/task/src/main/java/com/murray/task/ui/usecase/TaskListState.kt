@@ -1,6 +1,6 @@
 package com.murray.task.ui.usecase
 
-import com.murray.entities.tasks.Task
+import com.murray.data.tasks.Task
 
 
 sealed class TaskListState {

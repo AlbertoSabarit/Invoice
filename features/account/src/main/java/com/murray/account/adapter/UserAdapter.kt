@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.account.databinding.LayoutUserItemBinding
-import com.murray.entities.accounts.User
+import com.murray.data.accounts.User
 
 class UserAdapter(
     private val listener: OnUserClick,

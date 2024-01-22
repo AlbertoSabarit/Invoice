@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.murray.customer.ui.adapter.CustomAdapter
 import com.murray.customer.ui.list.usecase.CustomerListState
 import com.murray.customer.ui.list.usecase.CustomerListViewModel
-import com.murray.entities.customers.Customer
+import com.murray.data.customers.Customer
 
 class CustomerListFragment : Fragment() {
     private var _binding: FragmentCustomerListBinding? = null

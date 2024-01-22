@@ -18,12 +18,10 @@ import com.murray.account.R
 import com.murray.account.databinding.FragmentAccountSignUpBinding
 import com.murray.account.ui.signup.usecase.SignUpState
 import com.murray.account.ui.signup.usecase.SignUpViewModel
-import com.murray.entities.accounts.AccountException
-import com.murray.entities.accounts.Email
-import com.murray.entities.accounts.EnumTipoUsuario
-import com.murray.entities.accounts.EnumVisibilidad
-import com.murray.entities.accounts.UserSignUp
-import com.murray.entities.tasks.Task
+import com.murray.data.accounts.Email
+import com.murray.data.accounts.EnumTipoUsuario
+import com.murray.data.accounts.EnumVisibilidad
+import com.murray.data.accounts.UserSignUp
 
 
 class AccountSignUpFragment : Fragment() {

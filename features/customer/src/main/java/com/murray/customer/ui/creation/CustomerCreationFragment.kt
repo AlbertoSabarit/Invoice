@@ -13,9 +13,6 @@ import com.murray.customer.databinding.FragmentCustomerCreationBinding
 import com.murray.customer.ui.creation.usecase.CustomerCreationState
 import com.murray.customer.ui.LayoutTextWatcher
 import com.murray.customer.ui.creation.usecase.CustomerCreationViewModel
-import com.murray.entities.customers.Customer
-import com.murray.entities.email.Email
-import com.murray.repositories.CustomerRepository
 
 
 class CustomerCreationFragment : Fragment() {

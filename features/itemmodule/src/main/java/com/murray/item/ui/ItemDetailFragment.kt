@@ -9,11 +9,11 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.murray.entities.items.Item
-import com.murray.entities.items.ItemType
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
-import com.murray.entities.items.ImagesItem
+import com.murray.data.items.ImagesItem
 
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.accounts.User
-import com.murray.network.ResourceList
+import com.murray.data.accounts.User
+import com.murray.networkstate.ResourceList
 import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
 

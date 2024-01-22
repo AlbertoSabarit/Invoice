@@ -6,7 +6,7 @@
     <data>
         <variable
             name="task"
-            type="com.murray.entities.tasks.Task" />
+            type="com.murray.data.tasks.Task" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.accounts.Account
+import com.murray.data.accounts.Account
 import com.murray.firebase.AuthFirebase
 import com.murray.invoice.Locator
-import com.murray.network.Resource
+import com.murray.networkstate.Resource
 import kotlinx.coroutines.launch
 
 const val TAG = "ViewModel"
@@ -41,7 +41,7 @@ class SignInViewModel : ViewModel() {
                             Log.e(TAG, "Login correcto del usuario")
                             state.value = SignInState.Success(result.data as? Account)
                             //Guardar la informacion del usuario en el almacen de datos user_preferences
-                            Locator.userPreferencesRepository.saveUser(account.email.value, account.password.toString(), account.id)
+                            Locator.userPreferencesRepository.saveUser(account.email.value, account.password.toString(), account.id.value)
                         }
 
                         is Resource.Error -> {

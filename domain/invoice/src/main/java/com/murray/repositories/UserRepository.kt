@@ -1,11 +1,12 @@
 package com.murray.repositories
 
-import com.murray.entities.accounts.Account
-import com.murray.entities.accounts.AccountState
-import com.murray.entities.accounts.Email
-import com.murray.entities.accounts.User
-import com.murray.network.Resource
-import com.murray.network.ResourceList
+import com.murray.data.accounts.Account
+import com.murray.data.accounts.AccountId
+import com.murray.data.accounts.AccountState
+import com.murray.data.accounts.Email
+import com.murray.data.accounts.User
+import com.murray.networkstate.Resource
+import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -82,11 +83,12 @@ class UserRepository private constructor() {
             }
             return Resource.Success(
                 data = Account.create(
-                    1,
+                    AccountId(1),
                     Email("murray@gmail.com"),
                     "12345678",
                     "Murray",
-                    AccountState.VERIFIED
+                    AccountState.VERIFIED,
+                    1
                 )
             )
         }

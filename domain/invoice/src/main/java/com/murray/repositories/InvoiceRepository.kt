@@ -1,8 +1,8 @@
 package com.murray.repositories
 
-import com.murray.entities.invoices.Invoice
-import com.murray.network.Resource
-import com.murray.network.ResourceList
+import com.murray.data.invoices.Invoice
+import com.murray.networkstate.Resource
+import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

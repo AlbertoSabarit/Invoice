@@ -1,9 +1,9 @@
 package com.murray.repositories
 
 import android.net.Uri
-import com.murray.entities.items.Item
-import com.murray.entities.items.ItemType
-import com.murray.network.ResourceList
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
+import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

@@ -18,7 +18,7 @@
             app:destination="@id/itemDetailFragment" >
             <argument
                 android:name="item"
-                app:argType="com.murray.entities.items.Item"
+                app:argType="com.murray.data.items.Item"
                 />
         </action>
         <action
@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_item_creation" >
         <argument
             android:name="item"
-            app:argType="com.murray.entities.items.Item"
+            app:argType="com.murray.data.items.Item"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
@@ -46,7 +46,7 @@
             app:destination="@id/itemCreationFragment" />
         <argument
             android:name="item"
-            app:argType="com.murray.entities.items.Item" />
+            app:argType="com.murray.data.items.Item" />
     </fragment>
 
     <dialog

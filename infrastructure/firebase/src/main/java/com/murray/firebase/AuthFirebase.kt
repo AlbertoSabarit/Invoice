@@ -2,12 +2,12 @@ package com.murray.firebase
 
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.murray.entities.accounts.Account
-import com.murray.entities.accounts.AccountState
-import com.murray.entities.accounts.Email
-import com.murray.network.Resource
+import com.murray.data.accounts.Account
+import com.murray.data.accounts.AccountId
+import com.murray.data.accounts.AccountState
+import com.murray.data.accounts.Email
+import com.murray.networkstate.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
@@ -24,7 +24,7 @@ class AuthFirebase {
             try {
                 val authResult: AuthResult = authFirebase.signInWithEmailAndPassword(email, password).await()
                 val user = authResult.user
-                val account:Account = Account.create(id = user.hashCode(),email = Email(email), password = password, displayName = user!!.displayName, state = AccountState.VERIFIED)
+                val account:Account = Account.create(id = AccountId(user.hashCode()),email = Email(email), password = password, displayName = user!!.displayName, state = AccountState.VERIFIED, 1)
                 resource = Resource.Success(account)
             }catch (e:Exception){
                 resource = Resource.Error(e)

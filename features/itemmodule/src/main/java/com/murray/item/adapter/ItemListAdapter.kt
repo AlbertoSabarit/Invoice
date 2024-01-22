@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.entities.items.Item
-import com.murray.entities.items.ItemType
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.LayoutItemListBinding
-import com.murray.entities.items.ImagesItem
+import com.murray.data.items.ImagesItem
 
 class ItemListAdapter(
     //private val dataSet: MutableList<Item>,

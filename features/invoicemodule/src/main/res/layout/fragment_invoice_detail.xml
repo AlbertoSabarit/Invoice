@@ -6,7 +6,7 @@
     <data>
         <variable
             name="invoice"
-            type="com.murray.entities.invoices.Invoice" />
+            type="com.murray.data.invoices.Invoice" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

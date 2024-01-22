@@ -1,10 +1,10 @@
 package com.murray.repositories
 
-import com.murray.entities.customers.Customer
-import com.murray.entities.email.Email
-import com.murray.entities.tasks.Task
-import com.murray.network.Resource
-import com.murray.network.ResourceList
+import com.murray.data.customers.Customer
+import com.murray.data.email.Email
+import com.murray.data.tasks.Task
+import com.murray.networkstate.Resource
+import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

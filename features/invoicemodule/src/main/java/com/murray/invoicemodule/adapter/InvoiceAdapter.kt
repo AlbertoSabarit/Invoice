@@ -4,7 +4,7 @@ import com.murray.invoicemodule.databinding.LayoutInvoiceListBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.entities.invoices.Invoice
+import com.murray.data.invoices.Invoice
 
 class InvoiceAdapter(private val listener: onInvoiceClick) :
     RecyclerView.Adapter<InvoiceViewHolder>() {

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.customer.ui.adapter.CustomAdapter
-import com.murray.entities.customers.Customer
-import com.murray.network.ResourceList
+import com.murray.data.customers.Customer
+import com.murray.networkstate.ResourceList
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.InvoiceRepository
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.murray.item.ui.itemlist.usecase
 
-import com.murray.entities.items.Item
+import com.murray.data.items.Item
 
 sealed class ItemListState {
     data object NoDataError: ItemListState()

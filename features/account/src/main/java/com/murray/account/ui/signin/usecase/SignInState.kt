@@ -1,6 +1,6 @@
 package com.murray.account.ui.signin.usecase
 
-import com.murray.entities.accounts.Account
+import com.murray.data.accounts.Account
 
 sealed class SignInState {
     object EmailEmptyError : SignInState()

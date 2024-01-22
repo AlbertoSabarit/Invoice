@@ -5,8 +5,8 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.murray.entities.items.Item
-import com.murray.entities.items.ItemType
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
 import com.murray.repositories.ItemRepository
 
 class ItemCreationViewModel : ViewModel() {

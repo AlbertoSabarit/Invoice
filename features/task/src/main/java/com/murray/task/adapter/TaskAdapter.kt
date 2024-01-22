@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.task.databinding.CardviewLayoutBinding
-import com.murray.entities.tasks.Task
+import com.murray.data.tasks.Task
 
 class TaskAdapter(
     private val listener: onTaskClick) :

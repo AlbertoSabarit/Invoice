@@ -16,15 +16,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.entities.customers.Customer
-import com.murray.entities.tasks.Task
+import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import com.murray.task.databinding.FragmentTaskCreationBinding
 import com.murray.task.ui.usecase.TaskCreateState
 import com.murray.task.ui.usecase.TaskCreateViewModel
-import java.sql.ClientInfoStatus
 
 class TaskCreationFragment : Fragment() {
 

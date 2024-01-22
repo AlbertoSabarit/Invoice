@@ -1,18 +1,14 @@
 package com.murray.account.ui.signup.usecase
 
-import android.icu.text.SimpleDateFormat
-import android.net.ParseException
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.accounts.AccountException
-import com.murray.entities.accounts.User
-import com.murray.network.Resource
+import com.murray.data.accounts.User
+import com.murray.networkstate.Resource
 import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
-import java.util.Locale
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {

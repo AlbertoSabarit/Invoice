@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.customers.Customer
-import com.murray.entities.tasks.Task
-import com.murray.network.Resource
+import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
+import com.murray.networkstate.Resource
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.TaskRepository
 import kotlinx.coroutines.launch

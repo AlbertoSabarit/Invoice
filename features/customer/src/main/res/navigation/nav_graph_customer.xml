@@ -5,6 +5,10 @@
     android:id="@id/nav_graph_customer"
     app:startDestination="@id/customerListFragment">
 
+    <dialog
+        android:id="@+id/fragmentProgressDialog"
+        android:name="com.murray.invoice.base.FragmentProgressDialog"
+        android:label="FragmentProgressDialog" />
     <fragment
         android:id="@+id/customerListFragment"
         android:name="com.murray.customer.ui.list.CustomerListFragment"
@@ -19,6 +23,9 @@
         <action
             android:id="@+id/action_customerListFragment_to_baseFragmentDialog"
             app:destination="@id/baseFragmentDialog" />
+        <action
+            android:id="@+id/action_customerListFragment_to_fragmentProgressDialog"
+            app:destination="@id/fragmentProgressDialog" />
     </fragment>
     <fragment
         android:id="@+id/customerDetailFragment"

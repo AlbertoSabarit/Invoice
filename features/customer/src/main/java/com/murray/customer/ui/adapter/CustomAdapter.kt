@@ -47,6 +47,11 @@ class CustomAdapter (
         notifyDataSetChanged()
     }
 
+    fun sort(){
+        dataset.sortBy { it.name }
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return dataset.size
     }

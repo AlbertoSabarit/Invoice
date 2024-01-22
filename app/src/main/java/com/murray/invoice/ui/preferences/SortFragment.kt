@@ -17,7 +17,18 @@ class SortFragment: PreferenceFragmentCompat() {
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
         /* SORT CUSTOMER */
-        //TODO: SORT CUSTOMER WIP
+        val orderValueCustomer = preferences!!.getString(
+            "customers",
+            "0")
+        val listPreferenceCustomer = findPreference<ListPreference>("customers")
+        listPreferenceCustomer?.summary = listPreferenceCustomer?.entries?.get(orderValueCustomer!!.toInt())
+        listPreferenceCustomer?.value = orderValueCustomer
+        listPreferenceCustomer?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference)
+                preferences.edit()?.putString("customers", newValue.toString())?.apply()
+            listPreferenceCustomer.summary = listPreferenceCustomer.entries?.get(newValue!!.toString().toInt())
+            true
+        }
 
         /* SORT ITEM */
         val orderValueItem = preferences!!.getString(

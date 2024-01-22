@@ -4,7 +4,10 @@
     <PreferenceCategory android:title="@string/category_sort">
         <ListPreference
             android:key="@string/key_customer"
-            android:title="@string/title_customer">
+            android:title="@string/title_customer"
+            android:defaultValue="0"
+            android:entries="@array/customer_entries"
+            android:entryValues="@array/customer_values">>
 
         </ListPreference>
         <ListPreference

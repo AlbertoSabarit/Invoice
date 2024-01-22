@@ -16,11 +16,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.data.invoices.Invoice
+import com.murray.data.customers.Customer
+import com.murray.data.items.Item
+import com.murray.entities.invoices.Invoice
+import com.murray.entities.invoices.InvoiceLine
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
-import com.murray.repositories.CustomerRepository
 import com.murray.repositories.ItemRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,16 +37,6 @@ class InvoiceCreationFragment : Fragment() {
     private var contadorArt = 1
     private var precioActualArticulo: Double = 0.0
     private var comprobar = false;
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (requireArguments().containsKey(Invoice.TAG)) {
-            val invoice: Invoice? = requireArguments().getParcelable(Invoice.TAG)
-            viewModel.invoice = invoice ?: Invoice.createDefaultInvoice()
-        } else {
-            viewModel.invoice = Invoice.createDefaultInvoice()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,21 +46,16 @@ class InvoiceCreationFragment : Fragment() {
 
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
-        val nombres: MutableList<String> = CustomerRepository.dataSet.map { it.name }.sorted().toMutableList()
-
-        val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
-        cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = cliadapter
-
-       if (viewModel.invoice.id != -1) {
-            var pos = nombres.indexOf(viewModel.invoice.cliente)
-            binding.spinner.setSelection(pos, false)
+        if (requireArguments().containsKey(Invoice.TAG)) {
+            val invoice: Invoice? = requireArguments().getParcelable(Invoice.TAG)
+            viewModel.fini.value = invoice?.fcreacion
+            viewModel.ffin.value = invoice?.fvencimiento
         }
 
         if (requireArguments().containsKey(Invoice.TAG)) {
             val invoice: Invoice? = requireArguments().getParcelable(Invoice.TAG)
-            viewModel.fini.value = invoice!!.fcreacion
-            viewModel.ffin.value = invoice!!.fvencimiento
+            viewModel.fini.value = invoice?.fcreacion
+            viewModel.ffin.value = invoice?.fvencimiento
         } else {
             viewModel.invoice = Invoice.createDefaultInvoice()
         }
@@ -90,9 +77,17 @@ class InvoiceCreationFragment : Fragment() {
             showDatePickerFin()
         }
 
-        binding.btnGuardarFactura.setOnClickListener {
-            findNavController().popBackStack()
+        val nombres: MutableList<String> = viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
+
+        val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+        cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinner.adapter = cliadapter
+
+        if (viewModel.invoice.id != -1) {
+            var pos = nombres.indexOf(viewModel.invoice.cliente.name)
+            binding.spinner.setSelection(pos, false)
         }
+
         binding.imgQuitarArticulo.setOnClickListener{
             binding.txtparticulo.text = ""
             binding.txtptotal.text = ""
@@ -121,13 +116,14 @@ class InvoiceCreationFragment : Fragment() {
         binding.spArticulos.adapter = itemadapter
 
         if (viewModel.invoice.id != -1) {
-            var pos = narticulos.indexOf(viewModel.invoice.articulo)
+            val articulo = ItemRepository.getDataSetItem().find { it.name == viewModel.invoice.articulo.item.name}
+            val pos = narticulos.indexOf(articulo?.name ?: "")
             binding.spArticulos.setSelection(pos, false)
         }
 
         binding.btnMas.setOnClickListener{
             contadorArt++
-            binding.contArt.text = contadorArt.toString() + " x "
+            binding.contArt.text = contadorArt.toString()
             updatePrecioTotal()
             itemadapter.notifyDataSetChanged()
         }
@@ -135,7 +131,7 @@ class InvoiceCreationFragment : Fragment() {
         binding.btnMenos.setOnClickListener{
             if(contadorArt>1) {
                 contadorArt--
-                binding.contArt.text = contadorArt.toString() + " x "
+                binding.contArt.text = contadorArt.toString()
                 updatePrecioTotal()
                 itemadapter.notifyDataSetChanged()
             }
@@ -176,13 +172,65 @@ class InvoiceCreationFragment : Fragment() {
                 else -> onSuccess()
             }
         })
+
+        binding.btnGuardarFactura.setOnClickListener {
+            if (comprobar == true) {
+                var cliente = Customer()
+                val clientes: List<Customer> = viewModel.getCustomerList()
+
+                for (c in clientes) {
+                    if (c.name == binding.spinner.selectedItem.toString()) {
+                        cliente = c
+                        break
+                    }
+                }
+
+                var articulo = Item()
+                val articulos: List<Item> = viewModel.getItemList()
+
+                for (a in articulos) {
+                    if (a.name == binding.spArticulos.selectedItem.toString()) {
+                        articulo = a
+                        break
+                    }
+                }
+
+                val fCreacion = binding.tiefechaIni.text.toString()
+                val fVencimiento = binding.tiefechaFin.text.toString()
+
+                val iva = 21
+                val precio = articulo.rate
+
+
+                val nuevaFactura = Invoice(
+                    id = -2,
+                    cliente = cliente,
+                    articulo = InvoiceLine(articulo, contadorArt, iva,precio),
+                    fcreacion = fCreacion,
+                    fvencimiento = fVencimiento
+                )
+
+                if (viewModel.invoice.id == -1) {
+                    nuevaFactura.id = Invoice.lastId++
+                    viewModel.validateCredentials(nuevaFactura)
+                } else {
+                    viewModel.editInvoice(nuevaFactura)
+                    findNavController().popBackStack()
+                    Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+            }
+        }
     }
+
 
     private fun setErrorCreateInvoice() {
         if(comprobar == false) {
             Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun updatePrecioTotal() {
         val total: Double = contadorArt * precioActualArticulo
         binding.txtptotal.text = "$total €"
@@ -246,26 +294,8 @@ class InvoiceCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-
-        if (comprobar == true){
-        val cliente = binding.spinner.selectedItem.toString()
-        val fCreacion = binding.tiefechaIni.text.toString()
-        val fVencimiento = binding.tiefechaFin.text.toString()
-        val articulo = binding.txtnArticulo.text.toString()
-        val artcont = "$contadorArt x $articulo"
-        val nuevaFactura = Invoice(-2, cliente, artcont, fCreacion, fVencimiento)
-
-        if (viewModel.invoice.id == -1) {
-            nuevaFactura.id = Invoice.lastId++
-            viewModel.addToList(nuevaFactura)
-            Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
-        } else {
-            viewModel.editInvoice(nuevaFactura)
-
-            Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT).show()
-        }
-            findNavController().popBackStack()
-    }
+        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

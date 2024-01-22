@@ -8,7 +8,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.data.invoices.Invoice
+import com.murray.data.customers.Customer
+import com.murray.data.items.Item
+import com.murray.entities.invoices.Invoice
+import com.murray.networkstate.Resource
+import com.murray.repositories.CustomerRepository
 import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.launch
@@ -22,7 +26,7 @@ class InvoiceCreateViewModel:ViewModel() {
     lateinit var invoice : Invoice
     private var state = MutableLiveData<InvoiceCreateState>()
 
-    fun validateCredentials(){
+    fun validateCredentials(invoice: Invoice){
 
         when{
             TextUtils.isEmpty(fini.value) -> state.value = InvoiceCreateState.DataIniEmptyError
@@ -32,24 +36,39 @@ class InvoiceCreateViewModel:ViewModel() {
             else -> {
                 viewModelScope.launch {
                     state.value = InvoiceCreateState.Loading(true)
-                    //val result = InvoiceRepository.createInvoice(fini.value!!, ffin.value!!)
+                    val result = InvoiceRepository.createInvoice(invoice)
                     state.value = InvoiceCreateState.Loading(false)
                     state.value = InvoiceCreateState.Success
 
+                    when (result) {
+                        is Resource.Error -> state.value =
+                            InvoiceCreateState.InvoiceExist(result.exception.message!!)
 
+                        is Resource.Success<*> -> state.value = InvoiceCreateState.Success
+                    }
                 }
             }
         }
     }
 
-    fun editInvoice(invoiceTmp: Invoice){
+    /*  fun editInvoice(invoiceTmp: Invoice){
+          for (inv in InvoiceRepository.dataSet) {
+              if (inv.id == invoice.id) {
+                  inv.cliente.name = invoiceTmp.cliente.name
+                  inv.articulo.item.name = invoiceTmp.articulo.item.name
+                  inv.fcreacion = invoiceTmp.fcreacion
+                  inv.fvencimiento = invoiceTmp.fvencimiento
+              }
+          }
+      }*/
+
+    fun editInvoice(invoiceTmp: Invoice) {
         for (inv in InvoiceRepository.dataSet) {
-            if (inv.id == invoice.id) {
-                inv.cliente = invoiceTmp.cliente
-                inv.articulo = invoiceTmp.articulo
+            if (inv.id == invoiceTmp.id) {
+                inv.cliente.name = invoiceTmp.cliente.name
+                inv.articulo.item.name = invoiceTmp.articulo.item.name
                 inv.fcreacion = invoiceTmp.fcreacion
                 inv.fvencimiento = invoiceTmp.fvencimiento
-
             }
         }
     }
@@ -73,5 +92,13 @@ class InvoiceCreateViewModel:ViewModel() {
     }
     fun getState(): LiveData<InvoiceCreateState> {
         return state
+    }
+
+    fun getCustomerList(): MutableList<Customer> {
+        return CustomerRepository.getCustomers()
+    }
+
+    fun getItemList(): MutableList<Item> {
+        return ItemRepository.getDataSetItem()
     }
 }

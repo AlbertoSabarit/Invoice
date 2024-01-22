@@ -1,14 +1,14 @@
-package com.murray.data.invoices
+package com.murray.entities.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.murray.data.base.Entity
+import com.murray.data.customers.Customer
 
 data class Invoice(
     override var id: Int,
-    var cliente: String,
-    //TODO: List<InvoiceLine>
-    var articulo: String,
+    var cliente: Customer,
+    val articulo:InvoiceLine,
     var fcreacion: String,
     var fvencimiento: String
 ) : Parcelable, Comparable<Invoice>, Entity(id) {
@@ -24,22 +24,22 @@ data class Invoice(
         }
 
         fun createDefaultInvoice(): Invoice {
-            return Invoice(-1, "", "", "", "")
+            return Invoice(-1, Customer(), InvoiceLine(), "", "")
         }
     }
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readParcelable(Customer::class.java.classLoader)!!,
+        parcel.readParcelable(InvoiceLine::class.java.classLoader)!!,
         parcel.readString()!!,
         parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
-        parcel.writeString(cliente)
-        parcel.writeString(articulo)
+        parcel.writeParcelable(cliente, flags)
+        parcel.writeParcelable(articulo, flags)
         parcel.writeString(fcreacion)
         parcel.writeString(fvencimiento)
 

@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.murray.data.invoices.Invoice
+import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
-import com.murray.repositories.ItemRepository
 
 class InvoiceDetailFragment : Fragment() {
 
@@ -25,31 +24,45 @@ class InvoiceDetailFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         binding.invoice = requireArguments().getParcelable(Invoice.TAG)
 
-            val nombreArticulo = binding.invoice!!.articulo!!
-            if (!nombreArticulo.isNullOrEmpty()) {
-                val partes = nombreArticulo.split(" x ")
-                val cont= partes[0]
-                val nombre = partes[1]
-                val articuloSeleccionado = ItemRepository.getDataSetItem()?.find { it.name.equals(nombre, ignoreCase = true) }
+        val nombreArticulo = binding.invoice!!.articulo!!.item.name
 
-                if (articuloSeleccionado != null) {
-                    val precioArticulo = articuloSeleccionado.rate
 
-                    val total: Double = cont.toInt() * precioArticulo
-                    binding.txtnArticulo.text = nombre
-                    binding.txtptotal.text = "$total €"
-                    binding.txtparticulototal.text = "$total €"
-                    var impuesto:Double =  0.21 * total
-                    var subtotal :Double = total-impuesto
-                    binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
-                    binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
-                    binding.txtparticulo.text = precioArticulo.toString()
-                }
-            }
+        val cont= binding.invoice!!.articulo!!.count
 
+        /* val articuloSeleccionado = ItemRepository.getDataSetItem()?.find { it.name.equals(nombreArticulo) }
+
+         if (articuloSeleccionado != null) {
+             val precioArticulo = articuloSeleccionado.rate
+
+             val total: Double = cont * precioArticulo
+             binding.txtnArticulo.text = nombreArticulo
+             binding.txtptotal.text = "$total €"
+             binding.txtparticulototal.text = "$total €"
+             var impuesto:Double =  0.21 * total
+             var subtotal :Double = total-impuesto
+             binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+             binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+             binding.txtparticulo.text = precioArticulo.toString()
+             binding.txtcontArticulo.text = cont.toString() + "x"
+         }*/
+
+
+
+        val precioArticulo = binding.invoice!!.articulo!!.price
+
+        val total: Double = cont * precioArticulo
+        binding.txtnArticulo.text = nombreArticulo
+        binding.txtptotal.text = "$total €"
+        binding.txtparticulototal.text = "$total €"
+        var impuesto:Double =  0.21 * total
+        var subtotal :Double = total-impuesto
+        binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+        binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+        binding.txtparticulo.text = precioArticulo.toString()
+        binding.txtcontArticulo.text = cont.toString() + "x"
 
 
         binding.btnEditarEdita.setOnClickListener {

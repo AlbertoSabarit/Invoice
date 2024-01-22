@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.murray.data.items.Item
+import com.murray.entities.invoices.Invoice
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
@@ -151,7 +152,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
     private fun validateDeleteItem(item: Item) {
         val dataSet = viewmodel.getInvoiceRepository()
-        if (dataSet.any { invoice -> viewmodel.getInvoiceItemName(invoice.articulo) == item.name }) {
+        if (dataSet.any { invoice: Invoice -> viewmodel.getInvoiceItemName(invoice.articulo.item.name) == item.name }) {
             Toast.makeText(
                 requireContext(),
                 "No se puede eliminar un artículo asignado a una factura",

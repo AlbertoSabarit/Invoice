@@ -19,8 +19,8 @@ import com.murray.invoicemodule.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.murray.entities.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter
-import com.murray.data.invoices.Invoice
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.invoicemodule.databinding.FragmentInvoiceListBinding

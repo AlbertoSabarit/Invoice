@@ -9,330 +9,329 @@
             type="com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.murray.invoicemodule.ui.InvoiceCreationFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.murray.invoicemodule.ui.InvoiceCreationFragment">
 
 
-    <Button
-        android:id="@+id/btnAnadirArt"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="@string/txt_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
-        app:layout_constraintVertical_bias="0.044" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilFechaFin"
-        android:layout_width="360dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.586"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304">
-
-        <TextView
-            android:id="@+id/txtDataFin"
-            android:layout_width="113dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/txt_formato" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiefechaFin"
-            android:focusable="false"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:drawableEnd="@drawable/img_calendario"
-            android:inputType="date"
-            android:hint="@string/tx_fvencimiento"
-            android:text="@={viewmodel.ffin}"/>/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilFechaIni"
-        android:layout_width="359dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179">
-
-        <TextView
-            android:id="@+id/txtDataIni"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/txt_formato" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiefechaIni"
-            android:focusable="false"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:drawableEnd="@drawable/img_calendario"
-            android:hint="@string/tx_femision"
-            android:text="@={viewmodel.fini}"/>/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilCliente"
-        android:layout_width="359dp"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051">
-
-        <TextView
-            android:id="@+id/txtCliente"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/txt_oblig" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnAnadirArt"
+            android:layout_width="150dp"
             android:layout_height="50dp"
-            android:drawableEnd="@drawable/img_person" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/txt_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilFechaFin"
+            app:layout_constraintVertical_bias="0.044" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnGuardarFactura"
-        android:onClick="@{() -> viewmodel.validateCredentials()}"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_check"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvArticulo"
-        android:layout_width="365dp"
-        android:layout_height="282dp"
-        android:layout_marginTop="15dp"
-        android:visibility="invisible"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAnadirArt">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/md_theme_light_secondaryContainer">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFechaFin"
+            android:layout_width="360dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.586"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.304">
 
             <TextView
-                android:id="@+id/txtparticulo"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtDataFin"
+                android:layout_width="113dp"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.257"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.937"
-                tools:ignore="TextSizeCheck" />
+                android:layout_weight="1"
+                android:text="@string/txt_formato" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiefechaFin"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:drawableEnd="@drawable/img_calendario"
+                android:inputType="date"
+                android:hint="@string/tx_fvencimiento"
+                android:text="@={viewmodel.ffin}"/>/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFechaIni"
+            android:layout_width="359dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.557"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.179">
 
             <TextView
-                android:id="@+id/txtpsubtotal"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtDataIni"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.859"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2"
-                app:layout_constraintVertical_bias="0.203" />
+                android:layout_weight="1"
+                android:text="@string/txt_formato" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiefechaIni"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:drawableEnd="@drawable/img_calendario"
+                android:hint="@string/tx_femision"
+                android:text="@={viewmodel.fini}"/>/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCliente"
+            android:layout_width="359dp"
+            android:layout_height="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.557"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.051">
 
             <TextView
-                android:id="@+id/txtpimpuestos"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtCliente"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.863"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2"
-                app:layout_constraintVertical_bias="0.525" />
-
-            <TextView
-                android:id="@+id/txtptotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.861"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.934" />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="310dp"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.36"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.511" />
-
-            <TextView
-                android:id="@+id/txtSubtotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/tx_subtotal"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.097"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2"
-                app:layout_constraintVertical_bias="0.134" />
-
-            <TextView
-                android:id="@+id/txtImpuesto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/tx_impuesto"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSubtotal"
-                app:layout_constraintVertical_bias="0.169" />
-
-            <TextView
-                android:id="@+id/txtTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/tx_total"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.091"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtImpuesto"
-                app:layout_constraintVertical_bias="0.384" />
-
-            <TextView
-                android:id="@+id/txtnArticulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toTopOf="@+id/txtparticulo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/txtparticulototal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.859"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.869" />
-
-            <ImageButton
-                android:id="@+id/imgQuitarArticulo"
-                android:layout_width="51dp"
-                android:layout_height="54dp"
-                android:background="@color/md_theme_light_secondaryContainer"
-                android:src="@drawable/ic_quitar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtnArticulo"
-                app:layout_constraintHorizontal_bias="0.333"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.389" />
-
-
-            <ImageButton
-                android:id="@+id/btnMas"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/md_theme_light_secondaryContainer"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
-                app:layout_constraintEnd_toStartOf="@+id/btnMenos"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.306" />
-
-            <ImageButton
-                android:id="@+id/btnMenos"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
-                android:background="@color/md_theme_light_secondaryContainer"
-                android:src="@drawable/ic_remove"
-                app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.306" />
-
-            <TextView
-                android:id="@+id/contArt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="1 x"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider2"
-                app:layout_constraintEnd_toStartOf="@+id/txtparticulo"
-                app:layout_constraintHorizontal_bias="0.955"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_weight="1"
+                android:text="@string/txt_oblig" />
 
             <Spinner
-                android:id="@+id/spArticulos"
-                android:layout_width="239dp"
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toStartOf="@+id/btnMas"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:drawableEnd="@drawable/img_person" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.cardview.widget.CardView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnGuardarFactura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvArticulo"
+            android:layout_width="365dp"
+            android:layout_height="282dp"
+            android:layout_marginTop="15dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAnadirArt">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_light_secondaryContainer">
+
+                <TextView
+                    android:id="@+id/txtparticulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toTopOf="@+id/divider2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.257"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.937"
+                    tools:ignore="TextSizeCheck" />
+
+                <TextView
+                    android:id="@+id/txtpsubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.859"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2"
+                    app:layout_constraintVertical_bias="0.203" />
+
+                <TextView
+                    android:id="@+id/txtpimpuestos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.863"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2"
+                    app:layout_constraintVertical_bias="0.525" />
+
+                <TextView
+                    android:id="@+id/txtptotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.861"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.934" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="310dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.36"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.511" />
+
+                <TextView
+                    android:id="@+id/txtSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/tx_subtotal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.097"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2"
+                    app:layout_constraintVertical_bias="0.134" />
+
+                <TextView
+                    android:id="@+id/txtImpuesto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tx_impuesto"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSubtotal"
+                    app:layout_constraintVertical_bias="0.169" />
+
+                <TextView
+                    android:id="@+id/txtTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/tx_total"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.091"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtImpuesto"
+                    app:layout_constraintVertical_bias="0.384" />
+
+                <TextView
+                    android:id="@+id/txtnArticulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="64dp"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toTopOf="@+id/txtparticulo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/txtparticulototal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    app:layout_constraintBottom_toTopOf="@+id/divider2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.859"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.869" />
+
+                <ImageButton
+                    android:id="@+id/imgQuitarArticulo"
+                    android:layout_width="51dp"
+                    android:layout_height="54dp"
+                    android:background="@color/md_theme_light_secondaryContainer"
+                    android:src="@drawable/ic_quitar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/txtnArticulo"
+                    app:layout_constraintHorizontal_bias="0.333"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.389" />
+
+
+                <ImageButton
+                    android:id="@+id/btnMas"
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/md_theme_light_secondaryContainer"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMenos"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.306" />
+
+                <ImageButton
+                    android:id="@+id/btnMenos"
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@color/md_theme_light_secondaryContainer"
+                    android:src="@drawable/ic_remove"
+                    app:layout_constraintBottom_toTopOf="@+id/txtparticulototal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.306" />
+
+                <TextView
+                    android:id="@+id/contArt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="1 "
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toTopOf="@+id/divider2"
+                    app:layout_constraintEnd_toStartOf="@+id/txtparticulo"
+                    app:layout_constraintHorizontal_bias="0.955"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spArticulos"
+                    android:layout_width="239dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMas"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

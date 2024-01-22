@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.data.invoices.Invoice
 import com.murray.data.items.Item
+import com.murray.entities.invoices.Invoice
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.networkstate.ResourceList
 import com.murray.repositories.InvoiceRepository

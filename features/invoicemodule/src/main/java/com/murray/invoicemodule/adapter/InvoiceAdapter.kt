@@ -4,7 +4,7 @@ import com.murray.invoicemodule.databinding.LayoutInvoiceListBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.murray.data.invoices.Invoice
+import com.murray.entities.invoices.Invoice
 
 class InvoiceAdapter(private val listener: onInvoiceClick) :
     RecyclerView.Adapter<InvoiceViewHolder>() {
@@ -38,7 +38,7 @@ class InvoiceAdapter(private val listener: onInvoiceClick) :
         notifyDataSetChanged()
     }
     fun sort(){
-        dataset.sortBy { it.cliente }
+        dataset.sortBy { it.cliente.name }
         notifyDataSetChanged()
     }
 

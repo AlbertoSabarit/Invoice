@@ -1,6 +1,11 @@
 package com.murray.repositories
 
-import com.murray.data.invoices.Invoice
+import com.murray.data.customers.Customer
+import com.murray.data.email.Email
+import com.murray.data.items.Item
+import com.murray.data.items.ItemType
+import com.murray.entities.invoices.Invoice
+import com.murray.entities.invoices.InvoiceLine
 import com.murray.networkstate.Resource
 import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
@@ -20,27 +25,27 @@ class InvoiceRepository private constructor() {
             dataSet.add(i)
         }
         private fun initDataSetInvoice():MutableList<Invoice>{
-            dataSet.add(Invoice(Invoice.lastId++,
-                 "Alberto Sabarit", "2 x Cuaderno", "10/11/2023","25/12/2023")
-            )
-            dataSet.add(Invoice(Invoice.lastId++,
-                "Kateryna Nikitenko", "2 x Maleta de cuero", "11/11/2023","26/12/2023")
-            )
 
             dataSet.add(Invoice(Invoice.lastId++,
-                "Ender Watts", "3 x Portátil", "11/10/2023","30/12/2023")
-            )
-            dataSet.add(Invoice(Invoice.lastId++,
-                "Alejandro Valle", "3 x Cuaderno", "11/10/2023","30/12/2023")
+                Customer(CustomerRepository.getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
+                InvoiceLine(
+                    Item(ItemRepository.getNextId(), "Maleta de Cuero",
+                    ItemType.PRODUCT,
+                    60.00,
+                    true,
+                    "Cuero de cabra de grano superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente.  Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción.",
+                ), 2, 21, 60.00), "10/11/2023","25/12/2023")
             )
             return dataSet
         }
 
-        suspend fun createInvoice(fini: String, ffin: String) : Resource {
-            withContext(Dispatchers.IO){
-                delay(2000)
+        suspend fun createInvoice(invoice: Invoice) : Resource {
+            return withContext(Dispatchers.IO) {
+                delay(1000)
+                dataSet.add(invoice)
+                Resource.Success(dataSet)
+
             }
-            return Resource.Error(Exception("La fecha incorrecta"))
         }
 
         suspend fun getInvoiceList(): ResourceList {

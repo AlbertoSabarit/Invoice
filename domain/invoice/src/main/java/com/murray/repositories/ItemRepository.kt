@@ -38,7 +38,9 @@ class ItemRepository private constructor() {
             )
             dataSet.add(newItem)
         }
-
+        fun getNextId():Int{
+            return idIncrement++
+        }
         fun getDataSetItem(): MutableList<Item> {
             return dataSet
         }

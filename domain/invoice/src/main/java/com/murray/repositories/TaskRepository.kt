@@ -1,7 +1,7 @@
 package com.murray.repositories
 
+import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
-import com.murray.data.email.Email
 import com.murray.data.tasks.Task
 import com.murray.networkstate.Resource
 import com.murray.networkstate.ResourceList

@@ -2,8 +2,8 @@ package com.murray.data.customers
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.murray.data.accounts.Email
 import com.murray.data.base.Entity
-import com.murray.data.email.Email
 
 data class Customer(
     override val id: Int,

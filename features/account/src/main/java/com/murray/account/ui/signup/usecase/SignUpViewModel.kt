@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.User
+import com.murray.database.repository.UserRepositoryDB
 import com.murray.networkstate.Resource
 import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
@@ -41,7 +42,9 @@ class SignUpViewModel : ViewModel() {
 
                     when (result) {
                         is Resource.Error -> state.value = SignUpState.UserExist(result.exception.message!!)
-                        is Resource.Success<*> ->  state.value = SignUpState.Success
+                        is Resource.Success<*> ->  {
+                            UserRepositoryDB.insert(user)
+                            state.value = SignUpState.Success}
                     }
                 }
             }

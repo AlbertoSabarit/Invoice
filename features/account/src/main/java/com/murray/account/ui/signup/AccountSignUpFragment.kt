@@ -21,6 +21,7 @@ import com.murray.account.ui.signup.usecase.SignUpViewModel
 import com.murray.data.accounts.Email
 import com.murray.data.accounts.EnumTipoUsuario
 import com.murray.data.accounts.EnumVisibilidad
+import com.murray.data.accounts.User
 import com.murray.data.accounts.UserSignUp
 
 
@@ -110,12 +111,10 @@ class AccountSignUpFragment : Fragment() {
                 "Vacío" -> visibilidad = EnumVisibilidad.Vacío
             }
             val newUser =
-                UserSignUp(
+                User(
                     "Anónimo",
                     "Anonimín",
-                    Email(binding.tilEmailSignUp.text.toString()) ,
-                    tipoDeUsuario,
-                    visibilidad
+                    Email(binding.tilEmailSignUp.text.toString())
                 )
 
             viewModel.validateCredentials(newUser)

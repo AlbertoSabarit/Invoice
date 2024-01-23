@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.Account
+import com.murray.data.accounts.Email
+import com.murray.data.accounts.User
+import com.murray.database.repository.UserRepositoryDB
 import com.murray.firebase.AuthFirebase
 import com.murray.invoice.Locator
 import com.murray.networkstate.Resource

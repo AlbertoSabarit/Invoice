@@ -4,8 +4,8 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
-import com.murray.data.email.Email
 import com.murray.repositories.CustomerRepository
 import java.util.regex.Pattern
 

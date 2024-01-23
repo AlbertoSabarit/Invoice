@@ -1,7 +1,7 @@
 package com.murray.repositories
 
+import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
-import com.murray.data.email.Email
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
 import com.murray.entities.invoices.Invoice

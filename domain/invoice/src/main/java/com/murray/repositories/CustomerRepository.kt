@@ -1,7 +1,7 @@
 package com.murray.repositories
 
+import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
-import com.murray.data.email.Email
 import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

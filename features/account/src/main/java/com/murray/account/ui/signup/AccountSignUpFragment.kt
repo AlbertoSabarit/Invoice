@@ -112,8 +112,8 @@ class AccountSignUpFragment : Fragment() {
             }
             val newUser =
                 User(
-                    "Anónimo",
-                    "Anonimín",
+                    binding.tieNombre.text.toString(),
+                    binding.tieApellido.text.toString(),
                     Email(binding.tilEmailSignUp.text.toString())
                 )
 
@@ -123,6 +123,8 @@ class AccountSignUpFragment : Fragment() {
 
         viewModel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
+                SignUpState.NombreEmpty -> setNombreEmpty()
+                SignUpState.ApellidoEmpty -> setApellidoEmpty()
                 SignUpState.EmailEmptyError -> setEmailEmptyError()
                 SignUpState.PasswordEmptyError -> setPasswordEmptyError()
                 SignUpState.PasswordEmptyError2 -> setPasswordEmptyError2()
@@ -135,6 +137,18 @@ class AccountSignUpFragment : Fragment() {
             }
         })
     }
+
+    private fun setApellidoEmpty() {
+        binding.tilApellido.error = "Apellido Vacío"
+        binding.tilApellido.requestFocus()
+    }
+
+    private fun setNombreEmpty() {
+
+        binding.tilNombre.error = "Nombre Vacío"
+        binding.tilNombre.requestFocus()
+    }
+
     private fun setUsuarioExiste() {
         binding.tieEmailSignUp.error = "Usuario ya existe"
         Toast.makeText(context, "El usuario ya existe en el repositorio", Toast.LENGTH_SHORT).show()

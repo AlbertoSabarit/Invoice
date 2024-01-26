@@ -3,6 +3,7 @@ package com.murray.repositories
 import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
 import com.murray.data.tasks.Task
+import com.murray.data.tasks.TaskId
 import com.murray.networkstate.Resource
 import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class TaskRepository private constructor() {
 
             dataSet.add(
                 Task(
-                    Task.lastId++,
+                    TaskId(Task.lastId++) ,
                     "Citación",
                     Customer(
                         CustomerRepository.getNextId(),
@@ -43,7 +44,7 @@ class TaskRepository private constructor() {
                 )
             dataSet.add(
                 Task(
-                    Task.lastId++,
+                    TaskId(Task.lastId++),
                     "Entrevista de trabajo",
                     Customer(
                         CustomerRepository.getNextId(),
@@ -63,7 +64,7 @@ class TaskRepository private constructor() {
                 )
             dataSet.add(
                 Task(
-                    Task.lastId++,
+                    TaskId(Task.lastId++),
                     "Zafari",
                     Customer(
                         CustomerRepository.getNextId(),
@@ -83,7 +84,7 @@ class TaskRepository private constructor() {
                 )
             dataSet.add(
                 Task(
-                    Task.lastId++,
+                    TaskId(Task.lastId++),
                     "Llamada personal",
                     Customer(
                         CustomerRepository.getNextId(),

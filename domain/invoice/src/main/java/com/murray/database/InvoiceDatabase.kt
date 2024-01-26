@@ -7,6 +7,7 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.murray.data.accounts.Account
 import com.murray.data.accounts.BusinessProfile
+import com.murray.data.accounts.Email
 import com.murray.data.accounts.User
 import com.murray.data.converter.AccountIdTypeConverter
 import com.murray.data.converter.EmailTypeConverter
@@ -18,26 +19,30 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
-@Database(entities = [Account::class, BusinessProfile::class, User::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Account::class, BusinessProfile::class, User::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(AccountIdTypeConverter::class, EmailTypeConverter::class)
 abstract class InvoiceDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
-    abstract fun AccountDao(): AccountDao
-    abstract fun BusinessProfile(): BusinessProfileDao
+    abstract fun accountDao(): AccountDao
+    abstract fun businessProfile(): BusinessProfileDao
 
     companion object {
         @Volatile
-        private var instance: InvoiceDatabase? = null
-        fun getInstance(): InvoiceDatabase? {
-            if (instance == null) {
-                synchronized(InvoiceDatabase::class) {
-                    instance = buildDatabase()
-                }
+        private var INSTANCE: InvoiceDatabase? = null
+        fun getInstance(): InvoiceDatabase {
+            return INSTANCE ?: synchronized(InvoiceDatabase::class) {
+                val instance = buildDatabase()
+                INSTANCE = instance
+                instance
             }
-            return instance
         }
 
         private fun buildDatabase(): InvoiceDatabase {
@@ -50,7 +55,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 .addTypeConverter(AccountIdTypeConverter())
                 .addTypeConverter(EmailTypeConverter())
                 .addCallback(
-                    RoomDbInitializer(instance)
+                    RoomDbInitializer(INSTANCE)
                 ).build()
         }
     }
@@ -61,8 +66,11 @@ abstract class InvoiceDatabase : RoomDatabase() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            applicationScope.launch(Dispatchers.IO) {
-                populateDatabase()
+            // Esperar a que se complete la inserción de datos
+            runBlocking {
+                applicationScope.launch(Dispatchers.IO) {
+                    populateDatabase()
+                }.join()
             }
         }
 
@@ -71,6 +79,44 @@ abstract class InvoiceDatabase : RoomDatabase() {
         }
 
         private suspend fun populateUsers() {
+
+            instance.let { invoiceDatabase ->
+                invoiceDatabase?.userDao()?.insert(
+                    User(
+                        "Alberto",
+                        "Sabarit",
+                        Email("blbertosabarit@iesportada.org")
+                    )
+                )
+                invoiceDatabase?.userDao()?.insert(
+                    User(
+                        "Ender",
+                        "Watts",
+                        Email("enderwatts@iesportada.org")
+                    )
+                )
+                invoiceDatabase?.userDao()?.insert(
+                    User(
+                        "Kateryna",
+                        "Nikitenko",
+                        Email("katerynanikitenko@iesportada.org")
+                    )
+                )
+                invoiceDatabase?.userDao()?.insert(
+                    User(
+                        "Carlos",
+                        "Valle",
+                        Email("zlevalle@iesportada.org")
+                    )
+                )
+                invoiceDatabase?.userDao()?.insert(
+                    User(
+                        "Javier",
+                        "Zarcia",
+                        Email("kavier@iesportada.org")
+                    )
+                )
+            }
         }
-}
+    }
 }

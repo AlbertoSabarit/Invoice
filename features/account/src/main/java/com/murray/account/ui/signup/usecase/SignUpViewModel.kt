@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.User
 import com.murray.database.repository.UserRepositoryDB
+import com.murray.database.repository.UserState
 import com.murray.networkstate.Resource
 import com.murray.repositories.UserRepository
 import kotlinx.coroutines.launch
@@ -14,6 +15,8 @@ import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
 
+    var nombre = MutableLiveData<String>()
+    var apellido = MutableLiveData<String>()
     var email = MutableLiveData<String>()
     var password = MutableLiveData<String>()
     var password2 = MutableLiveData<String>()
@@ -26,35 +29,40 @@ class SignUpViewModel : ViewModel() {
 
 
     fun validateCredentials(user: User) {
-
         when {
+            TextUtils.isEmpty(nombre.value) -> state.value = SignUpState.NombreEmpty
+            TextUtils.isEmpty(apellido.value) -> state.value = SignUpState.ApellidoEmpty
             TextUtils.isEmpty(email.value) -> state.value = SignUpState.EmailEmptyError
-            !validateEmail (email.value!!) -> state.value =  SignUpState.InvalidFormat
+            !validateEmail(email.value!!) -> state.value = SignUpState.InvalidFormat
             TextUtils.isEmpty(password.value) -> state.value = SignUpState.PasswordEmptyError
             TextUtils.isEmpty(password2.value) -> state.value = SignUpState.PasswordEmptyError2
-            !isEqualPasswords(password.value!!, password2.value!!) -> state.value = SignUpState.PasswordsNotEquals
+            !isEqualPasswords(password.value!!, password2.value!!) -> state.value =
+                SignUpState.PasswordsNotEquals
 
             else -> {
                 viewModelScope.launch {
                     state.value = SignUpState.Loading(true)
-                    val result = UserRepository.createUser(user)
+                    val result = UserRepositoryDB.insert(user)
                     state.value = SignUpState.Loading(false)
 
                     when (result) {
-                        is Resource.Error -> state.value = SignUpState.UserExist(result.exception.message!!)
-                        is Resource.Success<*> ->  {
-                            UserRepositoryDB.insert(user)
-                            state.value = SignUpState.Success}
+                        is UserState.InsertError -> state.value =
+                            SignUpState.UserExist(result.mensaje)
+
+                        is UserState.Success -> {
+                            state.value = SignUpState.Success
+                        }
                     }
                 }
             }
         }
-
     }
+
     private fun isEqualPasswords(pass1: String, pass2: String): Boolean {
         return pass1 == pass2
     }
-    fun validateEmail(value: String) : Boolean {
+
+    fun validateEmail(value: String): Boolean {
         val pattern = Pattern.compile("^\\S+@\\S+\\.\\S+$")
 
         return pattern.matcher(value).matches()

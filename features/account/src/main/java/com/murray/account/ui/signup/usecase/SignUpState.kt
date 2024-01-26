@@ -1,6 +1,8 @@
 package com.murray.account.ui.signup.usecase
 
 sealed class SignUpState {
+    data object NombreEmpty: SignUpState()
+    data object ApellidoEmpty: SignUpState()
     object EmailEmptyError : SignUpState()
     data object PasswordEmptyError: SignUpState()
     data object PasswordEmptyError2: SignUpState()

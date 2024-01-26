@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navController : NavController
+    private lateinit var navController: NavController
 
     //Propiedades de acceso al botón flotante de la Activity principal y la barra de herramientas
-    val fab: FloatingActionButton get() = binding.fab
-    val toolbar : Toolbar get() = binding.toolbar
+    //val fab: FloatingActionButton get() = binding.fab
+    val toolbar: Toolbar get() = binding.toolbar
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,15 +35,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navHostFragment =supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -59,7 +57,9 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 navController.navigate(R.id.settingsFragment)
-                true}
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

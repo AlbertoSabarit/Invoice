@@ -52,6 +52,8 @@ class SignInViewModel : ViewModel() {
                             state.value =
                                 SignInState.AuthenticationError(result.exception.message!!)
                         }
+
+                        else ->{}
                     }
                 }
             }

@@ -27,14 +27,49 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="20dp" />
 
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tieEmailSignUp"
+            android:id="@+id/tilNombre"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
             app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre"
+                android:text="@={viewmodel.nombre}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilApellido"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tilNombre">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieApellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Apellido"
+                android:text="@={viewmodel.apellido}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tieEmailSignUp"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
+            app:layout_constraintStart_toStartOf="@+id/gdStart"
+            app:layout_constraintTop_toBottomOf="@+id/tilApellido">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tilEmailSignUp"
@@ -47,7 +82,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiePasswordSignUp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_marginTop="24dp"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
@@ -65,7 +100,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tieConfirmsPasswordsSignUp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_marginTop="24dp"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
@@ -120,7 +155,7 @@
             android:id="@+id/tvType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="32dp"
             android:text="Tipo usuario"
             app:layout_constraintEnd_toStartOf="@+id/barrier"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -140,53 +175,7 @@
             app:layout_constraintStart_toStartOf="@+id/gdStart"
             app:layout_constraintTop_toBottomOf="@+id/spProfile" />
 
-        <TextView
-            android:id="@+id/txCalificacion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="96dp"
-            android:gravity="center"
-            android:text="@string/calificacionUusario"
-            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/gdStart"
-            app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta" />
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toStartOf="@+id/gdEnd"
-            app:layout_constraintHorizontal_bias="0.537"
-            app:layout_constraintStart_toStartOf="@+id/gdStart"
-            app:layout_constraintTop_toBottomOf="@+id/txCalificacion">
-
-            <RadioButton
-                android:id="@+id/rblevel1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 estrella"
-                tools:layout_editor_absoluteX="119dp"
-                tools:layout_editor_absoluteY="530dp" />
-
-            <RadioButton
-                android:id="@+id/rblevel2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2 estrellas"
-                tools:layout_editor_absoluteX="119dp"
-                tools:layout_editor_absoluteY="530dp" />
-
-            <RadioButton
-                android:id="@+id/rblevel3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3 estrellas"
-                tools:layout_editor_absoluteX="119dp"
-                tools:layout_editor_absoluteY="530dp" />
-
-        </RadioGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

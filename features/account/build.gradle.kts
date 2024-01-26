@@ -52,8 +52,10 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
 
     //libreria de animaciones
-
     implementation("com.airbnb.android:lottie:6.2.0")
+
+    //Conertir un Flow en LiveData
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 }
 
 

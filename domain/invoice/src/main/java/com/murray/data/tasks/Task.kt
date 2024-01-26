@@ -6,7 +6,7 @@ import com.murray.data.base.Entity
 import com.murray.data.customers.Customer
 
 data class Task(
-    override var id: Int,
+    var id: TaskId,
     var titulo: String,
     var cliente: Customer,
     var tipoTarea: String,
@@ -14,9 +14,9 @@ data class Task(
     var fechaFin: String,
     var estado: String,
     var descripcion: String
-) : Comparable<Task>, Parcelable, Entity(id) {
+) : Comparable<Task>, Parcelable{
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
+        parcel.readParcelable(TaskId::class.java.classLoader)!!,
         parcel.readString()!!,
         parcel.readParcelable(Customer::class.java.classLoader)!!,
         parcel.readString()!!,
@@ -28,7 +28,7 @@ data class Task(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeParcelable(id, flags)
         parcel.writeString(titulo)
         parcel.writeParcelable(cliente, flags)
         parcel.writeString(tipoTarea)
@@ -42,6 +42,7 @@ data class Task(
         return 0
     }
 
+
     companion object CREATOR : Parcelable.Creator<Task> {
         val TAG = "Task"
         var lastId: Int = 1
@@ -54,12 +55,13 @@ data class Task(
         }
 
         fun createDefaultTask(): Task {
-            return Task(-1, "", Customer(), "", "", "", "", "")
+            return Task(TaskId(-1), "", Customer(), "", "", "", "", "")
         }
     }
 
     override fun compareTo(other: Task): Int {
         return cliente.name.compareTo(other.cliente.name)
     }
+
 
 }

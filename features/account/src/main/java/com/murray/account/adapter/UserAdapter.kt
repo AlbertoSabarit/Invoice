@@ -2,6 +2,8 @@ package com.murray.account.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.account.databinding.LayoutUserItemBinding
 import com.murray.data.accounts.User
@@ -9,10 +11,7 @@ import com.murray.data.accounts.User
 class UserAdapter(
     private val listener: OnUserClick,
     private val onItemClick: (user: User) -> Unit
-) :
-    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-
-    private var dataset = (arrayListOf<User>())
+) : ListAdapter<User, UserAdapter.UserViewHolder>(USER_COMPARATOR) {
 
 
     interface OnUserClick {
@@ -28,23 +27,16 @@ class UserAdapter(
 
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val item = dataset.get(position)
+        //Se accede a un elemento de la lista interna de ListAdapter mediante el metodo getItem(position)
+        val item = getItem(position)
         holder.bind(item)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
-    }
-
-    fun update(newDataSet: ArrayList<User>) {
-        //Actualizar mi dataset y notificar a la vista el cambio
-        dataset = newDataSet
-
-        notifyDataSetChanged()
-    }
 
     fun sortPersonalizado(){
-        dataset.sortBy { it.email.value }
+       /*currentList.sortBy { it.email.value }
+        notifyDataSetChanged()*/
+        submitList(currentList.sortedBy { it.email.value })
         notifyDataSetChanged()
     }
 
@@ -64,6 +56,19 @@ class UserAdapter(
                     true
                 }
             }
+        }
+    }
+
+    companion object{
+        private val USER_COMPARATOR = object:DiffUtil.ItemCallback<User>(){
+            override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+               return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+                return oldItem.name == newItem.name
+            }
+
         }
     }
 }

@@ -21,7 +21,6 @@ import com.murray.account.ui.userlist.usecase.UserListViewModel
 import com.murray.data.accounts.User
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.murray.account.R
 import com.murray.invoice.ui.MainActivity
 
@@ -47,8 +46,6 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Función que personaliza el botón flotante
-        setUpFab()
         //Función que personaliza el menú de la toolbar
         setUpToolbar()
 
@@ -58,25 +55,20 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
             when (it) {
                 is UserListState.Loading -> showProgressBar(it.value)
                 UserListState.NoDataError -> showNoDataError()
-                is UserListState.Success -> onSuccess(it.dataset)
+                UserListState.Success -> onSuccess()
             }
         })
-    }
 
-    /**
-     * Esta funcion personaliza el comprotamiento del boton flotante de la Activity
-     */
-    private fun setUpFab() {
+        //Este observador se ejecutará siempre que haya cambios en la tabla user de la base de datos
+        //El adapter se actualiza a través del COMPARATOR del adapter
 
-        (requireActivity() as? MainActivity)?.fab?.apply {
-            visibility = View.VISIBLE
-            setOnClickListener { view ->
-                //Acción del listener
-                Snackbar.make(view, "Soy el fragment", Snackbar.LENGTH_SHORT).show()
-            }
+        viewmodel.allUser.observe(viewLifecycleOwner) {
+            it.let { userAdapter.submitList(it) }
         }
 
+
     }
+
 
     /**
      * Esta funcion personaliza el comprotamiento del la toolbar de la Activity
@@ -94,30 +86,32 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
      * Se añade las opciones del menu definidas en R.menu.menu_user_list al menu principal
      */
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-       menuInflater.inflate(R.menu.menu_user_list, menu)
+        menuInflater.inflate(R.menu.menu_user_list, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when(menuItem.itemId){
-            R.id.action_sort ->{
+        return when (menuItem.itemId) {
+            R.id.action_sort -> {
                 userAdapter.sortPersonalizado()
                 return true
             }
-            R.id.action_refresh ->{
+
+            R.id.action_refresh -> {
                 viewmodel.getUserList()
                 return true
             }
-            else-> false
+
+            else -> false
         }
     }
+
     override fun onStart() {
         super.onStart()
         viewmodel.getUserList()
     }
 
-    private fun onSuccess(dataset: ArrayList<User>) {
+    private fun onSuccess() {
         hideNoDataError()
-        userAdapter.update(dataset)
     }
 
     private fun hideNoDataError() {

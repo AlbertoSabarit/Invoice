@@ -26,7 +26,7 @@ class UserRepository private constructor() {
         }
 
         private fun initDataSetUser(): MutableList<User> {
-            dataSet.add(
+          /*  dataSet.add(
                 User(
                     "Alberto",
                     "Sabarit",
@@ -67,7 +67,7 @@ class UserRepository private constructor() {
                     "Perez",
                     Email("manolo@iesportada.org")
                 )
-            )
+            )*/
             return dataSet
         }
 

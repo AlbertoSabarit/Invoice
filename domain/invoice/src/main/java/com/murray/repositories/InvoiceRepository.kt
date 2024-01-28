@@ -3,6 +3,7 @@ package com.murray.repositories
 import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
 import com.murray.data.items.Item
+import com.murray.data.items.ItemId
 import com.murray.data.items.ItemType
 import com.murray.entities.invoices.Invoice
 import com.murray.entities.invoices.InvoiceLine
@@ -11,7 +12,6 @@ import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class InvoiceRepository private constructor() {
     companion object{
@@ -29,7 +29,7 @@ class InvoiceRepository private constructor() {
             dataSet.add(Invoice(Invoice.lastId++,
                 Customer(CustomerRepository.getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
                 InvoiceLine(
-                    Item(ItemRepository.getNextId(), "Maleta de Cuero",
+                    Item(ItemId(ItemRepository.getNextId()), "Maleta de Cuero",
                     ItemType.PRODUCT,
                     60.00,
                     true,

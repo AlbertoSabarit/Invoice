@@ -2,6 +2,7 @@ package com.murray.repositories
 
 import android.net.Uri
 import com.murray.data.items.Item
+import com.murray.data.items.ItemId
 import com.murray.data.items.ItemType
 import com.murray.networkstate.ResourceList
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,7 @@ class ItemRepository private constructor() {
             imageUri: Uri? = null
         ) {
             val newItem = Item(
-                ++idIncrement,
+                ItemId(++idIncrement),
                 name,
                 type,
                 rate,
@@ -56,7 +57,7 @@ class ItemRepository private constructor() {
         }
 
         fun getItemById(id: Int) : Item{
-            return dataSet.find { item -> item.id == id } as Item
+            return dataSet.find { item -> item.id.value == id } as Item
         }
 
         private fun initDataSetItem(): MutableList<Item> {

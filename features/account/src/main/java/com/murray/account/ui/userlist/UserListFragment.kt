@@ -93,11 +93,21 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
         return when (menuItem.itemId) {
             R.id.action_sort -> {
                 userAdapter.sortPersonalizado()
+                Toast.makeText(
+                    requireContext(),
+                    "Ordenado por email",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return true
             }
 
             R.id.action_refresh -> {
-                viewmodel.getUserList()
+                userAdapter.submitList(viewmodel.allUser.value?.sortedBy { it.name })
+                Toast.makeText(
+                    requireContext(),
+                    "Ordenado por nombre",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return true
             }
 
@@ -144,7 +154,7 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
 
         with(binding.rvUser) {
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
             this.adapter = userAdapter
         }
     }

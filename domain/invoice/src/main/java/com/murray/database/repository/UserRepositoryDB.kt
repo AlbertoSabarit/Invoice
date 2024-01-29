@@ -3,6 +3,7 @@ package com.murray.database.repository
 import android.database.sqlite.SQLiteConstraintException
 import com.murray.data.accounts.User
 import com.murray.database.InvoiceDatabase
+import com.murray.networkstate.Resource
 import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryDB {
@@ -10,20 +11,17 @@ class UserRepositoryDB {
         return InvoiceDatabase.getInstance().userDao().selectAll()
     }
 
-    fun delete(user: User){
-        InvoiceDatabase.getInstance().userDao().delete(user)
+    fun insert(user: User): Resource {
+        try {
+            InvoiceDatabase.getInstance().userDao().insert(user)
+        } catch (e: SQLiteConstraintException) {
+            return Resource.Error(e)
+        }
+        return Resource.Success(user)
     }
 
-    companion object {
-        fun insert(user: User) : UserState{
-
-            try{
-                InvoiceDatabase.getInstance().userDao().insert(user)
-                return UserState.Success
-            }catch(e:SQLiteConstraintException){
-                return UserState.InsertError("Error")
-            }
-        }
+    fun delete(user: User) {
+        InvoiceDatabase.getInstance().userDao().delete(user)
     }
 
 }

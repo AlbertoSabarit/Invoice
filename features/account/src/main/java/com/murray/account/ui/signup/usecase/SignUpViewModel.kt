@@ -7,9 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.User
 import com.murray.database.repository.UserRepositoryDB
-import com.murray.database.repository.UserState
 import com.murray.networkstate.Resource
-import com.murray.repositories.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -22,6 +21,8 @@ class SignUpViewModel : ViewModel() {
     var password2 = MutableLiveData<String>()
 
     var state = MutableLiveData<SignUpState>()
+
+    var userRepository = UserRepositoryDB()
 
     fun getState(): LiveData<SignUpState> {
         return state
@@ -39,18 +40,17 @@ class SignUpViewModel : ViewModel() {
             !isEqualPasswords(password.value!!, password2.value!!) -> state.value =
                 SignUpState.PasswordsNotEquals
 
+
             else -> {
-                viewModelScope.launch {
-                    state.value = SignUpState.Loading(true)
-                    val result = UserRepositoryDB.insert(user)
-                    state.value = SignUpState.Loading(false)
+                viewModelScope.launch(Dispatchers.IO) {
+                    state.postValue(SignUpState.Loading(true))
+                    val result = userRepository.insert(user)
+                    state.postValue(SignUpState.Loading(false))
 
                     when (result) {
-                        is UserState.InsertError -> state.value =
-                            SignUpState.UserExist(result.mensaje)
-
-                        is UserState.Success -> {
-                            state.value = SignUpState.Success
+                        is Resource.Error -> state.postValue(SignUpState.UserExist(result.exception.toString()))
+                        is Resource.Success<*> -> {
+                            state.postValue(SignUpState.Success)
                         }
                     }
                 }

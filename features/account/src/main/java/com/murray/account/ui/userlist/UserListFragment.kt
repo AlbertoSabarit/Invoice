@@ -151,7 +151,6 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
             ).show()
         }
 
-
         with(binding.rvUser) {
             layoutManager = LinearLayoutManager(requireContext())
             //setHasFixedSize(true)
@@ -165,7 +164,8 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
     }
 
     override fun userOnLongClick(user: User) {
-        Toast.makeText(requireActivity(), "Pulsacion larga en el usuario $user", Toast.LENGTH_SHORT)
+        viewmodel.delete(user)
+        Toast.makeText(requireActivity(), "Usuario eliminado", Toast.LENGTH_SHORT)
             .show()
     }
 

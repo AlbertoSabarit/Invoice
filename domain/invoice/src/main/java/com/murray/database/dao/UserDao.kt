@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) // @Insert (onConflict = RESTRICT)
-    fun insert(user: User)
+    @Insert(onConflict = RESTRICT)   //@Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(user: User): Long
 
 
-    @Query ("SELECT * FROM user")
+    @Query("SELECT * FROM user")
     fun selectAll(): Flow<List<User>>
 
 

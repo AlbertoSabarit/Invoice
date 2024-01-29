@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.User
 import com.murray.database.repository.UserRepositoryDB
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -25,13 +26,15 @@ class UserListViewModel : ViewModel() {
     }
 
     fun getUserList() {
+        when {
+            allUser.value?.isEmpty() == true -> state.value = UserListState.NoDataError
+            else -> state.value = UserListState.Success
+        }
+    }
 
-        viewModelScope.launch {
-            //La carga de los datos es asincrona yu se raliza en la creacion del viewmodel no cuando la vista llama el metodo getUserList
-            when {
-                allUser.value?.isEmpty() == true -> state.value = UserListState.NoDataError
-                else -> state.value = UserListState.Success
-            }
+    fun delete(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userRepository.delete(user)
         }
     }
 }

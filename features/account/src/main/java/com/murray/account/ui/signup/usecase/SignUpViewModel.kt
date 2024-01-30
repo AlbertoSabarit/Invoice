@@ -10,6 +10,8 @@ import com.murray.database.repository.UserRepositoryDB
 import com.murray.networkstate.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
@@ -42,17 +44,27 @@ class SignUpViewModel : ViewModel() {
 
 
             else -> {
+                state.postValue(SignUpState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
-                    state.postValue(SignUpState.Loading(true))
                     val result = userRepository.insert(user)
-                    state.postValue(SignUpState.Loading(false))
+                    withContext(Dispatchers.Main) {
+                        state.postValue(SignUpState.Loading(false))
+                    }
 
                     when (result) {
-                        is Resource.Error -> state.postValue(SignUpState.UserExist(result.exception.toString()))
+                        is Resource.Error -> {
+                            withContext(Dispatchers.Main) {
+                                state.value = SignUpState.UserExist(result.exception.toString())
+                            }
+                        }
+
                         is Resource.Success<*> -> {
-                            state.postValue(SignUpState.Success)
+                            withContext(Dispatchers.Main) {
+                                state.value = SignUpState.Success
+                            }
                         }
                     }
+
                 }
             }
         }

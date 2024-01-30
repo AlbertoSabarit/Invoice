@@ -34,8 +34,6 @@ class UserAdapter(
 
 
     fun sortPersonalizado(){
-       /*currentList.sortBy { it.email.value }
-        notifyDataSetChanged()*/
         submitList(currentList.sortedBy { it.email.value })
         notifyDataSetChanged()
     }

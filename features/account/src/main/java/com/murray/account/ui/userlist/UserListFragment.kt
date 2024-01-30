@@ -1,5 +1,6 @@
 package com.murray.account.ui.userlist
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +24,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.murray.account.R
 import com.murray.invoice.ui.MainActivity
+import com.murray.invoice.utils.Utils
+import com.murray.invoice.utils.showToast
 
 class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
 
@@ -102,7 +105,7 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
             }
 
             R.id.action_refresh -> {
-                userAdapter.submitList(viewmodel.allUser.value?.sortedBy { it.name })
+                userAdapter.submitList(viewmodel.allUser.value)
                 Toast.makeText(
                     requireContext(),
                     "Ordenado por nombre",
@@ -159,8 +162,7 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
     }
 
     override fun userClick(user: User) {
-        Toast.makeText(requireActivity(), "Pulsacion cota en el usuario $user", Toast.LENGTH_SHORT)
-            .show()
+       requireActivity().showToast("Pulsación corta en el usuario $user")
     }
 
     override fun userOnLongClick(user: User) {

@@ -1,6 +1,7 @@
 package com.murray.database.repository
 
 import android.database.sqlite.SQLiteConstraintException
+import android.database.sqlite.SQLiteException
 import com.murray.data.accounts.User
 import com.murray.database.InvoiceDatabase
 import com.murray.networkstate.Resource
@@ -14,7 +15,7 @@ class UserRepositoryDB {
     fun insert(user: User): Resource {
         try {
             InvoiceDatabase.getInstance().userDao().insert(user)
-        } catch (e: SQLiteConstraintException) {
+        } catch (e: SQLiteException) {
             return Resource.Error(e)
         }
         return Resource.Success(user)

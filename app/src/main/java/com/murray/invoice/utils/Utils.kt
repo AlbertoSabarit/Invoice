@@ -5,13 +5,12 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
+//Esta función de extensión de podrá llamar desde cualquier Activity/o fragmento a través de su Activity
+fun Context.showToast(message: String){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
 object Utils {
-    //Esta función de extensión de podrá llamar desde cualquier Activity/o fragmento a través de su Activity
-    fun Context.showToast(message: String){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun Context.showSnackBar(view: View, message: String){
+    fun showSnackBar(view: View, message: String){
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
 }

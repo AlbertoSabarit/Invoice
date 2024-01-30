@@ -24,23 +24,25 @@ class MainActivity : AppCompatActivity() {
 
     //Propiedades de acceso al botón flotante de la Activity principal y la barra de herramientas
     //val fab: FloatingActionButton get() = binding.fab
-    val toolbar: Toolbar get() = binding.toolbar
+    val toolbar: Toolbar get() = binding.content.toolbar
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        //Sustituir la AppBar por defecto por el Widget Toolbar de nuestro Layout
+        setSupportActionBar(binding.content.toolbar)
+        //Habilitar el icono Home (hamburguesa) dentro de la barra
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(android.R.drawable.ic_menu_info_details)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
 
     }
 

@@ -8,7 +8,5 @@ class InvoiceApplication: Application() {
         super.onCreate()
         Locator.initWith(this)
 
-        //Se inicializa la conecion a Firease (SOLO PUEDE ESTAR AQUI)
-        FirebaseApp.initializeApp(this)
     }
 }

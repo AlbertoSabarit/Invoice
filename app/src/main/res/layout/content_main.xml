@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.MainActivity">
 
-    <!-- Para admitir módulos de funciones, primero cambia todas las instancias de NavHostFragment
-    androidx.navigation.fragment.NavHostFragment  en tu app por
-    androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment: -->
-    <fragment
-        android:id="@+id/nav_host_fragment_content_main"
-        android:name="androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/nav_graph" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_fragment" />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

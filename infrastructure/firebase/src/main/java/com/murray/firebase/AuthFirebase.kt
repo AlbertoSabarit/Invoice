@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class AuthFirebase {
-    private var authFirebase  = FirebaseAuth.getInstance()
+    private var authFirebase  = FirebaseAuth.getInstance()  //private lateinit var authFirebase: FirebaseAuth
     suspend fun login(email : String, password: String) : Resource {
         var resource:Resource
         //Este código se ejecuta en un hilo especifico para acciones de E/S

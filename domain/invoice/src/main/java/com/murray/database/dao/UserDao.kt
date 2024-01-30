@@ -17,7 +17,7 @@ interface UserDao {
     fun insert(user: User): Long
 
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user ORDER BY name")
     fun selectAll(): Flow<List<User>>
 
 

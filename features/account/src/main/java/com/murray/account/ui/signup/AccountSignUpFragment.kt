@@ -23,6 +23,8 @@ import com.murray.data.accounts.EnumTipoUsuario
 import com.murray.data.accounts.EnumVisibilidad
 import com.murray.data.accounts.User
 import com.murray.data.accounts.UserSignUp
+import com.murray.invoice.utils.Utils
+import com.murray.invoice.utils.showToast
 
 
 class AccountSignUpFragment : Fragment() {
@@ -134,6 +136,7 @@ class AccountSignUpFragment : Fragment() {
                 is SignUpState.UserExist -> setUsuarioExiste()
                 is SignUpState.Loading -> onLoading(it.value)
                 SignUpState.Success -> onSuccess()
+                else -> {}
             }
         })
     }
@@ -151,8 +154,8 @@ class AccountSignUpFragment : Fragment() {
 
     private fun setUsuarioExiste() {
         binding.tieEmailSignUp.error = "Usuario ya existe"
-        Toast.makeText(context, "El usuario ya existe en el repositorio", Toast.LENGTH_SHORT).show()
         binding.tieEmailSignUp.requestFocus()
+        requireActivity().showToast("El usuario ya existe en el repositorio")
     }
     private fun onLoading(value : Boolean) {
         if(value){

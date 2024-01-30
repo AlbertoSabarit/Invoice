@@ -11,8 +11,10 @@ import com.murray.data.accounts.Email
 import com.murray.data.accounts.User
 import com.murray.data.converter.AccountIdTypeConverter
 import com.murray.data.converter.EmailTypeConverter
+import com.murray.data.customers.Customer
 import com.murray.database.dao.AccountDao
 import com.murray.database.dao.BusinessProfileDao
+import com.murray.database.dao.CustomerDao
 import com.murray.database.dao.UserDao
 import com.murray.invoice.Locator
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +25,7 @@ import kotlinx.coroutines.runBlocking
 
 
 @Database(
-    entities = [Account::class, BusinessProfile::class, User::class],
+    entities = [Account::class, BusinessProfile::class, User::class, Customer::class],
     version = 1,
     exportSchema = false
 )
@@ -33,6 +35,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun accountDao(): AccountDao
     abstract fun businessProfile(): BusinessProfileDao
+    abstract fun customerDao(): CustomerDao
 
     companion object {
         @Volatile

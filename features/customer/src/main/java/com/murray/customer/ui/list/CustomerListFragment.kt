@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerListBinding
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import com.murray.customer.ui.adapter.CustomAdapter
 import com.murray.customer.ui.list.usecase.CustomerListState
@@ -97,6 +99,16 @@ class CustomerListFragment : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var appBarConfiguration =
+            AppBarConfiguration.Builder(R.id.customerListFragment)
+                .setOpenableLayout((requireActivity() as MainActivity).drawer)
+                .build()
+
+        NavigationUI.setupWithNavController(
+            (requireActivity() as MainActivity).toolbar,
+            findNavController(),
+            appBarConfiguration
+        )
 
         binding.floatingActionButton.setOnClickListener{
             findNavController().navigate(R.id.action_customerListFragment_to_customerCreationFragment)

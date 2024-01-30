@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.murray.invoice.R
 import com.murray.invoice.databinding.FragmentMainBinding
 
@@ -49,9 +51,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var appBarConfiguration =
+            AppBarConfiguration.Builder(R.id.mainFragment)
+                .setOpenableLayout((requireActivity() as MainActivity).drawer)
+                .build()
+
+        NavigationUI.setupWithNavController(
+            (requireActivity() as MainActivity).toolbar,
+            findNavController(),
+            appBarConfiguration
+        )
 
         binding.btSignin.setOnClickListener {
-            //findNavController().navigate()
             findNavController().navigate(R.id.action_mainFragment_to_nav_graph_account)
         }
 

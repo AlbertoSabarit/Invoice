@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.murray.myapplication.MainActivity">
     <item
+        android:id="@+id/action_customer"
+
+        android:title="Clientes" />
+    <item
+        android:id="@+id/action_item"
+
+        android:title="Artículos" />
+    <item
         android:id="@+id/action_invoice"
 
         android:title="Facturas" />

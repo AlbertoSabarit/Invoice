@@ -34,8 +34,11 @@ class UserAdapter(
 
 
     fun sortPersonalizado(){
-        submitList(currentList.sortedBy { it.email.value })
-        notifyDataSetChanged()
+       /* submitList(currentList.sortedBy { it.email.value })
+        notifyDataSetChanged()*/
+
+        val sortedUserList = currentList.sortedBy { it.email.value }
+        submitList(sortedUserList)
     }
 
 

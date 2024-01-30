@@ -81,6 +81,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //Imagenes circulares
     implementation ("com.mikhaellopez:circularimageview:4.3.1")
     // Declare the dependency for the Firebase Authentication library
     implementation ("com.google.firebase:firebase-auth-ktx")

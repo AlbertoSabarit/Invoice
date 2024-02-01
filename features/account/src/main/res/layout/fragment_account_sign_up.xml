@@ -31,7 +31,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNombre"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -48,7 +48,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilApellido"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -65,7 +65,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tieEmailSignUp"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
             app:layout_constraintStart_toStartOf="@+id/gdStart"
@@ -82,7 +82,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiePasswordSignUp"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:layout_marginTop="24dp"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"
@@ -100,7 +100,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tieConfirmsPasswordsSignUp"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:layout_marginTop="24dp"
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toStartOf="@+id/gdEnd"

@@ -2,20 +2,22 @@ package com.murray.task.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.murray.data.accounts.User
 import com.murray.task.databinding.CardviewLayoutBinding
 import com.murray.data.tasks.Task
 
 class TaskAdapter(
-    private val listener: onTaskClick) :
-    RecyclerView.Adapter<TaskAdapter.ListViewHolder>() {
+    private val listener: onTaskClick
+) : ListAdapter<Task, TaskAdapter.ListViewHolder>(TASK_COMPARATOR) {
 
-    private var dataset = arrayListOf<Task>()
 
     interface onTaskClick {
 
         fun onClickDetails(task: Task)
-        fun userOnLongClickDelete(task: Task) : Boolean
+        fun userOnLongClickDelete(task: Task): Boolean
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -24,7 +26,7 @@ class TaskAdapter(
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val item = dataset.get(position)
+        val item = getItem(position)
         holder.bind(item)
 
         holder.binding.root.setOnClickListener() { _ ->
@@ -37,14 +39,10 @@ class TaskAdapter(
         }
     }
 
-    fun update(newDataSet: ArrayList<Task>) {
-        dataset = newDataSet
-        notifyDataSetChanged()
-    }
 
     fun sortPersonalizado() {
-        dataset.sortBy { it.titulo }
-        notifyDataSetChanged()
+        val sortedTaskList = currentList.sortedBy { it.cliente.name}
+        submitList(sortedTaskList)
     }
 
     inner class ListViewHolder(val binding: CardviewLayoutBinding) :
@@ -58,8 +56,16 @@ class TaskAdapter(
 
         }
     }
+    companion object {
+        private val TASK_COMPARATOR = object : DiffUtil.ItemCallback<Task>() {
+            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+                return oldItem === newItem
+            }
 
-    override fun getItemCount(): Int {
-        return dataset.size
+            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+                return oldItem.titulo == newItem.titulo
+            }
+
+        }
     }
 }

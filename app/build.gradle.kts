@@ -92,4 +92,8 @@ dependencies {
     //dataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
+    //Conertir un Flow en LiveData
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+
 }

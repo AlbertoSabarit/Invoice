@@ -69,7 +69,6 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
             it.let { userAdapter.submitList(it) }
         }
 
-
     }
 
 

@@ -36,7 +36,7 @@ android {
 
 dependencies {
     implementation(project(":app"))
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation(project(mapOf("path" to ":domain:invoice")))
     implementation("androidx.preference:preference:1.2.1")
     testImplementation("junit:junit:4.13.2")
@@ -45,12 +45,13 @@ dependencies {
 
 
     //Implementar la navegación por módulos
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     implementation("com.airbnb.android:lottie:6.2.0")
 
     //dataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
 
 }

@@ -8,10 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.murray.data.accounts.User
 import com.murray.database.repository.UserRepositoryDB
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class UserListViewModel : ViewModel() {

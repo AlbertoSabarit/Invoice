@@ -5,55 +5,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.tasks.Task
-import com.murray.networkstate.ResourceList
-import com.murray.repositories.TaskRepository
+import com.murray.database.repository.TaskRepositoryDB
 import kotlinx.coroutines.launch
+import androidx.lifecycle.asLiveData
+import kotlinx.coroutines.Dispatchers
 
 class TaskListViewModel : ViewModel() {
 
     private var state = MutableLiveData<TaskListState>()
+    var taskRepository = TaskRepositoryDB()
+    var allTask: LiveData<List<Task>> = taskRepository.getTaskList().asLiveData()
 
     fun getState(): LiveData<TaskListState> {
         return state
     }
 
-    fun getTaskListOrderByCustomer() {
-        viewModelScope.launch {
-
-            state.value = TaskListState.Loading(true)
-            val result = TaskRepository.getTaskList()
-            state.value = TaskListState.Loading(false)
-
-            when (result) {
-                is ResourceList.NoData -> state.value = TaskListState.NoDataError
-                is ResourceList.Success<*> -> {
-                    (result.data as ArrayList<Task>).sort()
-                    state.value = TaskListState.Success(result.data as ArrayList<Task>)
-                }
-
-            }
+    fun getTaskList() {
+        when {
+            allTask.value?.isEmpty() == true -> state.value = TaskListState.NoDataError
+            else -> state.value = TaskListState.Success
         }
+
     }
 
-    fun getTaskListOrderByTitle() {
-        viewModelScope.launch {
-
-            state.value = TaskListState.Loading(true)
-            val result = TaskRepository.getTaskList()
-            state.value = TaskListState.Loading(false)
-
-            when (result) {
-                is ResourceList.NoData -> state.value = TaskListState.NoDataError
-                is ResourceList.Success<*> -> {
-                    (result.data as ArrayList<Task>).sortBy { it.titulo }
-                    state.value = TaskListState.Success(result.data as ArrayList<Task>)
-                }
-
-            }
+    fun delete(task: Task) {
+        viewModelScope.launch(Dispatchers.IO) {
+            taskRepository.delete(task)
         }
-    }
-
-    fun removeFromList(task: Task) {
-        TaskRepository.removeFromList(task)
     }
 }

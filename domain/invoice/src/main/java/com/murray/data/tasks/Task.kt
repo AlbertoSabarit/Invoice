@@ -2,33 +2,53 @@ package com.murray.data.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.murray.data.base.Entity
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.customers.Customer
 
+@Entity(
+    tableName = "task",
+    foreignKeys = [ForeignKey(
+        entity = Customer::class,
+        parentColumns = ["id"],
+        childColumns = ["cliente"],
+        onDelete = ForeignKey.RESTRICT,
+        onUpdate = ForeignKey.CASCADE
+    )],
+    indices = [Index("cliente")]
+)
 data class Task(
-    var id: TaskId,
     var titulo: String,
+    @TypeConverters(CustomerTypeConverter::class)
     var cliente: Customer,
     var tipoTarea: String,
     var fechaCreacion: String,
     var fechaFin: String,
     var estado: String,
     var descripcion: String
-) : Comparable<Task>, Parcelable{
+) : Comparable<Task>, Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable(TaskId::class.java.classLoader)!!,
-        parcel.readString()!!,
-        parcel.readParcelable(Customer::class.java.classLoader)!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readString() ?: "",
+        parcel.readParcelable(Customer::class.java.classLoader) ?: Customer(),
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: ""
     ) {
+        id = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(id, flags)
+        parcel.writeInt(id)
         parcel.writeString(titulo)
         parcel.writeParcelable(cliente, flags)
         parcel.writeString(tipoTarea)
@@ -42,10 +62,8 @@ data class Task(
         return 0
     }
 
-
     companion object CREATOR : Parcelable.Creator<Task> {
         val TAG = "Task"
-        var lastId: Int = 1
         override fun createFromParcel(parcel: Parcel): Task {
             return Task(parcel)
         }
@@ -55,13 +73,11 @@ data class Task(
         }
 
         fun createDefaultTask(): Task {
-            return Task(TaskId(-1), "", Customer(), "", "", "", "", "")
+            return Task("", Customer(), "", "", "", "", "")
         }
     }
 
     override fun compareTo(other: Task): Int {
         return cliente.name.compareTo(other.cliente.name)
     }
-
-
 }

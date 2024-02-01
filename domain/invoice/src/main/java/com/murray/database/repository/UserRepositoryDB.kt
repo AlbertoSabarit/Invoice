@@ -1,6 +1,5 @@
 package com.murray.database.repository
 
-import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteException
 import com.murray.data.accounts.User
 import com.murray.database.InvoiceDatabase

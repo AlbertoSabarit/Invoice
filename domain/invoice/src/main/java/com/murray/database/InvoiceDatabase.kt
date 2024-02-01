@@ -10,11 +10,15 @@ import com.murray.data.accounts.BusinessProfile
 import com.murray.data.accounts.Email
 import com.murray.data.accounts.User
 import com.murray.data.converter.AccountIdTypeConverter
+import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.converter.EmailTypeConverter
+import com.murray.data.converter.TaskIdTypeConverter
 import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
 import com.murray.database.dao.AccountDao
 import com.murray.database.dao.BusinessProfileDao
 import com.murray.database.dao.CustomerDao
+import com.murray.database.dao.TaskDao
 import com.murray.database.dao.UserDao
 import com.murray.invoice.Locator
 import kotlinx.coroutines.CoroutineScope
@@ -25,17 +29,22 @@ import kotlinx.coroutines.runBlocking
 
 
 @Database(
-    entities = [Account::class, BusinessProfile::class, User::class, Customer::class],
+    entities = [Account::class, BusinessProfile::class, User::class, Customer::class, Task::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(AccountIdTypeConverter::class, EmailTypeConverter::class)
+@TypeConverters(
+    AccountIdTypeConverter::class,
+    EmailTypeConverter::class,
+    CustomerTypeConverter::class
+)
 abstract class InvoiceDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun accountDao(): AccountDao
-    abstract fun businessProfile(): BusinessProfileDao
+    abstract fun businessProfileDao(): BusinessProfileDao
     abstract fun customerDao(): CustomerDao
+    abstract fun taskDao(): TaskDao
 
     companion object {
         @Volatile
@@ -57,6 +66,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 .allowMainThreadQueries()
                 .addTypeConverter(AccountIdTypeConverter())
                 .addTypeConverter(EmailTypeConverter())
+                .addTypeConverter(CustomerTypeConverter())
                 .addCallback(
                     RoomDbInitializer(INSTANCE)
                 ).build()
@@ -69,11 +79,8 @@ abstract class InvoiceDatabase : RoomDatabase() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            // Esperar a que se complete la inserción de datos
-            runBlocking {
-                applicationScope.launch(Dispatchers.IO) {
-                    populateDatabase()
-                }.join()
+            applicationScope.launch(Dispatchers.IO) {
+                populateDatabase()
             }
         }
 

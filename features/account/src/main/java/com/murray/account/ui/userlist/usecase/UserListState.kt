@@ -1,6 +1,5 @@
 package com.murray.account.ui.userlist.usecase
 
-import com.murray.data.accounts.User
 
 sealed class UserListState() {
 

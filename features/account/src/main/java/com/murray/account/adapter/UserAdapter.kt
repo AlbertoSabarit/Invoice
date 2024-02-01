@@ -33,10 +33,7 @@ class UserAdapter(
     }
 
 
-    fun sortPersonalizado(){
-       /* submitList(currentList.sortedBy { it.email.value })
-        notifyDataSetChanged()*/
-
+    fun sortPersonalizado() {
         val sortedUserList = currentList.sortedBy { it.email.value }
         submitList(sortedUserList)
     }
@@ -60,10 +57,10 @@ class UserAdapter(
         }
     }
 
-    companion object{
-        private val USER_COMPARATOR = object:DiffUtil.ItemCallback<User>(){
+    companion object {
+        private val USER_COMPARATOR = object : DiffUtil.ItemCallback<User>() {
             override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-               return oldItem === newItem
+                return oldItem === newItem
             }
 
             override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {

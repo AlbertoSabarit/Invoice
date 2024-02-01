@@ -9,10 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.customers.Customer
 import com.murray.data.tasks.Task
+import com.murray.database.repository.TaskRepositoryDB
 import com.murray.networkstate.Resource
 import com.murray.repositories.CustomerRepository
-import com.murray.repositories.TaskRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 const val TAG = "ViewModel"
@@ -27,6 +29,12 @@ class TaskCreateViewModel : ViewModel() {
     lateinit var task: Task
     private var state = MutableLiveData<TaskCreateState>()
 
+    var taskRepository = TaskRepositoryDB()
+
+    fun getState(): LiveData<TaskCreateState> {
+        return state
+    }
+
     fun validateCredentials(task: Task) {
 
         when {
@@ -40,17 +48,25 @@ class TaskCreateViewModel : ViewModel() {
                 TaskCreateState.IncorrectDateRangeError
 
             else -> {
-                viewModelScope.launch {
-
-                    state.value = TaskCreateState.Loading(true)
-                    val result = TaskRepository.createTask(task)
-                    state.value = TaskCreateState.Loading(false)
+                //state.postValue(TaskCreateState.Loading(true))
+                viewModelScope.launch(Dispatchers.IO) {
+                    val result = taskRepository.insert(task)
+                    withContext(Dispatchers.Main) {
+                        //state.postValue(TaskCreateState.Loading(false))
+                    }
 
                     when (result) {
-                        is Resource.Error -> state.value =
-                            TaskCreateState.TaskExist(result.exception.message!!)
+                        is Resource.Error -> {
+                            withContext(Dispatchers.Main) {
+                                state.value = TaskCreateState.TaskExist(result.exception.message!!)
+                            }
+                        }
 
-                        is Resource.Success<*> -> state.value = TaskCreateState.Success
+                        is Resource.Success<*> -> {
+                            withContext(Dispatchers.Main) {
+                                state.value = TaskCreateState.Success
+                            }
+                        }
                     }
 
                 }
@@ -59,7 +75,7 @@ class TaskCreateViewModel : ViewModel() {
     }
 
     fun editTask(taskTmp: Task) {
-        for (t in TaskRepository.dataSet) {
+     /*   for (t in TaskRepository.dataSet) {
             if (t.id == task.id) {
 
                 t.titulo = taskTmp.titulo
@@ -70,7 +86,7 @@ class TaskCreateViewModel : ViewModel() {
                 t.estado = taskTmp.estado
                 t.descripcion = taskTmp.descripcion
             }
-        }
+        }*/
     }
 
     fun getCustomerList(): MutableList<Customer> {
@@ -89,7 +105,5 @@ class TaskCreateViewModel : ViewModel() {
         }
     }
 
-    fun getState(): LiveData<TaskCreateState> {
-        return state
-    }
+
 }

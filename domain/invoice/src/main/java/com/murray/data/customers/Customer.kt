@@ -10,8 +10,8 @@ import com.murray.data.converter.EmailTypeConverter
 
 @androidx.room.Entity(tableName = "customer")
 data class Customer(
-    @PrimaryKey
-    override val id: Int,
+    @PrimaryKey (autoGenerate = true)
+    override val id: Int=0,
     var name: String,
     @TypeConverters(EmailTypeConverter::class)
     var email: Email,

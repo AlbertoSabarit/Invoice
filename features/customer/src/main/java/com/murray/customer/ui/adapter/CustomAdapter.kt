@@ -3,17 +3,17 @@ package com.murray.customer.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.customer.databinding.CardviewLayoutBinding
 import com.murray.data.customers.Customer
 
 class CustomAdapter (
-    //private val dataset: MutableList<Customer>,
-    private val context: Context,
     private val deleteClickListener: (customer: Customer) -> Unit,
-    private val clickListener: (Customer) -> Unit) : RecyclerView.Adapter<CustomAdapter.ListViewHolder>() {
+    private val clickListener: (Customer) -> Unit) :
+    ListAdapter<Customer, CustomAdapter.ListViewHolder>(CUSTOMER_COMPARATOR) {
 
-    private var dataset:ArrayList<Customer> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,8 +21,8 @@ class CustomAdapter (
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.bind(item, context)
+        val item = getItem(position)
+        holder.bind(item)
         holder.itemView.setOnClickListener {
             clickListener(item)
         }
@@ -31,29 +31,30 @@ class CustomAdapter (
         }
     }
 
-    class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Customer, context: Context) {
-            binding.txtCustomer.text = item.name
-            binding.txtEmail.text = item.email.getEmail()
+        fun bind(customer: Customer) {
+            binding.txtCustomer.text = customer.name
+            binding.txtEmail.text = customer.email.getEmail()
         }
-    }
-    fun remove(position: Int){
-        dataset.removeAt(position)
-        notifyItemRemoved(position)
-    }
-    fun update(newDataSet: ArrayList<Customer>){
-        dataset = newDataSet
-        notifyDataSetChanged()
     }
 
     fun sort(){
-        dataset.sortBy { it.name }
+        submitList(currentList.sortedBy { it.email.value })
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
+    companion object{
+        private val CUSTOMER_COMPARATOR = object: DiffUtil.ItemCallback<Customer>(){
+            override fun areItemsTheSame(oldItem: Customer, newItem: Customer): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Customer, newItem: Customer): Boolean {
+                return oldItem.name == newItem.name
+            }
+
+        }
     }
 
 }

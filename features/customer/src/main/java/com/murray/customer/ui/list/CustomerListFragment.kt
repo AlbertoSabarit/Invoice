@@ -103,10 +103,12 @@ class CustomerListFragment : Fragment(), MenuProvider {
         }
         setUpToolbar()
 
+        setUpUserRecycler()
+
         customerlistviewmodel.getState().observe(viewLifecycleOwner){
             when(it){
                 CustomerListState.NoDataError -> showNoDataError()
-                is CustomerListState.Success -> onSuccess(it.dataset)
+                is CustomerListState.Success -> onSuccess()
                 CustomerListState.ReferencedCustomer -> showReferencedCustomerError()
                 is CustomerListState.Loading -> showProgressBar(it.value)
             }
@@ -128,10 +130,8 @@ class CustomerListFragment : Fragment(), MenuProvider {
         binding.lnlSinClientes.visibility = View.VISIBLE
     }
 
-    private fun onSuccess(dataset: ArrayList<Customer>) {
+    private fun onSuccess() {
         hideNoData()
-        setUpUserRecycler()
-        customerAdapter.update(dataset)
     }
     private fun hideNoData(){
         binding.lnlSinClientes.visibility=View.GONE
@@ -143,7 +143,7 @@ class CustomerListFragment : Fragment(), MenuProvider {
         _binding = null
     }
     private fun setUpUserRecycler(){
-        customerAdapter = CustomAdapter (requireContext(), {deleteItem(it)}) { customer: Customer ->
+        customerAdapter = CustomAdapter ({deleteItem(it)}) { customer: Customer ->
             val bundle = bundleOf(
                 "id" to customer.id,
                 "name" to customer.name,
@@ -156,12 +156,12 @@ class CustomerListFragment : Fragment(), MenuProvider {
         }
         with(binding.recyclerView){
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
             this.adapter=customerAdapter
         }
     }
     private fun deleteItem(customer: Customer) {
-        if (customerlistviewmodel.deleteItem(customer, customerAdapter))
-            showNoDataError()
+        customerlistviewmodel.delete(customer)
+        showNoDataError()
     }
 }

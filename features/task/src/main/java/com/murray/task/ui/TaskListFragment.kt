@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.murray.data.tasks.Task
@@ -50,7 +52,16 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var appBarConfiguration =
+            AppBarConfiguration.Builder(R.id.taskListFragment)
+                .setOpenableLayout((requireActivity() as MainActivity).drawer)
+                .build()
 
+        NavigationUI.setupWithNavController(
+            (requireActivity() as MainActivity).toolbar,
+            findNavController(),
+            appBarConfiguration
+        )
         setUpToolbar()
         setUpTaskRecycler()
 
@@ -66,9 +77,14 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
             when (it) {
                 TaskListState.NoDataError -> showNoDataError()
                 is TaskListState.Loading -> onLoading(it.value)
-                is TaskListState.Success -> onSuccess(it.dataset)
+                TaskListState.Success -> onSuccess()
             }
         })
+
+
+        viewmodel.allTask.observe(viewLifecycleOwner) {
+            it.let { taskAdapter.submitList(it) }
+        }
     }
 
     private fun setUpToolbar() {
@@ -88,7 +104,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
         return when (menuItem.itemId) {
 
             R.id.action_refreshTask -> {
-                viewmodel.getTaskListOrderByCustomer()
+                taskAdapter.submitList(viewmodel.allTask.value)
                 Snackbar.make(requireView(), "Tarea ordenada por nombre", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
                 return true
@@ -111,26 +127,26 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("tasks", "0")
 
+        viewmodel.getTaskList()
 
         when (orderValue) {
 
             "0" -> {
-                viewmodel.getTaskListOrderByTitle()
+                viewmodel.getTaskList()
                 Snackbar.make(requireView(), "Tarea ordenada por título", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
 
             "1" -> {
-                viewmodel.getTaskListOrderByCustomer()
+                viewmodel.getTaskList()
                 Snackbar.make(requireView(), "Tarea ordenada por cliente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
         }
     }
 
-    private fun onSuccess(dataset: ArrayList<Task>) {
+    private fun onSuccess() {
         hideNoDataError()
-        taskAdapter.update(dataset)
     }
 
     private fun hideNoDataError() {
@@ -159,7 +175,7 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
             this.adapter = taskAdapter
         }
     }
@@ -185,8 +201,8 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
         ) { _, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
-                viewmodel.removeFromList(task)
-                viewmodel.getTaskListOrderByCustomer()
+                viewmodel.delete(task)
+                viewmodel.getTaskList()
 
                 Toast.makeText(
                     requireActivity(),

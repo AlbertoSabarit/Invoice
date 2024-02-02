@@ -50,5 +50,4 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
 
-
 }

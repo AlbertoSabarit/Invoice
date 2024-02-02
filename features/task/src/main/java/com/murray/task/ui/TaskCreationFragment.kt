@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.data.customers.Customer
 import com.murray.data.tasks.Task
-import com.murray.data.tasks.TaskId
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -101,10 +100,8 @@ class TaskCreationFragment : Fragment() {
                 }
             }
 
-
             val taskTmp =
                 Task(
-                    TaskId(-2),
                     binding.tieTitulo.text.toString(),
                     cliente,
                     binding.spinnerTipo.selectedItem.toString(),
@@ -114,15 +111,16 @@ class TaskCreationFragment : Fragment() {
                     binding.tieDescripcion.text.toString()
                 )
 
-            if (viewModel.task.id.value == -1) {
-                taskTmp.id.value = Task.lastId++
-                viewModel.validateCredentials(taskTmp)
+            viewModel.validateCredentials(taskTmp)
 
+          /*  if (viewModel.task.id == -1) {
+                viewModel.validateCredentials(taskTmp)
             } else {
-                viewModel.editTask(taskTmp)
+                viewModel.validateCredentials(taskTmp)
                 findNavController().popBackStack()
                 Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
-            }
+            }*/
+
         }
 
         viewModel.getState().observe(
@@ -150,7 +148,7 @@ class TaskCreationFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spTaskClientes.adapter = adapter
 
-        if (viewModel.task.id.value != -1) {
+        if (viewModel.task.id != -1) {
             var pos = nombres.indexOf(viewModel.task.cliente.name)
 
             binding.spTaskClientes.setSelection(pos, false)
@@ -164,7 +162,7 @@ class TaskCreationFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerTipo.adapter = adapter
 
-        if (viewModel.task.id.value != -1) {
+        if (viewModel.task.id != -1) {
             var pos = tipos.indexOf(viewModel.task.tipoTarea)
 
             binding.spinnerTipo.setSelection(pos, false)
@@ -178,7 +176,7 @@ class TaskCreationFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerEstado.adapter = adapter
 
-        if (viewModel.task.id.value != -1) {
+        if (viewModel.task.id != -1) {
             var pos = estados.indexOf(viewModel.task.estado)
 
             binding.spinnerEstado.setSelection(pos, false)

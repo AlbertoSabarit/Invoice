@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.dynamic-feature")
     id("org.jetbrains.kotlin.android")
@@ -40,22 +38,20 @@ android {
 }
 dependencies {
     implementation(project(":app"))
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation(project(mapOf("path" to ":infrastructure:firebase")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(project(mapOf("path" to ":domain:invoice")))
     //Implementar la navegación por módulos
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     //libreria de animaciones
     implementation("com.airbnb.android:lottie:6.2.0")
 
-    //Conertir un Flow en LiveData
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 }
 
 

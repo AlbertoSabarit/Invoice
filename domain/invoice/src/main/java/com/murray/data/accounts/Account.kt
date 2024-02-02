@@ -9,7 +9,8 @@ import androidx.room.TypeConverters
 import com.murray.data.converter.AccountIdTypeConverter
 import com.murray.data.converter.EmailTypeConverter
 
-@Entity(tableName = "account", foreignKeys = [ForeignKey( entity = BusinessProfile ::class,
+@Entity(tableName = "account",
+    foreignKeys = [ForeignKey( entity = BusinessProfile ::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("businessProfile"),
         onDelete = RESTRICT,
@@ -26,6 +27,8 @@ class Account(
     val businessProfile: Int?,
 ){
 
+  /*  @PrimaryKey(autoGenerate = true)
+    var id :AccountId = 0*/
 
     /**
      * Al utilizar un objeto acompañante con una función y el constructor privado de la clase

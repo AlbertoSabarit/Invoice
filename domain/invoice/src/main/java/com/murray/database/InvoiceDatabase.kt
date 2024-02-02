@@ -89,8 +89,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
         }
 
         private suspend fun populateUsers() {
-
-            instance.let { invoiceDatabase ->
+            getInstance().let { invoiceDatabase ->
                 invoiceDatabase?.userDao()?.insert(
                     User(
                         "Alberto",

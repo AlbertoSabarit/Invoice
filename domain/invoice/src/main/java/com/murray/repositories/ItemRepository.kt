@@ -29,7 +29,6 @@ class ItemRepository private constructor() {
             imageUri: Uri? = null
         ) {
             val newItem = Item(
-                ItemId(++idIncrement),
                 name,
                 type,
                 rate,
@@ -57,7 +56,7 @@ class ItemRepository private constructor() {
         }
 
         fun getItemById(id: Int) : Item{
-            return dataSet.find { item -> item.id.value == id } as Item
+            return dataSet.find { item -> item.id == id } as Item
         }
 
         private fun initDataSetItem(): MutableList<Item> {

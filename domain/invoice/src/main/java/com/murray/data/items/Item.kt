@@ -11,9 +11,6 @@ import com.murray.data.converter.UriTypeConverter
 
 @Entity(tableName="item")
 data class Item(
-    @PrimaryKey
-    @TypeConverters(ItemIdTypeConverter::class)
-    var id: ItemId,
     var name: String,
     var type: ItemType,
     var rate: Double,
@@ -21,25 +18,29 @@ data class Item(
     var description: String = "",
     @TypeConverters(UriTypeConverter::class)
     var imageUri: Uri? = null,
-    ): Comparable<Item>, Parcelable {
+): Comparable<Item>, Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable(ItemId::class.java.classLoader)!!,
         parcel.readString()!!,
         parcel.readParcelable(ItemType::class.java.classLoader)!!,
         parcel.readDouble(),
         parcel.readByte() != 0.toByte(),
         parcel.readString()!!,
         parcel.readParcelable(Uri::class.java.classLoader)
-    )
-    constructor() : this(ItemId(0), "", ItemType.SERVICE, 0.0, false, "", null)
+    ){
+        id = parcel.readInt()
+    }
+    constructor() : this("", ItemType.PRODUCT, 0.0, false, "", null)
 
     override fun compareTo(other: Item): Int {
         return name.compareTo(other.name)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(id, flags)
+        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeDouble(rate)
         parcel.writeByte(if (isTaxable) 1 else 0)

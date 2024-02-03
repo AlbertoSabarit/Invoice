@@ -67,15 +67,14 @@ class ItemListFragment : Fragment(), MenuProvider {
 
         setUpToolbar()
         setUpItemRecycler()
-        binding.btnCrearArticulo.setOnClickListener {
-            findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
-        }
+        setUpAddItemListener()
+
 
         viewmodel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 is ItemListState.Loading -> showProgressBar(it.value)
                 ItemListState.NoDataError -> showNoDataError()
-                is ItemListState.Success -> onSuccess(it.dataset)
+                ItemListState.Success -> onSuccess()
             }
         }
     }
@@ -88,27 +87,26 @@ class ItemListFragment : Fragment(), MenuProvider {
 
         when (orderValue) {
             "0" -> {
-                viewmodel.getItemList(false)
+                viewmodel.getItemList()
                 Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
 
             "1" -> {
-                viewmodel.getItemList(true)
+                viewmodel.getItemList()
                 Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
         }
     }
 
-    private fun onSuccess(dataset: ArrayList<Item>) {
+    private fun onSuccess() {
         with(binding) {
             lavNoItems.visibility = View.GONE
             tvItemListEmptyTitle.visibility = View.GONE
             tvItemListEmptyText.visibility = View.GONE
             rvItemList.visibility = View.VISIBLE
         }
-        itemListAdapter.update(dataset)
     }
 
     private fun showNoDataError() {
@@ -127,6 +125,15 @@ class ItemListFragment : Fragment(), MenuProvider {
             findNavController().popBackStack()
     }
 
+    private fun setUpAddItemListener(){
+        binding.btnCrearArticulo.setOnClickListener {
+            val item = Item()
+            item.id = -1
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
+            findNavController().navigate(action)
+        }
+    }
+
     private fun setUpItemRecycler() {
         itemListAdapter =
             ItemListAdapter(
@@ -136,7 +143,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
             this.adapter = itemListAdapter
         }
     }
@@ -172,7 +179,7 @@ class ItemListFragment : Fragment(), MenuProvider {
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            viewmodel.deleteItem(item,itemListAdapter)
+            viewmodel.deleteItem(item)
         }
     }
 
@@ -201,7 +208,7 @@ class ItemListFragment : Fragment(), MenuProvider {
                 return true
             }
             R.id.action_refreshTask ->{
-                viewmodel.getItemList(false)
+                viewmodel.getItemList()
                 return true
             }
             else-> false

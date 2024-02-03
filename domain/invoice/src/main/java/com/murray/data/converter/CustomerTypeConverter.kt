@@ -11,7 +11,6 @@ class CustomerTypeConverter {
     @TypeConverter
     fun toCustomer(value: Int): Customer {
         val customer = CustomerRepository.getCustomers().firstOrNull { it.id == value }
-
         return customer ?: throw NoSuchElementException("Cliente no encontrado: $value")
     }
 

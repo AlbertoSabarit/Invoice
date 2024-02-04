@@ -43,6 +43,7 @@ class CustomerRepository private constructor(){
         }
 
         private fun initDataSetUser(){
+        /*
             dataSet.add(Customer(getNextId(),"Alejandro Valle", Email("alejandro@gmail.es"), 693296746, "Torre del Mar", "Calle Juan Aguayo Moreno 3"))
             dataSet.add(Customer(getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"))
             dataSet.add(Customer(getNextId(),"Ender Watts", Email("ender@gmail.uk"),657318092,"Londres","9 Buckingham Gate"))
@@ -55,6 +56,7 @@ class CustomerRepository private constructor(){
             dataSet.add(Customer(getNextId(),"Francisco Cabrera", Email("Francisco@gmail.com"),696412057, "Málaga", "Calle Competa 29"))
             dataSet.add(Customer(getNextId(),"Jose Millan", Email("Jose@gmail.com"),604153895, "Málaga", "Calle Competa 29"))
             dataSet.add(Customer(getNextId(),"Pello Mir", Email("Pello@gmail.com"),680259805, "Málaga", "8"))
+            */
         }
     }
 

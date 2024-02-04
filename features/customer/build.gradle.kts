@@ -49,5 +49,5 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     implementation ("com.airbnb.android:lottie:3.4.0")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    //implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 }

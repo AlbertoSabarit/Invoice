@@ -14,6 +14,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerListBinding
@@ -31,63 +32,10 @@ class CustomerListFragment : Fragment(), MenuProvider {
     private var _binding: FragmentCustomerListBinding? = null
     private val binding get() = _binding!!
 
-    private val customerlistviewmodel :CustomerListViewModel by viewModels()
+    private val viewmodel: CustomerListViewModel by viewModels()
 
-    private lateinit var customerAdapter:CustomAdapter
+    private lateinit var customerAdapter: CustomAdapter
 
-    private fun setUpToolbar() {
-        (requireActivity() as? MainActivity)?.toolbar?.apply {
-            visibility = View.VISIBLE
-        }
-
-        val menuhost: MenuHost = requireActivity()
-        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_customer_list, menu)
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when(menuItem.itemId){
-            R.id.action_sortInvoice ->{
-                customerAdapter.sort()
-                return true
-            }
-            R.id.action_refreshInvoice ->{
-                customerlistviewmodel.getCustomerListOrderByName()
-                return true
-            }
-            else-> false
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
-
-        val orderValue = preferences!!.getString("customers", "0")
-
-
-        when (orderValue) {
-            "0" -> {
-                customerlistviewmodel.getCustomerListOrderByName()
-                Snackbar.make(requireView(), "Clientes ordenados por nombre", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            }
-
-            "1" -> {
-                customerlistviewmodel.getCustomerListOrderByEmail()
-                Snackbar.make(requireView(), "Clientes ordenados por email", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,30 +58,94 @@ class CustomerListFragment : Fragment(), MenuProvider {
             appBarConfiguration
         )
 
-        binding.floatingActionButton.setOnClickListener{
+        binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_customerListFragment_to_customerCreationFragment)
         }
         setUpToolbar()
-
         setUpUserRecycler()
 
-        customerlistviewmodel.getState().observe(viewLifecycleOwner){
-            when(it){
+
+        viewmodel.getState().observe(viewLifecycleOwner, Observer {
+            when (it) {
                 CustomerListState.NoDataError -> showNoDataError()
-                is CustomerListState.Success -> onSuccess()
                 CustomerListState.ReferencedCustomer -> showReferencedCustomerError()
                 is CustomerListState.Loading -> showProgressBar(it.value)
+                CustomerListState.Success -> onSuccess()
+            }
+        })
+
+        viewmodel.allCustomers.observe(viewLifecycleOwner, Observer { customers ->
+            if (customers.isNotEmpty()) {
+                hideNoData()
+                customerAdapter.submitList(customers)
+            } else {
+                showNoDataError()
+            }
+        })
+    }
+
+    private fun setUpToolbar() {
+        (requireActivity() as? MainActivity)?.toolbar?.apply {
+            visibility = View.VISIBLE
+        }
+
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_customer_list, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_sortInvoice -> {
+                Snackbar.make(requireView(), "Clientes ordenados por email", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                customerAdapter.sort()
+                return true
+            }
+
+            R.id.action_refreshInvoice -> {
+                Snackbar.make(requireView(), "Clientes ordenados por nombre", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                customerAdapter.submitList(viewmodel.allCustomers.value)
+                return true
+            }
+
+            else -> false
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadList()
+    }
+    private fun loadList() {
+        val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        val orderValue = preferences!!.getString("customers", "0")
+
+
+        when (orderValue) {
+            "0" -> {
+                customerAdapter.sort()
+            }
+            "1" -> {
+                viewmodel.getCustomerList()
             }
         }
     }
-    private fun showProgressBar(value : Boolean){
-        if(value)
-        findNavController().navigate(R.id.action_customerListFragment_to_fragmentProgressDialog)
+
+
+    private fun showProgressBar(value: Boolean) {
+        if (value)
+            findNavController().navigate(R.id.action_customerListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
     }
 
-    private fun showReferencedCustomerError(){
+    private fun showReferencedCustomerError() {
         findNavController().navigate(R.id.action_customerListFragment_to_baseFragmentDialog)
     }
 
@@ -145,35 +157,41 @@ class CustomerListFragment : Fragment(), MenuProvider {
     private fun onSuccess() {
         hideNoData()
     }
-    private fun hideNoData(){
-        binding.lnlSinClientes.visibility=View.GONE
+
+    private fun hideNoData() {
+        binding.lnlSinClientes.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
+    }
+
+    private fun setUpUserRecycler() {
+        customerAdapter =
+            CustomAdapter(requireContext(), { deleteItem(it) }) { customer: Customer ->
+                val bundle = bundleOf(
+                    "id" to customer.id,
+                    "name" to customer.name,
+                    "email" to customer.email.getEmail(),
+                    "phone" to customer.phone,
+                    "city" to customer.city,
+                    "address" to customer.address
+                )
+                findNavController().navigate(
+                    R.id.action_customerListFragment_to_customerDetailFragment,
+                    bundle
+                )
+            }
+        with(binding.recyclerView) {
+            layoutManager = LinearLayoutManager(requireContext())
+            this.adapter = customerAdapter
+        }
+    }
+
+    private fun deleteItem(customer: Customer) {
+        viewmodel.deleteItem(customer)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    private fun setUpUserRecycler(){
-        customerAdapter = CustomAdapter ({deleteItem(it)}) { customer: Customer ->
-            val bundle = bundleOf(
-                "id" to customer.id,
-                "name" to customer.name,
-                "email" to customer.email.getEmail(),
-                "phone" to customer.phone,
-                "city" to customer.city,
-                "address" to customer.address
-            )
-            findNavController().navigate(R.id.action_customerListFragment_to_customerDetailFragment, bundle)
-        }
-        with(binding.recyclerView){
-            layoutManager = LinearLayoutManager(requireContext())
-            //setHasFixedSize(true)
-            this.adapter=customerAdapter
-        }
-    }
-    private fun deleteItem(customer: Customer) {
-        customerlistviewmodel.delete(customer)
-        showNoDataError()
-    }
+
 }

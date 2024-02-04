@@ -10,28 +10,30 @@ import com.murray.data.converter.EmailTypeConverter
 
 @androidx.room.Entity(tableName = "customer")
 data class Customer(
-    @PrimaryKey (autoGenerate = true)
-    override val id: Int=0,
     var name: String,
     @TypeConverters(EmailTypeConverter::class)
     var email: Email,
     var phone: Int?,
     var city: String?,
     var address: String?
-) : Parcelable, Entity(id) {
+) : Parcelable{
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
         parcel.readString()!!,
         parcel.readParcelable(Email::class.java.classLoader)!!,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString()
-    )
+    ){
+        id = parcel.readInt()
+    }
 
-    constructor() : this(0, "", Email(""), null, null, null)
+    constructor() : this( "", Email(""), null, null, null)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeParcelable(email, flags)
         parcel.writeValue(phone)
@@ -59,7 +61,7 @@ data class Customer(
                    city: String?,
                    address: String?
         ): Customer {
-            return Customer(id = id, name = name, email = email, phone = phone, city = city, address = address)
+            return Customer(name = name, email = email, phone = phone, city = city, address = address)
         }
     }
 }

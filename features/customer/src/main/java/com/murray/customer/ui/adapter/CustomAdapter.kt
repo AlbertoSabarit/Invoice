@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.customer.databinding.CardviewLayoutBinding
 import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
 
 class CustomAdapter (
+    private val context: Context,
     private val deleteClickListener: (customer: Customer) -> Unit,
-    private val clickListener: (Customer) -> Unit) :
-    ListAdapter<Customer, CustomAdapter.ListViewHolder>(CUSTOMER_COMPARATOR) {
+    private val clickListener: (Customer) -> Unit
+) : ListAdapter<Customer, CustomAdapter.ListViewHolder>(CUSTOMER_COMPARATOR) {
 
+    private var dataset:ArrayList<Customer> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,7 +25,7 @@ class CustomAdapter (
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, context)
         holder.itemView.setOnClickListener {
             clickListener(item)
         }
@@ -31,21 +34,21 @@ class CustomAdapter (
         }
     }
 
-    inner class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(customer: Customer) {
-            binding.txtCustomer.text = customer.name
-            binding.txtEmail.text = customer.email.getEmail()
+        fun bind(item: Customer, context: Context) {
+            binding.txtCustomer.text = item.name
+            binding.txtEmail.text = item.email.getEmail()
         }
     }
 
     fun sort(){
-        submitList(currentList.sortedBy { it.email.value })
-        notifyDataSetChanged()
+        val sortedCustomerList = currentList.sortedBy { it.email.value}
+        submitList(sortedCustomerList)
     }
 
-    companion object{
-        private val CUSTOMER_COMPARATOR = object: DiffUtil.ItemCallback<Customer>(){
+    companion object {
+        private val CUSTOMER_COMPARATOR = object : DiffUtil.ItemCallback<Customer>() {
             override fun areItemsTheSame(oldItem: Customer, newItem: Customer): Boolean {
                 return oldItem === newItem
             }
@@ -53,8 +56,6 @@ class CustomAdapter (
             override fun areContentsTheSame(oldItem: Customer, newItem: Customer): Boolean {
                 return oldItem.name == newItem.name
             }
-
         }
     }
-
 }

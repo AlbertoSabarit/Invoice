@@ -32,9 +32,7 @@
         tools:layout="@layout/fragment_item_creation" >
         <argument
             android:name="item"
-            app:argType="com.murray.data.items.Item"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.murray.data.items.Item" />
     </fragment>
     <fragment
         android:id="@+id/itemDetailFragment"

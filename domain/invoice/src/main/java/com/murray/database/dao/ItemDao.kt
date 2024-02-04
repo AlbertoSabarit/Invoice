@@ -16,7 +16,7 @@ interface ItemDao {
 
     /*
     @Query("SELECT * FROM item where id = item.id")
-    fun selectItem(itemId: ItemId):Item*/
+    fun selectItem(id: Int):Item*/
 
     @Query ("SELECT * FROM item")
     fun selectAll(): Flow<List<Item>>

@@ -3,35 +3,31 @@ package com.murray.item.ui.itemlist.usecase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.data.items.Item
+import com.murray.database.repository.ItemRepositoryDB
 import com.murray.entities.invoices.Invoice
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.networkstate.ResourceList
 import com.murray.repositories.InvoiceRepository
 import com.murray.repositories.ItemRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ItemListViewModel: ViewModel() {
     private var state = MutableLiveData<ItemListState>()
+    var itemRepository = ItemRepositoryDB()
+    var allTask:LiveData<List<Item>> = itemRepository.getItemList().asLiveData()
 
     fun getState(): LiveData<ItemListState> {
         return state
     }
 
-    fun getItemList(orderRate: Boolean){
-        viewModelScope.launch {
-            state.value = ItemListState.Loading(true)
-            val result = ItemRepository.getItemList()
-            state.value = ItemListState.Loading(false)
-            when(result){
-                is ResourceList.Success<*> -> {
-                    val dataset = result.data as ArrayList<Item>
-                    if (orderRate) dataset.sortBy { it.rate } else dataset.sort()
-                    state.value = ItemListState.Success(result.data as ArrayList<Item>)
-                }
-                is ResourceList.NoData -> state.value = ItemListState.NoDataError
-            }
+    fun getItemList(){
+        when {
+            allTask.value?.isEmpty() == true -> state.value = ItemListState.NoDataError
+            else -> state.value = ItemListState.Success
         }
     }
 
@@ -41,12 +37,13 @@ class ItemListViewModel: ViewModel() {
         return matchResult?.groupValues?.get(1)
     }
 
-    fun deleteItem(item: Item, itemListAdapter:ItemListAdapter) {
-        ItemRepository.getDataSetItem().remove(item)
-        updateItemList(itemListAdapter)
-        checkItemListEmpty()
+    fun deleteItem(item: Item) {
+        viewModelScope.launch(Dispatchers.IO) {
+            itemRepository.delete(item)
+        }
     }
 
+    /*
     fun updateItemList(itemListAdapter:ItemListAdapter){
         itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
     }
@@ -55,7 +52,7 @@ class ItemListViewModel: ViewModel() {
         if (ItemRepository.getDataSetItem().isEmpty()){
             state.value = ItemListState.NoDataError
         }
-    }
+    }*/
 
     fun getInvoiceRepository(): MutableList<Invoice>{
         return InvoiceRepository.dataSet

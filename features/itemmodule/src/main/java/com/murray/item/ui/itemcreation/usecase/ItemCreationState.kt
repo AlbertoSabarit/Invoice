@@ -8,5 +8,6 @@ sealed class ItemCreationState {
 
     //TODO RN-AC5: si un artículo es tasable se le aplicará el IVA que se definirá en la configuración de la aplicación.
     //TODO data object ReferencedItem: ItemCreationState() //RN-AC6: no se puede eliminar un artículo que ya esté en una factura.
+    data class ItemExistsError(var message:String): ItemCreationState()
     data object Success: ItemCreationState()
 }

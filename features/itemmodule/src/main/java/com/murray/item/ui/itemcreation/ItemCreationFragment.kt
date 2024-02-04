@@ -50,18 +50,22 @@ class ItemCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemArgs: Item? = args.item
+        val itemArgs: Item = args.item
         //Log.d("ShowItemUnchanged", itemArgs.toString())
-        if (itemArgs != null) {
+        if (itemArgs.id == -1) {
             //Log.d("ShowItemUnchanged", "Item: $itemArgs")
             showItemUnchangedValuesEdit(itemArgs)
         }
+
+        binding.bItemCreationAddItem.setOnClickListener {
+            viewmodel.validateItemCreation(itemArgs) }
 
         viewmodel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 ItemCreationState.NameEmptyError -> setNameEmptyError()
                 ItemCreationState.InvalidFormatRateError -> setInvalidFormatRateError()
                 ItemCreationState.TypeIsMandatoryError -> setTypeIsMandatoryError()
+                is ItemCreationState.ItemExistsError -> setItemExistsError()
                 else -> onSuccess()
             }
         }
@@ -86,8 +90,8 @@ class ItemCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        val itemArgs: Item? = args.item
-        if (itemArgs == null) {
+        val itemArgs: Item = args.item
+        if (itemArgs.id == -1) {
             with(viewmodel) {
                 val type: ItemType =
                     when (typeSpinnerPosition.value) {
@@ -131,6 +135,10 @@ class ItemCreationFragment : Fragment() {
     private fun setTypeIsMandatoryError() {
         binding.tilItemCreationType.error = "Elige un tipo válido"
         binding.tilItemCreationType.requestFocus()
+    }
+
+    private fun setItemExistsError() {
+        Toast.makeText(requireContext(), "Ya existe el artículo", Toast.LENGTH_SHORT).show()
     }
 
     private fun initImageUri() {

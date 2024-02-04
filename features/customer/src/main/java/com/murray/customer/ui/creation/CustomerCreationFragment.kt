@@ -13,6 +13,9 @@ import com.murray.customer.databinding.FragmentCustomerCreationBinding
 import com.murray.customer.ui.creation.usecase.CustomerCreationState
 import com.murray.customer.ui.LayoutTextWatcher
 import com.murray.customer.ui.creation.usecase.CustomerCreationViewModel
+import com.murray.data.accounts.Email
+import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
 
 
 class CustomerCreationFragment : Fragment() {
@@ -53,7 +56,19 @@ class CustomerCreationFragment : Fragment() {
         binding.button.setOnClickListener() {
             Toast.makeText(requireContext(), R.string.toastMessage, Toast.LENGTH_SHORT).show()
         }
+        /*
+        binding.button.setOnClickListener {
+            val cliente =
+                Customer(
+                    binding.tieName.text.toString(),
+                    Email(binding.tieEmail.text.toString()),
+                    binding.tiePhone.text.toString().toInt(),
+                    binding.tieCity.text.toString(),
+                    binding.tieAddress.text.toString()
+                )
 
+            viewModel.validateCustomer(cliente)
+        }*/
         viewModel.getState().observe(viewLifecycleOwner) {
             when(it){
                 CustomerCreationState.NameIsMandatory -> setNameEmptyError()

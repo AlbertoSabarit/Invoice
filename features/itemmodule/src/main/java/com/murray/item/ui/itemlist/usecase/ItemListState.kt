@@ -4,6 +4,6 @@ import com.murray.data.items.Item
 
 sealed class ItemListState {
     data object NoDataError: ItemListState()
-    data class Success(val dataset: ArrayList<Item>): ItemListState()
+    data object Success: ItemListState()
     data class Loading(val value: Boolean):ItemListState()
 }

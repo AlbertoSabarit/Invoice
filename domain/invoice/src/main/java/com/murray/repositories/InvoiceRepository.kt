@@ -27,9 +27,9 @@ class InvoiceRepository private constructor() {
         private fun initDataSetInvoice():MutableList<Invoice>{
 
             dataSet.add(Invoice(Invoice.lastId++,
-                Customer(CustomerRepository.getNextId(),"Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
+                Customer("Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
                 InvoiceLine(
-                    Item(ItemId(ItemRepository.getNextId()), "Maleta de Cuero",
+                    Item("Maleta de Cuero",
                     ItemType.PRODUCT,
                     60.00,
                     true,

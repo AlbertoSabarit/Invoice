@@ -3,83 +3,40 @@ package com.murray.customer.ui.list.usecase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.customer.ui.adapter.CustomAdapter
 import com.murray.data.customers.Customer
+import com.murray.data.tasks.Task
+import com.murray.database.repository.CustomerRepositoryDB
+import com.murray.database.repository.TaskRepositoryDB
 import com.murray.entities.invoices.Invoice
 import com.murray.networkstate.ResourceList
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.InvoiceRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CustomerListViewModel: ViewModel() {
+
     private var state = MutableLiveData<CustomerListState>()
+    var customerRepository = CustomerRepositoryDB()
+    var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
 
     fun getState(): LiveData<CustomerListState> {
         return state
     }
 
-    fun getCustomerList(){
-        viewModelScope.launch {
-            val result = CustomerRepository.getDataSetCustomer()
-            when(result){
-                is ResourceList.Success<*> -> state.value = CustomerListState.Success(result.data as ArrayList<Customer>)
-                is ResourceList.NoData -> state.value = CustomerListState.NoDataError
-            }
-        }
-    }
-    fun deleteItem(customer: Customer, customerAdapter: CustomAdapter): Boolean {
-        var encontrado: Boolean = false
-        if (InvoiceRepository.dataSet.isNotEmpty()) {
-            for (i in InvoiceRepository.dataSet) {
-                /* Debería implementarse este método, pero invoice no guarda estancias de customer
-            if(i.cliente.id == customer.id)
-                encontrado = true
-             */
-                if (i.cliente.equals(customer.name))
-                    encontrado = true
-            }
-        }
-        if(!encontrado){
-            CustomerRepository.getCustomers().remove(customer)
-            customerAdapter.update(CustomerRepository.getCustomers() as ArrayList<Customer>)
-        }
-        else
-            state.value = CustomerListState.ReferencedCustomer
-
-        return CustomerRepository.getCustomers().isEmpty()
-    }
-    fun getCustomerListOrderByName() {
-        viewModelScope.launch {
-
-            state.value = CustomerListState.Loading(true)
-            val result = CustomerRepository.getDataSetCustomer()
-            state.value = CustomerListState.Loading(false)
-
-            when (result) {
-                is ResourceList.NoData -> state.value = CustomerListState.NoDataError
-                is ResourceList.Success<*> -> {
-                    (result.data as ArrayList<Customer>).sortBy { it.name }
-                    state.value = CustomerListState.Success(result.data as ArrayList<Customer>)
-                }
-            }
-        }
-    }
-    fun getCustomerListOrderByEmail() {
-        viewModelScope.launch {
-
-            state.value = CustomerListState.Loading(true)
-            val result = CustomerRepository.getDataSetCustomer()
-            state.value = CustomerListState.Loading(false)
-
-            when (result) {
-                is ResourceList.NoData -> state.value = CustomerListState.NoDataError
-                is ResourceList.Success<*> -> {
-                    (result.data as ArrayList<Customer>).sortBy { it.email.value }
-                    state.value = CustomerListState.Success(result.data as ArrayList<Customer>)
-                }
-            }
+    fun getCustomerList() {
+        when {
+            allCustomers.value?.isEmpty() == true -> state.value = CustomerListState.NoDataError
+            else -> state.value = CustomerListState.Success
         }
     }
 
+    fun deleteItem(customer: Customer) {
+        viewModelScope.launch(Dispatchers.IO) {
+            customerRepository.delete(customer)
+        }
+    }
 }

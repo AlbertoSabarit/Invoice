@@ -25,7 +25,6 @@ class TaskListViewModel : ViewModel() {
             allTask.value?.isEmpty() == true -> state.value = TaskListState.NoDataError
             else -> state.value = TaskListState.Success
         }
-
     }
 
     fun delete(task: Task) {

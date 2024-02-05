@@ -33,6 +33,8 @@ class TaskCreationFragment : Fragment() {
 
     private lateinit var twatcher: LogInTextWatcher
 
+    private var taskTmp: Task? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,10 +73,6 @@ class TaskCreationFragment : Fragment() {
             showDatePickerFin()
         }
 
-        binding.button.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
         twatcher = LogInTextWatcher(binding.tilTitulo)
         binding.tieTitulo.addTextChangedListener(twatcher)
 
@@ -91,17 +89,17 @@ class TaskCreationFragment : Fragment() {
         binding.button.setOnClickListener {
 
             var cliente = Customer()
-            val clientes: List<Customer> = viewModel.getCustomerList()
 
-            for (c in clientes) {
-                if (c.name ==  binding.spTaskClientes.selectedItem.toString()) {
-                    cliente = c
-                    break
+            viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
+
+                for (c in customers) {
+                    if (c.name == binding.spTaskClientes.selectedItem.toString()) {
+                        cliente = c
+                        break
+                    }
                 }
-            }
 
-            val taskTmp =
-                Task(
+                taskTmp = Task(
                     binding.tieTitulo.text.toString(),
                     cliente,
                     binding.spinnerTipo.selectedItem.toString(),
@@ -111,17 +109,17 @@ class TaskCreationFragment : Fragment() {
                     binding.tieDescripcion.text.toString()
                 )
 
-            viewModel.validateCredentials(taskTmp)
-
-          /*  if (viewModel.task.id == -1) {
-                viewModel.validateCredentials(taskTmp)
-            } else {
-                viewModel.validateCredentials(taskTmp)
-                findNavController().popBackStack()
-                Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
-            }*/
-
+                if (viewModel.task.id == 0) {
+                    Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+                    viewModel.validateCredentials(taskTmp!!)
+                } else {
+                    Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
+                    taskTmp!!.id = viewModel.task.id
+                    viewModel.validateCredentials(taskTmp!!)
+                }
+            }
         }
+
 
         viewModel.getState().observe(
             viewLifecycleOwner,
@@ -132,7 +130,7 @@ class TaskCreationFragment : Fragment() {
                     TaskCreateState.DataIniEmptyError -> setDateIniError()
                     TaskCreateState.DataFinEmptyError -> setDateFinError()
                     TaskCreateState.IncorrectDateRangeError -> setDateRangeError()
-                    is TaskCreateState.TaskExist -> setTaskExist()
+                    is TaskCreateState.TaskError -> setTaskError()
                     is TaskCreateState.Loading -> onLoading(it.value)
                     is TaskCreateState.TaskCreateError -> setErrorCreateTask()
 
@@ -142,18 +140,26 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun initSpinnerClientes() {
-        val nombres: MutableList<String> = viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
+        viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
+            val nombres: MutableList<String> = customers.map { it.name }.sorted().toMutableList()
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spTaskClientes.adapter = adapter
+            val adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, nombres)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spTaskClientes.adapter = adapter
 
-        if (viewModel.task.id != -1) {
-            var pos = nombres.indexOf(viewModel.task.cliente.name)
+            if (viewModel.task.id != -1) {
+                val clienteName = viewModel.task.cliente.name
+                val pos = nombres.indexOf(clienteName)
+                if (pos != -1) {
+                    binding.spTaskClientes.setSelection(pos, false)
+                } else {
 
-            binding.spTaskClientes.setSelection(pos, false)
+                }
+            }
         }
     }
+
 
     private fun initSpinnerTipo() {
         val tipos: Array<String> = arrayOf("Privado", "Llamada", "Visita")
@@ -192,9 +198,9 @@ class TaskCreationFragment : Fragment() {
         }
     }
 
-    private fun setTaskExist() {
-        binding.tilTitulo.error = "Ya existe una tarea con ese título"
-        Toast.makeText(context, "Ya existe una tarea con ese título", Toast.LENGTH_SHORT).show()
+    private fun setTaskError() {
+        //binding.tilTitulo.error = "Ya existe una tarea con ese título"
+        Toast.makeText(context, "Cliente erroneo o inexistente", Toast.LENGTH_SHORT).show()
         binding.tilTitulo.requestFocus()
     }
 
@@ -270,8 +276,13 @@ class TaskCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+
+        val bundle = Bundle()
+        bundle.putParcelable(Task.TAG, taskTmp)
+        parentFragmentManager.setFragmentResult("editTaskResult", bundle)
+
         findNavController().popBackStack()
+
     }
 
     override fun onDestroyView() {

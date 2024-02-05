@@ -34,7 +34,6 @@ class CustomerCreationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentCustomerCreationBinding.inflate(inflater, container, false)
         binding.viewmodel = this.viewModel
         binding.lifecycleOwner = this
@@ -56,7 +55,7 @@ class CustomerCreationFragment : Fragment() {
         binding.button.setOnClickListener() {
             Toast.makeText(requireContext(), R.string.toastMessage, Toast.LENGTH_SHORT).show()
         }
-        /*
+
         binding.button.setOnClickListener {
             val cliente =
                 Customer(
@@ -68,7 +67,7 @@ class CustomerCreationFragment : Fragment() {
                 )
 
             viewModel.validateCustomer(cliente)
-        }*/
+        }
         viewModel.getState().observe(viewLifecycleOwner) {
             when(it){
                 CustomerCreationState.NameIsMandatory -> setNameEmptyError()

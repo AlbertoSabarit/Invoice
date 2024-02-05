@@ -8,6 +8,6 @@ sealed class TaskCreateState {
     data object DataFinEmptyError: TaskCreateState()
     data object Success: TaskCreateState()
     data class TaskCreateError(var message: String): TaskCreateState()
-    data class TaskExist(var message: String): TaskCreateState()
+    data class TaskError(var message: String): TaskCreateState()
     data class Loading(var value: Boolean) : TaskCreateState()
 }

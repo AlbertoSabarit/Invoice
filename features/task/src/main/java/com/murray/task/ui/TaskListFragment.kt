@@ -81,11 +81,6 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
             }
         })
 
-
-        /*  viewmodel.allTask.observe(viewLifecycleOwner) {
-              it.let { taskAdapter.submitList(it) }
-          }*/
-
         viewmodel.allTask.observe(viewLifecycleOwner, Observer { tasks ->
             if (tasks.isNotEmpty()) {
                 hideNoDataError()

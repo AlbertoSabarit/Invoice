@@ -17,7 +17,7 @@ interface TaskDao {
     fun insert(task: Task): Long
 
 
-    @Query("SELECT * FROM task ORDER BY titulo")
+    @Query("SELECT * FROM task ORDER BY cliente")
     fun selectAll(): Flow<List<Task>>
 
     @Update

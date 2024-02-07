@@ -6,12 +6,13 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.murray.data.converter.ItemIdTypeConverter
+import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.converter.UriTypeConverter
 
 @Entity(tableName="item")
 data class Item(
     var name: String,
+    @TypeConverters(ItemTypeConverter::class)
     var type: ItemType,
     var rate: Double,
     var isTaxable: Boolean,
@@ -30,9 +31,7 @@ data class Item(
         parcel.readByte() != 0.toByte(),
         parcel.readString()!!,
         parcel.readParcelable(Uri::class.java.classLoader)
-    ){
-        id = parcel.readInt()
-    }
+    )
     constructor() : this("", ItemType.PRODUCT, 0.0, false, "", null)
 
     override fun compareTo(other: Item): Int {
@@ -40,7 +39,6 @@ data class Item(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeDouble(rate)
         parcel.writeByte(if (isTaxable) 1 else 0)

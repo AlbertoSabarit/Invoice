@@ -77,17 +77,30 @@ class ItemListFragment : Fragment(), MenuProvider {
                 ItemListState.Success -> onSuccess()
             }
         }
+
+        viewmodel.allItem.observe(viewLifecycleOwner) { itemList ->
+            if (itemList.isNotEmpty()) {
+                hideNoDataError()
+                itemListAdapter.submitList(itemList)
+            } else {
+                showNoDataError()
+            }
+        }
+
     }
 
     override fun onStart() {
         super.onStart()
+        loadList()
+    }
 
+    private fun loadList() {
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("items", "0")
 
         when (orderValue) {
             "0" -> {
-                viewmodel.getItemList()
+                itemListAdapter.sortPrecio()
                 Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
             }
@@ -101,6 +114,10 @@ class ItemListFragment : Fragment(), MenuProvider {
     }
 
     private fun onSuccess() {
+        hideNoDataError()
+    }
+
+    private fun hideNoDataError() {
         with(binding) {
             lavNoItems.visibility = View.GONE
             tvItemListEmptyTitle.visibility = View.GONE
@@ -179,7 +196,7 @@ class ItemListFragment : Fragment(), MenuProvider {
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            viewmodel.deleteItem(item)
+            viewmodel.deleteItem(item, itemListAdapter)
         }
     }
 
@@ -204,11 +221,14 @@ class ItemListFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when(menuItem.itemId){
             R.id.action_sortTask ->{
+                Snackbar.make(requireView(),getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG).setAction("Ordenado por precio", null).show()
                 itemListAdapter.sortPrecio()
                 return true
             }
             R.id.action_refreshTask ->{
-                viewmodel.getItemList()
+                Snackbar.make(requireView(),getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG).setAction("Ordenado por nombre", null).show()
+                //viewmodel.getItemList()
+                itemListAdapter.submitList(viewmodel.allItem.value)
                 return true
             }
             else-> false

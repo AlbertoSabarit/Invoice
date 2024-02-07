@@ -13,8 +13,8 @@ class ItemRepositoryDB {
 
     fun insert(item: Item): Resource {
         return try {
-            val itemId = InvoiceDatabase.getInstance().itemDao().insert(item)
-            Resource.Success(itemId)
+            InvoiceDatabase.getInstance().itemDao().insert(item)
+            Resource.Success(item)
         } catch (e: SQLiteException) {
             Resource.Error(e)
         }

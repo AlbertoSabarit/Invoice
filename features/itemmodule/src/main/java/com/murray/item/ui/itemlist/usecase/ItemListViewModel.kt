@@ -15,10 +15,10 @@ import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ItemListViewModel: ViewModel() {
+class ItemListViewModel : ViewModel() {
     private var state = MutableLiveData<ItemListState>()
     var itemRepository = ItemRepositoryDB()
-    var allTask:LiveData<List<Item>> = itemRepository.getItemList().asLiveData()
+    var allItem: LiveData<List<Item>> = itemRepository.getItemList().asLiveData()
 
     fun getState(): LiveData<ItemListState> {
         return state
@@ -26,7 +26,7 @@ class ItemListViewModel: ViewModel() {
 
     fun getItemList(){
         when {
-            allTask.value?.isEmpty() == true -> state.value = ItemListState.NoDataError
+            allItem.value?.isEmpty() == true -> state.value = ItemListState.NoDataError
             else -> state.value = ItemListState.Success
         }
     }
@@ -37,24 +37,13 @@ class ItemListViewModel: ViewModel() {
         return matchResult?.groupValues?.get(1)
     }
 
-    fun deleteItem(item: Item) {
+    fun deleteItem(item: Item, itemListAdapter: ItemListAdapter) {
         viewModelScope.launch(Dispatchers.IO) {
             itemRepository.delete(item)
         }
     }
 
-    /*
-    fun updateItemList(itemListAdapter:ItemListAdapter){
-        itemListAdapter.update(ItemRepository.getDataSetItem() as ArrayList<Item>)
-    }
-
-    fun checkItemListEmpty(){
-        if (ItemRepository.getDataSetItem().isEmpty()){
-            state.value = ItemListState.NoDataError
-        }
-    }*/
-
-    fun getInvoiceRepository(): MutableList<Invoice>{
+    fun getInvoiceRepository(): MutableList<Invoice> {
         return InvoiceRepository.dataSet
     }
 

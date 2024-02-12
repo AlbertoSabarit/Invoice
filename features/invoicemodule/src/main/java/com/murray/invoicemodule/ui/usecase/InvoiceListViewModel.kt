@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.entities.invoices.Invoice
+import com.murray.data.invoices.Invoice
 import com.murray.networkstate.ResourceList
 import com.murray.repositories.InvoiceRepository
 import kotlinx.coroutines.launch
@@ -59,7 +59,7 @@ class InvoiceListViewModel :ViewModel(){
             when (result) {
                 is ResourceList.NoData -> state.value = InvoiceListState.NoDataError
                 is ResourceList.Success<*> -> {
-                    (result.data as ArrayList<Invoice>).sortBy { it.articulo.item.name }
+                    //(result.data as ArrayList<Invoice>).sortBy { it.articulo.item.name }
                     state.value = InvoiceListState.Success(result.data as ArrayList<Invoice>)
                 }
 

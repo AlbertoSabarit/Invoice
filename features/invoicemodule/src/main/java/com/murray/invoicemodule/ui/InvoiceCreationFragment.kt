@@ -18,8 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.data.customers.Customer
 import com.murray.data.items.Item
-import com.murray.entities.invoices.Invoice
-import com.murray.entities.invoices.InvoiceLine
+import com.murray.data.invoices.Invoice
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
@@ -115,11 +114,11 @@ class InvoiceCreationFragment : Fragment() {
         itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spArticulos.adapter = itemadapter
 
-        if (viewModel.invoice.id != -1) {
+        /*if (viewModel.invoice.id != -1) {
             val articulo = ItemRepository.getDataSetItem().find { it.name == viewModel.invoice.articulo.item.name}
             val pos = narticulos.indexOf(articulo?.name ?: "")
             binding.spArticulos.setSelection(pos, false)
-        }
+        }*/
 
         binding.btnMas.setOnClickListener{
             contadorArt++
@@ -202,10 +201,10 @@ class InvoiceCreationFragment : Fragment() {
                 val precio = articulo.rate
 
 
-                val nuevaFactura = Invoice(
+               /* val nuevaFactura = Invoice(
                     id = -2,
                     cliente = cliente,
-                    articulo = InvoiceLine(articulo, contadorArt, iva,precio),
+                    articulo = LineItems(articulo, contadorArt, iva,precio),
                     fcreacion = fCreacion,
                     fvencimiento = fVencimiento
                 )
@@ -218,7 +217,7 @@ class InvoiceCreationFragment : Fragment() {
                     findNavController().popBackStack()
                     Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
                         .show()
-                }
+                }*/
 
             }
         }

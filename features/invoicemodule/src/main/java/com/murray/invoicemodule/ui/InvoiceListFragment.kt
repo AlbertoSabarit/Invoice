@@ -21,7 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.murray.entities.invoices.Invoice
+import com.murray.data.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -138,7 +138,6 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
     private fun onSuccess(dataset: ArrayList<Invoice>){
         hideNoDataError()
-        invoiceAdapter.update(dataset)
     }
 
     private fun hideNoDataError() {

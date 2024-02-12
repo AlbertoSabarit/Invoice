@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -22,7 +21,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.murray.data.items.Item
-import com.murray.entities.invoices.Invoice
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
@@ -218,24 +216,24 @@ class ItemListFragment : Fragment(), MenuProvider {
         ) { _, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
-                validateDeleteItem(item)
+                //validateDeleteItem(item)
             }
         }
         return true
     }
 
-    private fun validateDeleteItem(item: Item) {
-        val dataSet = viewmodel.getInvoiceRepository()
-        if (dataSet.any { invoice: Invoice -> viewmodel.getInvoiceItemName(invoice.articulo.item.name) == item.name }) {
-            Toast.makeText(
-                requireContext(),
-                "No se puede eliminar un artículo asignado a una factura",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            viewmodel.deleteItem(item, itemListAdapter)
-        }
-    }
+    /*   private fun validateDeleteItem(item: Item) {
+           val dataSet = viewmodel.getInvoiceRepository()
+           if (dataSet.any { invoice: Invoice -> viewmodel.getInvoiceItemName(invoice.articulo.item.name) == item.name }) {
+               Toast.makeText(
+                   requireContext(),
+                   "No se puede eliminar un artículo asignado a una factura",
+                   Toast.LENGTH_SHORT
+               ).show()
+           } else {
+               viewmodel.deleteItem(item, itemListAdapter)
+           }
+       }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

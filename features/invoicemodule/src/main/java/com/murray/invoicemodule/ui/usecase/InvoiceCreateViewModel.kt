@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.customers.Customer
 import com.murray.data.items.Item
-import com.murray.entities.invoices.Invoice
+import com.murray.data.invoices.Invoice
 import com.murray.networkstate.Resource
 import com.murray.repositories.CustomerRepository
 import com.murray.repositories.InvoiceRepository
@@ -62,7 +62,7 @@ class InvoiceCreateViewModel:ViewModel() {
           }
       }*/
 
-    fun editInvoice(invoiceTmp: Invoice) {
+   /* fun editInvoice(invoiceTmp: Invoice) {
         for (inv in InvoiceRepository.dataSet) {
             if (inv.id == invoiceTmp.id) {
                 inv.cliente.name = invoiceTmp.cliente.name
@@ -71,7 +71,7 @@ class InvoiceCreateViewModel:ViewModel() {
                 inv.fvencimiento = invoiceTmp.fvencimiento
             }
         }
-    }
+    }*/
     fun addToList(invoice: Invoice){
         InvoiceRepository.addInvoice(invoice)
     }

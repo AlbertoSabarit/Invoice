@@ -2,18 +2,19 @@ package com.murray.data.converter
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.murray.data.items.ItemType
+import com.murray.data.items.Item
+import com.murray.database.InvoiceDatabase
 
 @ProvidedTypeConverter
 class ItemTypeConverter {
-
     @TypeConverter
-    fun fromItemType(itemType: ItemType): String {
-        return itemType.name
+    fun toItem(value: Int): Item {
+        val item = InvoiceDatabase.getInstance().itemDao().selectById(value)
+        return item
     }
 
     @TypeConverter
-    fun toItemType(itemType: String): ItemType {
-        return enumValueOf(itemType)
+    fun fromItem(item: Item): Int {
+        return item.id
     }
 }

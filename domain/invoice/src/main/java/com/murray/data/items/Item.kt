@@ -6,7 +6,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.murray.data.converter.ItemIdTypeConverter
 import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.converter.UriTypeConverter
 
@@ -20,7 +19,7 @@ data class Item(
     var description: String = "",
     @TypeConverters(UriTypeConverter::class)
     var imageUri: Uri? = null,
-    ): Comparable<Item>, Parcelable {
+): Comparable<Item>, Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <dist:module dist:instant="true" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
 
     <application
         android:name=".InvoiceApplication"

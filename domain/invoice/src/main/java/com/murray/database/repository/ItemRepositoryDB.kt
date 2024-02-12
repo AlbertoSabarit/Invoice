@@ -12,6 +12,10 @@ class ItemRepositoryDB {
         return InvoiceDatabase.getInstance().itemDao().selectAll()
     }
 
+    fun getItemByName(name:String): Item {
+        return InvoiceDatabase.getInstance().itemDao().selectByName(name)
+    }
+
     fun insert(item: Item): Resource {
         try {
             InvoiceDatabase.getInstance().itemDao().insert(item)

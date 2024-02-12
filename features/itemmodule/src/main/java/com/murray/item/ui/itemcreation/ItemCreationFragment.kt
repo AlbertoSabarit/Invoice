@@ -15,10 +15,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
-import com.murray.data.customers.Customer
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
-import com.murray.data.tasks.Task
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
@@ -61,18 +59,18 @@ class ItemCreationFragment : Fragment() {
 
             val itemType = binding.sItemCreationType.selectedItem.toString()
 
-                val item =
-                    Item(
-                        binding.tietItemCreationName.text.toString(),
-                        ItemType.valueOf(itemType),
-                        binding.tietItemCreationRate.text.toString().toDouble(),
-                        binding.cbItemCreationTax.isChecked,
-                        binding.tietItemCreationDescr.text.toString(),
-                        selectedImageUri
-                    )
+            val item =
+                Item(
+                    binding.tietItemCreationName.text.toString(),
+                    ItemType.valueOf(itemType),
+                    binding.tietItemCreationRate.text.toString().toDouble(),
+                    binding.cbItemCreationTax.isChecked,
+                    binding.tietItemCreationDescr.text.toString(),
+                    selectedImageUri
+                )
 
-                viewmodel.validateItemCreation(item)
-            }
+            viewmodel.validateItemCreation(item)
+        }
 
 
         viewmodel.getState().observe(viewLifecycleOwner) {
@@ -112,32 +110,32 @@ class ItemCreationFragment : Fragment() {
 
     private fun onSuccess() {
         val itemArgs: Item? = args.item
-       /* if (itemArgs == null) {
-            with(viewmodel) {
-                val type: ItemType =
-                    when (typeSpinnerPosition.value) {
-                        1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT
-                    }
-                viewmodel.addItem(name.value!!, type,  rate.value!!.toDouble(), isTaxable.value ?: false, description.value ?: "", selectedImageUri)
-            }
-            Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
-        } else {
-            with(binding) {
-                itemArgs.name = tietItemCreationName.text.toString()
-                itemArgs.type =
-                    when (sItemCreationType.selectedItemPosition) {
-                        1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT
-                    }
-                itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
-                itemArgs.isTaxable = cbItemCreationTax.isChecked
-                itemArgs.description = tietItemCreationDescr.text.toString()
-                itemArgs.imageUri = selectedImageUri
-                viewmodel.editItem(itemArgs)
-            }
-        }*/
+        /* if (itemArgs == null) {
+             with(viewmodel) {
+                 val type: ItemType =
+                     when (typeSpinnerPosition.value) {
+                         1 -> ItemType.SERVICE
+                         else -> ItemType.PRODUCT
+                     }
+                 viewmodel.addItem(name.value!!, type,  rate.value!!.toDouble(), isTaxable.value ?: false, description.value ?: "", selectedImageUri)
+             }
+             Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
+             findNavController().popBackStack()
+         } else {
+             with(binding) {
+                 itemArgs.name = tietItemCreationName.text.toString()
+                 itemArgs.type =
+                     when (sItemCreationType.selectedItemPosition) {
+                         1 -> ItemType.SERVICE
+                         else -> ItemType.PRODUCT
+                     }
+                 itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
+                 itemArgs.isTaxable = cbItemCreationTax.isChecked
+                 itemArgs.description = tietItemCreationDescr.text.toString()
+                 itemArgs.imageUri = selectedImageUri
+                 viewmodel.editItem(itemArgs)
+             }
+         }*/
 
         Toast.makeText(requireActivity(), "Artículo editado", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()

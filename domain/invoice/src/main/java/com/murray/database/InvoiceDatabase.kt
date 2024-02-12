@@ -13,9 +13,10 @@ import com.murray.data.converter.AccountIdTypeConverter
 import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.converter.EmailTypeConverter
 import com.murray.data.converter.ItemTypeConverter
-import com.murray.data.converter.TaskIdTypeConverter
 import com.murray.data.converter.UriTypeConverter
 import com.murray.data.customers.Customer
+import com.murray.data.invoices.Invoice
+import com.murray.data.invoices.LineItems
 import com.murray.data.items.Item
 import com.murray.data.tasks.Task
 import com.murray.database.dao.AccountDao
@@ -29,7 +30,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 @Database(
@@ -41,8 +41,8 @@ import kotlinx.coroutines.runBlocking
     AccountIdTypeConverter::class,
     EmailTypeConverter::class,
     CustomerTypeConverter::class,
-    UriTypeConverter::class,
-    ItemTypeConverter::class
+    UriTypeConverter::class
+
 )
 abstract class InvoiceDatabase : RoomDatabase() {
 
@@ -75,7 +75,6 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 .addTypeConverter(EmailTypeConverter())
                 .addTypeConverter(CustomerTypeConverter())
                 .addTypeConverter(UriTypeConverter())
-                .addTypeConverter(ItemTypeConverter())
                 .addCallback(
                     RoomDbInitializer(INSTANCE)
                 ).build()

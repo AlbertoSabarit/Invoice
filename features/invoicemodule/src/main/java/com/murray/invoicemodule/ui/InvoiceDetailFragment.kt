@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.murray.entities.invoices.Invoice
+import com.murray.data.invoices.Invoice
 import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
 
@@ -25,12 +25,12 @@ class InvoiceDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.invoice = requireArguments().getParcelable(Invoice.TAG)
+        //binding.invoice = requireArguments().getParcelable(Invoice.TAG)
 
-        val nombreArticulo = binding.invoice!!.articulo!!.item.name
+        //val nombreArticulo = binding.invoice!!.articulo!!.item.name
 
 
-        val cont= binding.invoice!!.articulo!!.count
+        //val cont= binding.invoice!!.articulo!!.count
 
         /* val articuloSeleccionado = ItemRepository.getDataSetItem()?.find { it.name.equals(nombreArticulo) }
 
@@ -51,7 +51,7 @@ class InvoiceDetailFragment : Fragment() {
 
 
 
-        val precioArticulo = binding.invoice!!.articulo!!.price
+        /*val precioArticulo = binding.invoice!!.articulo!!.price
 
         val total: Double = cont * precioArticulo
         binding.txtnArticulo.text = nombreArticulo
@@ -73,7 +73,7 @@ class InvoiceDetailFragment : Fragment() {
                 R.id.action_invoiceDetailFragment_to_invoiceCreationFragment,
                 bundle
             )
-        }
+        }*/
     }
     override fun onDestroyView() {
         super.onDestroyView()

@@ -14,6 +14,7 @@ import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class ItemCreationViewModel : ViewModel() {
     var id = MutableLiveData<Int>()
@@ -42,17 +43,13 @@ class ItemCreationViewModel : ViewModel() {
                 ItemCreationState.TypeIsMandatoryError
 
             else -> {
-                //state.postValue(ItemCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = itemRepository.insert(item)
-                    withContext(Dispatchers.Main) {
-                        //state.postValue(ItemCreateState.Loading(false))
-                    }
 
                     when (result) {
                         is Resource.Error -> {
                             withContext(Dispatchers.Main) {
-                                state.value = ItemCreationState.ItemExistsError(result.exception.message!!)
+                                state.value = ItemCreationState.Error(Exception("Error"))
                             }
                         }
 
@@ -62,13 +59,14 @@ class ItemCreationViewModel : ViewModel() {
                             }
                         }
                     }
-
                 }
             }
         }
     }
+
+
     fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description:String, imageUri: Uri?){
-        itemRepository.insert(Item(name, type, rate, isTaxable, description, imageUri))
+        ItemRepository.addItem(name, type, rate, isTaxable, description, imageUri)
     }
 
     fun editItem(itemArgs: Item) {
@@ -83,4 +81,6 @@ class ItemCreationViewModel : ViewModel() {
             }
         }
     }
+
+
 }

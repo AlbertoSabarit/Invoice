@@ -5,8 +5,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
@@ -28,6 +28,7 @@ class ItemListAdapter(
         return ItemListViewHolder(LayoutItemListBinding.inflate(layoutInflater, parent, false))
     }
 
+
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, context)
@@ -36,14 +37,14 @@ class ItemListAdapter(
             detailClickListener(item)
         }
 
-        holder.itemView.setOnLongClickListener{
+        holder.itemView.setOnLongClickListener {
             deleteClickListener(item)
             true
         }
     }
 
     fun sortPrecio() {
-        val sortedItemList = currentList.sortedBy {it.rate}
+        val sortedItemList = currentList.sortedBy { it.rate}
         submitList(sortedItemList)
     }
 
@@ -52,10 +53,10 @@ class ItemListAdapter(
 
         fun bind(item: Item, context: Context) {
             with(binding) {
-                tvNombreText.text = item.name
+                tvNombreText.text= item.name
                 when (item.type) {
-                    ItemType.PRODUCT -> tvTipoText.text = context.getString(R.string.product_string)
-                    ItemType.SERVICE -> tvTipoText.text = context.getString(R.string.service_string)
+                    ItemType.Producto -> tvTipoText.text = context.getString(R.string.product_string)
+                    ItemType.Servicio -> tvTipoText.text = context.getString(R.string.service_string)
                 }
                 tvImpuestoText.text = if (item.isTaxable) context.getString(R.string.true_string) else context.getString(R.string.false_string)
                 tvPrecioText.text = "${String.format("%.2f", item.rate)}€"
@@ -91,6 +92,7 @@ class ItemListAdapter(
             override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
                 return oldItem.name == newItem.name
             }
+
         }
     }
 

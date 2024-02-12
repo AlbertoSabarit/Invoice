@@ -26,4 +26,6 @@ interface ItemDao {
 
     @Delete
     fun delete(item: Item)
+
+
 }

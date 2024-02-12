@@ -30,7 +30,7 @@ class InvoiceRepository private constructor() {
                 Customer("Alberto Sabarit", Email("alberto@gmail.es"), 620400868, "Rincón de la Victoria", "Calle José María Doblas 4"),
                 InvoiceLine(
                     Item("Maleta de Cuero",
-                    ItemType.PRODUCT,
+                    ItemType.Producto,
                     60.00,
                     true,
                     "Cuero de cabra de grano superior, cosido magistralmente con hilo encerado duradero para garantizar una bolsa de lona duradera. El forro interior de la bolsa es de lona resistente.  Tiene hebillas de latón de alta calidad. Hace que tu bolso se vea muy caro. Sólidos herrajes y construcción.",

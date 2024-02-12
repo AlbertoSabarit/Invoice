@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.murray.data.converter.ItemIdTypeConverter
 import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.converter.UriTypeConverter
 
@@ -19,7 +20,7 @@ data class Item(
     var description: String = "",
     @TypeConverters(UriTypeConverter::class)
     var imageUri: Uri? = null,
-): Comparable<Item>, Parcelable {
+    ): Comparable<Item>, Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
@@ -32,7 +33,7 @@ data class Item(
         parcel.readString()!!,
         parcel.readParcelable(Uri::class.java.classLoader)
     )
-    constructor() : this("", ItemType.PRODUCT, 0.0, false, "", null)
+    constructor() : this("", ItemType.Servicio, 0.0, false, "", null)
 
     override fun compareTo(other: Item): Int {
         return name.compareTo(other.name)

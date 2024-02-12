@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.data.items.Item
+import com.murray.data.tasks.Task
 import com.murray.database.repository.ItemRepositoryDB
+import com.murray.database.repository.TaskRepositoryDB
 import com.murray.entities.invoices.Invoice
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.networkstate.ResourceList
@@ -16,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ItemListViewModel : ViewModel() {
+
     private var state = MutableLiveData<ItemListState>()
     var itemRepository = ItemRepositoryDB()
     var allItem: LiveData<List<Item>> = itemRepository.getItemList().asLiveData()
@@ -24,7 +27,7 @@ class ItemListViewModel : ViewModel() {
         return state
     }
 
-    fun getItemList(){
+    fun getItemList() {
         when {
             allItem.value?.isEmpty() == true -> state.value = ItemListState.NoDataError
             else -> state.value = ItemListState.Success

@@ -35,8 +35,8 @@ class ItemDetailFragment : Fragment() {
         with(binding){
             tvItemDetailName.text = item.name
             when(item.type){
-                ItemType.PRODUCT -> tvItemDetailType.text = context?.getString(R.string.product_string)
-                ItemType.SERVICE -> tvItemDetailType.text = context?.getString(R.string.service_string)
+                ItemType.Producto -> tvItemDetailType.text = context?.getString(R.string.product_string)
+                ItemType.Servicio -> tvItemDetailType.text = context?.getString(R.string.service_string)
             }
             tvItemDetailRate.text = "${String.format("%.2f", item.rate)}€"
             tvItemDetailTaxable.text = if (item.isTaxable) "Sí" else "No"

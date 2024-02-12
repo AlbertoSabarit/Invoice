@@ -7,20 +7,23 @@ import com.murray.networkstate.Resource
 import kotlinx.coroutines.flow.Flow
 
 class ItemRepositoryDB {
+
     fun getItemList(): Flow<List<Item>> {
         return InvoiceDatabase.getInstance().itemDao().selectAll()
     }
 
     fun insert(item: Item): Resource {
-        return try {
+        try {
             InvoiceDatabase.getInstance().itemDao().insert(item)
-            Resource.Success(item)
         } catch (e: SQLiteException) {
-            Resource.Error(e)
+            return Resource.Error(e)
         }
+        return Resource.Success(item)
     }
 
     fun delete(item: Item) {
         InvoiceDatabase.getInstance().itemDao().delete(item)
     }
+
+
 }

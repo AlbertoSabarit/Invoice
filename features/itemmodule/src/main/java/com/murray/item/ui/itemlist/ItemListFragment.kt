@@ -15,6 +15,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -65,18 +66,21 @@ class ItemListFragment : Fragment(), MenuProvider {
             appBarConfiguration
         )
 
+        binding.btnCrearArticulo.setOnClickListener {
+            findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
+        }
+
         setUpToolbar()
         setUpItemRecycler()
-        setUpAddItemListener()
 
 
-        viewmodel.getState().observe(viewLifecycleOwner) {
+        viewmodel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ItemListState.Loading -> showProgressBar(it.value)
                 ItemListState.NoDataError -> showNoDataError()
                 ItemListState.Success -> onSuccess()
             }
-        }
+        })
 
         viewmodel.allItem.observe(viewLifecycleOwner) { itemList ->
             if (itemList.isNotEmpty()) {
@@ -86,7 +90,48 @@ class ItemListFragment : Fragment(), MenuProvider {
                 showNoDataError()
             }
         }
+    }
 
+    private fun setUpToolbar() {
+        (requireActivity() as? MainActivity)?.toolbar?.apply {
+            visibility = View.VISIBLE
+        }
+
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_item_list, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_sortTask -> {
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.snackbar_sort_item_rate),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Ordenado por item", null).show()
+                itemListAdapter.sortPrecio()
+
+                return true
+            }
+
+            R.id.action_refreshTask -> {
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.snackbar_sort_item_name),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Ordenado por nombre", null).show()
+                itemListAdapter.submitList(viewmodel.allItem.value)
+                return true
+            }
+
+            else -> false
+        }
     }
 
     override fun onStart() {
@@ -98,20 +143,21 @@ class ItemListFragment : Fragment(), MenuProvider {
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("items", "0")
 
+
         when (orderValue) {
+
             "0" -> {
                 itemListAdapter.sortPrecio()
-                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
             }
 
             "1" -> {
                 viewmodel.getItemList()
-                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
             }
+
+
         }
     }
+
 
     private fun onSuccess() {
         hideNoDataError()
@@ -142,15 +188,6 @@ class ItemListFragment : Fragment(), MenuProvider {
             findNavController().popBackStack()
     }
 
-    private fun setUpAddItemListener(){
-        binding.btnCrearArticulo.setOnClickListener {
-            val item = Item()
-            item.id = -1
-            val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
-            findNavController().navigate(action)
-        }
-    }
-
     private fun setUpItemRecycler() {
         itemListAdapter =
             ItemListAdapter(
@@ -160,7 +197,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
-            //setHasFixedSize(true)
+            setHasFixedSize(true)
             this.adapter = itemListAdapter
         }
     }
@@ -205,33 +242,4 @@ class ItemListFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
-    private fun setUpToolbar() {
-        (requireActivity() as? MainActivity)?.toolbar?.apply {
-            visibility = View.VISIBLE
-        }
-
-        val menuhost: MenuHost = requireActivity()
-        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_item_list, menu)
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when(menuItem.itemId){
-            R.id.action_sortTask ->{
-                Snackbar.make(requireView(),getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG).setAction("Ordenado por precio", null).show()
-                itemListAdapter.sortPrecio()
-                return true
-            }
-            R.id.action_refreshTask ->{
-                Snackbar.make(requireView(),getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG).setAction("Ordenado por nombre", null).show()
-                //viewmodel.getItemList()
-                itemListAdapter.submitList(viewmodel.allItem.value)
-                return true
-            }
-            else-> false
-        }
-    }
 }

@@ -37,7 +37,7 @@ class ItemCreationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentItemCreationBinding.inflate(inflater, container, false)
-        binding.itemcreationviewmodel = this.viewmodel
+        binding.viewmodel = this.viewmodel
         binding.lifecycleOwner = this
 
         initTextWatcher()
@@ -50,25 +50,23 @@ class ItemCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemArgs: Item? = args.item
-        if (itemArgs != null) {
-            showItemUnchangedValuesEdit(itemArgs)
+        binding.viewmodel!!.itemTemp.value = args.item
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
+
+        if (itemTemp.id != -1) {
+            initUneditedValues()
         }
 
         binding.bItemCreationAddItem.setOnClickListener {
-
             val itemType = binding.sItemCreationType.selectedItem.toString()
-
-            val item =
-                Item(
+            val item = Item(
                     binding.tietItemCreationName.text.toString(),
                     ItemType.valueOf(itemType),
                     binding.tietItemCreationRate.text.toString().toDouble(),
                     binding.cbItemCreationTax.isChecked,
                     binding.tietItemCreationDescr.text.toString(),
                     selectedImageUri
-                )
-
+            )
             viewmodel.validateItemCreation(item)
         }
 
@@ -90,54 +88,32 @@ class ItemCreationFragment : Fragment() {
     }
 
 
-    private fun showItemUnchangedValuesEdit(item: Item) {
+    private fun initUneditedValues() {
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
         with(binding) {
-            val viewmodel = itemcreationviewmodel ?: return
-            //otra manera: itemcreationviewmodel?.name?.value = item.name
-            viewmodel.name.value = item.name
+            val viewmodel = viewmodel ?: return
+            viewmodel.name.value = itemTemp.name
             viewmodel.typeSpinnerPosition.value =
-                when (item.type) {
+                when (itemTemp.type) {
                     ItemType.Producto -> 0
                     ItemType.Servicio -> 1
                     else -> 0 //va a ser uno u otro si o si
                 }
-            viewmodel.rate.value = item.rate.toString()
-            viewmodel.description.value = item.description
-            viewmodel.isTaxable.value = item.isTaxable
-            ivAddImage.setImageURI(item.imageUri)
+            viewmodel.rate.value = itemTemp.rate.toString()
+            viewmodel.description.value = itemTemp.description
+            viewmodel.isTaxable.value = itemTemp.isTaxable
+            ivAddImage.setImageURI(itemTemp.imageUri)
         }
     }
 
     private fun onSuccess() {
-        val itemArgs: Item? = args.item
-        /* if (itemArgs == null) {
-             with(viewmodel) {
-                 val type: ItemType =
-                     when (typeSpinnerPosition.value) {
-                         1 -> ItemType.SERVICE
-                         else -> ItemType.PRODUCT
-                     }
-                 viewmodel.addItem(name.value!!, type,  rate.value!!.toDouble(), isTaxable.value ?: false, description.value ?: "", selectedImageUri)
-             }
-             Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
-             findNavController().popBackStack()
-         } else {
-             with(binding) {
-                 itemArgs.name = tietItemCreationName.text.toString()
-                 itemArgs.type =
-                     when (sItemCreationType.selectedItemPosition) {
-                         1 -> ItemType.SERVICE
-                         else -> ItemType.PRODUCT
-                     }
-                 itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
-                 itemArgs.isTaxable = cbItemCreationTax.isChecked
-                 itemArgs.description = tietItemCreationDescr.text.toString()
-                 itemArgs.imageUri = selectedImageUri
-                 viewmodel.editItem(itemArgs)
-             }
-         }*/
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
+        val toastStr = when(itemTemp.id){
+            -1 -> "Tarea creada"
+            else -> "Tarea editada"
+        }
 
-        Toast.makeText(requireActivity(), "Artículo editado", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }
 

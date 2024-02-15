@@ -32,7 +32,7 @@ data class Item(
         parcel.readString()!!,
         parcel.readParcelable(Uri::class.java.classLoader)
     )
-    constructor() : this("", ItemType.Servicio, 0.0, false, "", null)
+    constructor() : this("", ItemType.Producto, 0.0, false, "", null)
 
     override fun compareTo(other: Item): Int {
         return name.compareTo(other.name)

@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
+import com.murray.item.ui.ItemDetailFragmentArgs
+import com.murray.item.ui.ItemDetailFragmentDirections
 import com.murray.item.ui.itemlist.usecase.ItemListState
 import com.murray.item.ui.itemlist.usecase.ItemListViewModel
 
@@ -34,10 +37,7 @@ class ItemListFragment : Fragment(), MenuProvider {
     private var _binding: FragmentItemListBinding? = null
     private val binding
         get() = _binding!!
-
-
     private val viewmodel: ItemListViewModel by viewModels()
-
     private lateinit var itemListAdapter: ItemListAdapter
 
     private val TAG = "ItemList"
@@ -65,7 +65,10 @@ class ItemListFragment : Fragment(), MenuProvider {
         )
 
         binding.btnCrearArticulo.setOnClickListener {
-            findNavController().navigate(R.id.action_itemListFragment_to_itemCreationFragment)
+            val emptyItem = Item()
+            emptyItem.id = -1
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(emptyItem)
+            findNavController().navigate(action)
         }
 
         setUpToolbar()

@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
+import com.murray.data.tasks.Task
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
@@ -112,8 +113,12 @@ class ItemCreationFragment : Fragment() {
             -1 -> "Tarea creada"
             else -> "Tarea editada"
         }
-
         Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
+
+        val bundle = Bundle()
+        bundle.putParcelable(Item.TAG, itemTemp)
+        parentFragmentManager.setFragmentResult("editItemResult", bundle)
+
         findNavController().popBackStack()
     }
 

@@ -28,13 +28,7 @@ class ItemListViewModel : ViewModel() {
         }
     }
 
-    fun getInvoiceItemName(cadena: String): String? {
-        val regex = Regex("\\d+ x (.+)")
-        val matchResult = regex.find(cadena)
-        return matchResult?.groupValues?.get(1)
-    }
-
-    fun deleteItem(item: Item, itemListAdapter: ItemListAdapter) {
+    fun delete(item: Item) {
         viewModelScope.launch(Dispatchers.IO) {
             itemRepository.delete(item)
         }

@@ -51,6 +51,7 @@ data class Item(
     }
 
     companion object CREATOR : Parcelable.Creator<Item> {
+        val TAG = "Item"
         override fun createFromParcel(parcel: Parcel): Item {
             return Item(parcel)
         }

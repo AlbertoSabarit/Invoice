@@ -14,6 +14,7 @@ import com.murray.data.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
 import com.murray.data.items.ImagesItem
+import com.murray.data.tasks.Task
 
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null
@@ -31,7 +32,27 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         val item: Item = args.item
+        initUI(item)
 
+        binding.bItemDetailEditItem.setOnClickListener {
+            val item: Item = args.item
+            val action = ItemDetailFragmentDirections.actionItemDetailFragmentToItemCreationFragment(item)
+            findNavController().navigate(action)
+        }
+
+        /*
+        parentFragmentManager.setFragmentResultListener(
+            "editItemResult",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val updatedItem = bundle.getParcelable<Item>(Item.TAG)
+            initUI(updatedItem!!)
+            //if (updatedItem != null) item = updatedItem
+            //item = updatedItem!!
+        }*/
+    }
+
+    private fun initUI(item: Item){
         with(binding){
             tvItemDetailName.text = item.name
             when(item.type){
@@ -43,13 +64,6 @@ class ItemDetailFragment : Fragment() {
             tvItemDetailDescr.text = item.description
             initImage(item, ivItemDetail)
         }
-
-        binding.bItemDetailEditItem.setOnClickListener {
-            val item: Item = args.item
-            val action = ItemDetailFragmentDirections.actionItemDetailFragmentToItemCreationFragment(item)
-            findNavController().navigate(action)
-        }
-
     }
 
     private fun initImage(item: Item, imageView: ImageView) {

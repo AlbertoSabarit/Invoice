@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -217,26 +218,17 @@ class ItemListFragment : Fragment(), MenuProvider {
         dialog.parentFragmentManager.setFragmentResultListener(
             BaseFragmentDialog.request, viewLifecycleOwner
         ) { _, bundle ->
-            val result = bundle.getBoolean(BaseFragmentDialog.result)
-            if (result) {
-                //validateDeleteItem(item)
-            }
+            viewmodel.delete(item)
+            viewmodel.getItemList()
+
+            Toast.makeText(
+                requireActivity(),
+                "Artículo ${item.name} borrado con éxito",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         return true
     }
-
-    /*   private fun validateDeleteItem(item: Item) {
-           val dataSet = viewmodel.getInvoiceRepository()
-           if (dataSet.any { invoice: Invoice -> viewmodel.getInvoiceItemName(invoice.articulo.item.name) == item.name }) {
-               Toast.makeText(
-                   requireContext(),
-                   "No se puede eliminar un artículo asignado a una factura",
-                   Toast.LENGTH_SHORT
-               ).show()
-           } else {
-               viewmodel.deleteItem(item, itemListAdapter)
-           }
-       }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

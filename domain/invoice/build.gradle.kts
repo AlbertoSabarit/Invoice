@@ -49,5 +49,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
+    //mockito (uri)
+    testImplementation("org.mockito:mockito-core:3.12.4")
+
 
 }

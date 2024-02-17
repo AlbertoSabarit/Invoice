@@ -110,8 +110,8 @@ class ItemCreationFragment : Fragment() {
     private fun onSuccess() {
         val itemTemp = binding.viewmodel!!.itemTemp.value!!
         val toastStr = when(itemTemp.id){
-            -1 -> "Tarea creada"
-            else -> "Tarea editada"
+            -1 -> "Artículo creado"
+            else -> "Artículo editado"
         }
         Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
 

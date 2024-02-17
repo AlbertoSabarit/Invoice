@@ -5,11 +5,13 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.murray.data.converter.InvoiceTypeConverter
 import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.items.Item
 
 @Entity(tableName = "line_items")
 data class LineItems(
+    @TypeConverters(InvoiceTypeConverter::class)
     val invoice: Invoice,
     @TypeConverters(ItemTypeConverter::class)
     val item: Item,

@@ -12,6 +12,7 @@ import com.murray.data.accounts.User
 import com.murray.data.converter.AccountIdTypeConverter
 import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.converter.EmailTypeConverter
+import com.murray.data.converter.InvoiceTypeConverter
 import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.converter.UriTypeConverter
 import com.murray.data.customers.Customer
@@ -22,7 +23,9 @@ import com.murray.data.tasks.Task
 import com.murray.database.dao.AccountDao
 import com.murray.database.dao.BusinessProfileDao
 import com.murray.database.dao.CustomerDao
+import com.murray.database.dao.InvoiceDao
 import com.murray.database.dao.ItemDao
+import com.murray.database.dao.LineItemsDao
 import com.murray.database.dao.TaskDao
 import com.murray.database.dao.UserDao
 import com.murray.invoice.Locator
@@ -33,7 +36,7 @@ import kotlinx.coroutines.launch
 
 
 @Database(
-    entities = [Account::class, BusinessProfile::class, User::class, Customer::class, Task::class, Item::class],
+    entities = [Account::class, BusinessProfile::class, User::class, Customer::class, Task::class, Item::class, Invoice::class, LineItems::class],
     version = 1,
     exportSchema = false
 )
@@ -41,8 +44,9 @@ import kotlinx.coroutines.launch
     AccountIdTypeConverter::class,
     EmailTypeConverter::class,
     CustomerTypeConverter::class,
-    UriTypeConverter::class
-
+    UriTypeConverter::class,
+    InvoiceTypeConverter::class,
+    ItemTypeConverter::class
 )
 abstract class InvoiceDatabase : RoomDatabase() {
 
@@ -52,6 +56,8 @@ abstract class InvoiceDatabase : RoomDatabase() {
     abstract fun customerDao(): CustomerDao
     abstract fun taskDao(): TaskDao
     abstract fun itemDao(): ItemDao
+    abstract fun invoiceDao(): InvoiceDao
+    abstract fun lineitemsDao():LineItemsDao
 
     companion object {
         @Volatile
@@ -75,6 +81,8 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 .addTypeConverter(EmailTypeConverter())
                 .addTypeConverter(CustomerTypeConverter())
                 .addTypeConverter(UriTypeConverter())
+                .addTypeConverter(InvoiceTypeConverter())
+                .addTypeConverter(ItemTypeConverter())
                 .addCallback(
                     RoomDbInitializer(INSTANCE)
                 ).build()

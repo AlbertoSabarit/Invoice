@@ -8,11 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.data.invoices.Invoice
 
-class InvoiceAdapter(
-    private val listener: onInvoiceClick
-) :
-    ListAdapter<Invoice,InvoiceAdapter.InvoiceViewHolder>(INVOICE_COMPARATOR) {
-
+class InvoiceAdapter(private val listener: onInvoiceClick) : ListAdapter<Invoice,InvoiceViewHolder>(INVOICE_COMPARATOR) {
     interface onInvoiceClick {
         fun clickListener(invoice: Invoice)
         fun userOnLongClickDelete(invoice: Invoice): Boolean
@@ -42,19 +38,7 @@ class InvoiceAdapter(
         submitList(sortedTaskList)
     }
 
-    inner class InvoiceViewHolder(val binding: LayoutInvoiceListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Invoice) {
-            with(binding) {
-                txtnfacturas.text = "Factura "
-                txtncliente.text = item.cliente.name
-                //contArticulos.text = item.articulo.count.toString()
-                //txtnarticulo.text = item.articulo.item.name
-                txtfcreacion.text = item.fcreacion
-                txtfvencimiento.text = item.fvencimiento
-            }
-        }
-    }
+
     companion object {
         private val INVOICE_COMPARATOR = object : DiffUtil.ItemCallback<Invoice>() {
             override fun areItemsTheSame(oldItem: Invoice, newItem: Invoice): Boolean {

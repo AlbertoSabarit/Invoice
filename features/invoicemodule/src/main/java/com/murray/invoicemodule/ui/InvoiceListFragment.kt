@@ -71,7 +71,17 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
             when(it){
                 is InvoiceListState.Loading -> showProgressBar(it.value)
                 InvoiceListState.NoDataError -> showNoDataError()
-                is InvoiceListState.Success -> onSuccess(it.dataset)
+                is InvoiceListState.Success -> onSuccess()
+            }
+        })
+
+
+        viewmodel.allInvoice.observe(viewLifecycleOwner, Observer { invoices ->
+            if (invoices.isNotEmpty()) {
+                hideNoDataError()
+                invoiceAdapter.submitList(invoices)
+            } else {
+                showNoDataError()
             }
         })
     }
@@ -96,7 +106,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
                 return true
             }
             R.id.action_refreshInvoice ->{
-                viewmodel.getInvoiceListOrderByCustomer()
+                viewmodel.getInvoiceList()
                 return true
             }
             else-> false
@@ -113,15 +123,11 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
         when (orderValue) {
             "0" -> {
-                viewmodel.getInvoiceListOrderByItem()
-                Snackbar.make(requireView(), "Factura ordenada por articulo", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                invoiceAdapter.sort()
             }
-
             "1" -> {
-                viewmodel.getInvoiceListOrderByCustomer()
-                Snackbar.make(requireView(), "Factura ordenada por cliente", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                //taskAdapter.submitList(viewmodel.allTask.value)
+                viewmodel.getInvoiceList()
             }
         }
 
@@ -136,7 +142,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
         }
     }
 
-    private fun onSuccess(dataset: ArrayList<Invoice>){
+    private fun onSuccess(){
         hideNoDataError()
     }
 
@@ -179,8 +185,8 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
         ) {_, bundle ->
             val result = bundle.getBoolean(BaseFragmentDialog.result)
             if (result) {
-                viewmodel.removeFromList(invoice)
-                viewmodel.getInvocieList()
+                viewmodel.delete(invoice)
+                viewmodel.getInvoiceList()
             }
         }
         return true

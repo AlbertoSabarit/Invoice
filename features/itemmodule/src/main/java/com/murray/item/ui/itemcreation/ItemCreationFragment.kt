@@ -60,10 +60,12 @@ class ItemCreationFragment : Fragment() {
 
         binding.bItemCreationAddItem.setOnClickListener {
             val itemType = binding.sItemCreationType.selectedItem.toString()
+            val rateStr = viewmodel.rate.value
+            val rate = if (rateStr.isNullOrEmpty()) 0.0 else rateStr.toDouble()
             val item = Item(
                     binding.tietItemCreationName.text.toString(),
                     ItemType.valueOf(itemType),
-                    binding.tietItemCreationRate.text.toString().toDouble(),
+                    rate,
                     binding.cbItemCreationTax.isChecked,
                     binding.tietItemCreationDescr.text.toString(),
                     selectedImageUri

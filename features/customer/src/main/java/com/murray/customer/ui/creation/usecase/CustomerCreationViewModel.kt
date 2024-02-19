@@ -41,7 +41,7 @@ class CustomerCreationViewModel : ViewModel() {
             else -> {
                 //state.postValue(TaskCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = customerRepository.insert(Customer(name.value!!, Email(email.value!!), phone.value!!.toInt(), city.value, address.value))
+                    val result = customerRepository.insert(Customer(name.value!!, Email(email.value!!), phone.value?.toInt(), city.value, address.value))
                     withContext(Dispatchers.Main) {
                         //state.postValue(TaskCreateState.Loading(false))
                     }

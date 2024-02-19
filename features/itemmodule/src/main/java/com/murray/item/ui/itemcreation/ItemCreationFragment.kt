@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
+import com.murray.data.tasks.Task
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
@@ -37,7 +38,7 @@ class ItemCreationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentItemCreationBinding.inflate(inflater, container, false)
-        binding.itemcreationviewmodel = this.viewmodel
+        binding.viewmodel = this.viewmodel
         binding.lifecycleOwner = this
 
         initTextWatcher()
@@ -50,76 +51,77 @@ class ItemCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemArgs: Item = args.item
-        //Log.d("ShowItemUnchanged", itemArgs.toString())
-        if (itemArgs.id == -1) {
-            //Log.d("ShowItemUnchanged", "Item: $itemArgs")
-            showItemUnchangedValuesEdit(itemArgs)
+        binding.viewmodel!!.itemTemp.value = args.item
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
+
+        if (itemTemp.id != -1) {
+            initUneditedValues()
         }
 
         binding.bItemCreationAddItem.setOnClickListener {
-            viewmodel.validateItemCreation(itemArgs) }
+            val itemType = binding.sItemCreationType.selectedItem.toString()
+            val rateStr = viewmodel.rate.value
+            val rate = if (rateStr.isNullOrEmpty()) 0.0 else rateStr.toDouble()
+            val item = Item(
+                    binding.tietItemCreationName.text.toString(),
+                    ItemType.valueOf(itemType),
+                    rate,
+                    binding.cbItemCreationTax.isChecked,
+                    binding.tietItemCreationDescr.text.toString(),
+                    selectedImageUri
+            )
+            viewmodel.validateItemCreation(item)
+        }
+
 
         viewmodel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 ItemCreationState.NameEmptyError -> setNameEmptyError()
                 ItemCreationState.InvalidFormatRateError -> setInvalidFormatRateError()
                 ItemCreationState.TypeIsMandatoryError -> setTypeIsMandatoryError()
-                is ItemCreationState.ItemExistsError -> setItemExistsError()
+                is ItemCreationState.Error -> setError(it.exception)
                 else -> onSuccess()
             }
         }
     }
 
-    private fun showItemUnchangedValuesEdit(item: Item) {
+    private fun setError(exception: Exception) {
+        Toast.makeText(context, "Se ha producido un error ${exception}", Toast.LENGTH_SHORT).show()
+        binding.tietItemCreationName.requestFocus()
+    }
+
+
+    private fun initUneditedValues() {
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
         with(binding) {
-            val viewmodel = itemcreationviewmodel ?: return
-            //otra manera: itemcreationviewmodel?.name?.value = item.name
-            viewmodel.name.value = item.name
+            val viewmodel = viewmodel ?: return
+            viewmodel.name.value = itemTemp.name
             viewmodel.typeSpinnerPosition.value =
-                when (item.type) {
-                    ItemType.PRODUCT -> 0
-                    ItemType.SERVICE -> 1
+                when (itemTemp.type) {
+                    ItemType.Producto -> 0
+                    ItemType.Servicio -> 1
                     else -> 0 //va a ser uno u otro si o si
                 }
-            viewmodel.rate.value = item.rate.toString()
-            viewmodel.description.value = item.description
-            viewmodel.isTaxable.value = item.isTaxable
-            ivAddImage.setImageURI(item.imageUri)
+            viewmodel.rate.value = itemTemp.rate.toString()
+            viewmodel.description.value = itemTemp.description
+            viewmodel.isTaxable.value = itemTemp.isTaxable
+            ivAddImage.setImageURI(itemTemp.imageUri)
         }
     }
 
     private fun onSuccess() {
-        val itemArgs: Item = args.item
-        if (itemArgs.id == -1) {
-            with(viewmodel) {
-                val type: ItemType =
-                    when (typeSpinnerPosition.value) {
-                        1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT
-                    }
-                viewmodel.addItem(name.value!!, type,  rate.value!!.toDouble(), isTaxable.value ?: false, description.value ?: "", selectedImageUri)
-            }
-            Toast.makeText(requireActivity(), "Artículo creado", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
-        } else {
-            with(binding) {
-                itemArgs.name = tietItemCreationName.text.toString()
-                itemArgs.type =
-                    when (sItemCreationType.selectedItemPosition) {
-                        1 -> ItemType.SERVICE
-                        else -> ItemType.PRODUCT
-                    }
-                itemArgs.rate = tietItemCreationRate.text.toString().toDouble()
-                itemArgs.isTaxable = cbItemCreationTax.isChecked
-                itemArgs.description = tietItemCreationDescr.text.toString()
-                itemArgs.imageUri = selectedImageUri
-                viewmodel.editItem(itemArgs)
-            }
-
-            Toast.makeText(requireActivity(), "Artículo editado", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
+        val itemTemp = binding.viewmodel!!.itemTemp.value!!
+        val toastStr = when(itemTemp.id){
+            -1 -> "Artículo creado"
+            else -> "Artículo editado"
         }
+        Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
+
+        val bundle = Bundle()
+        bundle.putParcelable(Item.TAG, itemTemp)
+        parentFragmentManager.setFragmentResult("editItemResult", bundle)
+
+        findNavController().popBackStack()
     }
 
     private fun setNameEmptyError() {
@@ -135,10 +137,6 @@ class ItemCreationFragment : Fragment() {
     private fun setTypeIsMandatoryError() {
         binding.tilItemCreationType.error = "Elige un tipo válido"
         binding.tilItemCreationType.requestFocus()
-    }
-
-    private fun setItemExistsError() {
-        Toast.makeText(requireContext(), "Ya existe el artículo", Toast.LENGTH_SHORT).show()
     }
 
     private fun initImageUri() {

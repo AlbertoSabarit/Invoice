@@ -52,6 +52,8 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         var appBarConfiguration =
             AppBarConfiguration.Builder(R.id.taskListFragment)
                 .setOpenableLayout((requireActivity() as MainActivity).drawer)
@@ -62,16 +64,14 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
             findNavController(),
             appBarConfiguration
         )
-        setUpToolbar()
-        setUpTaskRecycler()
 
         binding.btnCreateTask.setOnClickListener {
-            var bundle = Bundle()
-            findNavController().navigate(
-                R.id.action_taskListFragment_to_taskCreationFragment,
-                bundle
-            )
+            val bundle = Bundle()
+            findNavController().navigate(R.id.action_taskListFragment_to_taskCreationFragment, bundle)
         }
+
+        setUpToolbar()
+        setUpTaskRecycler()
 
         viewmodel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -81,10 +81,14 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
             }
         })
 
-
-        viewmodel.allTask.observe(viewLifecycleOwner) {
-            it.let { taskAdapter.submitList(it) }
-        }
+        viewmodel.allTask.observe(viewLifecycleOwner, Observer { tasks ->
+            if (tasks.isNotEmpty()) {
+                hideNoDataError()
+                taskAdapter.submitList(tasks)
+            } else {
+                showNoDataError()
+            }
+        })
     }
 
     private fun setUpToolbar() {
@@ -103,50 +107,46 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
 
-            R.id.action_refreshTask -> {
-                taskAdapter.submitList(viewmodel.allTask.value)
-                Snackbar.make(requireView(), "Tarea ordenada por nombre", Snackbar.LENGTH_LONG)
+            R.id.action_sortTask -> {
+                Snackbar.make(requireView(), "Tarea ordenada por titulo", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+                taskAdapter.sortPersonalizado()
                 return true
             }
 
-            R.id.action_sortTask -> {
-                taskAdapter.sortPersonalizado()
+            R.id.action_refreshTask -> {
                 Snackbar.make(requireView(), "Tarea ordenada por cliente", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+                taskAdapter.submitList(viewmodel.allTask.value)
                 return true
             }
-
             else -> false
         }
     }
-
     override fun onStart() {
         super.onStart()
+        loadList()
+    }
 
+    private fun loadList(){
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("tasks", "0")
 
-        viewmodel.getTaskList()
-
         when (orderValue) {
-
             "0" -> {
-                viewmodel.getTaskList()
-                Snackbar.make(requireView(), "Tarea ordenada por título", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                taskAdapter.sortPersonalizado()
             }
-
             "1" -> {
+                //taskAdapter.submitList(viewmodel.allTask.value)
                 viewmodel.getTaskList()
-                Snackbar.make(requireView(), "Tarea ordenada por cliente", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
             }
         }
     }
 
+
     private fun onSuccess() {
         hideNoDataError()
+
     }
 
     private fun hideNoDataError() {
@@ -175,7 +175,6 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(requireContext())
-            //setHasFixedSize(true)
             this.adapter = taskAdapter
         }
     }
@@ -214,6 +213,9 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
         return true
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
 

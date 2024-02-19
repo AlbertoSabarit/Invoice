@@ -31,7 +31,7 @@ class CustomerCreationViewModel : ViewModel() {
         return state
     }
 
-    fun validateCustomer() {
+    fun validateCustomer(customer: Customer) {
 
         when {
             TextUtils.isEmpty(name.value) -> state.value = CustomerCreationState.NameIsMandatory
@@ -41,7 +41,8 @@ class CustomerCreationViewModel : ViewModel() {
             else -> {
                 //state.postValue(TaskCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = customerRepository.insert(Customer(name.value!!, Email(email.value!!), phone.value?.toInt(), city.value, address.value))
+                    val result = customerRepository.insert(customer)
+
                     withContext(Dispatchers.Main) {
                         //state.postValue(TaskCreateState.Loading(false))
                     }
@@ -64,11 +65,6 @@ class CustomerCreationViewModel : ViewModel() {
             }
         }
     }
-    /*  fun success(){
-          CustomerRepository.addCustomer(name.value!!, Email(email.value!!), phone.value?.toInt() ?: null, city.value, address.value)
-          state.value = CustomerCreationState.Success
-      }*/
-
     fun validateEmail(value: String?): Boolean{
         val pattern: Pattern = Pattern.compile("^\\S+@\\S+\\.\\S+")
         return pattern.matcher(value).matches()

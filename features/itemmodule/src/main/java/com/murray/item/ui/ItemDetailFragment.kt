@@ -14,6 +14,7 @@ import com.murray.data.items.ItemType
 import com.murray.item.R
 import com.murray.item.databinding.FragmentItemDetailBinding
 import com.murray.data.items.ImagesItem
+import com.murray.data.tasks.Task
 
 class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null
@@ -31,18 +32,7 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         val item: Item = args.item
-
-        with(binding){
-            tvItemDetailName.text = item.name
-            when(item.type){
-                ItemType.PRODUCT -> tvItemDetailType.text = context?.getString(R.string.product_string)
-                ItemType.SERVICE -> tvItemDetailType.text = context?.getString(R.string.service_string)
-            }
-            tvItemDetailRate.text = "${String.format("%.2f", item.rate)}€"
-            tvItemDetailTaxable.text = if (item.isTaxable) "Sí" else "No"
-            tvItemDetailDescr.text = item.description
-            initImage(item, ivItemDetail)
-        }
+        initUI(item)
 
         binding.bItemDetailEditItem.setOnClickListener {
             val item: Item = args.item
@@ -50,6 +40,30 @@ class ItemDetailFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        /*
+        parentFragmentManager.setFragmentResultListener(
+            "editItemResult",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val updatedItem = bundle.getParcelable<Item>(Item.TAG)
+            initUI(updatedItem!!)
+            //if (updatedItem != null) item = updatedItem
+            //item = updatedItem!!
+        }*/
+    }
+
+    private fun initUI(item: Item){
+        with(binding){
+            tvItemDetailName.text = item.name
+            when(item.type){
+                ItemType.Producto -> tvItemDetailType.text = context?.getString(R.string.product_string)
+                ItemType.Servicio -> tvItemDetailType.text = context?.getString(R.string.service_string)
+            }
+            tvItemDetailRate.text = "${String.format("%.2f", item.rate)}€"
+            tvItemDetailTaxable.text = if (item.isTaxable) "Sí" else "No"
+            tvItemDetailDescr.text = item.description
+            initImage(item, ivItemDetail)
+        }
     }
 
     private fun initImage(item: Item, imageView: ImageView) {

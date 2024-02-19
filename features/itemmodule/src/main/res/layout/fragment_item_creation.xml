@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="itemcreationviewmodel"
+            name="viewmodel"
             type="com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel" />
     </data>
 
@@ -37,7 +37,7 @@
                 android:maxLength="30"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@={itemcreationviewmodel.name}" />
+                android:text="@={viewmodel.name}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +63,7 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@={itemcreationviewmodel.rate}" />
+                android:text="@={viewmodel.rate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_top_small"
-            android:checked="@={itemcreationviewmodel.isTaxable}"
+            android:checked="@={viewmodel.isTaxable}"
             android:text="@string/item_taxable_title"
             app:layout_constraintBottom_toTopOf="@+id/tilItemCreationType"
             app:layout_constraintEnd_toStartOf="@+id/gItemCreationEnd"
@@ -104,7 +104,7 @@
                 android:entries="@array/sp_item_creation_type"
                 android:hint="@string/item_type_title"
                 android:padding="@dimen/padding_spinner"
-                android:selectedItemPosition="@={itemcreationviewmodel.typeSpinnerPosition}" />
+                android:selectedItemPosition="@={viewmodel.typeSpinnerPosition}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -127,7 +127,7 @@
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:maxLines="5"
-                android:text="@={itemcreationviewmodel.description}" />
+                android:text="@={viewmodel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Button-->

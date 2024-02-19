@@ -22,6 +22,10 @@ class TaskRepositoryDB {
         }
     }
 
+    fun update(task: Task) {
+        InvoiceDatabase.getInstance().taskDao().update(task)
+    }
+
     fun delete(task: Task) {
         InvoiceDatabase.getInstance().taskDao().delete(task)
     }

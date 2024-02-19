@@ -41,7 +41,7 @@ class TaskAdapter(
 
 
     fun sortPersonalizado() {
-        val sortedTaskList = currentList.sortedBy { it.cliente.name}
+        val sortedTaskList = currentList.sortedBy { it.titulo}
         submitList(sortedTaskList)
     }
 
@@ -53,9 +53,9 @@ class TaskAdapter(
             binding.txtCliente.text = item.cliente.name
             binding.txtTipo.text = item.tipoTarea
             binding.txtEstado.text = item.estado
-
         }
     }
+
     companion object {
         private val TASK_COMPARATOR = object : DiffUtil.ItemCallback<Task>() {
             override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
@@ -63,9 +63,8 @@ class TaskAdapter(
             }
 
             override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-                return oldItem.titulo == newItem.titulo
+                return oldItem.cliente.name == newItem.cliente.name
             }
-
         }
     }
 }

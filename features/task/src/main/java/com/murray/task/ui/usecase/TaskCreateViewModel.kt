@@ -6,12 +6,13 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.data.customers.Customer
 import com.murray.data.tasks.Task
+import com.murray.database.repository.CustomerRepositoryDB
 import com.murray.database.repository.TaskRepositoryDB
 import com.murray.networkstate.Resource
-import com.murray.repositories.CustomerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,67 +31,62 @@ class TaskCreateViewModel : ViewModel() {
     private var state = MutableLiveData<TaskCreateState>()
 
     var taskRepository = TaskRepositoryDB()
+    var customerRepository = CustomerRepositoryDB()
 
     fun getState(): LiveData<TaskCreateState> {
         return state
     }
 
     fun validateCredentials(task: Task) {
-
         when {
             TextUtils.isEmpty(title.value) -> state.value = TaskCreateState.TitleEmptyError
-            TextUtils.isEmpty(description.value) -> state.value =
-                TaskCreateState.DescriptionEmptyError
+            TextUtils.isEmpty(description.value) -> state.value = TaskCreateState.DescriptionEmptyError
 
             TextUtils.isEmpty(fini.value) -> state.value = TaskCreateState.DataIniEmptyError
             TextUtils.isEmpty(ffin.value) -> state.value = TaskCreateState.DataFinEmptyError
-            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value =
-                TaskCreateState.IncorrectDateRangeError
+            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = TaskCreateState.IncorrectDateRangeError
 
             else -> {
-                //state.postValue(TaskCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = taskRepository.insert(task)
-                    withContext(Dispatchers.Main) {
-                        //state.postValue(TaskCreateState.Loading(false))
+                    if (task.id == 0) {
+                        insertNewTask(task)
+                    } else {
+                        editExistingTask(task)
                     }
-
-                    when (result) {
-                        is Resource.Error -> {
-                            withContext(Dispatchers.Main) {
-                                state.value = TaskCreateState.TaskExist(result.exception.message!!)
-                            }
-                        }
-
-                        is Resource.Success<*> -> {
-                            withContext(Dispatchers.Main) {
-                                state.value = TaskCreateState.Success
-                            }
-                        }
-                    }
-
                 }
             }
         }
     }
 
-    fun editTask(taskTmp: Task) {
-     /*   for (t in TaskRepository.dataSet) {
-            if (t.id == task.id) {
+    private suspend fun insertNewTask(task: Task) {
+        val result = taskRepository.insert(task)
 
-                t.titulo = taskTmp.titulo
-                t.cliente.name = taskTmp.cliente.name
-                t.tipoTarea = taskTmp.tipoTarea
-                t.fechaCreacion = taskTmp.fechaCreacion
-                t.fechaFin = taskTmp.fechaFin
-                t.estado = taskTmp.estado
-                t.descripcion = taskTmp.descripcion
-            }
-        }*/
+        withContext(Dispatchers.Main) {
+            handleResult(result)
+        }
     }
 
-    fun getCustomerList(): MutableList<Customer> {
-        return CustomerRepository.getCustomers()
+    private suspend fun editExistingTask(task: Task) {
+        taskRepository.update(task)
+
+        withContext(Dispatchers.Main) {
+            state.value = TaskCreateState.Success
+        }
+    }
+
+    private fun handleResult(result: Resource) {
+        when (result) {
+            is Resource.Error -> {
+                state.value = TaskCreateState.TaskError(result.exception.message!!)
+            }
+            is Resource.Success<*> -> {
+                state.value = TaskCreateState.Success
+            }
+        }
+    }
+    fun getCustomerList(): LiveData<List<Customer>> {
+        var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
+        return  allCustomers
     }
 
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {
@@ -104,6 +100,4 @@ class TaskCreateViewModel : ViewModel() {
             return false
         }
     }
-
-
 }

@@ -14,6 +14,7 @@ import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class ItemCreationViewModel : ViewModel() {
     var id = MutableLiveData<Int>()
@@ -22,6 +23,7 @@ class ItemCreationViewModel : ViewModel() {
     var rate = MutableLiveData<String>() //es string porque se introduce el valor en un edittext
     var isTaxable = MutableLiveData<Boolean>()
     var description = MutableLiveData<String>()
+    var itemTemp = MutableLiveData<Item>()
 
     private var state = MutableLiveData<ItemCreationState>()
 
@@ -42,45 +44,43 @@ class ItemCreationViewModel : ViewModel() {
                 ItemCreationState.TypeIsMandatoryError
 
             else -> {
-                //state.postValue(ItemCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = itemRepository.insert(item)
-                    withContext(Dispatchers.Main) {
-                        //state.postValue(ItemCreateState.Loading(false))
+                    if (itemTemp.value!!.id == -1){
+                        addItem(item)
+                    } else{
+                        item.id = itemTemp.value!!.id
+                        editItem(item)
                     }
-
-                    when (result) {
-                        is Resource.Error -> {
-                            withContext(Dispatchers.Main) {
-                                state.value = ItemCreationState.ItemExistsError(result.exception.message!!)
-                            }
-                        }
-
-                        is Resource.Success<*> -> {
-                            withContext(Dispatchers.Main) {
-                                state.value = ItemCreationState.Success
-                            }
-                        }
-                    }
-
                 }
             }
         }
     }
-    fun addItem(name:String, type:ItemType, rate:Double, isTaxable:Boolean, description:String, imageUri: Uri?){
-        itemRepository.insert(Item(name, type, rate, isTaxable, description, imageUri))
+    private suspend fun addItem(item: Item){
+        val result = itemRepository.insert(item)
+
+        withContext(Dispatchers.Main) {
+            handleResult(result)
+        }
     }
 
-    fun editItem(itemArgs: Item) {
-        for (itemDataset in ItemRepository.getDataSetItem()) {
-            if (itemDataset.id == itemArgs.id) {
-                itemDataset.name = itemArgs.name
-                itemDataset.type = itemArgs.type
-                itemDataset.rate = itemArgs.rate
-                itemDataset.isTaxable = itemArgs.isTaxable
-                itemDataset.description = itemArgs.description
-                itemDataset.imageUri = itemArgs.imageUri
+    private suspend fun editItem(item: Item) {
+        val result = itemRepository.update(item)
+
+        withContext(Dispatchers.Main) {
+            state.value = ItemCreationState.Success
+        }
+    }
+
+    private fun handleResult(result: Resource) {
+        when (result) {
+            is Resource.Error -> {
+                state.value = ItemCreationState.Error(result.exception)
+            }
+            is Resource.Success<*> -> {
+                state.value = ItemCreationState.Success
             }
         }
     }
+
+
 }

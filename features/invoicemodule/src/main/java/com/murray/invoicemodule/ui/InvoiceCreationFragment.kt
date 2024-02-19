@@ -17,13 +17,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.murray.data.customers.Customer
+import com.murray.data.invoices.Invoice
+import com.murray.data.invoices.LineItems
 import com.murray.data.items.Item
-import com.murray.entities.invoices.Invoice
-import com.murray.entities.invoices.InvoiceLine
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
-import com.murray.repositories.ItemRepository
+import kotlinx.coroutines.Delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -65,9 +65,9 @@ class InvoiceCreationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnAnadirArt.setOnClickListener{
+        binding.btnAnadirArt.setOnClickListener {
             binding.cvArticulo.visibility = View.VISIBLE
-            comprobar= true;
+            comprobar = true;
         }
 
         binding.tiefechaIni.setOnClickListener {
@@ -77,93 +77,106 @@ class InvoiceCreationFragment : Fragment() {
             showDatePickerFin()
         }
 
-        val nombres: MutableList<String> = viewModel.getCustomerList().map { it.name }.sorted().toMutableList()
+        viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
+            val nombres: MutableList<String> = customers.map { it.name }.sorted().toMutableList()
 
-        val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
-        cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = cliadapter
+            val cliadapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, nombres)
+            cliadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            binding.spinner.adapter = cliadapter
 
-        if (viewModel.invoice.id != -1) {
-            var pos = nombres.indexOf(viewModel.invoice.cliente.name)
-            binding.spinner.setSelection(pos, false)
+            if (viewModel.invoice.id != -1) {
+                val clienteName = viewModel.invoice.cliente.name
+                val pos = nombres.indexOf(clienteName)
+                if (pos != -1) {
+                    binding.spinner.setSelection(pos, false)
+                } else {
+
+                }
+            }
         }
 
-        binding.imgQuitarArticulo.setOnClickListener{
+        binding.imgQuitarArticulo.setOnClickListener {
             binding.txtparticulo.text = ""
             binding.txtptotal.text = ""
-            binding.txtnArticulo.text =""
+            binding.txtnArticulo.text = ""
             binding.txtparticulototal.text = ""
             binding.txtpsubtotal.text = ""
             binding.txtpimpuestos.text = ""
             binding.txtnArticulo.text = ""
-            binding.contArt.text= ""
+            binding.contArt.text = ""
             binding.imgQuitarArticulo.visibility = View.GONE
             binding.txtSubtotal.visibility = View.GONE
             binding.txtImpuesto.visibility = View.GONE
             binding.txtTotal.visibility = View.GONE
         }
 
-        twatcher= LogInTextWatcher(binding.tilFechaIni)
+        twatcher = LogInTextWatcher(binding.tilFechaIni)
         binding.tiefechaIni.addTextChangedListener(twatcher)
 
-        twatcher= LogInTextWatcher(binding.tilFechaFin)
+        twatcher = LogInTextWatcher(binding.tilFechaFin)
         binding.tiefechaFin.addTextChangedListener(twatcher)
 
-        val narticulos:  MutableList<String> = ItemRepository.getDataSetItem().map { it.name }.sorted().toMutableList()
+        viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+            val narticulos: MutableList<String> = articulos.map { it.name }.sorted().toMutableList()
 
-        val itemadapter = ArrayAdapter(requireContext(),R.layout.simple_spinner_item, narticulos)
-        itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.spArticulos.adapter = itemadapter
+            val itemadapter =
+                ArrayAdapter(requireContext(), R.layout.simple_spinner_item, narticulos)
+            itemadapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            binding.spArticulos.adapter = itemadapter
 
-        if (viewModel.invoice.id != -1) {
-            val articulo = ItemRepository.getDataSetItem().find { it.name == viewModel.invoice.articulo.item.name}
-            val pos = narticulos.indexOf(articulo?.name ?: "")
-            binding.spArticulos.setSelection(pos, false)
-        }
 
-        binding.btnMas.setOnClickListener{
-            contadorArt++
-            binding.contArt.text = contadorArt.toString()
-            updatePrecioTotal()
-            itemadapter.notifyDataSetChanged()
-        }
-
-        binding.btnMenos.setOnClickListener{
-            if(contadorArt>1) {
-                contadorArt--
+            binding.btnMas.setOnClickListener {
+                contadorArt++
                 binding.contArt.text = contadorArt.toString()
                 updatePrecioTotal()
                 itemadapter.notifyDataSetChanged()
             }
-        }
 
-        binding.spArticulos.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                val selectedArticulo = parentView.getItemAtPosition(position).toString()
-                val articuloSeleccionado = ItemRepository.getDataSetItem().find { it.name == selectedArticulo }
-
-
-                if (articuloSeleccionado != null) {
-                    precioActualArticulo = articuloSeleccionado.rate
-                    binding.imgQuitarArticulo.visibility = View.VISIBLE
-                    binding.txtSubtotal.visibility = View.VISIBLE
-                    binding.txtImpuesto.visibility = View.VISIBLE
-                    binding.txtTotal.visibility = View.VISIBLE
+            binding.btnMenos.setOnClickListener {
+                if (contadorArt > 1) {
+                    contadorArt--
+                    binding.contArt.text = contadorArt.toString()
                     updatePrecioTotal()
-                    binding.txtnArticulo.text = articuloSeleccionado.name
-                    binding.txtparticulo.text = articuloSeleccionado.rate.toString()
-
+                    itemadapter.notifyDataSetChanged()
                 }
-                itemadapter.notifyDataSetChanged()
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-            }
+            binding.spArticulos.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parentView: AdapterView<*>,
+                        selectedItemView: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val selectedArticulo = parentView.getItemAtPosition(position).toString()
+                        val articuloSeleccionado =
+                            articulos.find { it.name == selectedArticulo }
+
+
+                        if (articuloSeleccionado != null) {
+                            precioActualArticulo = articuloSeleccionado.rate
+                            binding.imgQuitarArticulo.visibility = View.VISIBLE
+                            binding.txtSubtotal.visibility = View.VISIBLE
+                            binding.txtImpuesto.visibility = View.VISIBLE
+                            binding.txtTotal.visibility = View.VISIBLE
+                            updatePrecioTotal()
+                            binding.txtnArticulo.text = articuloSeleccionado.name
+                            binding.txtparticulo.text = articuloSeleccionado.rate.toString()
+
+                        }
+                        itemadapter.notifyDataSetChanged()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                    }
+                }
         }
 
 
         viewModel.getState().observe(viewLifecycleOwner, Observer {
-            when(it){
+            when (it) {
                 InvoiceCreateState.DataIniEmptyError -> setDateIniError()
                 InvoiceCreateState.DataFinEmptyError -> setDateFinError()
                 InvoiceCreateState.IncorrectDateRangeError -> setDateRangeError()
@@ -176,53 +189,61 @@ class InvoiceCreationFragment : Fragment() {
         binding.btnGuardarFactura.setOnClickListener {
             if (comprobar == true) {
                 var cliente = Customer()
-                val clientes: List<Customer> = viewModel.getCustomerList()
-
-                for (c in clientes) {
-                    if (c.name == binding.spinner.selectedItem.toString()) {
-                        cliente = c
-                        break
-                    }
-                }
-
                 var articulo = Item()
-                val articulos: List<Item> = viewModel.getItemList()
+                var factura = Invoice()
+                var lineItems = LineItems()
+                val iva = 21
+                viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
 
-                for (a in articulos) {
-                    if (a.name == binding.spArticulos.selectedItem.toString()) {
-                        articulo = a
-                        break
+                    for (c in customers) {
+                        if (c.name == binding.spinner.selectedItem.toString()) {
+                            cliente = c
+                            break
+                        }
+                    }
+                    val fCreacion = binding.tiefechaIni.text.toString()
+                    val fVencimiento = binding.tiefechaFin.text.toString()
+
+                    val nuevaFactura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf(lineItems))
+                    viewModel.validateCredentials(nuevaFactura!!)
+                    viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+                        for (a in articulos) {
+                            if (a.name == binding.spArticulos.selectedItem.toString()) {
+                                articulo = a
+                                break
+                            }
+                        }
+                    }
+
+                    viewModel.getInvoiceList().observe(viewLifecycleOwner) { facturas ->
+                        for (a in facturas) {
+                            if ( a == nuevaFactura) {
+                                factura = a
+                                break
+                            }
+                        }
+                    }
+
+                    lineItems =  LineItems(factura, articulo, contadorArt, articulo.rate,  articulo.description, iva)
+                    viewModel.insertLineItem(lineItems)
+                    if (viewModel.invoice.id == 0) {
+                        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else {
+                        Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
+                            .show()
+                        nuevaFactura!!.id = viewModel.invoice.id
+                        //viewModel.update(nuevaFactura!!)
                     }
                 }
-
-                val fCreacion = binding.tiefechaIni.text.toString()
-                val fVencimiento = binding.tiefechaFin.text.toString()
-
-                val iva = 21
-                val precio = articulo.rate
-
-
-                val nuevaFactura = Invoice(
-                    id = -2,
-                    cliente = cliente,
-                    articulo = InvoiceLine(articulo, contadorArt, iva,precio),
-                    fcreacion = fCreacion,
-                    fvencimiento = fVencimiento
-                )
-
-                if (viewModel.invoice.id == -1) {
-                    nuevaFactura.id = Invoice.lastId++
-                    viewModel.validateCredentials(nuevaFactura)
-                } else {
-                    viewModel.editInvoice(nuevaFactura)
-                    findNavController().popBackStack()
-                    Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
             }
         }
+
+
     }
+
+
 
 
     private fun setErrorCreateInvoice() {

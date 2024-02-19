@@ -65,9 +65,18 @@ class UserListFragment : Fragment(), UserAdapter.OnUserClick, MenuProvider {
         //Este observador se ejecutará siempre que haya cambios en la tabla user de la base de datos
         //El adapter se actualiza a través del COMPARATOR del adapter
 
-        viewmodel.allUser.observe(viewLifecycleOwner) {
+      /*  viewmodel.allUser.observe(viewLifecycleOwner) {
             it.let { userAdapter.submitList(it) }
         }
+*/
+        viewmodel.allUser.observe(viewLifecycleOwner, Observer { tasks ->
+            if (tasks.isNotEmpty()) {
+                hideNoDataError()
+                userAdapter.submitList(tasks)
+            } else {
+                showNoDataError()
+            }
+        })
 
     }
 

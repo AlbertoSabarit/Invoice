@@ -33,9 +33,8 @@ class TaskDetailFragment : Fragment() {
         binding.task = requireArguments().getParcelable(Task.TAG)
 
         binding.btnEditar.setOnClickListener {
-
             var bundle = Bundle()
-           bundle.putParcelable(Task.TAG, binding.task)
+            bundle.putParcelable(Task.TAG, binding.task)
 
             findNavController().navigate(
                 R.id.action_taskDetailFragment_to_taskCreationFragment,
@@ -43,11 +42,17 @@ class TaskDetailFragment : Fragment() {
             )
         }
 
+        parentFragmentManager.setFragmentResultListener(
+            "editTaskResult",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val updatedTask = bundle.getParcelable<Task>(Task.TAG)
+            binding.task = updatedTask
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

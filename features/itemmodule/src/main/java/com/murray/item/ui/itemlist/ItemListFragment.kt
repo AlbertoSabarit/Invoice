@@ -15,18 +15,21 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.murray.data.items.Item
-import com.murray.entities.invoices.Invoice
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
 import com.murray.item.R
 import com.murray.item.adapter.ItemListAdapter
 import com.murray.item.databinding.FragmentItemListBinding
+import com.murray.item.ui.ItemDetailFragmentArgs
+import com.murray.item.ui.ItemDetailFragmentDirections
 import com.murray.item.ui.itemlist.usecase.ItemListState
 import com.murray.item.ui.itemlist.usecase.ItemListViewModel
 
@@ -35,10 +38,7 @@ class ItemListFragment : Fragment(), MenuProvider {
     private var _binding: FragmentItemListBinding? = null
     private val binding
         get() = _binding!!
-
-
     private val viewmodel: ItemListViewModel by viewModels()
-
     private lateinit var itemListAdapter: ItemListAdapter
 
     private val TAG = "ItemList"
@@ -65,42 +65,107 @@ class ItemListFragment : Fragment(), MenuProvider {
             appBarConfiguration
         )
 
+        binding.btnCrearArticulo.setOnClickListener {
+            val emptyItem = Item()
+            emptyItem.id = -1
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(emptyItem)
+            findNavController().navigate(action)
+        }
+
         setUpToolbar()
         setUpItemRecycler()
-        setUpAddItemListener()
 
 
-        viewmodel.getState().observe(viewLifecycleOwner) {
+        viewmodel.getState().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is ItemListState.Loading -> showProgressBar(it.value)
                 ItemListState.NoDataError -> showNoDataError()
                 ItemListState.Success -> onSuccess()
             }
+        })
+
+        viewmodel.allItem.observe(viewLifecycleOwner) { itemList ->
+            if (itemList.isNotEmpty()) {
+                hideNoDataError()
+                itemListAdapter.submitList(itemList)
+            } else {
+                showNoDataError()
+            }
+        }
+    }
+
+    private fun setUpToolbar() {
+        (requireActivity() as? MainActivity)?.toolbar?.apply {
+            visibility = View.VISIBLE
+        }
+
+        val menuhost: MenuHost = requireActivity()
+        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_item_list, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_sortTask -> {
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.snackbar_sort_item_rate),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Ordenado por item", null).show()
+                itemListAdapter.sortPrecio()
+
+                return true
+            }
+
+            R.id.action_refreshTask -> {
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.snackbar_sort_item_name),
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Ordenado por nombre", null).show()
+                itemListAdapter.submitList(viewmodel.allItem.value)
+                return true
+            }
+
+            else -> false
         }
     }
 
     override fun onStart() {
         super.onStart()
+        loadList()
+    }
 
+    private fun loadList() {
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("items", "0")
 
+
         when (orderValue) {
+
             "0" -> {
-                viewmodel.getItemList()
-                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_name), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                itemListAdapter.sortPrecio()
             }
 
             "1" -> {
                 viewmodel.getItemList()
-                Snackbar.make(requireView(), getString(R.string.snackbar_sort_item_rate), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
             }
+
+
         }
     }
 
+
     private fun onSuccess() {
+        hideNoDataError()
+    }
+
+    private fun hideNoDataError() {
         with(binding) {
             lavNoItems.visibility = View.GONE
             tvItemListEmptyTitle.visibility = View.GONE
@@ -125,15 +190,6 @@ class ItemListFragment : Fragment(), MenuProvider {
             findNavController().popBackStack()
     }
 
-    private fun setUpAddItemListener(){
-        binding.btnCrearArticulo.setOnClickListener {
-            val item = Item()
-            item.id = -1
-            val action = ItemListFragmentDirections.actionItemListFragmentToItemCreationFragment(item)
-            findNavController().navigate(action)
-        }
-    }
-
     private fun setUpItemRecycler() {
         itemListAdapter =
             ItemListAdapter(
@@ -143,7 +199,7 @@ class ItemListFragment : Fragment(), MenuProvider {
 
         with(binding.rvItemList) {
             layoutManager = LinearLayoutManager(requireContext())
-            //setHasFixedSize(true)
+            setHasFixedSize(true)
             this.adapter = itemListAdapter
         }
     }
@@ -162,25 +218,16 @@ class ItemListFragment : Fragment(), MenuProvider {
         dialog.parentFragmentManager.setFragmentResultListener(
             BaseFragmentDialog.request, viewLifecycleOwner
         ) { _, bundle ->
-            val result = bundle.getBoolean(BaseFragmentDialog.result)
-            if (result) {
-                validateDeleteItem(item)
-            }
-        }
-        return true
-    }
+            viewmodel.delete(item)
+            viewmodel.getItemList()
 
-    private fun validateDeleteItem(item: Item) {
-        val dataSet = viewmodel.getInvoiceRepository()
-        if (dataSet.any { invoice: Invoice -> viewmodel.getInvoiceItemName(invoice.articulo.item.name) == item.name }) {
             Toast.makeText(
-                requireContext(),
-                "No se puede eliminar un artículo asignado a una factura",
+                requireActivity(),
+                "Artículo ${item.name} borrado con éxito",
                 Toast.LENGTH_SHORT
             ).show()
-        } else {
-            viewmodel.deleteItem(item)
         }
+        return true
     }
 
     override fun onDestroyView() {
@@ -188,30 +235,4 @@ class ItemListFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
-    private fun setUpToolbar() {
-        (requireActivity() as? MainActivity)?.toolbar?.apply {
-            visibility = View.VISIBLE
-        }
-
-        val menuhost: MenuHost = requireActivity()
-        menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_item_list, menu)
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when(menuItem.itemId){
-            R.id.action_sortTask ->{
-                itemListAdapter.sortPrecio()
-                return true
-            }
-            R.id.action_refreshTask ->{
-                viewmodel.getItemList()
-                return true
-            }
-            else-> false
-        }
-    }
 }

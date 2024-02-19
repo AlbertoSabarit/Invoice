@@ -6,17 +6,14 @@ import androidx.room.TypeConverter
 
 @ProvidedTypeConverter
 class UriTypeConverter {
+
     @TypeConverter
     fun toUri(value: String?): Uri? {
-        return if (value == null){
-            null
-        } else{
-            Uri.parse(value)
-        }
+        return value?.let { Uri.parse(it) }
     }
 
     @TypeConverter
-    fun fromUri(uri: Uri?): String?{
+    fun fromUri(uri: Uri?): String? {
         return uri?.toString()
     }
 }

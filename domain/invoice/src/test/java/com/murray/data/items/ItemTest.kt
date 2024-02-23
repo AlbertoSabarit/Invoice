@@ -20,9 +20,39 @@ class ItemTest {
     }
 
     @Test
+    fun crearItem_comprobacionItemType_True() {
+        val item1 = Item("Item1", ItemType.Producto, 10.0, false, "")
+        val item2 = Item("Item2", ItemType.Servicio, 15.0, true, "")
+
+        assertTrue(item1.type == ItemType.Producto)
+        assertTrue(item2.type == ItemType.Servicio)
+    }
+
+    @Test
+    fun crearItem_comprobacionId_True() {
+        val item1 = Item("Item1", ItemType.Producto, 10.0, false, "")
+        val item2 = Item("Item2", ItemType.Servicio, 15.0, true, "")
+
+        assertTrue(item1.id >= 0)
+        assertTrue(item2.id >= 0)
+    }
+
+    @Test
+    fun crearItem_comprobacionConstructorVacio_True() {
+        val item = Item()
+
+        assertEquals("", item.name)
+        assertEquals(ItemType.Producto, item.type)
+        assertEquals(0.0, item.rate, 0.0)
+        assertEquals(false, item.isTaxable)
+        assertEquals("", item.description)
+        assertEquals(null, item.imageUri)
+    }
+
+    @Test
     fun compareTo_item1MayorItem2_True() {
         val item1 = Item("Item1", ItemType.Producto, 10.0, false, "")
-        val item2 = Item("Item2", ItemType.Producto, 15.0, true, "")
+        val item2 = Item("Item2", ItemType.Servicio, 15.0, true, "")
 
         assertEquals(-1, item1.compareTo(item2))
         assertEquals(1, item2.compareTo(item1))

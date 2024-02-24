@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.murray.data.invoices.Invoice
-import com.murray.data.tasks.Task
 import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel

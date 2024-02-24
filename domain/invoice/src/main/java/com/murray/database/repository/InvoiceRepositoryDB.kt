@@ -20,6 +20,14 @@ class InvoiceRepositoryDB {
         }
     }
 
+    fun insert2(invoice: Invoice): Long { // Cambiar el tipo de retorno a Long para representar el ID de la factura
+        return try {
+            val invoiceId = InvoiceDatabase.getInstance().invoiceDao().insert(invoice)
+            invoiceId // Devolver el ID de la factura insertada
+        } catch (e: SQLiteException) {
+            -1 // Devolver un valor negativo para indicar un error
+        }
+    }
     fun update(invoice: Invoice) {
         InvoiceDatabase.getInstance().invoiceDao().update(invoice)
     }

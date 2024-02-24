@@ -20,7 +20,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.murray.data.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoice.ui.MainActivity

@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
     EmailTypeConverter::class,
     CustomerTypeConverter::class,
     UriTypeConverter::class,
-    InvoiceTypeConverter::class,
+  //  InvoiceTypeConverter::class,
     ItemTypeConverter::class
 )
 abstract class InvoiceDatabase : RoomDatabase() {
@@ -81,7 +81,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 .addTypeConverter(EmailTypeConverter())
                 .addTypeConverter(CustomerTypeConverter())
                 .addTypeConverter(UriTypeConverter())
-                .addTypeConverter(InvoiceTypeConverter())
+                //.addTypeConverter(InvoiceTypeConverter())
                 .addTypeConverter(ItemTypeConverter())
                 .addCallback(
                     RoomDbInitializer(INSTANCE)

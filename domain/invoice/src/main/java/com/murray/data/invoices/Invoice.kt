@@ -8,7 +8,12 @@ import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import androidx.room.TypeConverters
+import com.murray.data.accounts.Account
+import com.murray.data.accounts.AccountId
+import com.murray.data.accounts.AccountState
+import com.murray.data.accounts.Email
 import com.murray.data.converter.CustomerTypeConverter
 
 @Entity(tableName = "invoice",
@@ -33,7 +38,7 @@ data class Invoice(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    constructor() : this(Customer(), "", "", ArrayList())
+    constructor() : this(Customer("", Email(""), 1, null, null), "", "", arrayListOf())
 
 
     constructor(parcel: Parcel) : this(
@@ -44,7 +49,6 @@ data class Invoice(
     ) {
         id = parcel.readInt()
     }
-
 
     override fun compareTo(other: Invoice): Int {
         return fcreacion.compareTo(other.fcreacion)
@@ -75,5 +79,21 @@ data class Invoice(
         fun createDefaultInvoice(): Invoice {
             return Invoice(Customer(), "", "", ArrayList())
         }
+
+            fun create(
+                cliente: Customer,
+                fcreacion: String,
+                fvencimiento: String,
+                lineItems: ArrayList<LineItems>,
+            ): Invoice {
+                return Invoice(
+                    cliente = cliente,
+                    fcreacion = fcreacion,
+                    fvencimiento = fvencimiento,
+                    lineItems = lineItems
+                )
+            }
+
+
     }
 }

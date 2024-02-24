@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.murray.data.invoices.Invoice
+import com.murray.data.invoices.LineItems
 
 class InvoiceAdapter(private val listener: onInvoiceClick) : ListAdapter<Invoice,InvoiceViewHolder>(INVOICE_COMPARATOR) {
     interface onInvoiceClick {

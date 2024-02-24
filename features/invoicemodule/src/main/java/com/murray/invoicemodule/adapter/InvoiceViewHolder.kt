@@ -12,15 +12,19 @@ class InvoiceViewHolder(val binding: LayoutInvoiceListBinding) : RecyclerView.Vi
             txtncliente.text = item.cliente.name
             //contArticulos.text = item.articulo.count.toString()
             //txtnarticulo.text =
-            //val cantidadArticulos = item.lineItems.sumBy { it.cantidad }
-            //contArticulos.text = cantidadArticulos.toString()
+            //txtnarticulo.text = item.lineItems.item.name
 
-            if (item.lineItems.isNotEmpty()) {
-                val nombreArticulo = item.lineItems[0].item.name
-                txtnarticulo.text = nombreArticulo
+            if (!item.lineItems.isNullOrEmpty()) {
+                // Obtiene el primer LineItems de la lista
+                val firstLineItem = item.lineItems[0]
+                // Establece el nombre del artículo en el TextView
+                txtnarticulo.text = firstLineItem.item.name
             } else {
-                txtnarticulo.text = "No hay artículo"
+                // Si la lista de lineItems está vacía, muestra un mensaje
+                txtnarticulo.text = "No hay artículos"
             }
+
+
 
             txtfcreacion.text = item.fcreacion
             txtfvencimiento.text = item.fvencimiento

@@ -51,6 +51,6 @@ dependencies {
 
     //mockito (uri)
     testImplementation("org.mockito:mockito-core:3.12.4")
-
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
 
 }

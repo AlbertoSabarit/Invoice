@@ -35,4 +35,8 @@
 
     <string name="snackbar_sort_item_name">Items sorted by name</string>
     <string name="snackbar_sort_item_rate">Items sorted by rate</string>
+    <string name="notif_item_text_context">Action completed successfully</string>
+    <string name="item_create_success">Item added</string>
+    <string name="item_edit_success">Item edited</string>
+    <string name="notif_item_delete_title">Item %1$s deleted</string>
 </resources>

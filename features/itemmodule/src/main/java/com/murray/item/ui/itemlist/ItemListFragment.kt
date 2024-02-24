@@ -1,6 +1,8 @@
 package com.murray.item.ui.itemlist
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -22,6 +24,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.items.Item
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -221,13 +225,18 @@ class ItemListFragment : Fragment(), MenuProvider {
             viewmodel.delete(item)
             viewmodel.getItemList()
 
-            Toast.makeText(
-                requireActivity(),
-                "Artículo ${item.name} borrado con éxito",
-                Toast.LENGTH_SHORT
-            ).show()
+            initNotification(item)
+            //Toast.makeText(requireActivity(),"Artículo ${item.name} borrado con éxito",Toast.LENGTH_SHORT).show()
         }
         return true
+    }
+
+    private fun initNotification(item: Item) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val title = getString(R.string.notif_item_delete_title, item.name)
+        val textContext = getString(R.string.notif_item_text_context)
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     override fun onDestroyView() {

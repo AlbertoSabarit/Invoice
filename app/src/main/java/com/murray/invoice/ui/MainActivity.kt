@@ -118,4 +118,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+    companion object{
+        const val CHANNEL_ID = "dummy channel"
+    }
 }

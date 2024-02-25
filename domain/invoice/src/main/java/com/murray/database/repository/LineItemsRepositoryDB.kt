@@ -11,8 +11,9 @@ class LineItemsRepositoryDB {
     fun getLineItemsList(): Flow<List<LineItems>> {
         return InvoiceDatabase.getInstance().lineitemsDao().selectAll()
     }
-    fun insert(lineItems: LineItems): Resource {
+    fun insert(lineItems: LineItems, invoiceId: Int): Resource {
         return try {
+            lineItems.invoiceId = invoiceId
             val invoiceId = InvoiceDatabase.getInstance().lineitemsDao().insert(lineItems)
             Resource.Success(invoiceId)
         } catch (e: SQLiteException) {

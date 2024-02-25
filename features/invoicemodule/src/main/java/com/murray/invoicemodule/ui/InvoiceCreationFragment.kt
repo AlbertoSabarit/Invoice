@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
@@ -16,6 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.customers.Customer
 import com.murray.data.invoices.Invoice
 import com.murray.data.invoices.LineItems
@@ -262,17 +266,17 @@ class InvoiceCreationFragment : Fragment() {
                             }
                         }
 
-                        // Crear un nuevo LineItem
                         val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
-                        nuevaFactura.lineItems.add(lineItem) // Agregar el LineItem a la lista de la factura
+                        nuevaFactura.lineItems.add(lineItem)
 
-                        // Llamar al método insertInvoiceWithLineItems para insertar la factura junto con sus elementos de línea asociados
                         viewModel.insertInvoiceWithLineItems(nuevaFactura, nuevaFactura.lineItems)
 
                         if (viewModel.invoice.id == 0) {
-                            Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+                            initNotification("Factura creada")
                         } else {
-                            Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT).show()
+                            initNotification("Factura editada")
                             nuevaFactura.id = viewModel.invoice.id
                             viewModel.editInvoiceWithLineItems(nuevaFactura,nuevaFactura.lineItems)
                         }
@@ -356,6 +360,14 @@ class InvoiceCreationFragment : Fragment() {
     private fun onSuccess() {
         Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
+    }
+
+    private fun initNotification(title : String) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Acción realizada con éxito"
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     override fun onDestroyView() {

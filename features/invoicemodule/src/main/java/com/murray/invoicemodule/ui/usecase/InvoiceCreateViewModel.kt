@@ -37,7 +37,6 @@ class InvoiceCreateViewModel:ViewModel() {
     var itemLineRepository = LineItemsRepositoryDB()
     var itemRepository = ItemRepositoryDB()
     init {
-        // Aquí puedes inicializar la factura si es necesario
         invoice = Invoice()
     }
 
@@ -92,7 +91,6 @@ class InvoiceCreateViewModel:ViewModel() {
     }*/
 
     fun insertInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
-        // Realizar la validación de las fechas
         if (TextUtils.isEmpty(fini.value)) {
             state.value = InvoiceCreateState.DataIniEmptyError
             return
@@ -112,7 +110,7 @@ class InvoiceCreateViewModel:ViewModel() {
 
                 lineItems.forEach { lineItem ->
                     lineItem.invoiceId = invoiceId.toInt()
-                    itemLineRepository.insert(lineItem)
+                    itemLineRepository.insert(lineItem, invoiceId.toInt())
                 }
 
                 state.postValue(InvoiceCreateState.Success)
@@ -127,12 +125,12 @@ class InvoiceCreateViewModel:ViewModel() {
         try {
             invoiceRepository.update(invoice)
 
-            // Borra todos los elementos de línea asociados a la factura actual
+            // Borra todos los elementos
             //invoiceRepository.delete(invoice)
 
             lineItems.forEach { lineItem ->
                 lineItem.invoiceId = invoice.id
-                itemLineRepository.insert(lineItem)
+                itemLineRepository.insert(lineItem, invoice.id)
             }
 
             state.postValue(InvoiceCreateState.Success)
@@ -140,9 +138,9 @@ class InvoiceCreateViewModel:ViewModel() {
             state.postValue(InvoiceCreateState.InvoiceCreateError(e.message ?: "Unknown error"))
         }
     }
-     fun insertLineItem(lineItem: LineItems) {
+    /* fun insertLineItem(lineItem: LineItems) {
          itemLineRepository.insert(lineItem)
-    }
+    }*/
 
 
     private suspend fun editInvoice(invoice: Invoice) {
@@ -175,10 +173,6 @@ class InvoiceCreateViewModel:ViewModel() {
         return  allItemsLine
     }
 
-    fun getInvoiceList(): LiveData<List<Invoice>> {
-        var allInvoice: LiveData<List<Invoice>> = invoiceRepository.getInvoiceList().asLiveData()
-        return  allInvoice
-    }
 
     fun getItemList(): LiveData<List<Item>> {
         var allItem: LiveData<List<Item>> = itemRepository.getItemList().asLiveData()

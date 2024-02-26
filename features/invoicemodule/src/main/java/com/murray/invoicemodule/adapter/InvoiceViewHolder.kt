@@ -10,13 +10,12 @@ class InvoiceViewHolder(val binding: LayoutInvoiceListBinding) : RecyclerView.Vi
         with(binding) {
             txtnfacturas.text = "Factura "
             txtncliente.text = item.cliente.name
-            //contArticulos.text = item.articulo.count.toString()
-            //txtnarticulo.text =
-            //txtnarticulo.text = item.lineItems.item.name
+            //contArticulos.text =
 
-            if (!item.lineItems.isNullOrEmpty()) {
-                val firstLineItem = item.lineItems[0]
-                txtnarticulo.text = firstLineItem.item.name
+
+            if (item.lineItems.isNotEmpty()) {
+                val primerItem = item.lineItems[0]
+                txtnarticulo.text = primerItem.item.name
             } else {
                 txtnarticulo.text = "No hay artículos"
             }

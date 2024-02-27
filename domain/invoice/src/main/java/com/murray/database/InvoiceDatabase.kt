@@ -19,6 +19,7 @@ import com.murray.data.customers.Customer
 import com.murray.data.invoices.Invoice
 import com.murray.data.invoices.LineItems
 import com.murray.data.items.Item
+import com.murray.data.items.ItemType
 import com.murray.data.tasks.Task
 import com.murray.database.dao.AccountDao
 import com.murray.database.dao.BusinessProfileDao
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
     EmailTypeConverter::class,
     CustomerTypeConverter::class,
     UriTypeConverter::class,
-  //  InvoiceTypeConverter::class,
+    //  InvoiceTypeConverter::class,
     ItemTypeConverter::class
 )
 abstract class InvoiceDatabase : RoomDatabase() {
@@ -57,7 +58,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun itemDao(): ItemDao
     abstract fun invoiceDao(): InvoiceDao
-    abstract fun lineitemsDao():LineItemsDao
+    abstract fun lineitemsDao(): LineItemsDao
 
     companion object {
         @Volatile
@@ -101,10 +102,13 @@ abstract class InvoiceDatabase : RoomDatabase() {
         }
 
         private suspend fun populateDatabase() {
-            //populateUsers()
+            populateUsers()
+            populateCustomers()
+            populateItems()
+            //populateTasks()
         }
 
-        private suspend fun populateUsers() {
+        private fun populateUsers() {
             getInstance().let { invoiceDatabase ->
                 invoiceDatabase.userDao().insert(
                     User(
@@ -139,6 +143,109 @@ abstract class InvoiceDatabase : RoomDatabase() {
                         "Javier",
                         "Zarcia",
                         Email("kavier@iesportada.org")
+                    )
+                )
+            }
+        }
+
+        private fun populateCustomers() {
+            getInstance().let { invoiceDatabase ->
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Alberto",
+                        Email("blbertosabarit@iesportada.org"),
+                        620400868,
+                        "Malaga",
+                        "Urb las pedrizas"
+                    )
+                )
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Kubo",
+                        Email("Kubito@iesportada.org"),
+                        620982374,
+                        "Malaga",
+                        "Urb las pedrizas"
+                    )
+                )
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Cristiano",
+                        Email("ronaldo@iesportada.org"),
+                        2340868,
+                        "Arabia city",
+                        "chalet"
+                    )
+                )
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Belligoal",
+                        Email("madrid@iesportada.org"),
+                        837489233,
+                        "Madrid",
+                        "Moraleja"
+                    )
+                )
+            }
+        }
+        private fun populateItems() {
+            getInstance().let { invoiceDatabase ->
+                invoiceDatabase.itemDao().insert(
+                    Item(
+                        "Balon de Oro",
+                        ItemType.Producto,
+                        50.0,
+                        true,
+                        "El mejor balon",
+                        null
+                    )
+                )
+                invoiceDatabase.itemDao().insert(
+                    Item(
+                        "Camiseta",
+                        ItemType.Servicio,
+                        70.0,
+                        false,
+                        "Camiseta del Real Madrid",
+                        null
+                    )
+                )
+            }
+        }
+        private fun populateTasks() {
+            getInstance().let { invoiceDatabase ->
+                invoiceDatabase.taskDao().insert(
+                    Task(
+                        "Entrevista",
+                        Customer(
+                            "Alberto",
+                            Email("blbertosabarit@iesportada.org"),
+                            620400868,
+                            "Malaga",
+                            "Urb las pedrizas"
+                        ),
+                        "Privado",
+                        "27/02/2024",
+                        "27/02/2024",
+                        "Pendiente",
+                        "Entrevista con el futuro balon de oro belligoal"
+                    )
+                )
+                invoiceDatabase.taskDao().insert(
+                    Task(
+                        "Recoger balon de oro",
+                        Customer(
+                            "Belligoal",
+                            Email("madrid@iesportada.org"),
+                            837489233,
+                            "Madrid",
+                            "Moraleja"
+                        ),
+                        "Privado",
+                        "21/02/2024",
+                        "26/03/2024",
+                        "Pendiente",
+                        "Gala L'equipe"
                     )
                 )
             }

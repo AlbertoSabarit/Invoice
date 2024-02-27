@@ -42,7 +42,6 @@ class Account(
             email: Email,
             password: String?,
             displayName: String?,
-            state: AccountState,
             businessProfile: Int?
         ): Account {
             return Account(
@@ -50,7 +49,7 @@ class Account(
                 email = email,
                 password = password,
                 displayName = displayName,
-                state = state,
+                state = AccountState.UNVERIFIED,
                 businessProfile = businessProfile,
             )
         }

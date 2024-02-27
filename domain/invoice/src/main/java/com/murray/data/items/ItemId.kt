@@ -3,8 +3,6 @@ package com.murray.data.items
 import android.os.Parcel
 import android.os.Parcelable
 import com.murray.data.base.UniqueId
-import com.murray.data.tasks.TaskId
-import java.io.Serializable
 
 class ItemId(override var value : Int) : UniqueId(value), Parcelable{
     constructor(parcel: Parcel) : this(parcel.readInt()) {

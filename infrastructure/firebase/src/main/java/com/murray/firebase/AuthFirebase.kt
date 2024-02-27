@@ -24,7 +24,7 @@ class AuthFirebase {
             try {
                 val authResult: AuthResult = authFirebase.signInWithEmailAndPassword(email, password).await()
                 val user = authResult.user
-                val account:Account = Account.create(id = AccountId(user.hashCode()),email = Email(email), password = password, displayName = user!!.displayName, state = AccountState.VERIFIED, 1)
+                val account:Account = Account.create(id = AccountId(user.hashCode()),email = Email(email), password = password, displayName = user!!.displayName, 1)
                 resource = Resource.Success(account)
             }catch (e:Exception){
                 resource = Resource.Error(e)

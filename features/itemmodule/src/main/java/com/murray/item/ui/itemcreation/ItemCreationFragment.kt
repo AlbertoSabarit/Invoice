@@ -1,5 +1,7 @@
 package com.murray.item.ui.itemcreation
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -15,9 +17,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.items.Item
 import com.murray.data.items.ItemType
 import com.murray.data.tasks.Task
+import com.murray.item.R
 import com.murray.item.databinding.FragmentItemCreationBinding
 import com.murray.item.ui.itemcreation.usecase.ItemCreationState
 import com.murray.item.ui.itemcreation.usecase.ItemCreationViewModel
@@ -106,22 +111,31 @@ class ItemCreationFragment : Fragment() {
             viewmodel.description.value = itemTemp.description
             viewmodel.isTaxable.value = itemTemp.isTaxable
             ivAddImage.setImageURI(itemTemp.imageUri)
+            bItemCreationAddItem.text = getString(R.string.b_item_detail_edit)
         }
     }
 
     private fun onSuccess() {
         val itemTemp = binding.viewmodel!!.itemTemp.value!!
         val toastStr = when(itemTemp.id){
-            -1 -> "Artículo creado"
-            else -> "Artículo editado"
+            -1 -> getString(R.string.item_create_success)
+            else -> getString(R.string.item_edit_success)
         }
-        Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
+        initNotification(toastStr)
+        //Toast.makeText(requireActivity(), toastStr, Toast.LENGTH_SHORT).show()
 
         val bundle = Bundle()
         bundle.putParcelable(Item.TAG, itemTemp)
         parentFragmentManager.setFragmentResult("editItemResult", bundle)
 
         findNavController().popBackStack()
+    }
+
+    private fun initNotification(title : String) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = getString(R.string.notif_item_text_context)
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     private fun setNameEmptyError() {

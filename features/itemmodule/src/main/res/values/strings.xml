@@ -35,4 +35,8 @@
 
     <string name="snackbar_sort_item_name">Artículos ordenados por nombre</string>
     <string name="snackbar_sort_item_rate">Artículos ordenados por precio</string>
+    <string name="notif_item_text_context">Acción realizada con éxito</string>
+    <string name="item_create_success">Artículo creado</string>
+    <string name="item_edit_success">Artículo editado</string>
+    <string name="notif_item_delete_title">Artículo %1$s borrado</string>
 </resources>

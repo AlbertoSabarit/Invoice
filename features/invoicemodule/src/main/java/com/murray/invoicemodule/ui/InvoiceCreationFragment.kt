@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
@@ -16,6 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.customers.Customer
 import com.murray.data.invoices.Invoice
 import com.murray.data.invoices.LineItems
@@ -23,7 +27,6 @@ import com.murray.data.items.Item
 import com.murray.invoicemodule.databinding.FragmentInvoiceCreationBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateState
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
-import kotlinx.coroutines.Delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -37,6 +40,11 @@ class InvoiceCreationFragment : Fragment() {
     private var contadorArt = 1
     private var precioActualArticulo: Double = 0.0
     private var comprobar = false;
+
+
+    var cliente = Customer()
+    var articulo = Item()
+    private var factura: Invoice? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -186,15 +194,10 @@ class InvoiceCreationFragment : Fragment() {
             }
         })
 
-        binding.btnGuardarFactura.setOnClickListener {
+         /*binding.btnGuardarFactura.setOnClickListener {
             if (comprobar == true) {
-                var cliente = Customer()
-                var articulo = Item()
-                var factura = Invoice()
-                var lineItems = LineItems()
                 val iva = 21
                 viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
-
                     for (c in customers) {
                         if (c.name == binding.spinner.selectedItem.toString()) {
                             cliente = c
@@ -204,48 +207,87 @@ class InvoiceCreationFragment : Fragment() {
                     val fCreacion = binding.tiefechaIni.text.toString()
                     val fVencimiento = binding.tiefechaFin.text.toString()
 
-                    val nuevaFactura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf(lineItems))
-                    viewModel.validateCredentials(nuevaFactura!!)
+                    var nuevaFactura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf())
+
                     viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
                         for (a in articulos) {
                             if (a.name == binding.spArticulos.selectedItem.toString()) {
                                 articulo = a
                                 break
+
                             }
+                        }
+
+                        val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
+                        nuevaFactura.lineItems.add(lineItem)
+
+
+                        if (viewModel.invoice.id == -1) {
+                            initNotification("Factura creada")
+                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
+                        } else {
+                            initNotification("Factura editada")
+                            nuevaFactura.id = viewModel.invoice.id
+                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
+
+                        }
+                    }
+                }
+            }
+        }*/
+        binding.btnGuardarFactura.setOnClickListener {
+            if (comprobar == true) {
+                val iva = 21
+                viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
+                    for (c in customers) {
+                        if (c.name == binding.spinner.selectedItem.toString()) {
+                            cliente = c
+                            break
                         }
                     }
 
-                    viewModel.getInvoiceList().observe(viewLifecycleOwner) { facturas ->
-                        for (a in facturas) {
-                            if ( a == nuevaFactura) {
-                                factura = a
-                                break
-                            }
-                        }
-                    }
+                    val fCreacion = binding.tiefechaIni.text.toString()
+                    val fVencimiento = binding.tiefechaFin.text.toString()
 
-                    lineItems =  LineItems(factura, articulo, contadorArt, articulo.rate,  articulo.description, iva)
-                    viewModel.insertLineItem(lineItems)
                     if (viewModel.invoice.id == 0) {
-                        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else {
-                        Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
-                            .show()
-                        nuevaFactura!!.id = viewModel.invoice.id
-                        //viewModel.update(nuevaFactura!!)
+                        factura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf())
+                        viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+                            for (a in articulos) {
+                                if (a.name == binding.spArticulos.selectedItem.toString()) {
+                                    articulo = a
+                                    break
+                                }
+                            }
+
+                            val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
+                            factura!!.lineItems.add(lineItem)
+
+                            viewModel.validateCredentials(factura!!, factura!!.lineItems)
+                            initNotification("Factura creada")
+                        }
+                    } else {
+                        viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+                            for (a in articulos) {
+                                if (a.name == binding.spArticulos.selectedItem.toString()) {
+                                    articulo = a
+                                    break
+                                }
+                            }
+
+                            val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
+                            viewModel.invoice.cliente = cliente
+                            viewModel.invoice.fcreacion = fCreacion
+                            viewModel.invoice.fvencimiento = fVencimiento
+                            viewModel.invoice.lineItems.add(lineItem)
+
+                            viewModel.editInvoiceWithLineItems(viewModel.invoice, viewModel.invoice.lineItems)
+                            initNotification("Factura editada")
+                        }
                     }
                 }
             }
         }
-
-
     }
-
-
-
-
     private fun setErrorCreateInvoice() {
         if(comprobar == false) {
             Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
@@ -315,8 +357,18 @@ class InvoiceCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putParcelable(Invoice.TAG, factura)
+        parentFragmentManager.setFragmentResult("editInvoiceResult", bundle)
         findNavController().popBackStack()
+    }
+
+    private fun initNotification(title : String) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Acción realizada con éxito"
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     override fun onDestroyView() {

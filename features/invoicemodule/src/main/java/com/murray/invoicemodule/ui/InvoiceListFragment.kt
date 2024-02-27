@@ -1,6 +1,8 @@
 package com.murray.invoicemodule.ui
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -20,7 +22,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.invoices.Invoice
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoice.ui.MainActivity
@@ -80,6 +83,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
             if (invoices.isNotEmpty()) {
                 hideNoDataError()
                 invoiceAdapter.submitList(invoices)
+
             } else {
                 showNoDataError()
             }
@@ -134,7 +138,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
     }
     private fun setUpUserRecycler() {
-        invoiceAdapter = InvoiceAdapter(this)
+        invoiceAdapter = InvoiceAdapter(this, viewmodel)
         with(binding.invoicerv) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -159,6 +163,15 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
             findNavController().navigate(R.id.action_invoiceListFragment_to_fragmentProgressDialog)
         else
             findNavController().popBackStack()
+    }
+
+    private fun initNotification(invoice: Invoice) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val title = "Borrar factura " + invoice.id
+        val textContext ="Acción realizada con éxito"
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
     override fun onDestroyView() {
         super.onDestroyView()
@@ -187,11 +200,11 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
             if (result) {
                 viewmodel.delete(invoice)
                 viewmodel.getInvoiceList()
+                initNotification(invoice)
             }
         }
         return true
     }
 
 }
-
 

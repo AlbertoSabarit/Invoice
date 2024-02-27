@@ -7,7 +7,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.murray.data.accounts.Email
 import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.customers.Customer
 

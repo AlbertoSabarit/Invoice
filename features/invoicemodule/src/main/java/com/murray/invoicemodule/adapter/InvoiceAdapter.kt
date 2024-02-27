@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.murray.data.invoices.Invoice
+import com.murray.invoicemodule.ui.usecase.InvoiceListViewModel
 
-class InvoiceAdapter(private val listener: onInvoiceClick) : ListAdapter<Invoice,InvoiceViewHolder>(INVOICE_COMPARATOR) {
+class InvoiceAdapter(private val listener: onInvoiceClick, private val viewModel: InvoiceListViewModel) : ListAdapter<Invoice,InvoiceViewHolder>(INVOICE_COMPARATOR) {
     interface onInvoiceClick {
         fun clickListener(invoice: Invoice)
         fun userOnLongClickDelete(invoice: Invoice): Boolean
@@ -21,7 +21,7 @@ class InvoiceAdapter(private val listener: onInvoiceClick) : ListAdapter<Invoice
 
     override fun onBindViewHolder(holder: InvoiceViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, viewModel)
 
         holder.binding.root.setOnClickListener() { _ ->
             listener.clickListener(item)

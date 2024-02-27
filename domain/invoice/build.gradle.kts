@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     id("com.android.dynamic-feature")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
@@ -34,12 +34,10 @@ dependencies {
     implementation(project(":app"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    //Soprote fecha Koltin
-
 
     //Librerias necesarias para room en kotlin
     val room_version = "2.6.1"
@@ -51,6 +49,12 @@ dependencies {
 
     //mockito (uri)
     testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
 
+    //libreria Truth de google
+    testImplementation("com.google.truth:truth:1.4.0")
+
+    //To use the JUnit Extension APIs
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
 }

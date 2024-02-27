@@ -1,10 +1,10 @@
-package com.murray.data.tasks
+package com.murray.data.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.murray.data.base.UniqueId
 
-data class TaskId(override var value : Int) : UniqueId(value), Parcelable{
+class InvoiceId (override var value : Int) : UniqueId(value), Parcelable {
     constructor(parcel: Parcel) : this(parcel.readInt()) {
     }
 
@@ -16,12 +16,12 @@ data class TaskId(override var value : Int) : UniqueId(value), Parcelable{
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<TaskId> {
-        override fun createFromParcel(parcel: Parcel): TaskId {
-            return TaskId(parcel)
+    companion object CREATOR : Parcelable.Creator<InvoiceId> {
+        override fun createFromParcel(parcel: Parcel): InvoiceId {
+            return InvoiceId(parcel)
         }
 
-        override fun newArray(size: Int): Array<TaskId?> {
+        override fun newArray(size: Int): Array<InvoiceId?> {
             return arrayOfNulls(size)
         }
     }

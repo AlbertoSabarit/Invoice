@@ -3,6 +3,8 @@ package com.murray.task.ui
 import com.murray.task.R
 //import android.R
 import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.customers.Customer
 import com.murray.data.tasks.Task
 import java.text.SimpleDateFormat
@@ -109,11 +113,11 @@ class TaskCreationFragment : Fragment() {
                     binding.tieDescripcion.text.toString()
                 )
 
-                if (viewModel.task.id == 0) {
-                    Toast.makeText(requireActivity(), "Tarea creada", Toast.LENGTH_SHORT).show()
+                if (viewModel.task.id == -1) {
+                    initNotification("Tarea creada")
                     viewModel.validateCredentials(taskTmp!!)
                 } else {
-                    Toast.makeText(requireActivity(), "Tarea editada", Toast.LENGTH_SHORT).show()
+                    initNotification("Tarea editada")
                     taskTmp!!.id = viewModel.task.id
                     viewModel.validateCredentials(taskTmp!!)
                 }
@@ -137,6 +141,14 @@ class TaskCreationFragment : Fragment() {
                     else -> onSuccess()
                 }
             })
+    }
+
+    private fun initNotification(title : String) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Acción realizada con éxito"
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     private fun initSpinnerClientes() {

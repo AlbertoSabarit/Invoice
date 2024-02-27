@@ -13,20 +13,14 @@ import com.murray.data.customers.Customer
 import com.murray.data.items.Item
 import com.murray.data.invoices.Invoice
 import com.murray.data.invoices.LineItems
-import com.murray.data.tasks.Task
-import com.murray.database.dao.LineItemsDao
 import com.murray.database.repository.CustomerRepositoryDB
 import com.murray.database.repository.InvoiceRepositoryDB
 import com.murray.database.repository.ItemRepositoryDB
 import com.murray.database.repository.LineItemsRepositoryDB
-import com.murray.database.repository.TaskRepositoryDB
 import com.murray.networkstate.Resource
-import com.murray.repositories.CustomerRepository
-import com.murray.repositories.InvoiceRepository
-import com.murray.repositories.ItemRepository
 import com.murray.task.ui.usecase.TaskCreateState
-import kotlinx.coroutines.Delay
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -37,46 +31,78 @@ class InvoiceCreateViewModel:ViewModel() {
     var fini =  MutableLiveData<String>()
     var ffin =  MutableLiveData<String>()
 
-    lateinit var invoice : Invoice
+    var invoice : Invoice
     private var state = MutableLiveData<InvoiceCreateState>()
 
     var invoiceRepository = InvoiceRepositoryDB()
     var customerRepository = CustomerRepositoryDB()
     var itemLineRepository = LineItemsRepositoryDB()
     var itemRepository = ItemRepositoryDB()
+    init {
+        invoice = Invoice()
+    }
 
     fun getState(): LiveData<InvoiceCreateState> {
         return state
     }
 
-    fun validateCredentials(invoice: Invoice){
+    fun getLineItemsForInvoice(invoiceId: Int): Flow<List<LineItems>> {
+        return invoiceRepository.getLineItemsInvoice(invoiceId)
+    }
 
-        when{
-            TextUtils.isEmpty(fini.value) -> state.value = InvoiceCreateState.DataIniEmptyError
-            TextUtils.isEmpty(ffin.value) -> state.value = InvoiceCreateState.DataFinEmptyError
-            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = InvoiceCreateState.IncorrectDateRangeError
 
-            else -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    if (invoice.id == 0) {
-                        insertInvoice(invoice)
-                    } else {
-                        editInvoice(invoice)
-                    }
-                }
+    fun validateCredentials(invoice: Invoice, lineItems: List<LineItems>) {
+        if (TextUtils.isEmpty(fini.value)) {
+            state.value = InvoiceCreateState.DataIniEmptyError
+            return
+        }
+        if (TextUtils.isEmpty(ffin.value)) {
+            state.value = InvoiceCreateState.DataFinEmptyError
+            return
+        }
+        if (!isValidDateRange(fini.value!!, ffin.value!!)) {
+            state.value = InvoiceCreateState.IncorrectDateRangeError
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val invoiceId = invoiceRepository.insert(invoice)
+
+            lineItems.forEach { lineItem ->
+                lineItem.invoiceId = invoiceId.toInt()
+                itemLineRepository.insert(lineItem, invoiceId.toInt())
+            }
+
+            withContext(Dispatchers.Main) {
+                state.value = InvoiceCreateState.Success
             }
         }
     }
 
-    private suspend fun insertInvoice(invoice: Invoice) {
-        withContext(Dispatchers.Main) {
-            val result = invoiceRepository.insert(invoice)
-            handleResult(result)
 
+
+    fun editInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // Actualiza la factura existente en la base de datos
+                invoiceRepository.update(invoice)
+
+                // Borra los elementos de línea de la factura existente
+                itemLineRepository.deleteLineItemsForInvoice(invoice.id)
+
+                // Inserta los nuevos elementos de línea
+                lineItems.forEach { lineItem ->
+                    lineItem.invoiceId = invoice.id
+                    itemLineRepository.insert2(lineItem)
+                }
+
+                // Notifica el éxito
+                state.postValue(InvoiceCreateState.Success)
+            } catch (e: Exception) {
+                // Si ocurre algún error, notifícalo
+                state.postValue(InvoiceCreateState.InvoiceCreateError(e.message ?: "Unknown error"))
+            }
         }
-    }
-     fun insertLineItem(lineItem: LineItems) {
-         itemLineRepository.insert(lineItem)
     }
 
 
@@ -98,19 +124,11 @@ class InvoiceCreateViewModel:ViewModel() {
             }
         }
     }
+
+
     fun getCustomerList(): LiveData<List<Customer>> {
         var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
         return  allCustomers
-    }
-
-    fun getLineItemList(): LiveData<List<LineItems>> {
-        var allItemsLine: LiveData<List<LineItems>> = itemLineRepository.getLineItemsList().asLiveData()
-        return  allItemsLine
-    }
-
-    fun getInvoiceList(): LiveData<List<Invoice>> {
-        var allInvoice: LiveData<List<Invoice>> = invoiceRepository.getInvoiceList().asLiveData()
-        return  allInvoice
     }
 
     fun getItemList(): LiveData<List<Item>> {

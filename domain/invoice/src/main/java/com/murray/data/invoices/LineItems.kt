@@ -2,17 +2,28 @@ package com.murray.data.invoices
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.murray.data.converter.InvoiceTypeConverter
 import com.murray.data.converter.ItemTypeConverter
 import com.murray.data.items.Item
 
-@Entity(tableName = "line_items")
+@Entity(tableName = "line_items",
+    foreignKeys = [ForeignKey(
+        entity = Invoice::class,
+        parentColumns = ["id"],
+        childColumns = ["invoice_id"],
+        onDelete = ForeignKey.CASCADE
+    )],
+    indices = [Index("invoice_id")]
+)
 data class LineItems(
-    @TypeConverters(InvoiceTypeConverter::class)
-    val invoice: Invoice,
+    @ColumnInfo(name = "invoice_id")
+    var invoiceId: Int,
     @TypeConverters(ItemTypeConverter::class)
     val item: Item,
     val cantidad: Int,
@@ -23,9 +34,11 @@ data class LineItems(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    constructor() : this(Invoice(), Item(), 0, 0.0,"", 0)
+
+
+    constructor() : this(0, Item(), 0, 0.0,"", 0)
     constructor(parcel: Parcel) : this(
-        parcel.readParcelable(Invoice::class.java.classLoader)!!,
+        parcel.readInt(),
         parcel.readParcelable(Item::class.java.classLoader)!!,
         parcel.readInt(),
         parcel.readDouble(),
@@ -36,7 +49,7 @@ data class LineItems(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(invoice, flags)
+        parcel.writeInt(invoiceId)
         parcel.writeParcelable(item, flags)
         parcel.writeInt(cantidad)
         parcel.writeDouble(price)
@@ -58,5 +71,4 @@ data class LineItems(
             return arrayOfNulls(size)
         }
     }
-
 }

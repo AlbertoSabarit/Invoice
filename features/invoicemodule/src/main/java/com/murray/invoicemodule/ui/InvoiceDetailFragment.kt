@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.murray.data.invoices.Invoice
-import com.murray.data.tasks.Task
 import com.murray.invoicemodule.R
 import com.murray.invoicemodule.databinding.FragmentInvoiceDetailBinding
 import com.murray.invoicemodule.ui.usecase.InvoiceCreateViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class InvoiceDetailFragment : Fragment() {
 
@@ -31,46 +33,24 @@ class InvoiceDetailFragment : Fragment() {
 
         binding.invoice = requireArguments().getParcelable(Invoice.TAG)
 
-        val nombre = StringBuilder()
-        val nombreArticulo = binding.invoice!!.lineItems.forEach { lineItem ->
-            nombre.append("${lineItem.item.name}")
-        }
-
-
-        //val cont= binding.invoice!!.articulo!!.count
-        viewModel.getLineItemList().observe(viewLifecycleOwner) { articulos ->
-
-            val articuloSeleccionado = articulos.find { it.item.name.equals(nombreArticulo) }
-
-            if (articuloSeleccionado != null) {
-                val precioArticulo = articuloSeleccionado.price
-
-                val total: Double = articuloSeleccionado.cantidad * precioArticulo
-                binding.txtnArticulo.text = nombre
-                binding.txtptotal.text = "$total €"
-                binding.txtparticulototal.text = "$total €"
-                var impuesto: Double = 0.21 * total
-                var subtotal: Double = total - impuesto
-                binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
-                binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
-                binding.txtparticulo.text = precioArticulo.toString()
-                binding.txtcontArticulo.text = articuloSeleccionado.cantidad.toString() + "x"
+        viewModel.getLineItemsForInvoice(binding.invoice!!.id).onEach { lineItems ->
+            val nombreArticulo = StringBuilder()
+            lineItems.forEach { lineItem ->
+                nombreArticulo.append("${lineItem.item.name}")
             }
+            val nombreArticuloString = nombreArticulo.toString()
 
-        }
-
-        /*val precioArticulo = binding.invoice!!.articulo!!.price
-
-        val total: Double = cont * precioArticulo
-        binding.txtnArticulo.text = nombreArticulo
-        binding.txtptotal.text = "$total €"
-        binding.txtparticulototal.text = "$total €"
-        var impuesto:Double =  0.21 * total
-        var subtotal :Double = total-impuesto
-        binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
-        binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
-        binding.txtparticulo.text = precioArticulo.toString()
-        binding.txtcontArticulo.text = cont.toString() + "x"*/
+            val precioTotal = lineItems.sumByDouble { it.item.rate * it.cantidad }
+            binding.txtnArticulo.text = nombreArticuloString
+            binding.txtptotal.text = "$precioTotal €"
+            binding.txtparticulototal.text = "$precioTotal €"
+            val impuesto = 0.21 * precioTotal
+            val subtotal = precioTotal - impuesto
+            binding.txtpimpuestos.text = String.format("%.2f €", impuesto)
+            binding.txtpsubtotal.text = String.format("%.2f €", subtotal)
+            binding.txtparticulo.text = lineItems.firstOrNull()?.item?.rate.toString()
+            binding.txtcontArticulo.text = lineItems.sumBy { it.cantidad }.toString() + "x"
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
 
         binding.btnEditarEdita.setOnClickListener {

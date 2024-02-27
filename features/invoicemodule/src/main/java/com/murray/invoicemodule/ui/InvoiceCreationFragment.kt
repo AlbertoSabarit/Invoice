@@ -284,6 +284,8 @@ class InvoiceCreationFragment : Fragment() {
                 }
             }
         }
+
+
     }
 
 

@@ -45,7 +45,9 @@ data class Invoice(
         parcel.readParcelable(Customer::class.java.classLoader)!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.createTypedArrayList(LineItems)!!
+        arrayListOf<LineItems>().apply {
+            parcel.readTypedList(this, LineItems.CREATOR)
+        }
     ) {
         id = parcel.readInt()
     }

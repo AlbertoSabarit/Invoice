@@ -111,7 +111,7 @@ class ItemCreationFragment : Fragment() {
             viewmodel.description.value = itemTemp.description
             viewmodel.isTaxable.value = itemTemp.isTaxable
             ivAddImage.setImageURI(itemTemp.imageUri)
-            bItemCreationAddItem.text = R.string.b_item_detail_edit.toString()
+            bItemCreationAddItem.text = getString(R.string.b_item_detail_edit)
         }
     }
 

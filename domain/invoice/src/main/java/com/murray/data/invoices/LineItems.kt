@@ -17,7 +17,7 @@ import com.murray.data.items.Item
         entity = Invoice::class,
         parentColumns = ["id"],
         childColumns = ["invoice_id"],
-        onDelete = ForeignKey.CASCADE // O cualquier otra acción de eliminación que desees
+        onDelete = ForeignKey.CASCADE
     )],
     indices = [Index("invoice_id")]
 )
@@ -71,5 +71,4 @@ data class LineItems(
             return arrayOfNulls(size)
         }
     }
-
 }

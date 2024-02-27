@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
 import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.invoices.Invoice
-import com.murray.data.items.Item
 import com.murray.invoicemodule.adapter.InvoiceAdapter
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -84,6 +83,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
             if (invoices.isNotEmpty()) {
                 hideNoDataError()
                 invoiceAdapter.submitList(invoices)
+
             } else {
                 showNoDataError()
             }
@@ -138,7 +138,7 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
     }
     private fun setUpUserRecycler() {
-        invoiceAdapter = InvoiceAdapter(this)
+        invoiceAdapter = InvoiceAdapter(this, viewmodel)
         with(binding.invoicerv) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -207,5 +207,4 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
     }
 
 }
-
 

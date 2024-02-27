@@ -22,7 +22,7 @@ interface InvoiceDao {
     fun selectById(invoiceId: Int): Invoice
 
     @Query("SELECT * FROM line_items WHERE invoice_id = :invoiceId")
-    fun getLineItemsForInvoice(invoiceId: Int): List<LineItems>
+    fun getLineItems(invoiceId: Int): Flow<List<LineItems>>
 
     @Update
     fun update(invoice: Invoice)

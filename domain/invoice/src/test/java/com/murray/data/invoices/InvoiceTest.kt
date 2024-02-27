@@ -9,17 +9,19 @@ import com.murray.data.items.Item
 import com.murray.data.items.ItemType
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 
 class InvoiceTest {
     private val invoice = Invoice.create(Customer(), "12/02/2021", "15/03/2021", arrayListOf())
-    /*@Test
+   /* @Test
     fun createInvoice_DefaultConstructor() {
         val invoice = Invoice()
         assertEquals(Customer(), invoice.cliente)
@@ -30,7 +32,7 @@ class InvoiceTest {
 
     @Test
     fun createInvoice_CustomConstructor() {
-        val cliente = Customer("John Doe", Email("john@example.com"), 1234, "City", "Address")
+        val cliente = Customer("Juan", Email("juan@example.com"), 1234, "City", "Address")
         val item = Item("Item 1", ItemType.Producto, 10.0, true, "Description")
         val lineItems = arrayListOf(LineItems(1, item, 2, 10.0, "Description", 5))
         val invoice = Invoice.create(cliente, "2024-02-24", "2024-03-24", lineItems)

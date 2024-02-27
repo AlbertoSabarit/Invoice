@@ -18,7 +18,9 @@ import com.murray.database.repository.InvoiceRepositoryDB
 import com.murray.database.repository.ItemRepositoryDB
 import com.murray.database.repository.LineItemsRepositoryDB
 import com.murray.networkstate.Resource
+import com.murray.task.ui.usecase.TaskCreateState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -29,7 +31,7 @@ class InvoiceCreateViewModel:ViewModel() {
     var fini =  MutableLiveData<String>()
     var ffin =  MutableLiveData<String>()
 
-    lateinit var invoice : Invoice
+    var invoice : Invoice
     private var state = MutableLiveData<InvoiceCreateState>()
 
     var invoiceRepository = InvoiceRepositoryDB()
@@ -44,53 +46,12 @@ class InvoiceCreateViewModel:ViewModel() {
         return state
     }
 
-
-   /* private suspend fun editInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
-        withContext(Dispatchers.Main) {
-             invoiceRepository.update(invoice)
-            withContext(Dispatchers.Main) {
-                state.value = InvoiceCreateState.Success
-            }
-        }
-    }*/
-    /*fun validateCredentials(invoice: Invoice){
-
-        when{
-            TextUtils.isEmpty(fini.value) -> state.value = InvoiceCreateState.DataIniEmptyError
-            TextUtils.isEmpty(ffin.value) -> state.value = InvoiceCreateState.DataFinEmptyError
-            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = InvoiceCreateState.IncorrectDateRangeError
-
-            else -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    if (invoice.id == 0) {
-                        insertInvoice(invoice)
-                    } else {
-                        editInvoice(invoice)
-                    }
-                }
-            }
-        }
-    }*/
-    private suspend fun insertInvoice(invoice: Invoice) {
-        withContext(Dispatchers.Main) {
-            val result = invoiceRepository.insert(invoice)
-            handleResult(result)
-
-        }
+    fun getLineItemsForInvoice(invoiceId: Int): Flow<List<LineItems>> {
+        return invoiceRepository.getLineItemsInvoice(invoiceId)
     }
 
-    //funciona
-   /* fun insertInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val invoiceId = invoiceRepository.insert2(invoice)
-            lineItems.forEach { lineItem ->
-                lineItem.invoiceId = invoiceId.toInt() // Asigna el ID de la factura a cada elemento de línea
-                itemLineRepository.insert(lineItem) // Inserta cada elemento de línea asociado a la factura
-            }
-        }
-    }*/
 
-    fun insertInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
+    fun validateCredentials(invoice: Invoice, lineItems: List<LineItems>) {
         if (TextUtils.isEmpty(fini.value)) {
             state.value = InvoiceCreateState.DataIniEmptyError
             return
@@ -105,42 +66,44 @@ class InvoiceCreateViewModel:ViewModel() {
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val invoiceId = invoiceRepository.insert2(invoice)
+            val invoiceId = invoiceRepository.insert(invoice)
 
+            lineItems.forEach { lineItem ->
+                lineItem.invoiceId = invoiceId.toInt()
+                itemLineRepository.insert(lineItem, invoiceId.toInt())
+            }
+
+            withContext(Dispatchers.Main) {
+                state.value = InvoiceCreateState.Success
+            }
+        }
+    }
+
+
+
+    fun editInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // Actualiza la factura existente en la base de datos
+                invoiceRepository.update(invoice)
+
+                // Borra los elementos de línea de la factura existente
+                itemLineRepository.deleteLineItemsForInvoice(invoice.id)
+
+                // Inserta los nuevos elementos de línea
                 lineItems.forEach { lineItem ->
-                    lineItem.invoiceId = invoiceId.toInt()
-                    itemLineRepository.insert(lineItem, invoiceId.toInt())
+                    lineItem.invoiceId = invoice.id
+                    itemLineRepository.insert2(lineItem)
                 }
 
+                // Notifica el éxito
                 state.postValue(InvoiceCreateState.Success)
             } catch (e: Exception) {
+                // Si ocurre algún error, notifícalo
                 state.postValue(InvoiceCreateState.InvoiceCreateError(e.message ?: "Unknown error"))
             }
         }
     }
-
-
-    fun editInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
-        try {
-            invoiceRepository.update(invoice)
-
-            // Borra todos los elementos
-            //invoiceRepository.delete(invoice)
-
-            lineItems.forEach { lineItem ->
-                lineItem.invoiceId = invoice.id
-                itemLineRepository.insert(lineItem, invoice.id)
-            }
-
-            state.postValue(InvoiceCreateState.Success)
-        } catch (e: Exception) {
-            state.postValue(InvoiceCreateState.InvoiceCreateError(e.message ?: "Unknown error"))
-        }
-    }
-    /* fun insertLineItem(lineItem: LineItems) {
-         itemLineRepository.insert(lineItem)
-    }*/
 
 
     private suspend fun editInvoice(invoice: Invoice) {
@@ -167,12 +130,6 @@ class InvoiceCreateViewModel:ViewModel() {
         var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
         return  allCustomers
     }
-
-    fun getLineItemList(): LiveData<List<LineItems>> {
-        var allItemsLine: LiveData<List<LineItems>> = itemLineRepository.getLineItemsList().asLiveData()
-        return  allItemsLine
-    }
-
 
     fun getItemList(): LiveData<List<Item>> {
         var allItem: LiveData<List<Item>> = itemRepository.getItemList().asLiveData()

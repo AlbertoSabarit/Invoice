@@ -27,4 +27,7 @@ interface LineItemsDao {
 
     @Delete
     fun delete(linesItem: LineItems)
+
+    @Query("DELETE FROM line_items WHERE invoice_id = :invoiceId")
+    fun deleteLineItemsForInvoice(invoiceId: Int)
 }

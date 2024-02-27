@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.murray.data.invoices.Invoice
+import com.murray.data.invoices.LineItems
 import com.murray.database.repository.InvoiceRepositoryDB
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class InvoiceListViewModel :ViewModel(){
@@ -23,7 +25,9 @@ class InvoiceListViewModel :ViewModel(){
             else -> state.value = InvoiceListState.Success
         }
     }
-
+    fun getLineItemsForInvoice(invoiceId: Int): Flow<List<LineItems>> {
+        return invoiceRepository.getLineItemsInvoice(invoiceId)
+    }
     fun delete(invoice: Invoice) {
         viewModelScope.launch(Dispatchers.IO) {
             invoiceRepository.delete(invoice)

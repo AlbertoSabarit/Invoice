@@ -41,10 +41,10 @@ class InvoiceCreationFragment : Fragment() {
     private var precioActualArticulo: Double = 0.0
     private var comprobar = false;
 
+
     var cliente = Customer()
     var articulo = Item()
-    var factura = Invoice()
-    var lineItems = LineItems()
+    private var factura: Invoice? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -194,56 +194,7 @@ class InvoiceCreationFragment : Fragment() {
             }
         })
 
-
-
-      /* binding.btnGuardarFactura.setOnClickListener {
-            if (comprobar == true) {
-
-                val iva = 21
-                viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
-
-                    for (c in customers) {
-                        if (c.name == binding.spinner.selectedItem.toString()) {
-                            cliente = c
-                            break
-                        }
-                    }
-                    val fCreacion = binding.tiefechaIni.text.toString()
-                    val fVencimiento = binding.tiefechaFin.text.toString()
-
-                    var nuevaFactura  = Invoice()
-
-                    viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
-                        for (a in articulos) {
-                            if (a.name == binding.spArticulos.selectedItem.toString()) {
-                                articulo = a
-                                break
-                            }
-                        }
-
-                       nuevaFactura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf(lineItems))
-                        viewModel.validateCredentials(nuevaFactura!!)
-                    }
-
-                    lineItems =  LineItems(nuevaFactura.id, articulo, contadorArt, articulo.rate,  articulo.description, iva)
-                    viewModel.insertLineItem(lineItems)
-
-                    if (viewModel.invoice.id == 0) {
-                        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else {
-                        Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT)
-                            .show()
-                        nuevaFactura!!.id = viewModel.invoice.id
-                        //viewModel.update(nuevaFactura!!)
-                    }
-                }
-            }
-        }
-*/
-
-        binding.btnGuardarFactura.setOnClickListener {
+         /*binding.btnGuardarFactura.setOnClickListener {
             if (comprobar == true) {
                 val iva = 21
                 viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
@@ -263,34 +214,80 @@ class InvoiceCreationFragment : Fragment() {
                             if (a.name == binding.spArticulos.selectedItem.toString()) {
                                 articulo = a
                                 break
+
                             }
                         }
 
                         val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
                         nuevaFactura.lineItems.add(lineItem)
 
-                        viewModel.insertInvoiceWithLineItems(nuevaFactura, nuevaFactura.lineItems)
 
-                        if (viewModel.invoice.id == 0) {
-                            //Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+                        if (viewModel.invoice.id == -1) {
                             initNotification("Factura creada")
+                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
                         } else {
-                            //Toast.makeText(requireActivity(), "Factura editada", Toast.LENGTH_SHORT).show()
                             initNotification("Factura editada")
                             nuevaFactura.id = viewModel.invoice.id
-                            viewModel.editInvoiceWithLineItems(nuevaFactura,nuevaFactura.lineItems)
+                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
+
+                        }
+                    }
+                }
+            }
+        }*/
+        binding.btnGuardarFactura.setOnClickListener {
+            if (comprobar == true) {
+                val iva = 21
+                viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
+                    for (c in customers) {
+                        if (c.name == binding.spinner.selectedItem.toString()) {
+                            cliente = c
+                            break
+                        }
+                    }
+
+                    val fCreacion = binding.tiefechaIni.text.toString()
+                    val fVencimiento = binding.tiefechaFin.text.toString()
+
+                    if (viewModel.invoice.id == 0) {
+                        factura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf())
+                        viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+                            for (a in articulos) {
+                                if (a.name == binding.spArticulos.selectedItem.toString()) {
+                                    articulo = a
+                                    break
+                                }
+                            }
+
+                            val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
+                            factura!!.lineItems.add(lineItem)
+
+                            viewModel.validateCredentials(factura!!, factura!!.lineItems)
+                            initNotification("Factura creada")
+                        }
+                    } else {
+                        viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
+                            for (a in articulos) {
+                                if (a.name == binding.spArticulos.selectedItem.toString()) {
+                                    articulo = a
+                                    break
+                                }
+                            }
+
+                            val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
+                            viewModel.invoice.cliente = cliente
+                            viewModel.invoice.fcreacion = fCreacion
+                            viewModel.invoice.fvencimiento = fVencimiento
+                            viewModel.invoice.lineItems.add(lineItem)
+
+                            viewModel.editInvoiceWithLineItems(viewModel.invoice, viewModel.invoice.lineItems)
+                            initNotification("Factura editada")
                         }
                     }
                 }
             }
         }
-
-
     }
-
-
-
-
     private fun setErrorCreateInvoice() {
         if(comprobar == false) {
             Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show()
@@ -360,7 +357,9 @@ class InvoiceCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Factura creada", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putParcelable(Invoice.TAG, factura)
+        parentFragmentManager.setFragmentResult("editInvoiceResult", bundle)
         findNavController().popBackStack()
     }
 

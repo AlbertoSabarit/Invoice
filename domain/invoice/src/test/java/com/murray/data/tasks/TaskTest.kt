@@ -14,35 +14,29 @@ class PruebaTarea {
 
     @Test
     fun `pruebaParcelable_EscribirLeer`() {
-        // Crear un cliente ficticio
-        val cliente = Customer()
-        cliente.name = "Juan Pérez"
 
-        // Crear una tarea ficticia
+        val cliente = Customer()
+        cliente.name = "Alberto Sabarit"
+
         val tareaOriginal = Task(
-            "Título de la Tarea",
+            "Desarrollo de interfaces",
             cliente,
-            "Tipo",
+            "Privado",
             "2024-02-26",
             "2024-02-27",
             "Pendiente",
-            "Descripción"
+            "Hola mundo"
         )
         tareaOriginal.id = 123
 
-        // Mock del Parcel
         val parcel = mock(Parcel::class.java)
 
-        // Simular escribir en el Parcel
         tareaOriginal.writeToParcel(parcel, 0)
 
-        // Cambiar el estado del Parcel para lectura
         parcel.setDataPosition(0)
 
-        // Simular leer desde el Parcel
         val tareaDesdeParcel = Task.CREATOR.createFromParcel(parcel)
 
-        // Verificar la igualdad de los objetos
         assertEquals(tareaOriginal, tareaDesdeParcel)
     }
 

@@ -5,11 +5,11 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 ## Características
 
 - Desarrollada con módulos dinámicos.
-- Navegación a fragmentos de forma directa.
+- Aplicación desarrollada según el patrón MVVM.
+- Navegación a fragmentos de forma directa y con Navigation Drawer.
+- Preferencias de la aplicación para personalizar la visualización de las entidades ordenandola por diferentes criterios.
+- La aplicación utiliza Room, el framework de persistencia de datos proporcionado por Android Jetpack, para gestionar la base de datos local.
 
-## V1.0
-
-- Listar, agregar, editar y eliminar objetos.
 
 ## Entidades y Funcionalidades
 
@@ -28,12 +28,11 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 ### Tareas
 - **Responsable**: Alberto Sabarit Peñalosa
 
-- [x] Listar, añadir, editar y eliminar tareas.
-- [x] Preferencias de la aplicación para personalizar la visualización de las tareas ordenandola por título o cliente.
-- [x] Menú de navegación que permite acceder a todas las entidades y operaciones de la aplicación.
-- [x] Implementación de operaciones CRUD para la entidad de tarea en la base de datos local.
+
+- [x] Implementación de operaciones CRUD(Listar, añadir, actualizar y eliminar) para la entidad de tarea en la base de datos local.
 - [x] Pruebas unitarias para la clase Task.
 - [x] Envío de notificaciones dentro de la aplicación para informar cuando se crea o edita una tarea.
+- [x] Ordenar tareas en la toolbar según título o cliente
 
 
 

@@ -84,22 +84,17 @@ class InvoiceCreateViewModel:ViewModel() {
     fun editInvoiceWithLineItems(invoice: Invoice, lineItems: List<LineItems>) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // Actualiza la factura existente en la base de datos
                 invoiceRepository.update(invoice)
 
-                // Borra los elementos de línea de la factura existente
                 itemLineRepository.deleteLineItemsForInvoice(invoice.id)
 
-                // Inserta los nuevos elementos de línea
                 lineItems.forEach { lineItem ->
                     lineItem.invoiceId = invoice.id
                     itemLineRepository.insert2(lineItem)
                 }
 
-                // Notifica el éxito
                 state.postValue(InvoiceCreateState.Success)
             } catch (e: Exception) {
-                // Si ocurre algún error, notifícalo
                 state.postValue(InvoiceCreateState.InvoiceCreateError(e.message ?: "Unknown error"))
             }
         }

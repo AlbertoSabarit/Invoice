@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.onEach
 class InvoiceViewHolder(val binding: LayoutInvoiceListBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Invoice, viewModel: InvoiceListViewModel) {
         with(binding) {
-            //txtnfacturas.text = "Factura "+ contador
             txtncliente.text = item.cliente.name
 
             viewModel.getLineItemsForInvoice(item.id).onEach { lineItems ->

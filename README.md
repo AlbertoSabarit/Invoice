@@ -39,7 +39,14 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 
 ### Facturas
 - **Responsable**: Kateryna Nikitenko
-- [x] Listar, agregar, editar y eliminar facturas.
+- [x] Creación de clase POJO (Invoice, LineItems) y repositorios para la base de datos
+- [x] Implementación de operaciones CRUD(Listar, añadir, actualizar y eliminar)
+- [x] Pruebas unitarias para las clases(Invoice y LineItems)
+- [x] Notificaciones cuando se crea y se borra la factura
+- [x] Ordenar facturas por cliente o por la fecha de cración
+- [x] Preferencias relacionadas con Invoice
+- [x] Preferencias el modo oscuro y claro para la aplicación
+
 
 ### Tareas
 - **Responsable**: Alberto Sabarit Peñalosa

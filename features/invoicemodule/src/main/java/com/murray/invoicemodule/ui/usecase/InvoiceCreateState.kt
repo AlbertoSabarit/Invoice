@@ -6,6 +6,5 @@ sealed class InvoiceCreateState {
     data object DataFinEmptyError: InvoiceCreateState()
     data class InvoiceCreateError(var message:String): InvoiceCreateState()
     data object Success : InvoiceCreateState()
-    data class InvoiceExist(var message: String): InvoiceCreateState()
     data class Loading(var value:Boolean): InvoiceCreateState()
 }

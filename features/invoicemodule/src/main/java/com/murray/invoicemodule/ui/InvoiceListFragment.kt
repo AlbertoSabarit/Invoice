@@ -119,18 +119,15 @@ class InvoiceListFragment : Fragment(), InvoiceAdapter.onInvoiceClick, MenuProvi
 
     override fun onStart() {
         super.onStart()
-        //viewmodel.getInvocieList()
 
         val preferences = activity?.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val orderValue = preferences!!.getString("invoices", "0")
-
 
         when (orderValue) {
             "0" -> {
                 invoiceAdapter.sort()
             }
             "1" -> {
-                //taskAdapter.submitList(viewmodel.allTask.value)
                 viewmodel.getInvoiceList()
             }
         }

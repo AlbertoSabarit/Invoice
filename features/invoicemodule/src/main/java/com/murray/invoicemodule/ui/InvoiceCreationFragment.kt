@@ -194,47 +194,6 @@ class InvoiceCreationFragment : Fragment() {
             }
         })
 
-         /*binding.btnGuardarFactura.setOnClickListener {
-            if (comprobar == true) {
-                val iva = 21
-                viewModel.getCustomerList().observe(viewLifecycleOwner) { customers ->
-                    for (c in customers) {
-                        if (c.name == binding.spinner.selectedItem.toString()) {
-                            cliente = c
-                            break
-                        }
-                    }
-                    val fCreacion = binding.tiefechaIni.text.toString()
-                    val fVencimiento = binding.tiefechaFin.text.toString()
-
-                    var nuevaFactura = Invoice(cliente, fCreacion, fVencimiento, arrayListOf())
-
-                    viewModel.getItemList().observe(viewLifecycleOwner) { articulos ->
-                        for (a in articulos) {
-                            if (a.name == binding.spArticulos.selectedItem.toString()) {
-                                articulo = a
-                                break
-
-                            }
-                        }
-
-                        val lineItem = LineItems(0, articulo, contadorArt, articulo.rate, articulo.description, iva)
-                        nuevaFactura.lineItems.add(lineItem)
-
-
-                        if (viewModel.invoice.id == -1) {
-                            initNotification("Factura creada")
-                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
-                        } else {
-                            initNotification("Factura editada")
-                            nuevaFactura.id = viewModel.invoice.id
-                            viewModel.validateCredentials(nuevaFactura, nuevaFactura.lineItems)
-
-                        }
-                    }
-                }
-            }
-        }*/
         binding.btnGuardarFactura.setOnClickListener {
             if (comprobar == true) {
                 val iva = 21

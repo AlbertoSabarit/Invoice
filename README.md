@@ -46,8 +46,7 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 - [x] Ordenar facturas por cliente o por la fecha de cración
 - [x] Preferencias relacionadas con Invoice
 - [x] Preferencias el modo oscuro y claro para la aplicación
-
-
+![invoice1.png](invoice1.png)![inovice2.png](inovice2.png)![invoice3.png](invoice3.png)![invoice4.png](invoice4.png)
 ### Tareas
 - **Responsable**: Alberto Sabarit Peñalosa
 

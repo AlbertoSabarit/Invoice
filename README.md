@@ -49,8 +49,11 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 <div style="flex">
   <img src="invoice1.png" width="200">
   <img src="inovice2.png" width="200" >
+  <img src="invoice3.png" width="200" >
+  <img src="invoice4.png" width="200" >
 </div>
-![invoice1.png](invoice1.png)![inovice2.png](inovice2.png)![invoice3.png](invoice3.png)![invoice4.png](invoice4.png)
+
+
 ### Tareas
 - **Responsable**: Alberto Sabarit Peñalosa
 

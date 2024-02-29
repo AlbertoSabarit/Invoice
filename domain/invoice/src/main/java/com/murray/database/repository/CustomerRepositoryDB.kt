@@ -12,6 +12,10 @@ class CustomerRepositoryDB {
         return InvoiceDatabase.getInstance().customerDao().selectAll()
     }
 
+    fun getCustomer(id: Int): Customer{
+        return InvoiceDatabase.getInstance().customerDao().selectById(id)
+    }
+
     fun insert(customer: Customer): Resource {
         try {
             InvoiceDatabase.getInstance().customerDao().insert(customer)
@@ -19,6 +23,10 @@ class CustomerRepositoryDB {
             return Resource.Error(e)
         }
         return Resource.Success(customer)
+    }
+
+    fun update(customer: Customer) {
+        InvoiceDatabase.getInstance().customerDao().update(customer)
     }
 
     fun delete(customer: Customer) {

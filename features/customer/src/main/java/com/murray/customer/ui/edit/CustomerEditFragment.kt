@@ -1,5 +1,7 @@
 package com.murray.customer.ui.edit
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,10 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.customer.databinding.FragmentCustomerEditBinding
 import com.murray.customer.ui.LayoutTextWatcher
 import com.murray.customer.ui.edit.usecase.CustomerEditState
 import com.murray.customer.ui.edit.usecase.CustomerEditViewModel
+import com.murray.database.repository.CustomerRepositoryDB
 import com.murray.repositories.CustomerRepository
 
 class CustomerEditFragment : Fragment() {
@@ -21,6 +26,7 @@ class CustomerEditFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: CustomerEditViewModel by viewModels()
+    val customerRepositoryDB = CustomerRepositoryDB()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +49,12 @@ class CustomerEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = requireArguments().getInt("id")
         viewModel.id = id
-        val c = CustomerRepository.dataSet[id]
-        viewModel.name.value = c.name
-        viewModel.email.value = c.email.value
-        viewModel.phone.value = c.phone.toString()?: null
-        viewModel.city.value = c.city
-        viewModel.address.value = c.address
+        val c = customerRepositoryDB.getCustomer(id)
+        viewModel.name.value = c!!.name
+        viewModel.email.value = c!!.email.value
+        viewModel.phone.value = c?.phone?.toString().takeIf { it != "null" } ?: ""
+        viewModel.city.value = c!!.city
+        viewModel.address.value = c!!.address
 
         viewModel.getState().observe(viewLifecycleOwner) {
             when (it) {
@@ -84,7 +90,7 @@ class CustomerEditFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Cliente actualizado con éxito!", Toast.LENGTH_SHORT).show()
+        initNotification()
         findNavController().popBackStack()
         findNavController().popBackStack()
     }
@@ -97,6 +103,14 @@ class CustomerEditFragment : Fragment() {
     private fun setEmailEmptyError() {
         binding.tilEmail.error = "El email no puede estar vacío"
         binding.tilEmail.requestFocus()
+    }
+
+    private fun initNotification() {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Cliente actualizado con éxito!"
+        sendNotification(requireContext(),pendingIntent,"Operación completada", textContext)
     }
 
 }

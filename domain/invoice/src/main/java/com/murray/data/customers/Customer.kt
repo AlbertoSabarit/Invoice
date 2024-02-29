@@ -22,8 +22,8 @@ data class Customer(
     var id: Int = 0
 
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
-        parcel.readParcelable(Email::class.java.classLoader)!!,
+        parcel.readString() ?: "",
+        parcel.readParcelable(Email::class.java.classLoader) ?: Email(""),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString()
@@ -34,6 +34,7 @@ data class Customer(
     constructor() : this( "", Email(""), null, null, null)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeParcelable(email, flags)
         parcel.writeValue(phone)

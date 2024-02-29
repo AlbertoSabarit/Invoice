@@ -65,7 +65,7 @@ class CustomerCreationViewModel : ViewModel() {
             }
         }
     }
-    fun validateEmail(value: String?): Boolean{
+    private fun validateEmail(value: String?): Boolean{
         val pattern: Pattern = Pattern.compile("^\\S+@\\S+\\.\\S+")
         return pattern.matcher(value).matches()
     }

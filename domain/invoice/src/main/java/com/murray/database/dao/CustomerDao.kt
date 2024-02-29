@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.ForeignKey.Companion.RESTRICT
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.murray.data.customers.Customer
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +19,9 @@ interface CustomerDao {
 
     @Query("SELECT * FROM customer WHERE id = :customerId")
     fun selectById(customerId: Int): Customer
+
+    @Update
+    fun update(customer: Customer)
 
     @Delete
     fun delete(customer: Customer)

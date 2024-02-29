@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.murray.customer.databinding.CardviewLayoutBinding
 import com.murray.data.customers.Customer
-import com.murray.data.tasks.Task
 
 class CustomAdapter (
     private val context: Context,
@@ -29,16 +28,17 @@ class CustomAdapter (
         holder.itemView.setOnClickListener {
             clickListener(item)
         }
-        holder.binding.imgBtDeleteItem.setOnClickListener {
+        holder.itemView.setOnLongClickListener{
             deleteClickListener(item)
+            true
         }
     }
 
     class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Customer, context: Context) {
-            binding.txtCustomer.text = item.name
-            binding.txtEmail.text = item.email.getEmail()
+        fun bind(customer: Customer, context: Context) {
+            binding.txtCustomer.text = customer.name
+            binding.txtEmail.text = customer.email.getEmail()
         }
     }
 

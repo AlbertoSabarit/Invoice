@@ -4,6 +4,9 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.murray.data.accounts.Email
+import com.murray.data.customers.Customer
+import com.murray.database.repository.CustomerRepositoryDB
 import com.murray.repositories.CustomerRepository
 import java.util.regex.Pattern
 
@@ -14,6 +17,7 @@ class CustomerEditViewModel : ViewModel() {
     var city = MutableLiveData<String>()
     var address = MutableLiveData<String>()
     var id = 0
+    var customerRepositoryDB = CustomerRepositoryDB()
 
     private var state = MutableLiveData<CustomerEditState>()
 
@@ -28,9 +32,12 @@ class CustomerEditViewModel : ViewModel() {
         }
     }
     fun success(){
-        if(phone.value =="")
-            phone.value = null
-        CustomerRepository.updateCustomer(id, name.value!!, email.value!!, phone.value?.toInt() ?: null, city.value, address.value)
+        var phoneTmp = phone.value
+        if (phone.value.equals(""))
+            phoneTmp = null
+        var customer = Customer(name.value!!, Email(email.value!!), phoneTmp?.toInt(), city.value, address.value)
+        customer.id = id
+        customerRepositoryDB.update(customer)
         state.value = CustomerEditState.Success
     }
 

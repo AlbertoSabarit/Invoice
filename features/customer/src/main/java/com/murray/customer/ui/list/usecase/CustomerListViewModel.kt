@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.murray.data.customers.Customer
+import com.murray.data.invoices.Invoice
 import com.murray.database.repository.CustomerRepositoryDB
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.murray.database.repository.InvoiceRepositoryDB
+
 
 class CustomerListViewModel: ViewModel() {
 
@@ -27,9 +27,17 @@ class CustomerListViewModel: ViewModel() {
         }
     }
 
-    fun deleteItem(customer: Customer) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun deleteItem(customer: Customer):Boolean {
+        try{
             customerRepository.delete(customer)
+            state.value = CustomerListState.Success
+            return true
+        } catch (e: Exception){
+            state.value = CustomerListState.ReferencedCustomer
+            return false
         }
+    }
+    fun setState(s: CustomerListState){
+        state.value = s
     }
 }

@@ -15,7 +15,23 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 
 ### Cliente
 - **Responsable**: Alejandro Valle Rodríguez
-- [x] Listar, agregar, editar y eliminar clientes.
+- [x] Creación de clase POJO (Customer) y repositorio para la base de datos
+- [x] Creación de repositorio volátil para Customer (Obsoleto)
+- [x] Creación de Adapter
+- [x] Operaciones CRUD en la base de datos local sobre la entidad Customer
+- [x] Creacion de 4 fragment para realizar las operaciones CRUD
+    - [x] CustomerListFragment con MVVM para listar clientes
+    - [x] CustomerCreationFragment con MVVM para crear clientes
+    - [x] CustomerEditFragment con MVVM para editar y actualizar clientes
+    - [x] CustomerDetailFragment con para mostrar los datos de los clientes
+- [x] Implementación de toolbar con opciones de ordenar Customer por nombre o email
+- [x] Implementación de preferencias relacionadas con Customer
+- [x] Implementación voluntaria de un mapa usando la API de Google Maps
+- [x] Implementación de TextWatchers para los fragmentos dedicados a crear y editar
+- [x] Implementación de notificaciones al crear, borrar (solo exitosamente) y editar clientes
+- [x] Implementación de BaseFragmentDialog al no poder borrar un cliente con el fin de dar un error más visible al usuario
+- [x] Creación de pruebas unitarias para la clase POJO Customer
+- [x] Primer diseño de la pantalla principal del a app, posteriormente mejorado por Katya
 
 ### Artículo
 - **Responsable**: Ender Watts García

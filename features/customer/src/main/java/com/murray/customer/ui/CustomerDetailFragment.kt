@@ -66,7 +66,7 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         id = arguments?.getInt("id")
         val cliente = arguments?.getString("name") ?: ""
         val email = arguments?.getString("email") ?: ""
-        var phone = arguments?.getInt("phone") ?: null
+        var phone = arguments?.getInt("phone")
         val city = arguments?.getString("city") ?: ""
         val address = arguments?.getString("address") ?: "España"
         this.address = address
@@ -83,6 +83,13 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         mapView = binding.map
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        binding.btnEditar.setOnClickListener{
+            val bundle = Bundle().apply {
+                putInt("id", id!!)
+            }
+            findNavController().navigate(R.id.action_customerDetailFragment_to_customerEditFragment, bundle)
+        }
 
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->

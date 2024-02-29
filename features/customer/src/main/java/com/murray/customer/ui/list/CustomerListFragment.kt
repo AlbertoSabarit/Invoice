@@ -1,13 +1,17 @@
 package com.murray.customer.ui.list
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -22,11 +26,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.customer.ui.adapter.CustomAdapter
 import com.murray.customer.ui.list.usecase.CustomerListState
 import com.murray.customer.ui.list.usecase.CustomerListViewModel
 import com.murray.data.customers.Customer
 import com.murray.invoice.ui.MainActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CustomerListFragment : Fragment(), MenuProvider {
     private var _binding: FragmentCustomerListBinding? = null
@@ -88,7 +97,6 @@ class CustomerListFragment : Fragment(), MenuProvider {
         (requireActivity() as? MainActivity)?.toolbar?.apply {
             visibility = View.VISIBLE
         }
-
         val menuhost: MenuHost = requireActivity()
         menuhost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
@@ -112,7 +120,6 @@ class CustomerListFragment : Fragment(), MenuProvider {
                 customerAdapter.submitList(viewmodel.allCustomers.value)
                 return true
             }
-
             else -> false
         }
     }
@@ -174,6 +181,7 @@ class CustomerListFragment : Fragment(), MenuProvider {
                     "city" to customer.city,
                     "address" to customer.address
                 )
+
                 findNavController().navigate(
                     R.id.action_customerListFragment_to_customerDetailFragment,
                     bundle
@@ -185,13 +193,42 @@ class CustomerListFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun deleteItem(customer: Customer) {
-        viewmodel.deleteItem(customer)
+    fun deleteItem(customer: Customer) {
+
+        val dialog = com.murray.invoice.base.BaseFragmentDialog.newInstance(
+            "Atención",
+            "¿Deseas borrarlo?"
+        )
+
+        dialog.show((context as AppCompatActivity).supportFragmentManager, "Lista de clientes")
+
+        dialog.parentFragmentManager.setFragmentResultListener(
+            com.murray.invoice.base.BaseFragmentDialog.request, viewLifecycleOwner
+        ) { _, bundle ->
+            val result = bundle.getBoolean(com.murray.invoice.base.BaseFragmentDialog.result)
+            if (result){
+                if(viewmodel.deleteItem(customer))
+                    initNotification()
+            }
+        }
+    }
+
+    private fun initNotification() {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Cliente eliminado con éxito!"
+        sendNotification(requireContext(),pendingIntent,"Operación completada", textContext)
     }
 
     override fun onDestroyView() {
+        //sin esto, al volver a este fragment salta el error de ReferencedCustomer, pero con este código quitamos el error
+        if (viewmodel.allCustomers.value?.isNotEmpty() == true) {
+            viewmodel.setState(CustomerListState.Success)
+        } else {
+            viewmodel.setState(CustomerListState.NoDataError)
+        }
         super.onDestroyView()
         _binding = null
     }
-
 }

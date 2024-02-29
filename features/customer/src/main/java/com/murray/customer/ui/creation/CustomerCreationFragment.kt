@@ -1,5 +1,7 @@
 package com.murray.customer.ui.creation
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.customer.R
 import com.murray.customer.databinding.FragmentCustomerCreationBinding
 import com.murray.customer.ui.creation.usecase.CustomerCreationState
@@ -57,16 +61,21 @@ class CustomerCreationFragment : Fragment() {
         }
 
         binding.button.setOnClickListener {
+            var phone: Int? = null
+            if(viewModel.validatePhone(binding.tiePhone.text.toString())){
+                phone = binding.tiePhone.text.toString().toInt()
+            }
             val cliente =
                 Customer(
                     binding.tieName.text.toString(),
                     Email(binding.tieEmail.text.toString()),
-                    binding.tiePhone.text.toString().toInt(),
+                    phone,
                     binding.tieCity.text.toString(),
                     binding.tieAddress.text.toString()
                 )
 
             viewModel.validateCustomer(cliente)
+
         }
         viewModel.getState().observe(viewLifecycleOwner) {
             when(it){
@@ -77,6 +86,14 @@ class CustomerCreationFragment : Fragment() {
                 else -> onSuccess()
             }
         }
+    }
+
+    private fun initNotification() {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Cliente creado con éxito!"
+        sendNotification(requireContext(),pendingIntent,"Operación completada", textContext)
     }
 
     private fun setPhoneFormatError() {
@@ -90,7 +107,7 @@ class CustomerCreationFragment : Fragment() {
     }
 
     private fun onSuccess() {
-        Toast.makeText(requireActivity(), "Cliente creado con éxito!", Toast.LENGTH_SHORT).show()
+        initNotification()
         findNavController().popBackStack()
     }
 

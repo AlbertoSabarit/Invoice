@@ -34,12 +34,12 @@ data class Customer(
     constructor() : this( "", Email(""), null, null, null)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeParcelable(email, flags)
         parcel.writeValue(phone)
         parcel.writeString(city)
         parcel.writeString(address)
+        parcel.writeInt(id)
     }
 
     override fun describeContents(): Int {
@@ -62,7 +62,9 @@ data class Customer(
                    city: String?,
                    address: String?
         ): Customer {
-            return Customer(name = name, email = email, phone = phone, city = city, address = address)
+            var customer = Customer(name = name, email = email, phone = phone, city = city, address = address)
+            customer.id = id
+            return customer
         }
     }
 }

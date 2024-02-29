@@ -61,9 +61,9 @@ class ItemTest {
     @Test
     fun writeToParcel_createFromParcel_True() {
         val originalItem = Item("Test", ItemType.Producto, 20.0, true, "Descripcion", mockUri)
-        val parcel = Parcel.obtain()
-        originalItem.writeToParcel(parcel, 0)
+        val parcel = mock(Parcel::class.java)
 
+        originalItem.writeToParcel(parcel, 0)
         parcel.setDataPosition(0)
 
         val itemFromParcel = Item.CREATOR.createFromParcel(parcel)

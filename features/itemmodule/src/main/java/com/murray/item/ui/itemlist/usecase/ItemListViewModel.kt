@@ -1,5 +1,6 @@
 package com.murray.item.ui.itemlist.usecase
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,9 +29,13 @@ class ItemListViewModel : ViewModel() {
         }
     }
 
-    fun delete(item: Item) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun delete(item: Item): Boolean {
+        try {
             itemRepository.delete(item)
+            itemRepository.getItemList()
+            return true
+        } catch (e: SQLiteConstraintException) {
+            return false
         }
     }
 

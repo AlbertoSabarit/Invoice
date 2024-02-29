@@ -222,11 +222,11 @@ class ItemListFragment : Fragment(), MenuProvider {
         dialog.parentFragmentManager.setFragmentResultListener(
             BaseFragmentDialog.request, viewLifecycleOwner
         ) { _, bundle ->
-            viewmodel.delete(item)
-            viewmodel.getItemList()
-
-            initNotification(item)
-            //Toast.makeText(requireActivity(),"Artículo ${item.name} borrado con éxito",Toast.LENGTH_SHORT).show()
+            if (viewmodel.delete(item)){
+                initNotification(item)
+            } else{
+                Toast.makeText(requireActivity(),"No se puede eliminar el artículo, referenciado en una factura",Toast.LENGTH_SHORT).show()
+            }
         }
         return true
     }

@@ -18,8 +18,14 @@ import com.murray.data.items.Item
         parentColumns = ["id"],
         childColumns = ["invoice_id"],
         onDelete = ForeignKey.CASCADE
+    ),ForeignKey(
+        entity = Item::class,
+        parentColumns = ["id"],
+        childColumns = ["item"],
+        onDelete = ForeignKey.RESTRICT,
+        onUpdate = ForeignKey.CASCADE
     )],
-    indices = [Index("invoice_id")]
+    indices = [Index("invoice_id"), Index("item")]
 )
 data class LineItems(
     @ColumnInfo(name = "invoice_id")

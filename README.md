@@ -35,7 +35,23 @@ Invoice es una aplicación para gestionar clientes, artículos, facturas y tarea
 
 ### Artículo
 - **Responsable**: Ender Watts García
-- [x] Listar, agregar, editar y eliminar artículos.
+- [x] Listar, agregar, editar y eliminar artículos
+- [x] Restricción a la hora de eliminar artículos referenciados en facturas
+- [x] Uso de diálogos para preguntar al usuario si quiere borrar el artículo
+- [x] Uso del patrón MVVM
+	- [x] Visualización de la lista de artículos
+		- [x] Uso de RecyclerView y ListAdapter
+	- [x] Creación y edición de artículos
+	- [x] Visualización de los datos detallados del artículo
+	- [x] Uso de mensaje de errores y TextWatchers en TextInputLayouts
+- [x] Notificaciones al crear, editar y eliminar artículos
+- [x] Implementación de data class POJO Item
+	- [x] Pruebas unitarias para Item
+- [x] Uso de base de datos con Room
+- [x] Preferencias
+	- [x] Ordenar lista de artículos por nombre o precio
+	- [x] Idioma de la aplicación
+- [x] Implementación de imágenes para los artículos
 
 ### Facturas
 - **Responsable**: Kateryna Nikitenko

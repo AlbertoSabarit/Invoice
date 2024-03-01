@@ -7,20 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.murray.data.items.Item
-import com.murray.data.items.ItemType
 import com.murray.database.repository.ItemRepositoryDB
 import com.murray.networkstate.Resource
-import com.murray.repositories.ItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class ItemCreationViewModel : ViewModel() {
     var id = MutableLiveData<Int>()
     var name = MutableLiveData<String>()
     var typeSpinnerPosition = MutableLiveData<Int>()
-    var rate = MutableLiveData<String>() //es string porque se introduce el valor en un edittext
+    var rate = MutableLiveData<String>()
     var isTaxable = MutableLiveData<Boolean>()
     var description = MutableLiveData<String>()
     var itemTemp = MutableLiveData<Item>()

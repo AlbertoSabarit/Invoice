@@ -1,10 +1,6 @@
 package com.murray.data.accounts
 
 import com.google.common.truth.Truth
-import com.murray.data.accounts.Account
-import com.murray.data.accounts.AccountId
-import com.murray.data.accounts.AccountState
-import com.murray.data.accounts.Email
 import org.junit.Test
 
 class AccountTest {

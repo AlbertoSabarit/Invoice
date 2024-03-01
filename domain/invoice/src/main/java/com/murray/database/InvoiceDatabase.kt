@@ -153,16 +153,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 invoiceDatabase.customerDao().insert(
                     Customer(
                         "Alberto Sabarit",
-                        Email("albertosabarit@iesportada.org"),
-                        620400868,
-                        "Rincón de la Victoria",
-                        "Urb las pedrizas"
-                    )
-                )
-                invoiceDatabase.customerDao().insert(
-                    Customer(
-                        "Kubo",
-                        Email("perro@de_alberto.org"),
+                        Email("sabarit@iesportada.org"),
                         620400868,
                         "Rincón de la Victoria",
                         "Urb las pedrizas"
@@ -180,7 +171,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 invoiceDatabase.customerDao().insert(
                     Customer(
                         "Ender Watts",
-                        Email("ender@gmail.uk"),
+                        Email("watts@gmail.uk"),
                         657318092,
                         "Londres",
                         "9 Buckingham Gate"
@@ -189,7 +180,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 invoiceDatabase.customerDao().insert(
                     Customer(
                         "Katya Nikitenko",
-                        Email("katya@gmail.ua"),
+                        Email("NikitenkoKatya@gmail.ua"),
                         643417845,
                         "Chernigov",
                         "Kam'yans'ka Sloboda"
@@ -210,9 +201,9 @@ abstract class InvoiceDatabase : RoomDatabase() {
             getInstance().let { invoiceDatabase ->
                 invoiceDatabase.itemDao().insert(
                     Item(
-                        "Balon de Oro",
+                        "Balón de Oro",
                         ItemType.Producto,
-                        50.0,
+                        60.0,
                         true,
                         "El mejor balon",
                         null
@@ -222,7 +213,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
                     Item(
                         "Camiseta",
                         ItemType.Servicio,
-                        70.0,
+                        50.0,
                         false,
                         "Camiseta del Real Madrid",
                         null
@@ -247,23 +238,6 @@ abstract class InvoiceDatabase : RoomDatabase() {
                         "27/02/2024",
                         "Pendiente",
                         "Entrevista con el futuro balon de oro belligoal"
-                    )
-                )
-                invoiceDatabase.taskDao().insert(
-                    Task(
-                        "Recoger balon de oro",
-                        Customer(
-                            "Belligoal",
-                            Email("madrid@iesportada.org"),
-                            837489233,
-                            "Madrid",
-                            "Moraleja"
-                        ),
-                        "Privado",
-                        "21/02/2024",
-                        "26/03/2024",
-                        "Pendiente",
-                        "Gala L'equipe"
                     )
                 )
             }

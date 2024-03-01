@@ -57,7 +57,7 @@ class TaskCreationFragment : Fragment() {
             viewModel.ffin.value = task.fechaFin
             viewModel.task = task
         } else {
-            viewModel.task = Task.createDefaultTask()
+            viewModel.task = Task()
         }
 
         initSpinnerClientes()

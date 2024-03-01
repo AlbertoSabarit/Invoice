@@ -7,6 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.murray.data.accounts.Email
 import com.murray.data.converter.CustomerTypeConverter
 import com.murray.data.customers.Customer
 
@@ -46,7 +47,8 @@ data class Task(
     ) {
         id = parcel.readInt()
     }
-    constructor() : this( "", Customer(), "","","","","",)
+
+    constructor() : this("", Customer(), "", "", "", "", "")
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -71,10 +73,6 @@ data class Task(
 
         override fun newArray(size: Int): Array<Task?> {
             return arrayOfNulls(size)
-        }
-
-        fun createDefaultTask(): Task {
-            return Task("", Customer(), "", "", "", "", "")
         }
     }
 

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Insert(onConflict = REPLACE) //(onConflict = ForeignKey.RESTRICT)
+    @Insert(onConflict = RESTRICT) //(onConflict = ForeignKey.RESTRICT)
     fun insert(task: Task): Long
 
 

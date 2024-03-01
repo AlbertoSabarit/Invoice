@@ -40,53 +40,46 @@ class TaskCreateViewModel : ViewModel() {
     fun validateCredentials(task: Task) {
         when {
             TextUtils.isEmpty(title.value) -> state.value = TaskCreateState.TitleEmptyError
-            TextUtils.isEmpty(description.value) -> state.value = TaskCreateState.DescriptionEmptyError
+            TextUtils.isEmpty(description.value) -> state.value =
+                TaskCreateState.DescriptionEmptyError
 
             TextUtils.isEmpty(fini.value) -> state.value = TaskCreateState.DataIniEmptyError
             TextUtils.isEmpty(ffin.value) -> state.value = TaskCreateState.DataFinEmptyError
-            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value = TaskCreateState.IncorrectDateRangeError
+            !isValidDateRange(fini.value!!, ffin.value!!) -> state.value =
+                TaskCreateState.IncorrectDateRangeError
 
             else -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    if (task.id == 0) {
-                        insertNewTask(task)
-                    } else {
-                        editExistingTask(task)
+                    val result = taskRepository.insert(task)
+                    withContext(Dispatchers.Main) {
+                        if (task.id == -1) {
+                            when (result) {
+                                is Resource.Error -> {
+                                    state.value =
+                                        TaskCreateState.TaskError(result.exception.message!!)
+                                }
+
+                                is Resource.Success<*> -> {
+                                    state.value = TaskCreateState.Success
+                                }
+                            }
+
+                        } else {
+                            taskRepository.update(task)
+
+                            state.value = TaskCreateState.Success
+
+                        }
                     }
                 }
             }
         }
     }
 
-    private suspend fun insertNewTask(task: Task) {
-        val result = taskRepository.insert(task)
-
-        withContext(Dispatchers.Main) {
-            handleResult(result)
-        }
-    }
-
-    private suspend fun editExistingTask(task: Task) {
-        taskRepository.update(task)
-
-        withContext(Dispatchers.Main) {
-            state.value = TaskCreateState.Success
-        }
-    }
-
-    private fun handleResult(result: Resource) {
-        when (result) {
-            is Resource.Error -> {
-                state.value = TaskCreateState.TaskError(result.exception.message!!)
-            }
-            is Resource.Success<*> -> {
-                state.value = TaskCreateState.Success
-            }
-        }
-    }
     fun getCustomerList(): LiveData<List<Customer>> {
-        var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
-        return  allCustomers
+        var allCustomers: LiveData<List<Customer>> =
+            customerRepository.getCustomerList().asLiveData()
+        return allCustomers
     }
 
     private fun isValidDateRange(startDate: String, endDate: String): Boolean {

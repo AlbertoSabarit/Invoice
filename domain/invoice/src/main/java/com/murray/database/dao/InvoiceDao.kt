@@ -2,6 +2,7 @@ package com.murray.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.ForeignKey.Companion.RESTRICT
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface InvoiceDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE) //(onConflict = ForeignKey.RESTRICT)
+    @Insert(onConflict = RESTRICT) //(onConflict = ForeignKey.RESTRICT)
     fun insert(invoice: Invoice): Long
 
     @Query("SELECT * FROM invoice")

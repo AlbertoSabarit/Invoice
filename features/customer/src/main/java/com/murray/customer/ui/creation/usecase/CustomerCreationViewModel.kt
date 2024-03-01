@@ -5,11 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
 import com.murray.database.repository.CustomerRepositoryDB
 import com.murray.networkstate.Resource
-import com.murray.repositories.CustomerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,13 +37,8 @@ class CustomerCreationViewModel : ViewModel() {
             !validateEmail(email.value) -> state.value = CustomerCreationState.EmailFormatError
             !validatePhone(phone.value) -> state.value = CustomerCreationState.PhoneFormatError
             else -> {
-                //state.postValue(TaskCreateState.Loading(true))
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = customerRepository.insert(customer)
-
-                    withContext(Dispatchers.Main) {
-                        //state.postValue(TaskCreateState.Loading(false))
-                    }
 
                     when (result) {
                         is Resource.Error -> {

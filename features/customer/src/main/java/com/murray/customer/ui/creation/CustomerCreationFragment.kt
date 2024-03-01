@@ -19,8 +19,6 @@ import com.murray.customer.ui.LayoutTextWatcher
 import com.murray.customer.ui.creation.usecase.CustomerCreationViewModel
 import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
-import com.murray.data.tasks.Task
-
 
 class CustomerCreationFragment : Fragment() {
 
@@ -30,10 +28,6 @@ class CustomerCreationFragment : Fragment() {
 
     private val viewModel: CustomerCreationViewModel by viewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +50,7 @@ class CustomerCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.button.setOnClickListener() {
+        binding.button.setOnClickListener {
             Toast.makeText(requireContext(), R.string.toastMessage, Toast.LENGTH_SHORT).show()
         }
 
@@ -120,5 +114,4 @@ class CustomerCreationFragment : Fragment() {
         binding.tilEmail.error = "El email no puede estar vacío"
         binding.tilEmail.requestFocus()
     }
-
 }

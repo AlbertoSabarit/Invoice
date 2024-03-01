@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.murray.data.accounts.Email
 import com.murray.data.customers.Customer
 import com.murray.database.repository.CustomerRepositoryDB
-import com.murray.repositories.CustomerRepository
 import java.util.regex.Pattern
 
 class CustomerEditViewModel : ViewModel() {
@@ -31,7 +30,7 @@ class CustomerEditViewModel : ViewModel() {
             else -> success()
         }
     }
-    fun success(){
+    private fun success(){
         var phoneTmp = phone.value
         if (phone.value.equals(""))
             phoneTmp = null
@@ -41,7 +40,7 @@ class CustomerEditViewModel : ViewModel() {
         state.value = CustomerEditState.Success
     }
 
-    fun validateEmail(value: String?): Boolean{
+    private fun validateEmail(value: String?): Boolean{
         val pattern: Pattern = Pattern.compile("^\\S+@\\S+\\.\\S+")
         return pattern.matcher(value).matches()
     }
@@ -50,7 +49,7 @@ class CustomerEditViewModel : ViewModel() {
         return state
     }
 
-    fun validatePhone(value: String?): Boolean{
+    private fun validatePhone(value: String?): Boolean{
         val pattern: Pattern = Pattern.compile("\\d+")
         return when (value) {
             null -> true

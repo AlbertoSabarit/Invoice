@@ -101,7 +101,7 @@ abstract class InvoiceDatabase : RoomDatabase() {
             }
         }
 
-        private suspend fun populateDatabase() {
+        private fun populateDatabase() {
             populateUsers()
             populateCustomers()
             populateItems()
@@ -133,9 +133,9 @@ abstract class InvoiceDatabase : RoomDatabase() {
                 )
                 invoiceDatabase.userDao().insert(
                     User(
-                        "Carlos",
+                        "Alejandro",
                         "Valle",
-                        Email("zlevalle@iesportada.org")
+                        Email("alevalle@iesportada.org")
                     )
                 )
                 invoiceDatabase.userDao().insert(
@@ -152,38 +152,56 @@ abstract class InvoiceDatabase : RoomDatabase() {
             getInstance().let { invoiceDatabase ->
                 invoiceDatabase.customerDao().insert(
                     Customer(
-                        "Alberto",
-                        Email("blbertosabarit@iesportada.org"),
+                        "Alberto Sabarit",
+                        Email("albertosabarit@iesportada.org"),
                         620400868,
-                        "Malaga",
+                        "Rincón de la Victoria",
                         "Urb las pedrizas"
                     )
                 )
                 invoiceDatabase.customerDao().insert(
                     Customer(
                         "Kubo",
-                        Email("Kubito@iesportada.org"),
-                        620982374,
-                        "Malaga",
+                        Email("perro@de_alberto.org"),
+                        620400868,
+                        "Rincón de la Victoria",
                         "Urb las pedrizas"
                     )
                 )
                 invoiceDatabase.customerDao().insert(
                     Customer(
-                        "Cristiano",
-                        Email("ronaldo@iesportada.org"),
-                        2340868,
-                        "Arabia city",
-                        "chalet"
+                        "Alejandro Valle",
+                        Email("alejandro@gmail.es"),
+                        693296746,
+                        "Torre del Mar",
+                        "Calle Juan Aguayo Moreno 3"
                     )
                 )
                 invoiceDatabase.customerDao().insert(
                     Customer(
-                        "Belligoal",
-                        Email("madrid@iesportada.org"),
-                        837489233,
-                        "Madrid",
-                        "Moraleja"
+                        "Ender Watts",
+                        Email("ender@gmail.uk"),
+                        657318092,
+                        "Londres",
+                        "9 Buckingham Gate"
+                    )
+                )
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Katya Nikitenko",
+                        Email("katya@gmail.ua"),
+                        643417845,
+                        "Chernigov",
+                        "Kam'yans'ka Sloboda"
+                    )
+                )
+                invoiceDatabase.customerDao().insert(
+                    Customer(
+                        "Lourdes Rodriguez",
+                        Email("Lourdes@gmail.com"),
+                        615940554,
+                        "Málaga",
+                        "Calle Competa 29"
                     )
                 )
             }

@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -33,9 +32,6 @@ import com.murray.customer.ui.list.usecase.CustomerListState
 import com.murray.customer.ui.list.usecase.CustomerListViewModel
 import com.murray.data.customers.Customer
 import com.murray.invoice.ui.MainActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CustomerListFragment : Fragment(), MenuProvider {
     private var _binding: FragmentCustomerListBinding? = null
@@ -49,14 +45,14 @@ class CustomerListFragment : Fragment(), MenuProvider {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCustomerListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var appBarConfiguration =
+        val appBarConfiguration =
             AppBarConfiguration.Builder(R.id.customerListFragment)
                 .setOpenableLayout((requireActivity() as MainActivity).drawer)
                 .build()
@@ -133,7 +129,6 @@ class CustomerListFragment : Fragment(), MenuProvider {
 
         val orderValue = preferences!!.getString("customers", "0")
 
-
         when (orderValue) {
             "0" -> {
                 customerAdapter.sort()
@@ -143,7 +138,6 @@ class CustomerListFragment : Fragment(), MenuProvider {
             }
         }
     }
-
 
     private fun showProgressBar(value: Boolean) {
         if (value)
@@ -172,7 +166,7 @@ class CustomerListFragment : Fragment(), MenuProvider {
 
     private fun setUpUserRecycler() {
         customerAdapter =
-            CustomAdapter(requireContext(), { deleteItem(it) }) { customer: Customer ->
+            CustomAdapter({ delete(it) }) { customer: Customer ->
                 val bundle = bundleOf(
                     "id" to customer.id,
                     "name" to customer.name,
@@ -193,8 +187,7 @@ class CustomerListFragment : Fragment(), MenuProvider {
         }
     }
 
-    fun deleteItem(customer: Customer) {
-
+    fun delete(customer: Customer) {
         val dialog = com.murray.invoice.base.BaseFragmentDialog.newInstance(
             "Atención",
             "¿Deseas borrarlo?"
@@ -207,7 +200,7 @@ class CustomerListFragment : Fragment(), MenuProvider {
         ) { _, bundle ->
             val result = bundle.getBoolean(com.murray.invoice.base.BaseFragmentDialog.result)
             if (result){
-                if(viewmodel.deleteItem(customer))
+                if(viewmodel.delete(customer))
                     initNotification()
             }
         }

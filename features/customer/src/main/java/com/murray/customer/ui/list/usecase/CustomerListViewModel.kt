@@ -5,15 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.murray.data.customers.Customer
-import com.murray.data.invoices.Invoice
 import com.murray.database.repository.CustomerRepositoryDB
-import com.murray.database.repository.InvoiceRepositoryDB
-
 
 class CustomerListViewModel: ViewModel() {
 
     private var state = MutableLiveData<CustomerListState>()
-    var customerRepository = CustomerRepositoryDB()
+    private var customerRepository = CustomerRepositoryDB()
     var allCustomers: LiveData<List<Customer>> = customerRepository.getCustomerList().asLiveData()
 
     fun getState(): LiveData<CustomerListState> {
@@ -27,14 +24,14 @@ class CustomerListViewModel: ViewModel() {
         }
     }
 
-    fun deleteItem(customer: Customer):Boolean {
-        try{
+    fun delete(customer: Customer):Boolean {
+        return try{
             customerRepository.delete(customer)
             state.value = CustomerListState.Success
-            return true
+            true
         } catch (e: Exception){
             state.value = CustomerListState.ReferencedCustomer
-            return false
+            false
         }
     }
     fun setState(s: CustomerListState){

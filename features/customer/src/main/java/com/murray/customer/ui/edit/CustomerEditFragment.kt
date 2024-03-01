@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
@@ -17,7 +16,6 @@ import com.murray.customer.ui.LayoutTextWatcher
 import com.murray.customer.ui.edit.usecase.CustomerEditState
 import com.murray.customer.ui.edit.usecase.CustomerEditViewModel
 import com.murray.database.repository.CustomerRepositoryDB
-import com.murray.repositories.CustomerRepository
 
 class CustomerEditFragment : Fragment() {
 
@@ -26,16 +24,12 @@ class CustomerEditFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: CustomerEditViewModel by viewModels()
-    val customerRepositoryDB = CustomerRepositoryDB()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val customerRepositoryDB = CustomerRepositoryDB()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCustomerEditBinding.inflate(inflater, container, false)
         binding.viewmodel = this.viewModel
@@ -50,11 +44,11 @@ class CustomerEditFragment : Fragment() {
         val id = requireArguments().getInt("id")
         viewModel.id = id
         val c = customerRepositoryDB.getCustomer(id)
-        viewModel.name.value = c!!.name
-        viewModel.email.value = c!!.email.value
-        viewModel.phone.value = c?.phone?.toString().takeIf { it != "null" } ?: ""
-        viewModel.city.value = c!!.city
-        viewModel.address.value = c!!.address
+        viewModel.name.value = c.name
+        viewModel.email.value = c.email.value
+        viewModel.phone.value = c.phone?.toString().takeIf { it != "null" } ?: ""
+        viewModel.city.value = c.city
+        viewModel.address.value = c.address
 
         viewModel.getState().observe(viewLifecycleOwner) {
             when (it) {
@@ -76,9 +70,6 @@ class CustomerEditFragment : Fragment() {
         tieEmail.addTextChangedListener(textWatcherEmail)
     }
 
-    fun actualizarCliente(){
-
-    }
     private fun setPhoneFormatError() {
         binding.tilPhone.error = "El teléfono no es válido"
         binding.tilPhone.requestFocus()
@@ -112,5 +103,4 @@ class CustomerEditFragment : Fragment() {
         val textContext = "Cliente actualizado con éxito!"
         sendNotification(requireContext(),pendingIntent,"Operación completada", textContext)
     }
-
 }

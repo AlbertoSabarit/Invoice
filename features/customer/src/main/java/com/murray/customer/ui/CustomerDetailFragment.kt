@@ -26,15 +26,10 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     private val binding
         get() = _binding!!
 
-    lateinit var gMap: GoogleMap
-    lateinit var mapView: MapView
+    private lateinit var gMap: GoogleMap
+    private lateinit var mapView: MapView
     var address:String = "España"
     var id:Int? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -49,7 +44,7 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCustomerDetailBinding.inflate(inflater, container, false)
         binding.btnEditar.setOnClickListener{
@@ -66,14 +61,11 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
         id = arguments?.getInt("id")
         val cliente = arguments?.getString("name") ?: ""
         val email = arguments?.getString("email") ?: ""
-        var phone = arguments?.getInt("phone")
+        val phone = arguments?.getInt("phone")
         val city = arguments?.getString("city") ?: ""
         val address = arguments?.getString("address") ?: "España"
         this.address = address
-        if(phone == 0)
-            binding.txtPhone.text  = null
-        else
-            binding.txtPhone.text = phone.toString()?: ""
+        binding.txtPhone.text = phone.takeIf { it != 0 }?.toString() ?: ""
         binding.txtName.text = cliente
         binding.txtEmail.text = email
 
@@ -90,7 +82,6 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
             }
             findNavController().navigate(R.id.action_customerDetailFragment_to_customerEditFragment, bundle)
         }
-
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -120,13 +111,12 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getLatLngFromAddress(address: String): LatLng? {
-
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         try {
             val addresses = geocoder.getFromLocationName(address, 1)
             if (addresses?.isNotEmpty() == true) {
-                val latitude = addresses?.get(0)?.latitude
-                val longitude = addresses?.get(0)?.longitude
+                val latitude = addresses[0].latitude
+                val longitude = addresses[0].longitude
                 return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
             }
             else{
@@ -149,7 +139,6 @@ class CustomerDetailFragment : Fragment(), OnMapReadyCallback {
 
             return longitude?.let { latitude?.let { it1 -> LatLng(it1, it) } }
         }
-        return null
     }
 
 }

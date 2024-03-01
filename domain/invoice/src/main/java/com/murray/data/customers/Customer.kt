@@ -5,7 +5,6 @@ import android.os.Parcelable
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.murray.data.accounts.Email
-import com.murray.data.base.Entity
 import com.murray.data.converter.EmailTypeConverter
 
 @androidx.room.Entity(tableName = "customer")
@@ -62,7 +61,7 @@ data class Customer(
                    city: String?,
                    address: String?
         ): Customer {
-            var customer = Customer(name = name, email = email, phone = phone, city = city, address = address)
+            val customer = Customer(name = name, email = email, phone = phone, city = city, address = address)
             customer.id = id
             return customer
         }

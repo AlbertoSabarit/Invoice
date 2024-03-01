@@ -1,6 +1,5 @@
 package com.murray.customer.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,12 +9,9 @@ import com.murray.customer.databinding.CardviewLayoutBinding
 import com.murray.data.customers.Customer
 
 class CustomAdapter (
-    private val context: Context,
     private val deleteClickListener: (customer: Customer) -> Unit,
     private val clickListener: (Customer) -> Unit
 ) : ListAdapter<Customer, CustomAdapter.ListViewHolder>(CUSTOMER_COMPARATOR) {
-
-    private var dataset:ArrayList<Customer> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,7 +20,7 @@ class CustomAdapter (
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, context)
+        holder.bind(item)
         holder.itemView.setOnClickListener {
             clickListener(item)
         }
@@ -34,9 +30,9 @@ class CustomAdapter (
         }
     }
 
-    class ListViewHolder(val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: CardviewLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(customer: Customer, context: Context) {
+        fun bind(customer: Customer) {
             binding.txtCustomer.text = customer.name
             binding.txtEmail.text = customer.email.getEmail()
         }

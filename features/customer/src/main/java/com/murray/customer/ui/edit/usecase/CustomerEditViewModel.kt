@@ -34,7 +34,7 @@ class CustomerEditViewModel : ViewModel() {
         var phoneTmp = phone.value
         if (phone.value.equals(""))
             phoneTmp = null
-        var customer = Customer(name.value!!, Email(email.value!!), phoneTmp?.toInt(), city.value, address.value)
+        val customer = Customer(name.value!!, Email(email.value!!), phoneTmp?.toInt(), city.value, address.value)
         customer.id = id
         customerRepositoryDB.update(customer)
         state.value = CustomerEditState.Success

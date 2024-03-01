@@ -114,10 +114,10 @@ class TaskCreationFragment : Fragment() {
                 )
 
                 if (viewModel.task.id == -1) {
-                    initNotification("Tarea creada")
+                    initNotification("Tarea realizada")
                     viewModel.validateCredentials(taskTmp!!)
                 } else {
-                    initNotification("Tarea editada")
+                    initNotification("Tarea realizada")
                     taskTmp!!.id = viewModel.task.id
                     viewModel.validateCredentials(taskTmp!!)
                 }

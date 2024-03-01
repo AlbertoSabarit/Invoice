@@ -1,6 +1,8 @@
 package com.murray.task.ui
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -21,6 +23,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.hanmajid.android.tiramisu.notificationruntimepermission.createNotificationChannel
+import com.hanmajid.android.tiramisu.notificationruntimepermission.sendNotification
 import com.murray.data.tasks.Task
 import com.murray.invoice.ui.MainActivity
 import com.murray.invoice.base.BaseFragmentDialog
@@ -203,14 +207,18 @@ class TaskListFragment : Fragment(), TaskAdapter.onTaskClick, MenuProvider {
                 viewmodel.delete(task)
                 viewmodel.getTaskList()
 
-                Toast.makeText(
-                    requireActivity(),
-                    "Tarea ${task.titulo} borrada con éxito",
-                    Toast.LENGTH_SHORT
-                ).show()
+                initNotification("Tarea borrada con éxito")
             }
         }
         return true
+    }
+
+    private fun initNotification(title : String) {
+        createNotificationChannel(requireContext())
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0,  Intent(),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val textContext = "Acción realizada con éxito"
+        sendNotification(requireContext(),pendingIntent,title, textContext)
     }
 
     override fun onDestroyView() {

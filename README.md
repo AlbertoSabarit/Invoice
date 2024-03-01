@@ -93,9 +93,9 @@ parte de la asignatura de ✨DEINT✨.
 - [x] Realizado todo lo que no corresponde a los módulos de cada integtrante del equipo, como puede ser lo relacionado con Account, User y App.
 
 <div style="flex">
-  <img src="Tasknolist.PNG" width="200" height ="300">
-  <img src="creartarea.PNG" width="200" height ="300">
-  <img src="tarearealizada.PNG" width="200" height ="300">
+  <img src="Tasknolist.PNG" width="200" height ="400">
+  <img src="creartarea.PNG" width="200" height ="400">
+  <img src="tarearealizada.PNG" width="200" height ="400">
 </div>
 
 ## Créditos
